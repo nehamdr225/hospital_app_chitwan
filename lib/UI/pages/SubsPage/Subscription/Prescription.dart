@@ -1,5 +1,5 @@
 import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/pages/SubsPage/atoms/Tab1ListCard.dart';
+import 'package:chitwan_hospital/UI/pages/SubsPage/atoms/ListCard.dart';
 import 'package:flutter/material.dart';
 
 class Prescription extends StatelessWidget {
@@ -11,10 +11,16 @@ class Prescription extends StatelessWidget {
       body: ListView.builder(
           itemCount: NearYou.length,
           itemBuilder: (BuildContext context, int index) {
-            return Tab1ListCard(
-              name: NearYou[index]['name'],
-              caption: NearYou[index]['cap'],
-              image: NearYou[index]['src'],
+            return ListCard(
+              name: PrescriptionData[index]['name'],
+              caption: PrescriptionData[index]['cap'],
+              image: PrescriptionData[index]['src'],
+              phone: PrescriptionData[index]['phone'],
+              status: PrescriptionData[index]['status'],
+              date: PrescriptionData[index]['date'],
+              time:PrescriptionData[index]['time'],
+              take: PrescriptionData[index]['take'],
+              data: true,
             );
           }),
     );

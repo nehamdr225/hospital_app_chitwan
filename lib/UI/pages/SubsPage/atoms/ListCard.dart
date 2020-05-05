@@ -12,6 +12,8 @@ class ListCard extends StatefulWidget {
   final status;
   final date;
   final time;
+  final take;
+  final data;
   ListCard(
       {this.image,
       this.name,
@@ -19,7 +21,9 @@ class ListCard extends StatefulWidget {
       this.phone,
       this.date,
       this.status,
-      this.time});
+      this.time,
+      this.take,
+      this.data = "false"});
 
   @override
   _ListCardState createState() => _ListCardState();
@@ -57,16 +61,16 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => AppointmentDetail(
-                name: widget.name,
-              caption: widget.caption,
-              image: widget.image,
-              phone: widget.phone,
-              status: widget.status,
-              date: widget.date,
-              time: widget.time,
-              )));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AppointmentDetail(
+                    name: widget.name,
+                    caption: widget.caption,
+                    image: widget.image,
+                    phone: widget.phone,
+                    status: widget.status,
+                    date: widget.date,
+                    time: widget.time,
+                  )));
         },
         child: Container(
             decoration: BoxDecoration(
@@ -108,14 +112,6 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
                 direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  // Flexible(
-                  //   flex: 1,
-                  //   child: Image.asset(
-                  //     'assets/images/doctor.png',
-                  //     height: 100.0,
-                  //     width: 70.0,
-                  //   ),
-                  // ),
                   Flexible(
                     flex: 3,
                     child: Padding(
@@ -125,30 +121,33 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.calendar_today,
-                                  size: 16.0,
-                                  color: theme.iconTheme.color,
-                                ),
-                                FancyText(
-                                    defaultStyle: true,
-                                    text: "  ${widget.date}"),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Icon(
-                                    Icons.timer,
-                                    size: 16.0,
-                                    color: theme.iconTheme.color,
-                                  ),
-                                ),
-                                FancyText(
-                                    defaultStyle: true, text: " ${widget.time}")
-                              ],
-                            ),
-                          ),
+                              padding: const EdgeInsets.only(bottom: 5.0),
+                              child: widget.data == false
+                                  ? Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.calendar_today,
+                                          size: 16.0,
+                                          color: theme.iconTheme.color,
+                                        ),
+                                        FancyText(
+                                            defaultStyle: true,
+                                            text: "  ${widget.date}"),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Icon(
+                                            Icons.timer,
+                                            size: 16.0,
+                                            color: theme.iconTheme.color,
+                                          ),
+                                        ),
+                                        FancyText(
+                                            defaultStyle: true,
+                                            text: " ${widget.time}")
+                                      ],
+                                    )
+                                  : null),
                           FancyText(
                             text: widget.name,
                             fontWeight: FontWeight.w700,
@@ -175,26 +174,97 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
                               ),
                             ],
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(top: 3.0),
-                                child: FancyText(
-                                  text: "Hospital: ",
-                                  textAlign: TextAlign.left,
-                                  defaultStyle: true,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 3.0),
-                                child: FancyText(
-                                    text: "CMC Hospital",
-                                    textAlign: TextAlign.left,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
+                          widget.data == false
+                              ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 3.0),
+                                      child: FancyText(
+                                        text: "Hospital: ",
+                                        textAlign: TextAlign.left,
+                                        defaultStyle: true,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 3.0),
+                                      child: FancyText(
+                                          text: "CMC Hospital",
+                                          textAlign: TextAlign.left,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                )
+                              : widget.status == "Ready"
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 3.0),
+                                          child: FancyText(
+                                            text: "Collect from: ",
+                                            textAlign: TextAlign.left,
+                                            defaultStyle: true,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 3.0),
+                                          child: FancyText(
+                                            text: widget.take,
+                                            textAlign: TextAlign.left,
+                                            size: 14.5,
+                                            fontWeight: FontWeight.w700,
+                                            color: theme
+                                                .colorScheme.secondaryVariant,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Padding(
+                                      //processing
+                                      padding: const EdgeInsets.only(top: 3.0),
+                                      child: FancyText(
+                                        text: "Your order is processing!",
+                                        textAlign: TextAlign.left,
+                                        color:
+                                            theme.colorScheme.secondaryVariant,
+                                      ),
+                                    ),
+                          Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: widget.data == true &&
+                                      widget.status == "Ready"
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 2.0),
+                                          child: FancyText(
+                                            text: "Collect on: ",
+                                            textAlign: TextAlign.left,
+                                            defaultStyle: true,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 2.0),
+                                          child: FancyText(
+                                              text:
+                                                  "${widget.date} at ${widget.time}",
+                                              textAlign: TextAlign.left,
+                                              size: 14.5,
+                                              color: theme
+                                                  .colorScheme.secondaryVariant,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    )
+                                  : null),
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Row(
@@ -222,7 +292,8 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
                         width: 80.0,
                         height: 30.0,
                         decoration: BoxDecoration(
-                            color: widget.status == "Accepted"
+                            color: widget.status == "Accepted" ||
+                                    widget.status == "Ready"
                                 ? Colors.green.shade400
                                 : theme.colorScheme.secondary,
                             borderRadius: BorderRadius.only(

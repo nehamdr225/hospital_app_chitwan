@@ -1,6 +1,5 @@
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/SubsPage/AppointmentPage.dart';
-//import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,7 @@ class HomeApp extends StatelessWidget {
       //darkTheme: theme.serviceDarkTheme,
       theme: theme.serviceLightTheme,
       home: SafeArea(
-        child: AppointmentPage()
+        child: HomeScreen()
       )
     );
   }

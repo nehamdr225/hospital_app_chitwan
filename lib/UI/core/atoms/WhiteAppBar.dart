@@ -40,13 +40,17 @@ class WhiteAppBar extends StatelessWidget {
       : null ,
       title: Text(title, style: theme.textTheme.body1.copyWith(fontSize: 16.0)),
       leading: logo == true
-          ? Padding(
-              padding: EdgeInsets.only(top: 16.0, left: 8.0),
-              child: Text(
-                'LOGO',
-                style: theme.textTheme.body2.copyWith(
-                    fontWeight: FontWeight.w900, color:theme.colorScheme.onPrimary),
-              ))
+      ? Padding(
+        padding: const EdgeInsets.only(top:5.0, left: 7.0),
+        child: Image.asset("assets/images/caduceus.png", ),
+      )
+          // ? Padding(
+          //     padding: EdgeInsets.only(top: 16.0, left: 8.0),
+          //     child:  Text(
+              // //   'LOGO',
+              // //   style: theme.textTheme.body2.copyWith(
+              // //       fontWeight: FontWeight.w900, color:theme.colorScheme.onPrimary),
+              // // ))
           : IconButton(
               icon: Icon(CupertinoIcons.back, color: Theme.of(context).colorScheme.primary,),
               onPressed: () {
