@@ -23,7 +23,7 @@ class ListCard extends StatefulWidget {
       this.status,
       this.time,
       this.take,
-      this.data = "false"});
+      this.data = false});
 
   @override
   _ListCardState createState() => _ListCardState();
