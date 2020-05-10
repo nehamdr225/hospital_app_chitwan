@@ -1,7 +1,6 @@
-import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:flutter/material.dart';
 
-class FForms extends StatelessWidget {
+class  FForms extends StatelessWidget {
   final bool obscure;
   final String text;
   final bool labeltext;

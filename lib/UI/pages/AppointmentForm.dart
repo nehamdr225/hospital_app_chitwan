@@ -47,6 +47,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   borderColor: theme.colorScheme.primary,
                   formColor: theme.colorScheme.background,
                   text: "Last Name",
+                  type: TextInputType.text,
                   textColor: blueGrey.withOpacity(0.7),
                   height: 40.0,
                   width: width * 0.50,
@@ -54,12 +55,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: InputField(
-              //value: userData['email'],
-              title: 'Email',
-            ),
+          FForms(
+            text: "Phone Number",
+            type: TextInputType.phone,
+            height: 40.0,
+            width: width * 0.90,
           ),
           Container(
             padding: const EdgeInsets.all(10.0),
