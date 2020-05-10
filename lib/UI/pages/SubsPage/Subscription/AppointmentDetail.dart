@@ -41,10 +41,7 @@ class AppointmentDetail extends StatelessWidget {
                 width: size.width * 0.95,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
-                  gradient: LinearGradient(colors: [
-                    Color(0xff6882AD),
-                    Color(0xff173A7B),
-                  ]),
+                  gradient: gradientColor,
                   boxShadow: [
                     BoxShadow(
                         color: Colors.white60,

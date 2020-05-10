@@ -1,6 +1,5 @@
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/SubsPage/AppointmentPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -17,17 +16,8 @@ Future main() async {
 class BootStrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Fetch _fetch = Fetch();
-    // CoreSecureStorage _storage = CoreSecureStorage();
-    // ProductApi _productApi = ProductApi(_fetch);
-    // UserApi _userApi = UserApi(_fetch, _storage);
-    // Validator _validator = Validator();
-
     return MultiProvider(
       providers: [
-      //   ChangeNotifierProvider(create: (_) => new ProductModel(_productApi)),
-      //   ChangeNotifierProvider(
-      //       create: (_) => new UserModel(_userApi, _storage, _validator)),
         ChangeNotifierProvider(create: (_) => new STheme())
       ],
       child: HomeApp(),

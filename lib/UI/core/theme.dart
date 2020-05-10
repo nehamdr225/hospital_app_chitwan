@@ -4,8 +4,13 @@ import 'package:flutter/services.dart';
 const textDark = Color(0xff171817); // black text
 const textLight_Blue = Color(0xff1d2d44); // blueish for light mode
 const textLight = Color(0xfff4f4fc); // white text
-const textDark_Yellow = Color(0xffEEFAFF); 
-const textLight_Red = Color(0xffFFC6A7);// yellow text for dark mode
+const textDark_Yellow = Color(0xffEEFAFF);
+const textLight_Red = Color(0xffFFC6A7); // yellow text for dark mode
+const gradientColor = LinearGradient(colors: [
+  Color(0xff6882AD),
+  Color(0xff173A7B),
+]);
+const blueGrey= Color(0xff4D6A9C);
 
 class STheme with ChangeNotifier {
   ThemeData serviceDarkTheme = ThemeData(
@@ -14,13 +19,13 @@ class STheme with ChangeNotifier {
     ),
     colorScheme: ColorScheme(
       primary: Color(0xff173A7B),
-      primaryVariant:Color(0xff091654),
+      primaryVariant: Color(0xff091654),
       onPrimary: Color(0xff6882AD),
       secondary: Color(0xffC20114),
-      secondaryVariant: Color(0xffD94B4B),//97010D),
+      secondaryVariant: Color(0xffD94B4B), //97010D),
       onSecondary: Color(0xff0c090d),
       background: Color(0xff191B24),
-      onBackground: Color(0xff232633),      //Color(0xff404e60),
+      onBackground: Color(0xff232633), //Color(0xff404e60),
       onError: Color(0xffc5032b),
       error: Color(0xffc5032b),
       surface: Color(0xffffffff),
@@ -30,28 +35,29 @@ class STheme with ChangeNotifier {
     canvasColor: Colors.white,
     fontFamily: 'Montserrat',
     textSelectionColor: Colors.black38,
-    textTheme: TextTheme( 
-        headline: TextStyle(fontSize: 24.0, color: textLight, fontWeight: FontWeight.w500),
-        title: TextStyle(fontSize: 18.0, color: textLight),
-        body2: TextStyle(fontSize: 16.0, color: textDark ),
-        body1: TextStyle(fontSize: 14.0, color: textLight),
-        overline: TextStyle(fontSize: 10.0, color: textLight), 
-        caption: TextStyle(fontSize: 12.0, color: textLight),
+    textTheme: TextTheme(
+      headline: TextStyle(
+          fontSize: 24.0, color: textLight, fontWeight: FontWeight.w500),
+      title: TextStyle(fontSize: 18.0, color: textLight),
+      body2: TextStyle(fontSize: 16.0, color: textDark),
+      body1: TextStyle(fontSize: 14.0, color: textLight),
+      overline: TextStyle(fontSize: 10.0, color: textLight),
+      caption: TextStyle(fontSize: 12.0, color: textLight),
     ),
   );
-  ThemeData serviceLightTheme = ThemeData( 
+  ThemeData serviceLightTheme = ThemeData(
     iconTheme: IconThemeData(
       color: Color(0xff173A7B),
     ),
     colorScheme: ColorScheme(
       primary: Color(0xff173A7B),
-      primaryVariant:Color(0xff091654),  
+      primaryVariant: Color(0xff091654),
       onPrimary: Color(0xff0c090d),
       secondary: Color(0xffC20114),
-      secondaryVariant: Color(0xffD94B4B),//97010D),
+      secondaryVariant: Color(0xffD94B4B), //97010D),
       onSecondary: Color(0xff0c090d),
       background: Color(0xfff5f5f5),
-      onBackground: Color(0xffffffff),      
+      onBackground: Color(0xffffffff),
       onError: Color(0xffc5032b),
       error: Color(0xffc5032b),
       onSurface: Color(0xff191B24),
@@ -62,13 +68,14 @@ class STheme with ChangeNotifier {
     fontFamily: 'Montserrat',
     textSelectionColor: Colors.black38,
     unselectedWidgetColor: Colors.grey[500],
-    textTheme: TextTheme( 
-        headline: TextStyle(fontSize: 24.0, color: textDark, fontWeight: FontWeight.w500),
-        title: TextStyle(fontSize: 18.0, color: textDark),
-        body2: TextStyle(fontSize: 16.0, color: textLight ),
-        body1: TextStyle(fontSize: 14.0, color: textDark),
-        overline: TextStyle(fontSize: 10.0, color: textDark),
-        caption: TextStyle(fontSize: 12.0, color: textDark),
+    textTheme: TextTheme(
+      headline: TextStyle(
+          fontSize: 24.0, color: textDark, fontWeight: FontWeight.w500),
+      title: TextStyle(fontSize: 18.0, color: textDark),
+      body2: TextStyle(fontSize: 16.0, color: textLight),
+      body1: TextStyle(fontSize: 14.0, color: textDark),
+      overline: TextStyle(fontSize: 10.0, color: textDark),
+      caption: TextStyle(fontSize: 12.0, color: textDark),
     ),
   );
 
@@ -95,4 +102,3 @@ class STheme with ChangeNotifier {
   //   setTheme() => serviceDarkTheme;
   // }
 }
-

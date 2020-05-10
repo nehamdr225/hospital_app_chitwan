@@ -27,9 +27,10 @@ class _AppointmentPageState extends State<AppointmentPage>
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100.0),
           child: WhiteAppBar(
-            logo: true,
+            logo: false,
             settings: false,
             tabbar: true,
+            title: "Appointment",
             controller: _tabController,
             tabs: <Widget>[
               Tab(
