@@ -90,7 +90,7 @@ class FRaisedButton extends StatelessWidget {
                 ),
           shape: shape == false
               ? Border.all(
-                  width: 0.0, color: Theme.of(context).colorScheme.background)
+                  width: 1.0, color: Theme.of(context).colorScheme.primary)
               : RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(radius)),
                 ),

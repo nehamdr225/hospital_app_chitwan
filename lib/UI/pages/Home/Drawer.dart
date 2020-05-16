@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
@@ -5,9 +6,14 @@ import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SubsPage/AppointmentPage.dart';
 import 'package:flutter/material.dart';
 
-class DrawerApp extends StatelessWidget {
-  final bool loggedIn;
-  DrawerApp({this.loggedIn: true});
+class DrawerApp extends StatefulWidget {
+  @override
+  _DrawerAppState createState() => _DrawerAppState();
+}
+
+class _DrawerAppState extends State<DrawerApp> {
+  bool loggedIn = true;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -55,8 +61,6 @@ class DrawerApp extends StatelessWidget {
                             radius: 40.0,
                             child: Image.asset(
                               'assets/images/doctor.png',
-                              height: 45.0,
-                              width: 35.0,
                             ),
                           ),
                           Container(
@@ -70,17 +74,17 @@ class DrawerApp extends StatelessWidget {
                                       .caption
                                       .copyWith(
                                           fontSize: 16.0,
-                                          fontWeight: FontWeight.w500)),
+                                          fontWeight: FontWeight.w500,
+                                          color: textDark_Yellow)),
                               contentPadding: EdgeInsets.only(left: 5.0),
                               trailing: Icon(
                                 Icons.arrow_right,
                                 color: theme.iconTheme.color,
                               ),
                               onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => UserPromptApp()));
+                                setState(() {
+                                  loggedIn = true;
+                                });
                               },
                             ),
                           )
@@ -166,6 +170,42 @@ class DrawerApp extends StatelessWidget {
                 //     MaterialPageRoute(builder: (context) => AboutPage()));
               },
             ),
+            loggedIn == true
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 18.0, right: 18.0),
+                    child: FRaisedButton(
+                        elevation: 0.0,
+                        height: 40.0,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w600,
+                        text: "Login As...",
+                        onPressed: () {},
+                        color: blueGrey,
+                        bg: Colors.white,
+                        shape: false),
+                  )
+                : Text(' '),
+            loggedIn == true
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 18.0, right: 18.0),
+                    child: FRaisedButton(
+                        elevation: 0.0,
+                        height: 40.0,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w600,
+                        text: "Sign Out",
+                        onPressed: () {
+                          setState(() {
+                            loggedIn = false;
+                          });
+                        },
+                        color: textDark_Yellow,
+                        bg: theme.colorScheme.secondary,
+                        shape: false),
+                  )
+                : Text(' ')
           ],
         ),
       ),
