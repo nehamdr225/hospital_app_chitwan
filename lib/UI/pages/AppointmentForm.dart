@@ -1,4 +1,3 @@
-import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/Forns.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
@@ -27,6 +26,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
     "Dr. Bharati Devi Sharma",
     "Dr. Amit Jha",
     "Dr. Sangeeta Paudel",
+  ];
+  String _valTime;
+  List _myTime = [
+    "12:00 PM",
+    "5:00 PM",
+    "7:00 PM",
   ];
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -129,6 +134,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           color: theme.colorScheme.primary,
                         )),
                     child: DropdownButton(
+                      underline: SizedBox(),
                       hint: Container(
                           height: 45.0,
                           width: width * 0.50,
@@ -182,6 +188,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           color: theme.colorScheme.primary,
                         )),
                     child: DropdownButton(
+                      underline: SizedBox(),
                       hint: Container(
                           height: 45.0,
                           width: width * 0.50,
@@ -247,6 +254,61 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 ),
               ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FancyText(
+                    text: "Pick Time: ",
+                    size: 16.0,
+                    fontWeight: FontWeight.w500,
+                    textAlign: TextAlign.left,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10.0),
+                    height: 40.0,
+                    // width: width * 0.40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.white,
+                        border: Border.all(
+                          width: 1,
+                          color: theme.colorScheme.primary,
+                        )),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      hint: Container(
+                          height: 45.0,
+                          width: width * 0.45,
+                          alignment: Alignment.center,
+                          child: FancyText(
+                            text: "Pick a time",
+                            color: blueGrey,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      value: _valTime,
+                      items: _myTime.map((value) {
+                        return DropdownMenuItem(
+                          child: FancyText(
+                            text: value,
+                            color: blueGrey,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          value: value,
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _valTime = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Icon(Icons.timer)
+                ]),
           ),
           Padding(
             //gender
