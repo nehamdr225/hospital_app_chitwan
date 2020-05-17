@@ -67,7 +67,7 @@ class  FForms extends StatelessWidget {
           focusedBorder: underline == false
               ? OutlineInputBorder(
                   borderSide:
-                      BorderSide(color: Theme.of(context).colorScheme.primary))
+                      BorderSide(color: borderColor))//Theme.of(context).colorScheme.primary))
               : UnderlineInputBorder(
                   borderSide: BorderSide(
                   color: Theme.of(context).colorScheme.primaryVariant,

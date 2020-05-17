@@ -5,7 +5,8 @@ const textDark = Color(0xff171817); // black text
 const textLight_Blue = Color(0xff1d2d44); // blueish for light mode
 const textLight = Color(0xfff4f4fc); // white text
 const textDark_Yellow = Color(0xffEEFAFF);
-const textLight_Red = Color(0xffFFC6A7); // yellow text for dark mode
+const textLight_Red = Color(0xffFFC6A7); 
+const textLight_Red2=Color(0xffF7AD95);// yellow text for dark mode
 const gradientColor = LinearGradient(colors: [
   Color(0xff6882AD),
   Color(0xff173A7B),

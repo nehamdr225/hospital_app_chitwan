@@ -3,6 +3,8 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/LoginAs.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/SubsPage/AppointmentPage.dart';
 import 'package:flutter/material.dart';
 
@@ -82,10 +84,16 @@ class _DrawerAppState extends State<DrawerApp> {
                                 color: theme.iconTheme.color,
                               ),
                               onTap: () {
-                                setState(() {
-                                  loggedIn = true;
-                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignIn()));
                               },
+                              // onTap: () {
+                              //   setState(() {
+                              //     loggedIn = true;
+                              //   });
+                              // },
                             ),
                           )
                         ])),
@@ -180,7 +188,10 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
                         text: "Login As...",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                     MaterialPageRoute(builder: (context) => LoginAs()));
+                        },
                         color: blueGrey,
                         bg: Colors.white,
                         shape: false),

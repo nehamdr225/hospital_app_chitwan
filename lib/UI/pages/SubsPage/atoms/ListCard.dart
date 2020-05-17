@@ -79,15 +79,6 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
               boxShadow: [
                 BoxShadow(
                     color: Colors.white60,
-                    //offset: Offset(-4, -4),
-                    blurRadius: 3.0,
-                    spreadRadius: -12.0),
-                BoxShadow(
-                    color: Colors.white60,
-                    offset: Offset(-4, -4),
-                    blurRadius: 3.0),
-                BoxShadow(
-                    color: Colors.white60,
                     offset: Offset(-4, -4),
                     blurRadius: 3.0),
                 BoxShadow(

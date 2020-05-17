@@ -1,23 +1,23 @@
 import 'package:chitwan_hospital/UI/Widget/Forns.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/SignUp.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatelessWidget {
+class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         backgroundColor: theme.background,
         body: Stack(
           children: <Widget>[
             Container(
                 height: size.height,
                 child: Image.asset(
-                  "assets/images/img1.jpeg",
+                  "assets/images/img3.jpeg",
                   fit: BoxFit.fitHeight,
                 )),
             IconButton(
@@ -33,15 +33,21 @@ class SignIn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: theme.background,
-                    ),
-                    width: size.width * 0.90,
-                    height: 155.0,
-                    child: Column(
-                      children: <Widget>[
-                        // SizedBox(height: 10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: theme.background,
+                      ),
+                      width: size.width * 0.90,
+                      height: 165.0,
+                      child: Column(children: <Widget>[
+                        FForms(
+                          borderColor: theme.background,
+                          formColor: Colors.white,
+                          text: "Email",
+                          textColor: blueGrey.withOpacity(0.7),
+                          height: 55.0,
+                          width: size.width * 0.90,
+                        ),
                         FForms(
                           borderColor: theme.background,
                           formColor: Colors.white,
@@ -54,6 +60,34 @@ class SignIn extends StatelessWidget {
                           borderColor: theme.background,
                           formColor: Colors.white,
                           text: "Password",
+                          textColor: blueGrey.withOpacity(0.7),
+                          height: 55.0,
+                          width: size.width * 0.90,
+                        ),
+                      ])),
+                  SizedBox(height: 10.0),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: theme.background,
+                    ),
+                    width: size.width * 0.90,
+                    height: 155.0,
+                    child: Column(
+                      children: <Widget>[
+                        // SizedBox(height: 10.0),
+                        FForms(
+                          borderColor: theme.background,
+                          formColor: Colors.white,
+                          text: "Full Name",
+                          textColor: blueGrey.withOpacity(0.7),
+                          height: 55.0,
+                          width: size.width * 0.90,
+                        ),
+                        FForms(
+                          borderColor: theme.background,
+                          formColor: Colors.white,
+                          text: "Phone Number",
                           textColor: blueGrey.withOpacity(0.7),
                           height: 55.0,
                           width: size.width * 0.90,
@@ -80,7 +114,7 @@ class SignIn extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         FancyText(
-                          text: "Don't have an account? ",
+                          text: "Already have an account? ",
                           color: textDark_Yellow,
                           fontWeight: FontWeight.w600,
                           size: 14.0,
@@ -90,10 +124,10 @@ class SignIn extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUp()));
+                                    builder: (context) => SignIn()));
                           },
                           child: FancyText(
-                            text: "Sign Up",
+                            text: "Sign In",
                             color: textLight_Red2,
                             fontWeight: FontWeight.w700,
                             size: 14.0,

@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:flutter/material.dart';
 
 enum Gender { male, female }
+enum AppointmentT { opd, online }
 
 class AppointmentForm extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class AppointmentForm extends StatefulWidget {
 
 class _AppointmentFormState extends State<AppointmentForm> {
   Gender _gender = Gender.male;
+  AppointmentT _appointment = AppointmentT.opd;
   List name = [];
   DateTime selectedDate = DateTime.now();
   String _valHospital;
@@ -20,6 +22,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
     "Chitwan Hospital",
     "Chitwan Hospital",
     "Chitwan Hospital",
+  ];
+  String _valDepartment;
+  List _myDepartment = [
+    "Operation Theater",
+    "ENT",
+    "Dermatology",
   ];
   String _valDoctor;
   List _myDoctor = [
@@ -171,6 +179,60 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FancyText(
+                    text: "Select Department: ",
+                    size: 16.0,
+                    fontWeight: FontWeight.w500,
+                    textAlign: TextAlign.left,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10.0),
+                    height: 40.0,
+                    // width: width * 0.40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.white,
+                        border: Border.all(
+                          width: 1,
+                          color: theme.colorScheme.primary,
+                        )),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      hint: Container(
+                          height: 45.0,
+                          width: width * 0.40,
+                          alignment: Alignment.center,
+                          child: FancyText(
+                            text: "Select Department",
+                            color: blueGrey,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      value: _valDepartment,
+                      items: _myDepartment.map((value) {
+                        return DropdownMenuItem(
+                          child: FancyText(
+                            text: value,
+                            color: blueGrey,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          value: value,
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _valDepartment = value;
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FancyText(
                     text: "Select Doctor: ",
                     size: 16.0,
                     fontWeight: FontWeight.w500,
@@ -309,6 +371,51 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   ),
                   Icon(Icons.timer)
                 ]),
+          ),
+          Padding(
+            //gender
+            padding: const EdgeInsets.only(
+                top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+            child: Row(
+              children: <Widget>[
+                FancyText(
+                  text: "Consultation Type: ",
+                  size: 16.0,
+                  fontWeight: FontWeight.w500,
+                ),
+                SizedBox(width: 10.0),
+                Radio(
+                  value: AppointmentT.opd,
+                  activeColor: theme.iconTheme.color,
+                  groupValue: _appointment,
+                  onChanged: (AppointmentT value) {
+                    setState(() {
+                      _appointment = value;
+                    });
+                  },
+                ),
+                FancyText(
+                  text: "OPD",
+                  size: 15.0,
+                  color: blueGrey.withOpacity(0.9),
+                ),
+                Radio(
+                  value: AppointmentT.online,
+                  activeColor: theme.iconTheme.color,
+                  groupValue: _appointment,
+                  onChanged: (AppointmentT value) {
+                    setState(() {
+                      _appointment = value;
+                    });
+                  },
+                ),
+                FancyText(
+                  text: "Online",
+                  size: 15.0,
+                  color: blueGrey.withOpacity(0.9),
+                ),
+              ],
+            ),
           ),
           Padding(
             //gender
