@@ -1,6 +1,6 @@
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/GridList.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class LoginAs extends StatelessWidget {
@@ -9,29 +9,54 @@ class LoginAs extends StatelessWidget {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return SafeArea(
-          child: Scaffold(
-        backgroundColor: theme.background,
+      child: Scaffold(
+        backgroundColor: Colors.white,
         body: Stack(
           children: <Widget>[
             Container(
+                alignment: Alignment.bottomCenter,
                 height: size.height,
                 child: Image.asset(
-                  "assets/images/img2.jpeg",
-                  fit: BoxFit.fitHeight,
+                  "assets/images/illustration.png",
+                  fit: BoxFit.fitWidth,
                 )),
             IconButton(
                 icon: Icon(
                   Icons.arrow_back_ios,
-                  color: textDark_Yellow,
+                  color: theme.primary,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: GridList(
-                listViews: Options,
-                crossAxisCount: 2,
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Container(
+                    child: FancyText(
+                      text: "Login As",
+                      size: 22.0,
+                      fontWeight: FontWeight.w800,
+                      color: theme.primary,
+                    ),
+                  ),
+                  SizedBox(height: 30.0),
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.transparent,
+                      ),
+                      width: size.width * 0.80,
+                      height: size.height * 0.70,
+                      child: GridList(
+                        listViews: Options,
+                        crossAxisCount: 2
+                      ),
+                  ),
+                ],
               ),
             ),
           ],

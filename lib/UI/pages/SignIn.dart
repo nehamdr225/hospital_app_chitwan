@@ -1,16 +1,22 @@
 import 'package:chitwan_hospital/UI/Widget/Forns.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         backgroundColor: theme.background,
         body: Stack(
           children: <Widget>[
@@ -62,7 +68,12 @@ class SignIn extends StatelessWidget {
                           height: 45.0,
                           width: size.width * 0.90,
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                loggedIn = true;
+                              });
+                              Navigator.pop(context);
+                            },
                             color: theme.primary,
                             child: FancyText(
                               text: "SUBMIT",

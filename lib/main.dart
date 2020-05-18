@@ -1,5 +1,5 @@
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

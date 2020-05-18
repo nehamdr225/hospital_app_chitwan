@@ -1,8 +1,9 @@
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
-import 'package:chitwan_hospital/UI/pages/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/LoginAs.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/SubsPage/AppointmentPage.dart';
@@ -14,8 +15,6 @@ class DrawerApp extends StatefulWidget {
 }
 
 class _DrawerAppState extends State<DrawerApp> {
-  bool loggedIn = true;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -189,8 +188,10 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Login As...",
                         onPressed: () {
-                          Navigator.push(context,
-                     MaterialPageRoute(builder: (context) => LoginAs()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginAs()));
                         },
                         color: blueGrey,
                         bg: Colors.white,

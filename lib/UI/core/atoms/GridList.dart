@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/UI/core/atoms/GridLook.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule//DoctorsModule.dart';
 import 'package:flutter/material.dart';
 
 class GridList extends StatelessWidget {
@@ -18,12 +19,23 @@ class GridList extends StatelessWidget {
           crossAxisCount: crossAxisCount),
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.all(8.0),
           child: GridLook(
+            color: Colors.white,
               name: listViews[index]['name'],
               caption: listViews[index]['cap'],
               src: listViews[index]['src'],
-              onTap: () {}),
+              onTap: () {
+              if (listViews[index]['id'] == 0) {
+                print("Doctors Module");
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => DoctorsModule()));
+              } else if (listViews[index]['id'] == 1){
+                print("Pharmacy Module");
+              }
+
+              }),
+              
         );
       },
     );

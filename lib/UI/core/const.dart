@@ -1,3 +1,5 @@
+var loggedIn = true;
+
 const NearYou = [
   {
     "name": "Dr. Bharati Devi Sharma",
@@ -66,30 +68,37 @@ const Options = [
     "name": "Doctors",
     "cap": "Doctors",
     "src": "assets/images/Qdoctors.png",
+    "id":0
   },
   {
     "name": "Pharmacy",
     "cap": "Pharmacy",
     "src": "assets/images/Qpharmacy.png",
+    "id":1
   },
   {
     "name": "Ambulance",
     "cap": "Ambulance",
     "src": "assets/images/Qambulance.png",
+    "id":2
   },
   {
     "name": "Laboratory",
     "cap": "Laboratory",
     "src": "assets/images/QLab.png",
+    "id":3
   },
   {
     "name": "Hospital",
     "cap": "Hospital",
     "src": "assets/images/Qhospital.png",
+    "id":4
   },
   {
     "name": "Blood Bank",
     "cap": "Blood Bank",
     "src": "assets/images/QbloodBank.png",
+    "id":5
   },
 ];
+
