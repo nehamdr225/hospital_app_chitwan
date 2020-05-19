@@ -1,6 +1,6 @@
-import 'package:chitwan_hospital/UI/pages/SubsPage/Subscription/Apointment.dart';
-import 'package:chitwan_hospital/UI/pages/SubsPage/Subscription/Contacts.dart';
-import 'package:chitwan_hospital/UI/pages/SubsPage/Subscription/Prescription.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Apointment.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Contacts.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Prescription.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 

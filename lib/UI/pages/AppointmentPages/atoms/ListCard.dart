@@ -1,6 +1,6 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/SubsPage/Subscription/AppointmentDetail.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

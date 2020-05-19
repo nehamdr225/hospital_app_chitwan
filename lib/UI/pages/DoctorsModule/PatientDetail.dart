@@ -1,21 +1,31 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientListCard.dart';
 import 'package:flutter/material.dart';
 
-class DoctorsModule extends StatelessWidget {
+class PatientDetail extends StatelessWidget {
+  final name;
+  final image;
+  final caption;
+  final phone;
+  final status;
+  final date;
+  final time;
+  PatientDetail(
+      {this.image,
+      this.name,
+      this.caption,
+      this.phone,
+      this.date,
+      this.status,
+      this.time});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
-          child: WhiteAppBar(
-            logo: true,
-          ),
-          preferredSize: Size.fromHeight(50.0)),
+          child: WhiteAppBar(), preferredSize: Size.fromHeight(60.0)),
       backgroundColor: theme.background,
       body: ListView(children: <Widget>[
         Padding(
@@ -128,23 +138,6 @@ class DoctorsModule extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            height: MediaQuery.of(context).size.height * 0.70,
-            child: ListView.builder(
-                itemCount: NearYou.length - 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return PatientListCard(
-                    name: NearYou[index]['name'],
-                    caption: NearYou[index]['cap'],
-                    image: NearYou[index]['src'],
-                    phone: NearYou[index]['phone'],
-                    status: NearYou[index]['status'],
-                    date: NearYou[index]['date'],
-                    time: NearYou[index]['time'],
-                    gender: NearYou[index]['gender'],
-                  );
-                })),
-      
       ]),
     );
   }

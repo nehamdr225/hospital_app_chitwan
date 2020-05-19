@@ -1,10 +1,11 @@
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class HomeListCard extends StatefulWidget {
+class PatientListCard extends StatefulWidget {
   final name;
   final image;
   final caption;
@@ -14,7 +15,8 @@ class HomeListCard extends StatefulWidget {
   final time;
   final take;
   final data;
-  HomeListCard(
+  final gender;
+  PatientListCard(
       {this.image,
       this.name,
       this.caption,
@@ -23,13 +25,14 @@ class HomeListCard extends StatefulWidget {
       this.status,
       this.time,
       this.take,
+      this.gender,
       this.data = false});
 
   @override
-  _HomeListCardState createState() => _HomeListCardState();
+  _PatientListCardState createState() => _PatientListCardState();
 }
 
-class _HomeListCardState extends State<HomeListCard>
+class _PatientListCardState extends State<PatientListCard>
     with TickerProviderStateMixin {
   AnimationController controller;
 
@@ -56,6 +59,7 @@ class _HomeListCardState extends State<HomeListCard>
 
   @override
   Widget build(BuildContext context) {
+    final patientName = widget.name.replaceAll('Dr. ', '');
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Padding(
@@ -117,9 +121,8 @@ class _HomeListCardState extends State<HomeListCard>
                     flex: 1,
                     child: CircleAvatar(
                       backgroundColor: theme.colorScheme.background,
-                      backgroundImage:
-                          ExactAssetImage("assets/images/doctor.png"),
-                      maxRadius: 45.0,
+                      maxRadius: 35.0,
+                      child: Image.asset("assets/images/addProfileImg.png", height: 50.0, width: 50.0,),
                     ),
                   ),
                   Flexible(
@@ -131,7 +134,7 @@ class _HomeListCardState extends State<HomeListCard>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: widget.name,
+                            text: patientName,
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -140,17 +143,17 @@ class _HomeListCardState extends State<HomeListCard>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.only(top: 2.0),
+                                padding: const EdgeInsets.only(top: 3.0),
                                 child: FancyText(
-                                  text: "Department: ",
+                                  text: "Gender: ",
                                   textAlign: TextAlign.left,
                                   defaultStyle: true,
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 2.0),
+                                padding: const EdgeInsets.only(top: 3.0),
                                 child: FancyText(
-                                    text: widget.caption,
+                                    text: widget.gender,
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -160,17 +163,17 @@ class _HomeListCardState extends State<HomeListCard>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.only(top: 3.0),
+                                padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                  text: "Hospital: ",
+                                  text: "Time: ",
                                   textAlign: TextAlign.left,
                                   defaultStyle: true,
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 3.0),
+                                padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: "CMC Hospital",
+                                    text: widget.time,
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -193,20 +196,45 @@ class _HomeListCardState extends State<HomeListCard>
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 30.0,
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: theme.colorScheme.secondary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0)),
-                              child: FancyText(
-                                text: "Book Appointment",
-                                size: 15.0,
+                          Row(
+                            children: <Widget>[
+                              // SizedBox(
+                              //   height: 30.0,
+                              //   child: RaisedButton(
+                              //     onPressed: () {},
+                              //     color: theme.colorScheme.secondary,
+                              //     shape: RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(4.0)),
+                              //     child: FancyText(
+                              //       text: "Book Appointment",
+                              //       size: 15.0,
+                              //       color: textDark_Yellow,
+                              //       fontWeight: FontWeight.w600,
+                              //     ),
+                              //   ),
+                              // ),
+                              FRaisedButton(
+                                elevation: 0.0,
+                                height: 30.0,
+                                width: 100.0,
+                                text:"Reject",
+                                borderColor: Colors.transparent,
                                 color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
+                                bg: theme.colorScheme.secondary,
+                                onPressed: (){},
                               ),
-                            ),
+                              SizedBox(width:10.0),
+                              FRaisedButton(
+                                elevation: 0.0,
+                                height: 30.0,
+                                width: 100.0,
+                                text: "Accept",
+                                borderColor: Colors.transparent,
+                                color: textDark_Yellow,
+                                bg: Colors.green[600],
+                                onPressed: (){},
+                              )
+                            ],
                           )
                         ],
                       ),

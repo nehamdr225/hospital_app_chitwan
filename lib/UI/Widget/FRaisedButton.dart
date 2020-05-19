@@ -14,6 +14,7 @@ class FRaisedButton extends StatelessWidget {
   final imgcolor;
   final elevation;
   final radius;
+  final borderColor;
   final TextAlign textAlign;
   final MainAxisAlignment mainAxisAlignment;
   FRaisedButton({
@@ -33,6 +34,7 @@ class FRaisedButton extends StatelessWidget {
     this.needIcon: false,
     this.textAlign: TextAlign.center,
     this.mainAxisAlignment: MainAxisAlignment.center,
+    this.borderColor: const Color(0xff173A7B),
   });
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class FRaisedButton extends StatelessWidget {
                 ),
           shape: shape == false
               ? Border.all(
-                  width: 1.0, color: Theme.of(context).colorScheme.primary)
+                  width: 1.0, color: borderColor)
               : RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(radius)),
                 ),

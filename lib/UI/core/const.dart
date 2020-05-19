@@ -9,6 +9,7 @@ const NearYou = [
     "status": "Accepted",
     "date": "07-05-2020",
     "time": "10:00 am",
+    "gender": "Female",
   },
   {
     "name": "Dr. Amit Jha",
@@ -18,6 +19,7 @@ const NearYou = [
     "status": "Accepted",
     "date": "10-05-2020",
     "time": "05:00 pm",
+    "gender": "Male",
   },
   {
     "name": "Dr. Sangeeta Paudel",
@@ -27,6 +29,7 @@ const NearYou = [
     "status": "Cancelled",
     "date": "19-04-2020",
     "time": "08:00 pm",
+    "gender": "Female",
   },
 ];
 

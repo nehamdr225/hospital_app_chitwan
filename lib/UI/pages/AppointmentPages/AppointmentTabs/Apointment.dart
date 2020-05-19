@@ -1,4 +1,4 @@
-import 'package:chitwan_hospital/UI/pages/SubsPage/atoms/ListCard.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/ListCard.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:flutter/material.dart';
 
