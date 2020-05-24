@@ -9,12 +9,14 @@ class WhiteAppBar extends StatelessWidget {
   final bool leading;
   final bool settings;
   final String title;
+  final fontSize;
   final tabbar;
   final controller;
   final List<Widget> tabs;
   WhiteAppBar(
       {this.elevation: 0.0,
       this.logo,
+      this.fontSize:18.0,
       this.leading: true,
       this.settings,
       this.tabbar: false,
@@ -45,7 +47,7 @@ class WhiteAppBar extends StatelessWidget {
       title: FancyText(
         text: title,
         fontWeight: FontWeight.w600,
-        size: 18.0,
+        size: fontSize,//18.0,
         color: theme.colorScheme.primary,
       ),
       leading: leading == true

@@ -2,6 +2,7 @@ import 'package:chitwan_hospital/UI/Widget/Forns.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/LoginAs.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:flutter/material.dart';
 
@@ -109,6 +110,30 @@ class _SignInState extends State<SignIn> {
                             fontWeight: FontWeight.w700,
                             size: 14.0,
                           ),
+                        ),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginAs()));
+                          },
+                          child: FancyText(
+                            text: "Login As",
+                            color: textLight_Red2,
+                            fontWeight: FontWeight.w700,
+                            size: 14.0,
+                          ),
+                        ),
+                        FancyText(
+                          text: "others",
+                          color: textDark_Yellow,
+                          fontWeight: FontWeight.w600,
+                          size: 14.0,
                         ),
                       ])
                 ],

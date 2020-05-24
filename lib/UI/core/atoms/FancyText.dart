@@ -7,6 +7,7 @@ class FancyText extends StatelessWidget {
   final fontWeight;
   final Function onTap;
   final TextDecoration decoration;
+  final Color decorationColor;
   final Color color;
   final bool defaultStyle;
   final opacity;
@@ -23,6 +24,7 @@ class FancyText extends StatelessWidget {
       this.opacity: 0.6,
       this.defaultStyle: false,
       this.decoration,
+      this.decorationColor: textDark,
       this.textAlign: TextAlign.center});
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class FancyText extends StatelessWidget {
                 fontSize: size,
                 color: color,
                 decoration: decoration,
-                decorationColor: textDark),
+                decorationColor: decorationColor),
       ),
     );
   }

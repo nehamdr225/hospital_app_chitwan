@@ -1,7 +1,8 @@
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -67,8 +68,8 @@ class _PatientListCardState extends State<PatientListCard>
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AppointmentDetail(
-                    name: widget.name,
+              builder: (context) => PatientDetail(
+                    name: patientName,
                     caption: widget.caption,
                     image: widget.image,
                     phone: widget.phone,
@@ -122,7 +123,11 @@ class _PatientListCardState extends State<PatientListCard>
                     child: CircleAvatar(
                       backgroundColor: theme.colorScheme.background,
                       maxRadius: 35.0,
-                      child: Image.asset("assets/images/addProfileImg.png", height: 50.0, width: 50.0,),
+                      child: Image.asset(
+                        "assets/images/addProfileImg.png",
+                        height: 50.0,
+                        width: 50.0,
+                      ),
                     ),
                   ),
                   Flexible(
@@ -180,7 +185,8 @@ class _PatientListCardState extends State<PatientListCard>
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
+                            padding:
+                                const EdgeInsets.only(top: 5.0, bottom: 8.0),
                             child: Row(
                               children: <Widget>[
                                 Icon(
@@ -196,46 +202,116 @@ class _PatientListCardState extends State<PatientListCard>
                               ],
                             ),
                           ),
-                          Row(
-                            children: <Widget>[
-                              // SizedBox(
-                              //   height: 30.0,
-                              //   child: RaisedButton(
-                              //     onPressed: () {},
-                              //     color: theme.colorScheme.secondary,
-                              //     shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(4.0)),
-                              //     child: FancyText(
-                              //       text: "Book Appointment",
-                              //       size: 15.0,
-                              //       color: textDark_Yellow,
-                              //       fontWeight: FontWeight.w600,
-                              //     ),
-                              //   ),
-                              // ),
-                              FRaisedButton(
-                                elevation: 0.0,
-                                height: 30.0,
-                                width: 100.0,
-                                text:"Reject",
-                                borderColor: Colors.transparent,
-                                color: textDark_Yellow,
-                                bg: theme.colorScheme.secondary,
-                                onPressed: (){},
-                              ),
-                              SizedBox(width:10.0),
-                              FRaisedButton(
-                                elevation: 0.0,
-                                height: 30.0,
-                                width: 100.0,
-                                text: "Accept",
-                                borderColor: Colors.transparent,
-                                color: textDark_Yellow,
-                                bg: Colors.green[600],
-                                onPressed: (){},
-                              )
-                            ],
-                          )
+                          doctorDecision == "undecided"
+                              ? Row(
+                                  children: <Widget>[
+                                    FRaisedButton(
+                                      elevation: 0.0,
+                                      height: 30.0,
+                                      width: 100.0,
+                                      text: "Reject",
+                                      borderColor: Colors.transparent,
+                                      color: textDark_Yellow,
+                                      bg: theme.colorScheme.secondary,
+                                      onPressed: () {
+                                        setState(() {
+                                          doctorDecision = "rejected";
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: FancyText(
+                                                    text: "Are you sure?",
+                                                    size: 15.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: blueGrey),
+                                                content: FancyText(
+                                                    text:
+                                                        "Are you sure you want to reject patient request?",
+                                                    size: 15.0,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: blueGrey),
+                                                actions: <Widget>[
+                                                  IconButton(
+                                                      icon: Icon(
+                                                        Icons.cancel,
+                                                        color: theme.colorScheme
+                                                            .secondary,
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          doctorDecision =
+                                                              "undecided";
+                                                        });
+                                                        Navigator.pop(context);
+                                                      }),
+                                                  IconButton(
+                                                      icon: Icon(
+                                                        Icons.check_circle,
+                                                        color:
+                                                            Colors.green[600],
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          doctorDecision =
+                                                              "rejected";
+                                                        });
+                                                        Navigator.pop(context);
+                                                      }),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                    ),
+                                    SizedBox(width: 10.0),
+                                    FRaisedButton(
+                                      elevation: 0.0,
+                                      height: 30.0,
+                                      width: 100.0,
+                                      text: "Accept",
+                                      borderColor: Colors.transparent,
+                                      color: textDark_Yellow,
+                                      bg: Colors.green[600],
+                                      onPressed: () {
+                                        setState(() {
+                                          doctorDecision = "accepted";
+                                        });
+                                      },
+                                    )
+                                  ],
+                                )
+                              : doctorDecision == "rejected"
+                                  ? Row(children: [
+                                      FancyText(
+                                        text: "Rejected",
+                                        color: theme.colorScheme.secondary,
+                                        fontWeight: FontWeight.w700,
+                                        size: 15.0,
+                                      ),
+                                      SizedBox(width: 20.0),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            doctorDecision = "undecided";
+                                          });
+                                        },
+                                        child: FancyText(
+                                          text: "undo",
+                                          decoration: TextDecoration.underline,
+                                          decorationColor:
+                                              theme.colorScheme.secondary,
+                                          color: theme.colorScheme.secondary,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ])
+                                  : FancyText(
+                                      text: "Accepted",
+                                      color: Colors.green[600],
+                                      fontWeight: FontWeight.w700,
+                                      size: 15.0,
+                                    ),
                         ],
                       ),
                     ),

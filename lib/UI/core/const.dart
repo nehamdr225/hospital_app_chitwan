@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 var loggedIn = true;
+var doctorDecision =  "undecided"; //doctor has accepted the patient request
 
 const NearYou = [
   {
@@ -105,3 +107,42 @@ const Options = [
   },
 ];
 
+class Doodle {
+  final String name;
+  final String time;
+  final String diagnosis;
+  final String doodle;
+  final Color iconBackground;
+  final Icon icon;
+  const Doodle(
+      {this.name,
+      this.time,
+      this.diagnosis,
+      this.doodle,
+      this.icon,
+      this.iconBackground});
+}
+
+const List<Doodle> doodles = [
+  Doodle(
+      name: "Bharati Devi Sharma",
+      time: "07-05-2020, 10:00 am",
+      diagnosis:
+          "High Blood Pressure",      
+      iconBackground: Color(0xff173A7B),),
+  Doodle(
+      name: "Sangeeta Paudel",
+      time: "19-04-2020, 08:00 pm",
+      diagnosis:
+          "Dermatology",      
+      iconBackground: Color(0xff173A7B),),
+  Doodle(
+      name: "Amit Jha",
+      time: "10-05-2020, 05:00 PM",
+      diagnosis:
+          "Diabetic",
+      // doodle:
+      //     "rthday-5436382608621568-hp2x.jpg",
+      iconBackground: Color(0xff173A7B),),
+
+];
