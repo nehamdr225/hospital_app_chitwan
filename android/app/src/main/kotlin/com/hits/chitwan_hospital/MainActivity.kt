@@ -1,4 +1,4 @@
-package com.example.chitwan_hospital
+package com.hits.chitwan_hospital
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

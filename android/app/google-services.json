@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "702084225768",
+    "firebase_url": "https://chitwan-hospital.firebaseio.com",
+    "project_id": "chitwan-hospital",
+    "storage_bucket": "chitwan-hospital.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702084225768:android:8d91fd1e0a460efa8c875d",
+        "android_client_info": {
+          "package_name": "com.hits.chitwan_hospital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702084225768-gehuj1517a0nl49g6u04rbt2oh9iheuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfmAyuZYtsjgqAZp6VyWTr9ZPQSKMBCo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702084225768-gehuj1517a0nl49g6u04rbt2oh9iheuc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

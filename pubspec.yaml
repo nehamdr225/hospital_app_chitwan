@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   provider: ^3.0.0+1
   timeline_list: ^0.0.5
+  cloud_firestore:
   # http: ^0.12.0
   # rxdart: 
   # flutter_bloc:
