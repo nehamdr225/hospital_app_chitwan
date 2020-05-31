@@ -107,6 +107,45 @@ const Options = [
   },
 ];
 
+const Doctor_Tab = [
+  {
+    "name": "Ayurveda",
+    "cap": "Ayurveda",
+    "src": "assets/images/Qdoctors.png",
+    "id":0
+  },
+  {
+    "name": "Cardiologist",
+    "cap": "Cardiologist",
+    "src": "assets/images/Qpharmacy.png",
+    "id":1
+  },
+  {
+    "name": "Dentist",
+    "cap": "Dentist",
+    "src": "assets/images/Qambulance.png",
+    "id":2
+  },
+  {
+    "name": "Dermatologist",
+    "cap": "Dermatologist",
+    "src": "assets/images/QLab.png",
+    "id":3
+  },
+  {
+    "name": "Eye Care",
+    "cap": "Eye Care",
+    "src": "assets/images/Qhospital.png",
+    "id":4
+  },
+  {
+    "name": "Endocrinologist",
+    "cap": "Endocrinologist",
+    "src": "assets/images/QbloodBank.png",
+    "id":5
+  },
+];
+
 class Doodle {
   final String name;
   final String time;

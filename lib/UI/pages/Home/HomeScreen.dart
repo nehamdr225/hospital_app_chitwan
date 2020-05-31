@@ -95,6 +95,7 @@ class HomeScreen extends StatelessWidget {
                     status: NearYou[index]['status'],
                     date: NearYou[index]['date'],
                     time: NearYou[index]['time'],
+                    
                   );
                 })),
       ]),

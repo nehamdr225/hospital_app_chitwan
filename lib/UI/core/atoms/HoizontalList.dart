@@ -1,13 +1,16 @@
 import 'package:chitwan_hospital/UI/core/atoms/Category.dart';
+import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalList extends StatefulWidget {
   final listViews;
   final border;
+  final scrollDirection;
 
   HorizontalList({
     this.listViews,
     this.border: false,
+    this.scrollDirection:Axis.horizontal,
   });
 
   @override
@@ -18,11 +21,13 @@ class _HorizontalListState extends State<HorizontalList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: widget.scrollDirection,
       itemCount: widget.listViews.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.only(right: 8.0,),
+          padding: const EdgeInsets.only(
+            right: 8.0,
+          ),
           child: Category(
             name: widget.listViews[index]['name'],
             caption: widget.listViews[index]['name'],
@@ -30,13 +35,14 @@ class _HorizontalListState extends State<HorizontalList> {
             height: 60.0,
             width: 50.0,
             onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) => GenderSpecific(
-              //       gender: widget.listViews[index]['cap'],
-              //     ),
-              //   ),
-              // );
+              if(widget.listViews[index]['id']==0){
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DoctorsTab(
+                  ),
+                ),
+              );
+              }
             },
           ),
         );
