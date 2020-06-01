@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class  FForms extends StatelessWidget {
+class FForms extends StatelessWidget {
   final bool obscure;
   final String text;
   final bool labeltext;
@@ -9,12 +9,14 @@ class  FForms extends StatelessWidget {
   final prefix;
   final TextInputType type;
   final Function onChanged;
+  final Function onSaved;
   final height;
   final width;
   final underline;
   final borderColor;
   final formColor;
   final textColor;
+  final Function validator;
   final style = TextStyle(
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.bold,
@@ -28,13 +30,15 @@ class  FForms extends StatelessWidget {
       this.type,
       this.obscure: false,
       this.onChanged,
+      this.onSaved,
       this.icon,
       this.trailingIcon,
       this.prefix,
       this.underline: false,
       this.formColor: Colors.white,
       this.borderColor: Colors.white,
-      this.textColor});
+      this.textColor,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,9 @@ class  FForms extends StatelessWidget {
       height: height,
       width: width,
       color: formColor,
-      child: TextField(
+      child: TextFormField(
+        onSaved: onSaved,
+        validator: validator,
         keyboardType: type,
         autofocus: false,
         obscureText: obscure,
@@ -66,8 +72,9 @@ class  FForms extends StatelessWidget {
                 )),
           focusedBorder: underline == false
               ? OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: borderColor))//Theme.of(context).colorScheme.primary))
+                  borderSide: BorderSide(
+                      color:
+                          borderColor)) //Theme.of(context).colorScheme.primary))
               : UnderlineInputBorder(
                   borderSide: BorderSide(
                   color: Theme.of(context).colorScheme.primaryVariant,

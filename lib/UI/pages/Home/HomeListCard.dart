@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -196,7 +197,15 @@ class _HomeListCardState extends State<HomeListCard>
                           SizedBox(
                             height: 30.0,
                             child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AppointmentForm(
+                                      doctor: widget.name,
+                                      department: widget.caption,
+                                    )));
+                              },
                               color: theme.colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0)),

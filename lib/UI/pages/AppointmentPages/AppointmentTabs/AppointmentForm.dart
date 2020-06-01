@@ -1,4 +1,4 @@
-import 'package:chitwan_hospital/UI/Widget/Forns.dart';
+import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -8,6 +8,9 @@ enum Gender { male, female }
 enum AppointmentT { opd, online }
 
 class AppointmentForm extends StatefulWidget {
+  final doctor;
+  final department;
+  AppointmentForm({this.doctor, this.department});
   @override
   _AppointmentFormState createState() => _AppointmentFormState();
 }
@@ -201,11 +204,17 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           height: 45.0,
                           width: width * 0.40,
                           alignment: Alignment.center,
-                          child: FancyText(
-                            text: "Select Department",
-                            color: blueGrey,
-                            fontWeight: FontWeight.w500,
-                          )),
+                          child: widget.doctor != null
+                              ? FancyText(
+                                  text: widget.department,
+                                  color: blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                )
+                              : FancyText(
+                                  text: "Select Department",
+                                  color: blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                )),
                       value: _valDepartment,
                       items: _myDepartment.map((value) {
                         return DropdownMenuItem(
@@ -255,11 +264,17 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           height: 45.0,
                           width: width * 0.50,
                           alignment: Alignment.center,
-                          child: FancyText(
-                            text: "Select Doctor",
-                            color: blueGrey,
-                            fontWeight: FontWeight.w500,
-                          )),
+                          child: widget.doctor != null
+                              ? FancyText(
+                                  text: widget.doctor,
+                                  color: blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                )
+                              : FancyText(
+                                  text: "Select Doctor",
+                                  color: blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                )),
                       value: _valDoctor,
                       items: _myDoctor.map((value) {
                         return DropdownMenuItem(

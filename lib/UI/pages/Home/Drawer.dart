@@ -7,7 +7,23 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/LoginAs.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentPage.dart';
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// class Provider extends InheritedWidget {
+//   final AuthService auth;
+
+//   Provider({Key key, Widget child, this.auth}) : super(key: key, child: child);
+
+//   @override
+//   bool updateShouldNotify(InheritedWidget oldWidget) {
+//     return true;
+//   }
+
+//   static Provider of(BuildContext context) =>
+//       (context.inheritFromWidgetOfExactType(Provider) as Provider);
+// }
 
 class DrawerApp extends StatefulWidget {
   @override
@@ -15,8 +31,13 @@ class DrawerApp extends StatefulWidget {
 }
 
 class _DrawerAppState extends State<DrawerApp> {
+  final AuthService _auth = AuthService();
+  final user = AuthService().user;
+
   @override
   Widget build(BuildContext context) {
+    //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
+    //final uid = Provider.of<AuthService>(context).getCurrentUid;
     final theme = Theme.of(context);
     return Drawer(
       child: Container(
@@ -24,30 +45,38 @@ class _DrawerAppState extends State<DrawerApp> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            loggedIn == true
-                ? UserAccountsDrawerHeader(
-                    accountName: FancyText(
-                      text: "Neha Mdr.",
-                      size: 16.0,
-                      fontWeight: FontWeight.w600,
-                      color: textDark_Yellow,
-                    ),
-                    accountEmail: FancyText(
-                      text: "himalayaninfotechnp@gmail.com",
-                      size: 13.0,
-                      fontWeight: FontWeight.w500,
-                      color: textDark_Yellow,
-                    ),
-                    currentAccountPicture: GestureDetector(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white54,
-                        child: Icon(Icons.person, color: Colors.black45),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: gradientColor,
-                    ),
-                  )
+            user != null
+                ? FutureBuilder(
+                    future: Provider.of<AuthService>(context).getCurrentUser(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return UserAccountsDrawerHeader(
+                          accountName: FancyText(
+                            text: "Neha", //snapshot.data.name,
+                            size: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: textDark_Yellow,
+                          ),
+                          accountEmail: FancyText(
+                            text: "email",//snapshot.data.email,
+                            size: 13.0,
+                            fontWeight: FontWeight.w500,
+                            color: textDark_Yellow,
+                          ),
+                          currentAccountPicture: GestureDetector(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white54,
+                              child: Icon(Icons.person, color: Colors.black45),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: gradientColor,
+                          ),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    })
                 : DrawerHeader(
                     decoration: BoxDecoration(
                       //color: primary,
@@ -177,7 +206,7 @@ class _DrawerAppState extends State<DrawerApp> {
                 //     MaterialPageRoute(builder: (context) => AboutPage()));
               },
             ),
-            loggedIn == true
+            user != null
                 ? Padding(
                     padding: const EdgeInsets.only(
                         top: 10.0, left: 18.0, right: 18.0),
@@ -198,7 +227,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         shape: false),
                   )
                 : Text(' '),
-            loggedIn == true
+            user != null
                 ? Padding(
                     padding: const EdgeInsets.only(
                         top: 10.0, left: 18.0, right: 18.0),
@@ -208,7 +237,8 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
-                        onPressed: () {
+                        onPressed: () async {
+                          _auth.signOut();
                           setState(() {
                             loggedIn = false;
                           });

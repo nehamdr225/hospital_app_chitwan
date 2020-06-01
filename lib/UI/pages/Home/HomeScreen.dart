@@ -6,6 +6,7 @@ import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Appoi
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -50,7 +51,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AppointmentForm()));
+              MaterialPageRoute(builder: (context) => AppointmentForm()));
         },
         icon: Icon(Icons.calendar_today),
         label: FancyText(
@@ -84,20 +85,25 @@ class HomeScreen extends StatelessWidget {
         ),
         Container(
             height: MediaQuery.of(context).size.height * 0.70,
-            child: ListView.builder(
-                itemCount: NearYou.length - 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return HomeListCard(
-                    name: NearYou[index]['name'],
-                    caption: NearYou[index]['cap'],
-                    image: NearYou[index]['src'],
-                    phone: NearYou[index]['phone'],
-                    status: NearYou[index]['status'],
-                    date: NearYou[index]['date'],
-                    time: NearYou[index]['time'],
-                    
-                  );
-                })),
+            child: StreamBuilder(
+              stream: Firestore.instance.collection("doctors").snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return const Text("Loading");
+                return ListView.builder(
+                    itemCount: snapshot.data.documents.length-1,
+                    itemBuilder: (BuildContext context, int index) {
+                      return HomeListCard(
+                        name: snapshot.data.documents[index]['name'],
+                        caption: snapshot.data.documents[index]['field'],
+                        image: snapshot.data.documents[index]['src'],
+                        phone: snapshot.data.documents[index]['phone'],
+                        status: snapshot.data.documents[index]['status'],
+                        date: snapshot.data.documents[index]['date'],
+                        time: snapshot.data.documents[index]['time'],
+                      );
+                    });
+              },
+            )),
       ]),
     );
   }

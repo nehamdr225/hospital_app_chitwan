@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-var loggedIn = true;
+var loggedIn = false;
 var doctorDecision =  "undecided"; //doctor has accepted the patient request
 
 const NearYou = [
@@ -7,7 +7,7 @@ const NearYou = [
     "name": "Dr. Bharati Devi Sharma",
     "cap": "Operation Theater",
     "phone": "9841347147",
-    "src": "assets/images/bakery.jpg",
+    "src": "assets/images/doctor.png",
     "status": "Accepted",
     "date": "07-05-2020",
     "time": "10:00 am",
@@ -17,7 +17,7 @@ const NearYou = [
     "name": "Dr. Amit Jha",
     "cap": "ENT",
     "phone": "9841347147",
-    "src": "assets/images/barber.jpg",
+    "src": "assets/images/doctor.png",
     "status": "Accepted",
     "date": "10-05-2020",
     "time": "05:00 pm",
@@ -27,7 +27,7 @@ const NearYou = [
     "name": "Dr. Sangeeta Paudel",
     "cap": "Dermatology",
     "phone": "9841347147",
-    "src": "assets/images/spa.jpg",
+    "src": "assets/images/doctor.png",
     "status": "Cancelled",
     "date": "19-04-2020",
     "time": "08:00 pm",
