@@ -52,13 +52,13 @@ class _DrawerAppState extends State<DrawerApp> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return UserAccountsDrawerHeader(
                           accountName: FancyText(
-                            text: "Neha", //snapshot.data.name,
+                            text: "${snapshot.data.displayName}",
                             size: 16.0,
                             fontWeight: FontWeight.w600,
                             color: textDark_Yellow,
                           ),
                           accountEmail: FancyText(
-                            text: "email",//snapshot.data.email,
+                            text: snapshot.data.email,
                             size: 13.0,
                             fontWeight: FontWeight.w500,
                             color: textDark_Yellow,

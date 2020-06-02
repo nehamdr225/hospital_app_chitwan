@@ -34,17 +34,25 @@ class AuthService with ChangeNotifier{
   }
   // signup with email and password
   Future registerWithEmailAndPassword(String email, String password, String name, String phone) async {
+    AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     try{
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
-      await DatabaseService(uid: user.uid).updateUserData(name, email, phone);
-      return _userFromFirebaseUser(user);
+      await DatabaseService(uid: user.uid).updateUserData(email, phone);
+      await updateUserName(name, result.user);
+    return result.user.uid;
     }catch(e){
       print(e.toString());
       return null;
     }
+    
   }
   
+  Future updateUserName(String name, FirebaseUser currentUser) async {
+     var userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.displayName = name;
+    await currentUser.updateProfile(userUpdateInfo);
+    await currentUser.reload();
+  }
 
   //sign out
   Future signOut() async{

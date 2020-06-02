@@ -37,7 +37,7 @@ class _SignUpState extends State<SignUp> {
                   Container(
                       height: size.height,
                       child: Image.asset(
-                        "assets/images/img3.jpeg",
+                        "assets/images/img1.jpeg",
                         fit: BoxFit.cover,
                       )),
                   IconButton(
@@ -144,6 +144,13 @@ class _SignUpState extends State<SignUp> {
                                       dynamic result = await _auth
                                           .registerWithEmailAndPassword(
                                               _email, _password, _name, _phone);
+                                      setState(() => loading = false);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeScreen()));
+
                                       if (result == null) {
                                         setState(() {
                                           loading = false;
@@ -188,7 +195,8 @@ class _SignUpState extends State<SignUp> {
                                   size: 14.0,
                                 ),
                               ),
-                            ])
+                            ]),
+                        Text(error),
                       ],
                     ),
                   )

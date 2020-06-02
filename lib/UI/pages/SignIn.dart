@@ -110,6 +110,13 @@ class _SignInState extends State<SignIn> {
                                       dynamic result = await _auth
                                           .signInWithEmailAndPassword(
                                               email, password);
+                                      setState(() => loading = false);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeScreen()));
+
                                       if (result == null) {
                                         setState(() {
                                           loading = false;
@@ -173,7 +180,8 @@ class _SignInState extends State<SignIn> {
                                 fontWeight: FontWeight.w600,
                                 size: 14.0,
                               ),
-                            ])
+                            ]),
+                        Text(error),
                       ],
                     ),
                   )
