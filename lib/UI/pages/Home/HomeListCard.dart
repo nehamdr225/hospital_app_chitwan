@@ -4,11 +4,12 @@ import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Appoi
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:chitwan_hospital/service/appointment.dart';
 
 class HomeListCard extends StatefulWidget {
-  final name;
+  final doctorName;
   final image;
-  final caption;
+  final department;
   final phone;
   final status;
   final date;
@@ -17,8 +18,8 @@ class HomeListCard extends StatefulWidget {
   final data;
   HomeListCard(
       {this.image,
-      this.name,
-      this.caption,
+      this.doctorName,
+      this.department,
       this.phone,
       this.date,
       this.status,
@@ -57,6 +58,7 @@ class _HomeListCardState extends State<HomeListCard>
 
   @override
   Widget build(BuildContext context) {
+    final newAppointment = new Appointments(null, null, widget.department, widget.doctorName, "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Padding(
@@ -65,8 +67,8 @@ class _HomeListCardState extends State<HomeListCard>
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AppointmentDetail(
-                    name: widget.name,
-                    caption: widget.caption,
+                    name: widget.doctorName,
+                    caption: widget.department,
                     image: widget.image,
                     phone: widget.phone,
                     status: widget.status,
@@ -132,7 +134,7 @@ class _HomeListCardState extends State<HomeListCard>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: widget.name,
+                            text: widget.doctorName,
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -151,7 +153,7 @@ class _HomeListCardState extends State<HomeListCard>
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: widget.caption,
+                                    text: widget.department,
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -202,8 +204,9 @@ class _HomeListCardState extends State<HomeListCard>
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AppointmentForm(
-                                      doctor: widget.name,
-                                      department: widget.caption,
+                                      appointment: newAppointment,
+                                      doctor: widget.doctorName,
+                                      department: widget.department,
                                     )));
                               },
                               color: theme.colorScheme.secondary,

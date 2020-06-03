@@ -7,10 +7,12 @@ import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chitwan_hospital/service/appointment.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final newAppointment = new Appointments(null, null, "Department", "Dr. ", "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final theme = Theme.of(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -51,7 +53,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AppointmentForm()));
+              MaterialPageRoute(builder: (context) => AppointmentForm(
+                appointment: newAppointment,
+              )));
         },
         icon: Icon(Icons.calendar_today),
         label: FancyText(
@@ -93,8 +97,8 @@ class HomeScreen extends StatelessWidget {
                     itemCount: snapshot.data.documents.length-1,
                     itemBuilder: (BuildContext context, int index) {
                       return HomeListCard(
-                        name: snapshot.data.documents[index]['name'],
-                        caption: snapshot.data.documents[index]['field'],
+                        doctorName: snapshot.data.documents[index]['name'],
+                        department: snapshot.data.documents[index]['field'],
                         image: snapshot.data.documents[index]['src'],
                         phone: snapshot.data.documents[index]['phone'],
                         status: snapshot.data.documents[index]['status'],

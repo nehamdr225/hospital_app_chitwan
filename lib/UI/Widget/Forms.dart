@@ -17,6 +17,8 @@ class FForms extends StatelessWidget {
   final formColor;
   final textColor;
   final Function validator;
+  final controller;
+  final key;
   final style = TextStyle(
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.bold,
@@ -38,7 +40,9 @@ class FForms extends StatelessWidget {
       this.formColor: Colors.white,
       this.borderColor: Colors.white,
       this.textColor,
-      this.validator});
+      this.validator,
+      this.controller,
+      this.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +51,8 @@ class FForms extends StatelessWidget {
       width: width,
       color: formColor,
       child: TextFormField(
+        key: key,
+        controller: controller,
         onSaved: onSaved,
         validator: validator,
         keyboardType: type,
