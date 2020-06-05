@@ -85,7 +85,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
-          child: WhiteAppBar(title: "Appointment Form")),
+          child: WhiteAppBar(
+            titleColor: theme.colorScheme.primary,title: "Appointment Form")),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
@@ -104,7 +105,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     formColor: Colors.white,
                     text: "First Name",
                     textColor: blueGrey.withOpacity(0.7),
-                    height: 45.0,
+                    height: 60.0,
                     width: width * 0.40,
                     // validator: (val) =>
                     //     val.isEmpty ? 'First Name is required' : null,
@@ -125,7 +126,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     text: "Last Name",
                     type: TextInputType.text,
                     textColor: blueGrey.withOpacity(0.7),
-                    height: 45.0,
+                    height: 60.0,
                     width: width * 0.515,
                     validator: (val) =>
                         val.isEmpty ? 'Last Name is required' : null,
@@ -146,7 +147,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 ),
                 text: "Phone Number",
                 type: TextInputType.phone,
-                height: 45.0,
+                height: 60.0,
                 //width: width * 0.80,
                 borderColor: theme.colorScheme.primary,
                 formColor: Colors.white,
@@ -554,7 +555,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         .document(uid)
                         .collection("appointments")
                         .add(widget.appointment.toJson());
-
+                    
                     Navigator.pop(context);
                   },
                 ),

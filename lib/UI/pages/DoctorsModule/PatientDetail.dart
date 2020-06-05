@@ -37,6 +37,7 @@ class _PatientDetailState extends State<PatientDetail> {
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
+            titleColor: theme.primary,
             title: "Patient History",
           ),
           preferredSize: Size.fromHeight(60.0)),

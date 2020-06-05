@@ -6,13 +6,17 @@ import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientListCard.dart';
 import 'package:flutter/material.dart';
 
 class DoctorsModule extends StatelessWidget {
+  final name ;
+  DoctorsModule({this.name});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    print("THIS THIS THIS IS THE NAME ==== $name");
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
+            titleColor: theme.primary,
             logo: true,
           ),
           preferredSize: Size.fromHeight(50.0)),

@@ -16,6 +16,7 @@ class PatientHistoryPage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: PreferredSize(
           child: WhiteAppBar(
+            titleColor: Theme.of(context).colorScheme.primary,
             leading: true,
             title: date,
             fontSize: 15.0,

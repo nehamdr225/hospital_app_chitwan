@@ -27,6 +27,7 @@ class AppointmentDetail extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: WhiteAppBar(
+            titleColor: theme.colorScheme.primary,
           title: "Appointment Detail",
         ),
       ),

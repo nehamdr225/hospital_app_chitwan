@@ -27,6 +27,7 @@ class _AppointmentPageState extends State<AppointmentPage>
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100.0),
           child: WhiteAppBar(
+            titleColor: theme.colorScheme.primary,
             logo: false,
             settings: false,
             tabbar: true,

@@ -20,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   String _email = "", _password = "";
   String error = '';
   bool loading = false;
+  bool obscure = true;
   String _name, uid;
   String _phone;
 
@@ -52,18 +53,18 @@ class _SignUpState extends State<SignUp> {
                                 builder: (context) => HomeScreen()));
                       }),
                   Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              color: theme.background,
-                            ),
-                            width: size.width * 0.90,
-                            height: 110.0,
-                            child: Form(
-                              key: _formKey,
+                    child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: theme.background,
+                              ),
+                              width: size.width * 0.90,
+                              height: 110.0,
                               child: Column(children: <Widget>[
                                 FForms(
                                   validator: (val) => val.length < 6
@@ -86,7 +87,28 @@ class _SignUpState extends State<SignUp> {
                                   onChanged: (val) {
                                     setState(() => _password = val);
                                   },
-                                  obscure: true,
+                                  obscure: obscure,
+                                  trailingIcon: obscure == true
+                                      ? IconButton(
+                                          icon: Icon(
+                                            Icons.visibility,
+                                            color: theme.primary,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              obscure = false;
+                                            });
+                                          })
+                                      : IconButton(
+                                          icon: Icon(
+                                            Icons.visibility_off,
+                                            color: theme.primary,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              obscure = true;
+                                            });
+                                          }),
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Password",
@@ -95,110 +117,115 @@ class _SignUpState extends State<SignUp> {
                                   width: size.width * 0.90,
                                 ),
                               ]),
-                            )),
-                        SizedBox(height: 10.0),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: theme.background,
-                          ),
-                          width: size.width * 0.90,
-                          height: 155.0,
-                          child: Column(
-                            children: <Widget>[
-                              // SizedBox(height: 10.0),
-                              FForms(
-                                validator: (val) =>
-                                    val.length < 6 ? 'Enter full name' : null,
-                                onChanged: (val) {
-                                  setState(() => _name = val);
-                                },
-                                borderColor: theme.background,
-                                formColor: Colors.white,
-                                text: "Full Name",
-                                textColor: blueGrey.withOpacity(0.7),
-                                height: 55.0,
-                                width: size.width * 0.90,
+                            ),
+                            SizedBox(height: 10.0),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: theme.background,
                               ),
-                              FForms(
-                                validator: (val) => val.length < 9
-                                    ? 'Enter phone number'
-                                    : null,
-                                onChanged: (val) {
-                                  setState(() => _phone = val);
-                                },
-                                borderColor: theme.background,
-                                formColor: Colors.white,
-                                text: "Phone Number",
-                                textColor: blueGrey.withOpacity(0.7),
-                                height: 55.0,
-                                width: size.width * 0.90,
+                              width: size.width * 0.90,
+                              height: 155.0,
+                              child: Column(
+                                children: <Widget>[
+                                  // SizedBox(height: 10.0),
+                                  FForms(
+                                    validator: (val) => val.length < 6
+                                        ? 'Enter full name'
+                                        : null,
+                                    onChanged: (val) {
+                                      setState(() => _name = val);
+                                    },
+                                    borderColor: theme.background,
+                                    formColor: Colors.white,
+                                    text: "Full Name",
+                                    textColor: blueGrey.withOpacity(0.7),
+                                    height: 55.0,
+                                    width: size.width * 0.90,
+                                  ),
+                                  FForms(
+                                    validator: (val) => val.length < 9
+                                        ? 'Enter phone number'
+                                        : null,
+                                    onChanged: (val) {
+                                      setState(() => _phone = val);
+                                    },
+                                    borderColor: theme.background,
+                                    formColor: Colors.white,
+                                    text: "Phone Number",
+                                    textColor: blueGrey.withOpacity(0.7),
+                                    height: 55.0,
+                                    width: size.width * 0.90,
+                                  ),
+                                  SizedBox(
+                                    height: 45.0,
+                                    width: size.width * 0.90,
+                                    child: RaisedButton(
+                                      onPressed: () async {
+                                        if (_formKey.currentState.validate()) {
+                                          setState(() => loading = true);
+                                          dynamic result = await _auth
+                                              .registerWithEmailAndPassword(
+                                                  _email,
+                                                  _password,
+                                                  _name,
+                                                  _phone);
+                                          setState(() => loading = false);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeScreen()));
+
+                                          if (result == null) {
+                                            setState(() {
+                                              loading = false;
+                                              error =
+                                                  'Please supply a valid email';
+                                            });
+                                          }
+                                        }
+                                      },
+                                      color: theme.primary,
+                                      child: FancyText(
+                                        text: "SUBMIT",
+                                        size: 16.0,
+                                        color: textDark_Yellow,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 45.0,
-                                width: size.width * 0.90,
-                                child: RaisedButton(
-                                  onPressed: () async {
-                                    if (_formKey.currentState.validate()) {
-                                      setState(() => loading = true);
-                                      dynamic result = await _auth
-                                          .registerWithEmailAndPassword(
-                                              _email, _password, _name, _phone);
-                                      setState(() => loading = false);
+                            ),
+                            SizedBox(height: 10.0),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  FancyText(
+                                    text: "Already have an account? ",
+                                    color: textDark_Yellow,
+                                    fontWeight: FontWeight.w600,
+                                    size: 14.0,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomeScreen()));
-
-                                      if (result == null) {
-                                        setState(() {
-                                          loading = false;
-                                          error = 'Please supply a valid email';
-                                        });
-                                      }
-                                    }
-                                  },
-                                  color: theme.primary,
-                                  child: FancyText(
-                                    text: "SUBMIT",
-                                    size: 16.0,
-                                    color: textDark_Yellow,
-                                    fontWeight: FontWeight.w600,
+                                              builder: (context) => SignIn()));
+                                    },
+                                    child: FancyText(
+                                      text: "Sign In",
+                                      color: textLight_Red2,
+                                      fontWeight: FontWeight.w700,
+                                      size: 14.0,
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FancyText(
-                                text: "Already have an account? ",
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
-                                size: 14.0,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignIn()));
-                                },
-                                child: FancyText(
-                                  text: "Sign In",
-                                  color: textLight_Red2,
-                                  fontWeight: FontWeight.w700,
-                                  size: 14.0,
-                                ),
-                              ),
-                            ]),
-                        Text(error),
-                      ],
-                    ),
+                                ]),
+                            Text(error),
+                          ],
+                        )),
                   )
                 ],
               ),

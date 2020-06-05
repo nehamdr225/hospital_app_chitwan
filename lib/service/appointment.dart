@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:travel_budget/credentials.dart';
 
 
 class Appointments {
@@ -53,14 +51,14 @@ class Appointments {
 
 
 
-  Map<String, Icon> types() => {
-    "car": Icon(Icons.directions_car, size: 50),
-    "bus": Icon(Icons.directions_bus, size: 50),
-    "train": Icon(Icons.train, size: 50),
-    "plane": Icon(Icons.airplanemode_active, size: 50),
-    "ship": Icon(Icons.directions_boat, size: 50),
-    "other": Icon(Icons.directions, size: 50),
-  };
+  // Map<String, Icon> types() => {
+  //   "car": Icon(Icons.directions_car, size: 50),
+  //   "bus": Icon(Icons.directions_bus, size: 50),
+  //   "train": Icon(Icons.train, size: 50),
+  //   "plane": Icon(Icons.airplanemode_active, size: 50),
+  //   "ship": Icon(Icons.directions_boat, size: 50),
+  //   "other": Icon(Icons.directions, size: 50),
+  // };
 
   // return the google places image
   // Image getLocationImage() {

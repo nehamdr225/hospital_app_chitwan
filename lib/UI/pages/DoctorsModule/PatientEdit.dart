@@ -61,6 +61,7 @@ class _PatientEditState extends State<PatientEdit> {
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
+            titleColor: theme.primary,
             title: "Edit",
           ),
           preferredSize: Size.fromHeight(60.0)),

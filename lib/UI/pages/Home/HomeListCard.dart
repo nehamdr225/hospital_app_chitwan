@@ -1,7 +1,7 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
+import 'package:chitwan_hospital/UI/pages/Home/DoctorDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
@@ -66,7 +66,7 @@ class _HomeListCardState extends State<HomeListCard>
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AppointmentDetail(
+              builder: (context) => DoctorDetails(
                     name: widget.doctorName,
                     caption: widget.department,
                     image: widget.image,

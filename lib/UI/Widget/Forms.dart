@@ -5,12 +5,13 @@ class FForms extends StatelessWidget {
   final String text;
   final bool labeltext;
   final icon;
-  final trailingIcon;
+  final Widget trailingIcon;
   final prefix;
   final TextInputType type;
   final Function onChanged;
   final Function onSaved;
   final height;
+  final minHeight;
   final width;
   final underline;
   final borderColor;
@@ -27,6 +28,7 @@ class FForms extends StatelessWidget {
   FForms(
       {this.text,
       this.height,
+      this.minHeight,
       this.labeltext: true,
       this.width,
       this.type,
@@ -50,6 +52,10 @@ class FForms extends StatelessWidget {
       height: height,
       width: width,
       color: formColor,
+      // constraints: BoxConstraints(
+      //   minHeight: minHeight,
+      //   maxHeight: height
+      // ),
       child: TextFormField(
         key: key,
         controller: controller,

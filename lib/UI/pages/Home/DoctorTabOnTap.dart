@@ -182,7 +182,7 @@ class CallList extends DoctorsTab {
 
     return Scaffold(
         appBar: PreferredSize(
-            child: WhiteAppBar(
+            child: WhiteAppBar(titleColor: Theme.of(context).colorScheme.background,
               title: "$department",
             ),
             preferredSize: Size.fromHeight(50.0)),

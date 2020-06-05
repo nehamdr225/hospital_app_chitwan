@@ -4,26 +4,12 @@ import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/LoginAs.dart';
+import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentPage.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// class Provider extends InheritedWidget {
-//   final AuthService auth;
-
-//   Provider({Key key, Widget child, this.auth}) : super(key: key, child: child);
-
-//   @override
-//   bool updateShouldNotify(InheritedWidget oldWidget) {
-//     return true;
-//   }
-
-//   static Provider of(BuildContext context) =>
-//       (context.inheritFromWidgetOfExactType(Provider) as Provider);
-// }
 
 class DrawerApp extends StatefulWidget {
   @override
@@ -217,10 +203,14 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Login As...",
                         onPressed: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => LoginAs()));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginAs()));
+                                  builder: (context) => OthersLogin()));
                         },
                         color: blueGrey,
                         bg: Colors.white,
@@ -242,6 +232,10 @@ class _DrawerAppState extends State<DrawerApp> {
                           setState(() {
                             loggedIn = false;
                           });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignIn()));
                         },
                         color: textDark_Yellow,
                         bg: theme.colorScheme.secondary,

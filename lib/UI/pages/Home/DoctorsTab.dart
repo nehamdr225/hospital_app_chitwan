@@ -12,6 +12,7 @@ class DoctorsTab extends StatelessWidget {
     return Scaffold(
         appBar: PreferredSize(
             child: WhiteAppBar(
+              titleColor: Theme.of(context).colorScheme.background,
               title: "All Departments",
             ),
             preferredSize: Size.fromHeight(50.0)),
