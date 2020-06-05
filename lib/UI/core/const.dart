@@ -4,7 +4,7 @@ var doctorDecision =  "undecided"; //doctor has accepted the patient request
 
 const NearYou = [
   {
-    "name": "Dr. Bharati Devi Sharma",
+    "name": "Ms. Bharati Devi Sharma",
     "cap": "Operation Theater",
     "phone": "9841347147",
     "src": "assets/images/doctor.png",
@@ -14,7 +14,7 @@ const NearYou = [
     "gender": "Female",
   },
   {
-    "name": "Dr. Amit Jha",
+    "name": "Mr. Amit Jha",
     "cap": "ENT",
     "phone": "9841347147",
     "src": "assets/images/doctor.png",
@@ -24,7 +24,17 @@ const NearYou = [
     "gender": "Male",
   },
   {
-    "name": "Dr. Sangeeta Paudel",
+    "name": "Ms. Sangeeta Paudel",
+    "cap": "Dermatology",
+    "phone": "9841347147",
+    "src": "assets/images/doctor.png",
+    "status": "Cancelled",
+    "date": "19-04-2020",
+    "time": "08:00 pm",
+    "gender": "Female",
+  },
+  {
+    "name": "Ms. Sangeeta Paudel",
     "cap": "Dermatology",
     "phone": "9841347147",
     "src": "assets/images/doctor.png",

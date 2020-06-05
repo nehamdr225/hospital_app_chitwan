@@ -275,6 +275,21 @@ class _PatientEditState extends State<PatientEdit> {
                           fontWeight: FontWeight.w700,
                           size: 15.0,
                         ),
+                        SizedBox(width: 20.0,),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              doctorDecision = "undecided";
+                            });
+                          },
+                          child: FancyText(
+                            text: "undo",
+                            decoration: TextDecoration.underline,
+                            decorationColor: theme.secondary,
+                            color: theme.secondary,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )
                       ],
                     ),
                   ),

@@ -94,7 +94,7 @@ class _SignInState extends State<SignIn> {
                             color: theme.background,
                           ),
                           width: size.width * 0.90,
-                          height: 155.0,
+                          //height: 165.0,
                           child: Form(
                             key: _formKey,
                             child: Column(
@@ -105,7 +105,7 @@ class _SignInState extends State<SignIn> {
                                   formColor: Colors.white,
                                   text: "Email",
                                   textColor: blueGrey.withOpacity(0.7),
-                                  height: 55.0,
+                                  height: 60.0,
                                   width: size.width * 0.90,
                                   validator: (val) =>
                                       val.isEmpty ? 'Enter an email' : null,
@@ -140,7 +140,7 @@ class _SignInState extends State<SignIn> {
                                             });
                                           }),
                                   textColor: blueGrey.withOpacity(0.7),
-                                  height: 55.0,
+                                  height: 60.0,
                                   width: size.width * 0.90,
                                   validator: (val) => val.length < 6
                                       ? 'Enter a password 6+ chars long'
@@ -165,6 +165,10 @@ class _SignInState extends State<SignIn> {
                                         setState(() {
                                           loading = true;
                                         });
+                                        // Scaffold.of(context).showSnackBar(
+                                        //     SnackBar(
+                                        //         content:
+                                        //             Text('Processing Data')));
                                         _formKey.currentState.save();
                                         dynamic result = await _auth
                                             .signInWithEmailAndPassword(

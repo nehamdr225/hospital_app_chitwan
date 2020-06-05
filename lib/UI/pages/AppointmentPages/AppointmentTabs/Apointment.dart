@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 class Appointment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colorScheme.background,
-      body: ListView.builder(
+    //final theme = Theme.of(context);
+    return ListView.builder(
           itemCount: NearYou.length,
           itemBuilder: (BuildContext context, int index) {
             return ListCard(
@@ -20,7 +18,7 @@ class Appointment extends StatelessWidget {
               date: NearYou[index]['date'],
               time:NearYou[index]['time'],
             );
-          }),
+          },
     );
   }
 }

@@ -48,50 +48,42 @@ class FForms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      color: formColor,
-      // constraints: BoxConstraints(
-      //   minHeight: minHeight,
-      //   maxHeight: height
-      // ),
-      child: TextFormField(
-        key: key,
-        controller: controller,
-        onSaved: onSaved,
-        validator: validator,
-        keyboardType: type,
-        autofocus: false,
-        obscureText: obscure,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
-          prefix: prefix,
-          prefixIcon: icon,
-          suffixIcon: trailingIcon,
-          hintText: labeltext == true ? text : '',
-          enabled: true,
-          labelStyle: style.copyWith(color: textColor),
-          labelText: text,
-          hintStyle: style.copyWith(color: textColor),
-          enabledBorder: underline == false
-              ? OutlineInputBorder(borderSide: BorderSide(color: borderColor))
-              : UnderlineInputBorder(
-                  borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primaryVariant,
-                )),
-          focusedBorder: underline == false
-              ? OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color:
-                          borderColor)) //Theme.of(context).colorScheme.primary))
-              : UnderlineInputBorder(
-                  borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primaryVariant,
-                )),
-        ),
+    return TextFormField(
+      cursorColor: Theme.of(context).colorScheme.primary,
+      key: key,
+      controller: controller,
+      onSaved: onSaved,
+      validator: validator,
+      keyboardType: type,
+      autofocus: false,
+      obscureText: obscure,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        border:
+            OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
+        prefix: prefix,
+        prefixIcon: icon,
+        suffixIcon: trailingIcon,
+        hintText: labeltext == true ? text : '',
+        enabled: true,
+        labelStyle: style.copyWith(color: textColor),
+        labelText: text,
+        hintStyle: style.copyWith(color: textColor),
+        enabledBorder: underline == false
+            ? OutlineInputBorder(borderSide: BorderSide(color: borderColor))
+            : UnderlineInputBorder(
+                borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primaryVariant,
+              )),
+        focusedBorder: underline == false
+            ? OutlineInputBorder(
+                borderSide: BorderSide(
+                    color:
+                        borderColor)) //Theme.of(context).colorScheme.primary))
+            : UnderlineInputBorder(
+                borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primaryVariant,
+              )),
       ),
     );
   }

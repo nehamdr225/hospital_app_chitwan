@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                                 color: theme.background,
                               ),
                               width: size.width * 0.90,
-                              height: 110.0,
+                              //height: 110.0,
                               child: Column(children: <Widget>[
                                 FForms(
                                   validator: (val) => val.length < 6
@@ -125,7 +125,7 @@ class _SignUpState extends State<SignUp> {
                                 color: theme.background,
                               ),
                               width: size.width * 0.90,
-                              height: 155.0,
+                              //height: 155.0,
                               child: Column(
                                 children: <Widget>[
                                   // SizedBox(height: 10.0),

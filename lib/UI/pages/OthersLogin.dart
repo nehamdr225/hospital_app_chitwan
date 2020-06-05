@@ -80,7 +80,7 @@ class _OthersLoginState extends State<OthersLogin> {
                       color: theme.background,
                     ),
                     width: size.width * 0.90,
-                    height: 148.0,
+                    //height: 148.0,
                     child: Column(
                       children: <Widget>[
                         // SizedBox(height: 10.0),
@@ -116,19 +116,22 @@ class _OthersLoginState extends State<OthersLogin> {
                             },
                           ),
                         ),
-                        FForms(
-                          borderColor: theme.background,
-                          formColor: Colors.white,
-                          text: "Your ID",
-                          textColor: blueGrey.withOpacity(0.7),
-                          height: 55.0,
-                          width: size.width * 0.90,
-                          validator: (val) => val.length < 6
-                              ? 'Enter ID given to you by the hospital.'
-                              : null,
-                          onChanged: (val) {
-                            setState(() => _id = val);
-                          },
+                        Container(
+                          color: Colors.white,
+                          child: FForms(
+                            borderColor: theme.background,
+                            formColor: Colors.white,
+                            text: "Your ID",
+                            textColor: blueGrey.withOpacity(0.7),
+                            height: 55.0,
+                            width: size.width * 0.90,
+                            validator: (val) => val.length < 6
+                                ? 'Enter ID given to you by the hospital.'
+                                : null,
+                            onChanged: (val) {
+                              setState(() => _id = val);
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 45.0,
