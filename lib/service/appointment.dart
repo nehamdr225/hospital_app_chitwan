@@ -29,6 +29,7 @@ class Appointments {
   // formatting for upload to Firbase when creating the appointments
   Map<String, dynamic> toJson() => {
     'firstName': firstName,
+    'phoneNum': phoneNum,
     'date': date,
     'lastName': lastName,
     'hospital': hospital,

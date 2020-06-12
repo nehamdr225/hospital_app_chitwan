@@ -55,6 +55,7 @@ class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print("THIS IS THE STUFF: ${widget.name},${widget.caption}, ${widget.phone}");
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Padding(

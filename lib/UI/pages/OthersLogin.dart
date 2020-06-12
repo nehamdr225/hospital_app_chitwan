@@ -3,7 +3,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/auth.dart';
+//import 'package:chitwan_hospital/service/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class OthersLogin extends StatefulWidget {
 }
 
 class _OthersLoginState extends State<OthersLogin> {
-  final AuthService _auth = AuthService();
+  //final AuthService _auth = AuthService();
 
   String _othersList;
   List _list = [

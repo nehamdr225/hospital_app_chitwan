@@ -10,6 +10,7 @@ class WhiteAppBar extends StatelessWidget {
   final bool settings;
   final String title;
   final Color titleColor;
+  final Color backgroundColor;
   final fontSize;
   final tabbar;
   final controller;
@@ -27,7 +28,8 @@ class WhiteAppBar extends StatelessWidget {
       this.titleColor,
       this.controller,
       this.title: "",
-      this.color: Colors.white});
+      this.backgroundColor,
+      this.color });
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -35,7 +37,9 @@ class WhiteAppBar extends StatelessWidget {
       elevation: 0.0,
       primary: true,
       iconTheme: theme.iconTheme.copyWith(color: color),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: backgroundColor != null
+          ? backgroundColor
+          : Theme.of(context).colorScheme.background,
       centerTitle: true,
       bottom: tabbar == true
           ? TabBar(
@@ -65,7 +69,9 @@ class WhiteAppBar extends StatelessWidget {
               : IconButton(
                   icon: Icon(
                     CupertinoIcons.back,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: color != null
+                        ? color
+                        : Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () {
                     Navigator.pop(context);

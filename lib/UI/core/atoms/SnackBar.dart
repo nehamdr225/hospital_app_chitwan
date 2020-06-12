@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 buildAndShowSnackBar(context, content) {
   final snack = 
-  SnackBar(
+  SnackBar( 
     content: Text(content,
         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
     backgroundColor: Theme.of(context).colorScheme.secondary,

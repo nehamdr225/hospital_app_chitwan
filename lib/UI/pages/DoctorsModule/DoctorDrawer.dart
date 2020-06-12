@@ -2,22 +2,20 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/AccountPage.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorProfile.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentPage.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DrawerApp extends StatefulWidget {
+class DoctorDrawerApp extends StatefulWidget {
   @override
-  _DrawerAppState createState() => _DrawerAppState();
+  _DoctorDrawerAppState createState() => _DoctorDrawerAppState();
 }
 
-class _DrawerAppState extends State<DrawerApp> {
+class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
   final AuthService _auth = AuthService();
   final user = AuthService().user;
 
@@ -65,7 +63,7 @@ class _DrawerAppState extends State<DrawerApp> {
                       }
                     })
                 : DrawerHeader(
-                    decoration: BoxDecoration(  
+                    decoration: BoxDecoration(
                       //color: primary,
                       gradient: gradientColor,
                     ),
@@ -124,59 +122,22 @@ class _DrawerAppState extends State<DrawerApp> {
                     MaterialPageRoute(builder: (context) => HomeScreen()));
               },
             ),
-            DrawerElements(
-              //Favorite
-              title: 'Favorite',
-              icon: 'assets/images/drawerIcon/favorite.png',
-              onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => HomePageApp()));
-              },
-            ),
-            DrawerElements(
-              //Appointments
-              title: 'Appointments',
-              icon: 'assets/images/drawerIcon/calendar.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AppointmentPage()));
-              },
-            ),
-            DrawerElements(
-              //Specialities
-              title: 'Specialities',
-              icon: 'assets/images/drawerIcon/specialist.png',
-              onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => CartPage()));
-              },
-            ),
-            DrawerElements(
-              //Settings
-              title: 'Settings',
-              icon: 'assets/images/drawerIcon/setting.png',
-              onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => CartPage()));
-              },
-            ),
-            user != null ?
-            DrawerElements(
-              //Settings
-              title: 'Profile',
-              icon: 'assets/images/drawerIcon/profile.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountPage()));
-              },
-            ): Text(" "),
-            Divider(
-              color: Colors.grey[500],
-              height: 5.0,
-            ),
+            user != null
+                ? DrawerElements(
+                    //Settings
+                    title: 'Profile',
+                    icon: 'assets/images/drawerIcon/profile.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorProfile()));
+                    },
+                  )
+                : Text(" "),
             DrawerElements(
               //Share
-              title: 'Share',
+              title: 'Working Schedule',
               icon: 'assets/images/drawerIcon/shareButton.png',
               onTap: () {
                 // Navigator.push(
@@ -185,6 +146,11 @@ class _DrawerAppState extends State<DrawerApp> {
                 // );
               },
             ),
+            Divider(
+              color: Colors.grey[500],
+              height: 5.0,
+            ),
+            
             DrawerElements(
               // About Us
               title: 'About Us',
@@ -212,16 +178,12 @@ class _DrawerAppState extends State<DrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
-                        text: "Login As...",
+                        text: "Login As User",
                         onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => LoginAs()));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OthersLogin()));
+                                  builder: (context) => HomeScreen()));
                         },
                         color: blueGrey,
                         bg: Colors.white,
@@ -253,7 +215,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         shape: false),
                   )
                 : Text(' '),
-                SizedBox(height:15.0)
+            SizedBox(height: 15.0)
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
           child: WhiteAppBar(
-            titleColor: theme.colorScheme.primary,title: "Appointment Form")),
+              titleColor: theme.colorScheme.primary,
+              title: "Appointment Form")),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
@@ -555,8 +557,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         .document(uid)
                         .collection("appointments")
                         .add(widget.appointment.toJson());
-                    
-                    Navigator.pop(context);
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                 ),
               ),

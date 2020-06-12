@@ -1,12 +1,13 @@
+import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientListCard.dart';
 import 'package:flutter/material.dart';
 
 class DoctorsModule extends StatelessWidget {
-  final name ;
+  final name;
   DoctorsModule({this.name});
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,12 @@ class DoctorsModule extends StatelessWidget {
     print("THIS THIS THIS IS THE NAME ==== $name");
     return Scaffold(
       appBar: PreferredSize(
-          child: WhiteAppBar(
-            titleColor: theme.primary,
-            logo: true,
-          ),
-          preferredSize: Size.fromHeight(50.0)),
+        preferredSize: Size.fromHeight(50.0),
+        child: MainAppBar(
+          department: "Doctor",
+        ),
+      ),
+      drawer: DoctorDrawerApp(),
       backgroundColor: theme.background,
       body: ListView(children: <Widget>[
         Padding(
@@ -66,7 +68,8 @@ class DoctorsModule extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0, left: 28.0, bottom: 0.0),
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 28.0, bottom: 0.0),
                         child: FancyText(
                             text: "Hello Doctor!",
                             textAlign: TextAlign.left,
@@ -148,7 +151,6 @@ class DoctorsModule extends StatelessWidget {
                     gender: NearYou[index]['gender'],
                   );
                 })),
-      
       ]),
     );
   }

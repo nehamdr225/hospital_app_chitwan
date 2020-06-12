@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/HoizontalList.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
@@ -17,36 +18,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: AppBar(
-          elevation: 0.0,
-          primary: true,
-          iconTheme: theme.iconTheme,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          centerTitle: true,
-          title: FancyText(
-            text: "Hospital",
-            fontWeight: FontWeight.w600,
-            size: 20.0,
-            color: theme.colorScheme.primary,
-          ),
-          leading: Builder(builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.sort),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              iconSize: 30.0,
-            );
-          }),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.more_vert,
-              ),
-              onPressed: () {},
-            ),
-          ],
-        ),
+        child: MainAppBar(
+          department: "Hospital",
+        )
       ),
       backgroundColor: theme.colorScheme.background,
       drawer: DrawerApp(),

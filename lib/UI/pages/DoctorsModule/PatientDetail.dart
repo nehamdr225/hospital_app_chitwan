@@ -117,8 +117,30 @@ class _PatientDetailState extends State<PatientDetail> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Padding(
+                                padding: const EdgeInsets.only(right: 25.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  // crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    IconButton(
+                                        icon: Icon(
+                                          Icons.chat,
+                                          color: textDark_Yellow,
+                                        ),
+                                        onPressed: () {}),
+                                    IconButton(
+                                        icon: Icon(
+                                          Icons.video_call,
+                                          size: 29.0,
+                                          color: textDark_Yellow,
+                                        ),
+                                        onPressed: () {}),
+                                  ],
+                                ),
+                              ),
+                              Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 15.0, bottom: 5.0),
+                                    top: 0.0, bottom: 5.0),
                                 child: Row(
                                   children: <Widget>[
                                     Icon(
@@ -173,46 +195,167 @@ class _PatientDetailState extends State<PatientDetail> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 3.0),
+                                padding: const EdgeInsets.only(top:3.0),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     FancyText(
                                       text: "Current Status: ",
                                       textAlign: TextAlign.left,
                                       color: textDark_Yellow,
                                     ),
-                                    FancyText(
-                                      text: "  ${widget.status}",
-                                      textAlign: TextAlign.left,
-                                      size: 15.0,
-                                      fontWeight: FontWeight.w700,
-                                      color: textLight_Red,
-                                    ),
+                                    doctorDecision == "undecided"
+                                        ? Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon:
+                                                  Icon(Icons.check_circle),
+                                              color: Colors.green,
+                                              onPressed: () {
+                                                setState(() {
+                                                  doctorDecision =
+                                                      "accepted";
+                                                });
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.cancel),
+                                              color: Colors.red,
+                                              onPressed: () {
+                                                setState(() {
+                                                  doctorDecision =
+                                                      "rejected";
+                                                });
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                        context) {
+                                                      return AlertDialog(
+                                                        title: FancyText(
+                                                            text:
+                                                                "Are you sure?",
+                                                            size: 15.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600,
+                                                            color:
+                                                                blueGrey),
+                                                        content: FancyText(
+                                                            text:
+                                                                "Are you sure you want to reject patient request?",
+                                                            size: 15.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400,
+                                                            color:
+                                                                blueGrey),
+                                                        actions: <Widget>[
+                                                          IconButton(
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .cancel,
+                                                                color: theme
+                                                                    .secondary,
+                                                              ),
+                                                              onPressed:
+                                                                  () {
+                                                                setState(
+                                                                    () {
+                                                                  doctorDecision =
+                                                                      "undecided";
+                                                                });
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }),
+                                                          IconButton(
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .check_circle,
+                                                                color: Colors
+                                                                        .green[
+                                                                    600],
+                                                              ),
+                                                              onPressed:
+                                                                  () {
+                                                                setState(
+                                                                    () {
+                                                                  doctorDecision =
+                                                                      "rejected";
+                                                                });
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }),
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                            ),
+                                            SizedBox(width: 10.0),
+                                          ],
+                                        )
+                                        : doctorDecision == "rejected"
+                                            ? Row(children: [
+                                                FancyText(
+                                                  text: "Rejected",
+                                                  color: theme.secondary,
+                                                  fontWeight: FontWeight.w700,
+                                                  size: 15.0,
+                                                ),
+                                                SizedBox(width: 10.0),
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      doctorDecision =
+                                                          "undecided";
+                                                    });
+                                                  },
+                                                  child: FancyText(
+                                                    text: "undo",
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    decorationColor:
+                                                        Colors.red[200],
+                                                    color: Colors.red[200],
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                )
+                                              ])
+                                            : Row(
+                                              children: <Widget>[
+                                                FancyText(
+                                                  text: "Accepted",
+                                                  color: Colors.green,
+                                                  fontWeight:
+                                                      FontWeight.w700,
+                                                  size: 15.0,
+                                                ),
+                                                SizedBox(width: 10.0),
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      doctorDecision =
+                                                          "undecided";
+                                                    });
+                                                  },
+                                                  child: FancyText(
+                                                    text: "undo",
+                                                    decoration:
+                                                        TextDecoration
+                                                            .underline,
+                                                    decorationColor:
+                                                        Colors.red[200],
+                                                    color: Colors.red[200],
+                                                    fontWeight:
+                                                        FontWeight.w400,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right:25.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  // crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    IconButton(
-                                        icon: Icon(
-                                          Icons.chat,
-                                          color: textDark_Yellow,
-                                        ),
-                                        onPressed: () {}),
-                                    IconButton(
-                                        icon: Icon(
-                                          Icons.video_call,
-                                          size: 29.0,
-                                          color: textDark_Yellow,
-                                        ),
-                                        onPressed: () {}),
-                                  ],
-                                ),
-                              ),
+                              SizedBox(height: 20.0),
                             ],
                           ),
                         ),
@@ -248,29 +391,33 @@ class _PatientDetailState extends State<PatientDetail> {
                     diagnosis: doodle.diagnosis,
                   )));
         },
-        child: Card(
-          margin: EdgeInsets.symmetric(vertical: 16.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          clipBehavior: Clip.antiAlias,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(doodle.time, style: textTheme.caption),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Text(
-                  doodle.diagnosis,
-                  style: textTheme.title,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-              ],
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.80,
+          child: Card(
+            margin: EdgeInsets.symmetric(vertical: 16.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)),
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(doodle.time, style: textTheme.caption),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    doodle.diagnosis,
+                    style: textTheme.title,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,0 +1,309 @@
+import 'dart:io';
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
+import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/service/auth.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+enum AppointmentT { opd, online, both }
+
+class DoctorProfile extends StatefulWidget {
+  @override
+  _DoctorProfileState createState() => _DoctorProfileState();
+}
+
+class _DoctorProfileState extends State<DoctorProfile> {
+  AppointmentT _appointment = AppointmentT.opd;
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40.0),
+          child: WhiteAppBar(
+            elevation: 0.0,
+            backgroundColor: theme.colorScheme.primary,
+            color: Colors.white,
+            // onPressed: () {
+            //   Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => HomePageApp()));
+            // },
+          )),
+      body: FutureBuilder(
+          future: Provider.of<AuthService>(context).getCurrentUser(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return ListView(children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(top: 20.0),
+                  alignment: Alignment.topCenter,
+                  height: 200.0,
+                  width: size.width,
+                  color: theme.colorScheme.primary,
+                  child: CircleAvatar(
+                    radius: 55.0,
+                    backgroundColor: theme.colorScheme.primary,
+                    child: CircleAvatar(
+                      backgroundColor: theme.colorScheme.background,
+                      foregroundColor: Colors.white,
+                      radius: 54.0,
+                      child:
+                          // userData['media'] != null
+                          //     ? Image.network(userData['media'])
+                          //:
+                          Text(
+                        snapshot.data.displayName.split(' ').reduce((a, b) {
+                          return '${a[0]} ${b[0]}';
+                        }),
+                        style: Theme.of(context).textTheme.body1.copyWith(
+                            color: theme.colorScheme.primary,
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                ),
+                Container(
+                  //Name
+                  padding: const EdgeInsets.all(10.0),
+                  child: InputField(
+                    title: 'Name',
+                    value: "${snapshot.data.displayName}",
+                  ),
+                ),
+                Padding(
+                  //Email
+                  padding: const EdgeInsets.all(10.0),
+                  child: InputField(
+                    title: 'Email',
+                    value: "${snapshot.data.email}",
+                  ),
+                ),
+                Container(
+                  //Contact
+                  padding:
+                      const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+                  child: InputField(
+                    title: 'Contact',
+                    value: "9840056679",
+                  ),
+                ),
+                Container(
+                  //Current Address
+                  padding:
+                      const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+                  child: InputField(
+                    title: 'Current Address',
+                    value: "New Baneshwor, Kathmandu",
+                  ),
+                ),
+                Container(
+                  //Working Hospital
+                  padding:
+                      const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                  child: InputField(
+                    title: 'Working Hospital/Clinic',
+                    value: "KMC",
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                  child: InputField(
+                    title: 'NMC Registration Number',
+                    value: "xxx-xxx-xxxx",
+                  ),
+                ),
+                Padding(
+                  //Appointment Type
+                  padding: const EdgeInsets.only(
+                      top: 0.0, left: 18.0, right: 10.0, bottom: 10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      FancyText(
+                        text: "Consultation Type: ",
+                        size: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(children: <Widget>[
+                              Radio(
+                                value: AppointmentT.opd,
+                                activeColor: theme.iconTheme.color,
+                                groupValue: _appointment,
+                                onChanged: (AppointmentT value) {
+                                  setState(() {
+                                    _appointment = value;
+                                  });
+                                },
+                              ),
+                              FancyText(
+                                text: "On-Site Only",
+                                size: 15.0,
+                                color: blueGrey.withOpacity(0.9),
+                              ),
+                            ]),
+                            Row(children: <Widget>[
+                              Radio(
+                                value: AppointmentT.online,
+                                activeColor: theme.iconTheme.color,
+                                groupValue: _appointment,
+                                onChanged: (AppointmentT value) {
+                                  setState(() {
+                                    _appointment = value;
+                                  });
+                                },
+                              ),
+                              FancyText(
+                                text: "Online Only",
+                                size: 15.0,
+                                color: blueGrey.withOpacity(0.9),
+                              ),
+                            ]),
+                            Row(children: <Widget>[
+                              Radio(
+                                value: AppointmentT.both,
+                                activeColor: theme.iconTheme.color,
+                                groupValue: _appointment,
+                                onChanged: (AppointmentT value) {
+                                  setState(() {
+                                    _appointment = value;
+                                  });
+                                },
+                              ),
+                              FancyText(
+                                text: "Both",
+                                size: 15.0,
+                                color: blueGrey.withOpacity(0.9),
+                              ),
+                            ]),
+                          ]),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(children: <Widget>[
+                    FancyText(
+                      text: "Upload NMC registration ID: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    _image == null
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.add_a_photo,
+                              size: 26.0,
+                              color: theme.colorScheme.primary,
+                            ),
+                            onPressed: getImage,
+                          )
+                        : Row(
+                            children: <Widget>[
+                              Container(
+                                  height: 50.0,
+                                  width: 50.0,
+                                  child: Image.file(_image)),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.add_a_photo,
+                                  size: 26.0,
+                                  color: theme.colorScheme.primary,
+                                ),
+                                onPressed: getImage,
+                              )
+                            ],
+                          )
+                  ]),
+                ),
+                SizedBox(height: 30.0,),
+                Container(
+                    alignment: Alignment.center,
+                    child: FRaisedButton(
+                      width: size.width * 0.50,
+                      elevation: 0.0,
+                      text: "Save Changes",
+                      bg: theme.colorScheme.primary,
+                      color: theme.colorScheme.onBackground,
+                      fontWeight: FontWeight.w600,
+                      borderColor: theme.colorScheme.background,
+                      onPressed: () {},
+                    )),
+                SizedBox(
+                  height: 10.0,
+                ),
+                SizedBox(height: 20.0),
+                FRaisedButton(
+                  text: 'Change Password',
+                  color: theme.colorScheme.onPrimary,
+                  bg: theme.colorScheme.background,
+                  borderColor: theme.colorScheme.background,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w700,
+                  height: 45.0,
+                  elevation: 0.0,
+                  onPressed: () {
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => ResetPage()));
+                  },
+                ),
+                FRaisedButton(
+                  text: 'Deactivate Account',
+                  color: theme.colorScheme.onPrimary,
+                  bg: theme.colorScheme.background,
+                  borderColor: theme.colorScheme.background,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w700,
+                  height: 45.0,
+                  elevation: 0.0,
+                  onPressed: () {
+                    // Navigator.push(context,
+                    //           MaterialPageRoute(builder: (context) => ChangePassword()));
+                  },
+                ),
+                FRaisedButton(
+                  text: 'Delete Account',
+                  color: theme.colorScheme.secondary,
+                  bg: theme.colorScheme.background,
+                  borderColor: theme.colorScheme.background,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w700,
+                  height: 45.0,
+                  elevation: 0.0,
+                  onPressed: () {
+                    // Navigator.push(context,
+                    //           MaterialPageRoute(builder: (context) => ChangePassword()));
+                  },
+                ),
+                SizedBox(height: 15.0)
+              ]);
+            } else {
+              return CircularProgressIndicator();
+            }
+          }),
+    );
+  }
+}

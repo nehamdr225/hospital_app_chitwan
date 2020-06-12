@@ -29,6 +29,7 @@ dependencies:
   firebase_auth: 
   flutter_secure_storage: ^3.3.3
   flutter_spinkit: "^4.0.0"
+  image_picker:
   # http: ^0.12.0
   # rxdart: 
   # flutter_bloc:

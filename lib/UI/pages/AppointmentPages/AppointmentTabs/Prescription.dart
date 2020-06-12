@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Prescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+   // final theme = Theme.of(context);
     return ListView.builder(
           itemCount: PrescriptionData.length,
           itemBuilder: (BuildContext context, int index) {
