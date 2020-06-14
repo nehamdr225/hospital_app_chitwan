@@ -1,20 +1,9 @@
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 
-class PatientHistoryPage extends StatelessWidget {
-  final String date;
-  final String diagnosis;
-  final String investigation;
-  final String medicine;
-  final String followUp;
-  PatientHistoryPage(
-      {this.date,
-      this.diagnosis: "no data",
-      this.followUp: "no data",
-      this.investigation: "no data",
-      this.medicine: "no data"});
+class WorkSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +12,7 @@ class PatientHistoryPage extends StatelessWidget {
             child: WhiteAppBar(
               titleColor: Theme.of(context).colorScheme.primary,
               leading: true,
-              title: date,
+              title: "Work Schedule",
               fontSize: 15.0,
             ),
             preferredSize: Size.fromHeight(50.0)),
@@ -33,7 +22,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 8.0),
               child: FancyText(
-                text: "Diagnosis: ",
+                text: "Sunday ",
                 textAlign: TextAlign.left,
                 fontWeight: FontWeight.w800,
                 size: 15.0,
@@ -43,7 +32,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0),
               child: FancyText(
-                text: diagnosis,
+                text: "Available",
                 textAlign: TextAlign.left,
                 size: 15.5,
                 fontWeight: FontWeight.w700,
@@ -55,7 +44,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 8.0),
               child: FancyText(
-                text: "Investigation: ",
+                text: "Monday ",
                 textAlign: TextAlign.left,
                 fontWeight: FontWeight.w800,
                 size: 15.0,
@@ -65,7 +54,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0),
               child: FancyText(
-                text: investigation,
+                text: "Available",
                 textAlign: TextAlign.left,
                 size: 15.5,
                 fontWeight: FontWeight.w700,
@@ -77,7 +66,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 8.0),
               child: FancyText(
-                text: "Medicine: ",
+                text: "Tuesday",
                 textAlign: TextAlign.left,
                 fontWeight: FontWeight.w800,
                 size: 15.0,
@@ -87,7 +76,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0),
               child: FancyText(
-                text: medicine,
+                text: "Available",
                 textAlign: TextAlign.left,
                 size: 15.5,
                 fontWeight: FontWeight.w700,
@@ -99,7 +88,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 8.0),
               child: FancyText(
-                text: "Follow Up: ",
+                text: "Wednesday ",
                 textAlign: TextAlign.left,
                 fontWeight: FontWeight.w800,
                 size: 15.0,
@@ -109,7 +98,73 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0),
               child: FancyText(
-                text: followUp,
+                text: "Available",
+                textAlign: TextAlign.left,
+                size: 15.5,
+                fontWeight: FontWeight.w700,
+                color: blueGrey,
+              ),
+            )
+          ]),
+          TableRow(children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+              child: FancyText(
+                text: "Thursday ",
+                textAlign: TextAlign.left,
+                fontWeight: FontWeight.w800,
+                size: 15.0,
+                color: blueGrey.withOpacity(0.7),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: FancyText(
+                text: "Not Available",
+                textAlign: TextAlign.left,
+                size: 15.5,
+                fontWeight: FontWeight.w700,
+                color: blueGrey,
+              ),
+            )
+          ]),
+          TableRow(children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+              child: FancyText(
+                text: "Friday ",
+                textAlign: TextAlign.left,
+                fontWeight: FontWeight.w800,
+                size: 15.0,
+                color: blueGrey.withOpacity(0.7),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: FancyText(
+                text: "Not Available",
+                textAlign: TextAlign.left,
+                size: 15.5,
+                fontWeight: FontWeight.w700,
+                color: blueGrey,
+              ),
+            )
+          ]),
+          TableRow(children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+              child: FancyText(
+                text: "Saturday ",
+                textAlign: TextAlign.left,
+                fontWeight: FontWeight.w800,
+                size: 15.0,
+                color: blueGrey.withOpacity(0.7),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: FancyText(
+                text: "Available",
                 textAlign: TextAlign.left,
                 size: 15.5,
                 fontWeight: FontWeight.w700,
@@ -118,5 +173,6 @@ class PatientHistoryPage extends StatelessWidget {
             )
           ]),
         ]));
+        
   }
 }

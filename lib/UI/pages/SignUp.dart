@@ -77,7 +77,6 @@ class _SignUpState extends State<SignUp> {
                                   formColor: Colors.white,
                                   text: "Email",
                                   textColor: blueGrey.withOpacity(0.7),
-                                  height: 55.0,
                                   width: size.width * 0.90,
                                 ),
                                 FForms(
@@ -112,8 +111,6 @@ class _SignUpState extends State<SignUp> {
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Password",
-                                  textColor: blueGrey.withOpacity(0.7),
-                                  height: 55.0,
                                   width: size.width * 0.90,
                                 ),
                               ]),
@@ -140,7 +137,6 @@ class _SignUpState extends State<SignUp> {
                                     formColor: Colors.white,
                                     text: "Full Name",
                                     textColor: blueGrey.withOpacity(0.7),
-                                    height: 55.0,
                                     width: size.width * 0.90,
                                   ),
                                   FForms(
@@ -154,7 +150,6 @@ class _SignUpState extends State<SignUp> {
                                     formColor: Colors.white,
                                     text: "Phone Number",
                                     textColor: blueGrey.withOpacity(0.7),
-                                    height: 55.0,
                                     width: size.width * 0.90,
                                   ),
                                   SizedBox(

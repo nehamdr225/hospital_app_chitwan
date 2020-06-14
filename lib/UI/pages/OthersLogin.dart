@@ -123,7 +123,6 @@ class _OthersLoginState extends State<OthersLogin> {
                             formColor: Colors.white,
                             text: "Your ID",
                             textColor: blueGrey.withOpacity(0.7),
-                            height: 55.0,
                             width: size.width * 0.90,
                             validator: (val) => val.length < 6
                                 ? 'Enter ID given to you by the hospital.'

@@ -19,12 +19,20 @@ class DoctorProfile extends StatefulWidget {
 class _DoctorProfileState extends State<DoctorProfile> {
   AppointmentT _appointment = AppointmentT.opd;
   File _image;
+  File _profileImg;
   final picker = ImagePicker();
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedFile.path);
+    });
+  }
+
+  Future getProfileImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _profileImg = File(pickedFile.path);
     });
   }
 
@@ -59,23 +67,45 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   child: CircleAvatar(
                     radius: 55.0,
                     backgroundColor: theme.colorScheme.primary,
-                    child: CircleAvatar(
-                      backgroundColor: theme.colorScheme.background,
-                      foregroundColor: Colors.white,
-                      radius: 54.0,
-                      child:
-                          // userData['media'] != null
-                          //     ? Image.network(userData['media'])
-                          //:
-                          Text(
-                        snapshot.data.displayName.split(' ').reduce((a, b) {
-                          return '${a[0]} ${b[0]}';
-                        }),
-                        style: Theme.of(context).textTheme.body1.copyWith(
-                            color: theme.colorScheme.primary,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700),
-                      ),
+                    child: Stack(
+                      children: <Widget>[
+                        CircleAvatar(
+                          //backgroundImage: FileImage(_profileImg),//Image.file(_profileImg),
+                          backgroundColor: theme.colorScheme.background,
+                          foregroundColor: Colors.white,
+                          radius: 54.0,
+                          child:
+                              _profileImg != null
+                                  ? Container(
+                                        height: 100.0,
+                                        width: 100.0,
+                                        decoration:
+                                            BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(image: FileImage(_profileImg), fit: BoxFit.cover)),
+                                        //child: Image.file(_profileImg)
+                                    )
+                                  : Text(
+                                      snapshot.data.displayName
+                                          .split(' ')
+                                          .reduce((a, b) {
+                                        return '${a[0]} ${b[0]}';
+                                      }),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .body1
+                                          .copyWith(
+                                              color: theme.colorScheme.primary,
+                                              fontSize: 24.0,
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                        ),
+                        Align(
+                            alignment: Alignment.bottomRight,
+                            child: IconButton(
+                                icon: Icon(Icons.photo_camera, color: blueGrey),
+                                onPressed: getProfileImage))
+                      ],
                     ),
                   ),
                 ),
@@ -135,99 +165,95 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 ),
                 Padding(
                   //Appointment Type
-                  padding: const EdgeInsets.only(
-                      top: 0.0, left: 18.0, right: 10.0, bottom: 10.0),
-                  child: Row(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      FancyText(
-                        text: "Consultation Type: ",
-                        size: 16.0,
-                        fontWeight: FontWeight.w500,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: FancyText(
+                          text: "Consultation Type: ",
+                          size: 12.0,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              Radio(
-                                value: AppointmentT.opd,
-                                activeColor: theme.iconTheme.color,
-                                groupValue: _appointment,
-                                onChanged: (AppointmentT value) {
-                                  setState(() {
-                                    _appointment = value;
-                                  });
-                                },
-                              ),
-                              FancyText(
-                                text: "On-Site Only",
-                                size: 15.0,
-                                color: blueGrey.withOpacity(0.9),
-                              ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 2.0),
+                        child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(children: <Widget>[
+                                Radio(
+                                  value: AppointmentT.opd,
+                                  activeColor: theme.iconTheme.color,
+                                  groupValue: _appointment,
+                                  onChanged: (AppointmentT value) {
+                                    setState(() {
+                                      _appointment = value;
+                                    });
+                                  },
+                                ),
+                                FancyText(
+                                  text: "On-Site Only",
+                                  size: 15.0,
+                                  color: blueGrey.withOpacity(0.9),
+                                ),
+                              ]),
+                              Row(children: <Widget>[
+                                Radio(
+                                  value: AppointmentT.online,
+                                  activeColor: theme.iconTheme.color,
+                                  groupValue: _appointment,
+                                  onChanged: (AppointmentT value) {
+                                    setState(() {
+                                      _appointment = value;
+                                    });
+                                  },
+                                ),
+                                FancyText(
+                                  text: "Online Only",
+                                  size: 15.0,
+                                  color: blueGrey.withOpacity(0.9),
+                                ),
+                              ]),
+                              Row(children: <Widget>[
+                                Radio(
+                                  value: AppointmentT.both,
+                                  activeColor: theme.iconTheme.color,
+                                  groupValue: _appointment,
+                                  onChanged: (AppointmentT value) {
+                                    setState(() {
+                                      _appointment = value;
+                                    });
+                                  },
+                                ),
+                                FancyText(
+                                  text: "Both",
+                                  size: 15.0,
+                                  color: blueGrey.withOpacity(0.9),
+                                ),
+                              ]),
                             ]),
-                            Row(children: <Widget>[
-                              Radio(
-                                value: AppointmentT.online,
-                                activeColor: theme.iconTheme.color,
-                                groupValue: _appointment,
-                                onChanged: (AppointmentT value) {
-                                  setState(() {
-                                    _appointment = value;
-                                  });
-                                },
-                              ),
-                              FancyText(
-                                text: "Online Only",
-                                size: 15.0,
-                                color: blueGrey.withOpacity(0.9),
-                              ),
-                            ]),
-                            Row(children: <Widget>[
-                              Radio(
-                                value: AppointmentT.both,
-                                activeColor: theme.iconTheme.color,
-                                groupValue: _appointment,
-                                onChanged: (AppointmentT value) {
-                                  setState(() {
-                                    _appointment = value;
-                                  });
-                                },
-                              ),
-                              FancyText(
-                                text: "Both",
-                                size: 15.0,
-                                color: blueGrey.withOpacity(0.9),
-                              ),
-                            ]),
-                          ]),
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Row(children: <Widget>[
-                    FancyText(
-                      text: "Upload NMC registration ID: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    _image == null
-                        ? IconButton(
-                            icon: Icon(
-                              Icons.add_a_photo,
-                              size: 26.0,
-                              color: theme.colorScheme.primary,
-                            ),
-                            onPressed: getImage,
-                          )
-                        : Row(
-                            children: <Widget>[
-                              Container(
-                                  height: 50.0,
-                                  width: 50.0,
-                                  child: Image.file(_image)),
-                              IconButton(
+                  padding: const EdgeInsets.only(left: 18.0, bottom: 10.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        FancyText(
+                          text: "Upload NMC registration ID: ",
+                          size: 12.0,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        SizedBox(height: 10.0),
+                        _image == null
+                            ? IconButton(
                                 icon: Icon(
                                   Icons.add_a_photo,
                                   size: 26.0,
@@ -235,11 +261,36 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 ),
                                 onPressed: getImage,
                               )
-                            ],
-                          )
-                  ]),
+                            : Row(
+                                children: <Widget>[
+                                  Stack(children: <Widget>[
+                                    Container(
+                                        height: 80.0,
+                                        width: 80.0,
+                                        decoration:
+                                            BoxDecoration(border: Border.all()),
+                                        child: Image.file(_image)),
+                                    Container(
+                                      height: 80.0,
+                                      width: 80.0,
+                                      color: Colors.black38,
+                                    ),
+                                  ]),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.add_a_photo,
+                                      size: 26.0,
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                    onPressed: getImage,
+                                  )
+                                ],
+                              )
+                      ]),
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(
+                  height: 30.0,
+                ),
                 Container(
                     alignment: Alignment.center,
                     child: FRaisedButton(
@@ -301,7 +352,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 SizedBox(height: 15.0)
               ]);
             } else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           }),
     );

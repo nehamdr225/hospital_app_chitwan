@@ -3,6 +3,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/AccountPage.dart';
+import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
@@ -147,8 +148,8 @@ class _DrawerAppState extends State<DrawerApp> {
               title: 'Specialities',
               icon: 'assets/images/drawerIcon/specialist.png',
               onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => CartPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DoctorsTab()));
               },
             ),
             DrawerElements(

@@ -10,8 +10,6 @@ class FForms extends StatelessWidget {
   final TextInputType type;
   final Function onChanged;
   final Function onSaved;
-  final height;
-  final minHeight;
   final width;
   final underline;
   final borderColor;
@@ -27,8 +25,6 @@ class FForms extends StatelessWidget {
       color: Colors.grey[400]);
   FForms(
       {this.text,
-      this.height,
-      this.minHeight,
       this.labeltext: true,
       this.width,
       this.type,

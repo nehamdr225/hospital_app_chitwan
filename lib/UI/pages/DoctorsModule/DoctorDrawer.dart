@@ -3,6 +3,8 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorProfile.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorsModule.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule/WorkSchedule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn.dart';
@@ -119,7 +121,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
               icon: 'assets/images/drawerIcon/home.png',
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                    MaterialPageRoute(builder: (context) => DoctorsModule()));
               },
             ),
             user != null
@@ -140,10 +142,10 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
               title: 'Working Schedule',
               icon: 'assets/images/drawerIcon/shareButton.png',
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => HelpCenter()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkSchedule()),
+                );
               },
             ),
             Divider(

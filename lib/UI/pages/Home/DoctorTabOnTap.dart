@@ -7,7 +7,7 @@ class CallList extends DoctorsTab {
   final department;
   final departmentDoctors;
 
-  CallList({this.department, this.departmentDoctors});
+  CallList({this.department, this.departmentDoctors, Key key});
   @override
   Widget build(BuildContext context) {
     //var name = "Name".substring(1);
@@ -93,7 +93,7 @@ class CallList extends DoctorsTab {
                                         defaultStyle: true,
                                       ),
                                     ),
-                                    FancyText(
+                                    FancyText(  
                                         text:
                                             "${contact[0].toString()}, ${contact[1].toString()}",
                                         textAlign: TextAlign.left,
@@ -182,7 +182,8 @@ class CallList extends DoctorsTab {
 
     return Scaffold(
         appBar: PreferredSize(
-            child: WhiteAppBar(titleColor: Theme.of(context).colorScheme.background,
+            child: WhiteAppBar(
+              titleColor: Theme.of(context).colorScheme.primary,
               title: "$department",
             ),
             preferredSize: Size.fromHeight(50.0)),

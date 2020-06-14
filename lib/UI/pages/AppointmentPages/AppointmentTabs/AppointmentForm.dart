@@ -107,7 +107,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     formColor: Colors.white,
                     text: "First Name",
                     textColor: blueGrey.withOpacity(0.7),
-                    height: 60.0,
                     width: width * 0.40,
                     // validator: (val) =>
                     //     val.isEmpty ? 'First Name is required' : null,
@@ -128,7 +127,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     text: "Last Name",
                     type: TextInputType.text,
                     textColor: blueGrey.withOpacity(0.7),
-                    height: 60.0,
                     width: width * 0.515,
                     validator: (val) =>
                         val.isEmpty ? 'Last Name is required' : null,
@@ -149,7 +147,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 ),
                 text: "Phone Number",
                 type: TextInputType.phone,
-                height: 60.0,
                 //width: width * 0.80,
                 borderColor: theme.colorScheme.primary,
                 formColor: Colors.white,

@@ -1,0 +1,480 @@
+{
+    "OPERATION THEATER": {
+        "BHARATI DEVI SHARMA (REGMI)": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9841347147"]
+        },
+        "GOPENDRA PRASAD DEO": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9845063095"]
+        },
+        "INDRA NARAYAN SHRESTHA": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9745017578", "9851059140"]
+        },
+        "NABIN KRISHNA YADAV": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9842163493"]
+        },
+        "SUBIN SHRESTHA": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9860556176"]
+        },
+        "SURESH GAUTAM": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9855033255"]
+        },
+        "SUSHIL PAKHRIN TAMANG": {
+            "department": "ANESTHESIOLOGY",
+            "sub-department": "OPERATION THEATER",
+            "contact": ["9851164779"]
+        }
+    },
+    "SCHOOL OF DENTAL SCIENCE": {
+        "HARENDER SINGH": {
+            "department": "COMMUNITY DENTISTRY",
+            "sub-department": "CODS",
+            "contact": ["9812297085"]
+        },
+        "BHAWANA ADHIKARI": {
+            "department": "CONSERVATIVE DENTISTRY",
+            "sub-department": "CODS",
+            "contact": ["9803362025"]
+        },
+        "ARUN KUMAR SHAH": {
+            "department": "ORAL & MAXILLOFACIAL SURGERY",
+            "sub-department": "CODS",
+            "contact": ["9824764047"]
+        },
+        "SHAILESH GAUTAM": {
+            "department": "ORAL & MAXILLOFACIAL SURGERY",
+            "sub-department": "ORAL & MAXILLOFACIAL SURGERY",
+            "contact": ["9861933133"]
+        },
+        "SUDEEP ACHARYA": {
+            "department": "ORAL & MAXILLOFACIAL SURGERY",
+            "sub-department": "CODS",
+            "contact": ["98511-47241"]
+        },
+        "NEHA MISHRA": {
+            "department": "ORAL PATHOLOGY",
+            "sub-department": "CODS",
+            "contact": ["98219-52988"]
+        },
+        "RAJIB Chaulagain": {
+            "department": "ORAL PATHOLOGY",
+            "sub-department": "CODS",
+            "contact": ["98601-9933"]
+        },
+        "BASANTA KUMAR SHRESTHA": {
+            "department": "ORTHODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98510-86523"]
+        },
+        "BASHU RAJ PANDEY": {
+            "department": "ORTHODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98450-51938"]
+        },
+        "RAJAN SINGH": {
+            "department": "ORTHODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98512-53332"]
+        },
+        "SANJEEB CHAUDHARY": {
+            "department": "CONSERVATIVE DENTISTRY",
+            "sub-department": "CODS",
+            "contact": ["9849849651"]
+        },
+        "BIDHYA THAPALIYA": {
+            "department": "PEDODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98459-54580"]
+        },
+        "ERIKA SHRESTHA": {
+            "department": "PEDODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98111-52037"]
+        },
+        "SHRISTI KAFLE": {
+            "department": "PEDODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98490-73212"]
+        },
+        "BIBEK KHANAL": {
+            "department": "PROSTHODONTICS",
+            "sub-department": "CODS",
+            "contact": ["98510-63923"]
+        },
+        "SMRITI NARAYAN THAKUR": {
+            "department": "PROSTHODONTICS",
+            "sub-department": "CODS",
+            "contact": ["9849390261"]
+        },
+        "SRIJANA MISHRA": {
+            "department": "PROSTHODONTICS",
+            "sub-department": "CODS",
+            "contact": ["9845415644"]
+        }
+    },
+    "DERMATOLOGY": {
+        "PRATICHYA THAPA": {
+            "department": "DERMATOLOGY",
+            "sub-department": "OPD [DERMATOLOGY]",
+            "contact": ["9841936426"]
+        },
+        "SANGEETA PAUDEL": {
+            "department": "DERMATOLOGY",
+            "sub-department": "OPD [DERMATOLOGY]",
+            "contact": ["9841526893"]
+        }
+    },
+    "ENT DEPARTMENT": {
+        "AMIT JHA": {
+            "department": "ENT DEPARTMENT",
+            "sub-department": "OPD [ENT]",
+            "contact": ["9855054254"]
+        },
+        "PARAS RAJ AMATYA": {
+            "department": "ENT DEPARTMENT",
+            "sub-department": "OPD [ENT]",
+            "contact": ["9860354063"]
+        },
+        "SOVIT JUNG BARAL": {
+            "department": "ENT DEPARTMENT",
+            "sub-department": "OPD [ENT]",
+            "contact": ["9815108123"]
+        },
+        "TILAK RAJ LIMBU": {
+            "department": "ENT DEPARTMENT",
+            "sub-department": "OPD [ENT]",
+            "contact": ["9845371552"]
+        }
+    },
+    "EMERGENCY": {
+        "DAYA RAM LAMSAL": {
+            "department": "GP & EMRGENCY MED.",
+            "sub-department": "EMERGENCY",
+            "contact": ["9802955185"]
+        },
+        "KRISHNA BAHADUR RAUT": {
+            "department": "GP & EMRGENCY MED.",
+            "sub-department": "EMERGENCY",
+            "contact": ["9860314953"]
+        }
+    },
+    "GYNAE & OBS": {
+        "BASANT SHARMA": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9842082358"]
+        },
+        "JULLY CHAUDHARY": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9841848528"]
+        },
+        "PREKSHYA SINGH": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9869231933"]
+        },
+        "RAKSHYA JOSHI": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9851162619", "9803496245"]
+        },
+        "RENUKA TAMRAKAR": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9849304555"]
+        },
+        "SABITA SHRESTHA": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9841690196"]
+        },
+        "UPENDRA PANDIT": {
+            "department": "GYNAE & OBS",
+            "sub-department": "OPD [GYNAE]",
+            "contact": ["9848032739"]
+        }
+    },
+    "MEDICINE": {
+        "ARUN SEDHAIN": {
+            "department": "MEDICINE",
+            "sub-department": "NEPHRO WARD",
+            "contact": ["9855060155", "9843492908"]
+        },
+        "BARUN SHRESTHA": {
+            "department": "MEDICINE",
+            "sub-department": "OPD [MEDICINE]",
+            "contact": ["9855064500", "9802955200"]
+        },
+        "BIDHAN SHRESTHA": {
+            "department": "MEDICINE",
+            "sub-department": "OPD [MEDICINE]",
+            "contact": ["9855051029"]
+        },
+        "BISHNU MANI DHITAL": {
+            "department": "MEDICINE",
+            "sub-department": "CARDIOLOGY",
+            "contact": ["9841298620"]
+        },
+        "LAXMAN MANDAL": {
+            "department": "MEDICINE",
+            "sub-department": "OPD [MEDICINE]",
+            "contact": ["9851209929"]
+        },
+        "SAGAR POUDYAL": {
+            "department": "MEDICINE",
+            "sub-department": "OPD [MEDICINE]",
+            "contact": ["9851017174"]
+        },
+        "SHITAL ADHIKARI": {
+            "department": "MEDICINE",
+            "sub-department": "OPD [MEDICINE]",
+            "contact": ["9802955100"]
+        },
+        "SHYAM RAJ REGMI": {
+            "department": "MEDICINE",
+            "sub-department": "CARDIOLOGY",
+            "contact": ["9851071881"]
+        },
+        "SUDHIR REGMI": {
+            "department": "MEDICINE",
+            "sub-department": "CARDIOLOGY",
+            "contact": ["9855061766"]
+        },
+        "SURESH SHRESTHA": {
+            "department": "MEDICINE",
+            "sub-department": "OPD [MEDICINE]",
+            "contact": ["9855016487"]
+        }
+    },
+    "NUCLEAR MEDICINE": {
+        "JIWAN PAUDEL": {
+            "department": "NUCLEAR MEDICINE",
+            "sub-department": "NUCLEAR MEDICINE",
+            "contact": ["9847111340"]
+        }
+    },
+    "OPHTHALMOLOGY": {
+        "POLINA DAHAL": {
+            "department": "OPHTHALMOLOGY",
+            "sub-department": "OPHTHALMOLOGY",
+            "contact": ["9845417133"]
+        },
+        "RISHI KANTA ADHIKARI": {
+            "department": "OPHTHALMOLOGY",
+            "sub-department": "OPD [EYE]",
+            "contact": ["9849543807"]
+        }
+    },
+    "ORTHOPEDIC": {
+        "ANANDA PRASAD REGMI": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9802955058"]
+        },
+        "BISHNU DEV SHARMA": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9851188562"]
+        },
+        "DEVENDRA ACHARYA": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9843305164"]
+        },
+        "JYOTI SITAULA": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9841812170"]
+        },
+        "PRATAP BABU BHANDARI": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9855065922"]
+        },
+        "SANJEEB RIJAL": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9811823511", "9855015123"]
+        },
+        "SAUGAT K.C.": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9842173919"]
+        },
+        "SUJIT RAJ SHRESTHA": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9841390720"]
+        },
+        "SUMAN KUMAR BASEL": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9841760790"]
+        },
+        "TEJ PRAKASH DAWADI": {
+            "department": "ORTHOPEDIC",
+            "sub-department": "OPD [ORTHO]",
+            "contact": ["9855063666"]
+        }
+    },
+    "PEDIATRICS": {
+        "PRATIVA DHUNGEL": {
+            "department": "PEDIATRICS",
+            "sub-department": "PEDIATRICS",
+            "contact": ["9841200001"]
+        },
+        "SHANTI REGMI POKHREL": {
+            "department": "PEDIATRICS",
+            "sub-department": "OPD [PED]",
+            "contact": ["9855055907"]
+        },
+        "SHREE NARAYAN YADAV": {
+            "department": "PEDIATRICS",
+            "sub-department": "OPD [PED]",
+            "contact": ["9851221100"]
+        },
+        "SUDHIR ADHIKARI": {
+            "department": "PEDIATRICS",
+            "sub-department": "OPD [PED]",
+            "contact": ["9846153289"]
+        },
+        "SUMITA POUDEL": {
+            "department": "PEDIATRICS",
+            "sub-department": "OPD [PED]",
+            "contact": ["9846082632"]
+        }
+    },
+    "PSYCHIATRY": {
+        "CHANDRA PRASAD SEDAIN": {
+            "department": "PSYCHIATRY",
+            "sub-department": "OPD [PSYCHIATRY]",
+            "contact": ["9855056666"]
+        },
+        "KHAGENDRA KAFLE": {
+            "department": "PSYCHIATRY",
+            "sub-department": "OPD [PSYCHIATRY]",
+            "contact": ["9808839302"]
+        },
+        "SHAILENDRA RAJ ADHIKARI": {
+            "department": "PSYCHIATRY",
+            "sub-department": "OPD [PSYCHIATRY]",
+            "contact": ["9855061744", "9841386009"]
+        }
+    },
+    "RADIO DIAGNOSIS": {
+        "BIGYAN PAUDEL": {
+            "department": "RADIO DIAGNOSIS",
+            "sub-department": "USG",
+            "contact": ["9841407549"]
+        },
+        "DEEPAK ADHIKARI": {
+            "department": "RADIO DIAGNOSIS",
+            "sub-department": "USG",
+            "contact": ["9840095152"]
+        },
+        "DIPESH PAUDEL": {
+            "department": "RADIO DIAGNOSIS",
+            "sub-department": "USG",
+            "contact": ["9841229492"]
+        },
+        "KISHOR GAUTAM": {
+            "department": "RADIO DIAGNOSIS",
+            "sub-department": "USG",
+            "contact": ["9840511822"]
+        }
+    },
+    "SURGERY": {
+        "ABHISHEK BHATTARAI": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9841344514"]
+        },
+        "AJIT SHRESTHA": {
+            "department": "SURGERY",
+            "sub-department": "OPD [NEURO]",
+            "contact": ["9841292012"]
+        },
+        "BUDHI NATH ADHIKARI SUDHIN": {
+            "department": "SURGERY",
+            "sub-department": "PLASTIC SURGERY",
+            "contact": ["9849716454"]
+        },
+        "GANESH ADHIKARI": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9865195504"]
+        },
+        "HARISH CHANDRA NEUPANE": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9802955155"]
+        },
+        "ISWAR CHANDRA GHIMIRE": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9855050937", "9845026286"]
+        },
+        "KESH MAYA GURUNG": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9841298536"]
+        },
+        "KESHAR BAHADUR SAH": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9845397899"]
+        },
+        "KISHOR KUMAR TAMRAKAR": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9845201960"]
+        },
+        "MANOJ CHAND": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9841096501"]
+        },
+        "MOHAN KHADKA": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9860980699"]
+        },
+        "PRAGYAN KHWAUNJU": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9803011495"]
+        },
+        "PRAKASH DAHAL": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9855063550"]
+        },
+        "RAJIV SHAH": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9855063156"]
+        },
+        "SURAJ RAJ BHATTARAI": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9855081300"]
+        },
+        "TSETEN YONJEN TAMANG": {
+            "department": "SURGERY",
+            "sub-department": "OPD [SURGERY]",
+            "contact": ["9851164776"]
+        }
+    }
+}

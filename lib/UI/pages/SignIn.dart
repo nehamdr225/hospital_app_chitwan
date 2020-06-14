@@ -105,7 +105,6 @@ class _SignInState extends State<SignIn> {
                                   formColor: Colors.white,
                                   text: "Email",
                                   textColor: blueGrey.withOpacity(0.7),
-                                  height: 60.0,
                                   width: size.width * 0.90,
                                   validator: (val) =>
                                       val.isEmpty ? 'Enter an email' : null,
@@ -140,7 +139,6 @@ class _SignInState extends State<SignIn> {
                                             });
                                           }),
                                   textColor: blueGrey.withOpacity(0.7),
-                                  height: 60.0,
                                   width: size.width * 0.90,
                                   validator: (val) => val.length < 6
                                       ? 'Enter a password 6+ chars long'

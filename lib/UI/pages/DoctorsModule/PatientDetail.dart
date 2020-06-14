@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientEdit.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientHistoryPage.dart';
+import 'package:chitwan_hospital/UI/pages/DoctorsModule/RecordForm.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
@@ -42,6 +43,19 @@ class _PatientDetailState extends State<PatientDetail> {
           ),
           preferredSize: Size.fromHeight(60.0)),
       backgroundColor: theme.background,
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => RecordForm()));
+          },
+          icon: Icon(Icons.calendar_today),
+          label: FancyText(
+            text: "Diagnosis",
+            color: textDark_Yellow,
+            fontWeight: FontWeight.w600,
+          ),
+          backgroundColor: theme.primary,
+        ),
       body: ListView(children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 12.0),
