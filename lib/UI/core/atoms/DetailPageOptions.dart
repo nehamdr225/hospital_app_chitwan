@@ -3,22 +3,22 @@ import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
 import 'package:flutter/material.dart';
 
-class HorizontalList extends StatefulWidget {
+class DetailPageOptions extends StatefulWidget {
   final listViews;
   final border;
   final scrollDirection;
 
-  HorizontalList({
+  DetailPageOptions({
     this.listViews,
     this.border: false,
     this.scrollDirection:Axis.horizontal,
   });
 
   @override
-  _HorizontalListState createState() => _HorizontalListState();
+  _DetailPageOptionsState createState() => _DetailPageOptionsState();
 }
 
-class _HorizontalListState extends State<HorizontalList> {
+class _DetailPageOptionsState extends State<DetailPageOptions> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -33,9 +33,9 @@ class _HorizontalListState extends State<HorizontalList> {
             name: widget.listViews[index]['name'],
             caption: widget.listViews[index]['name'],
             src: widget.listViews[index]['src'],
-            height: 60.0,
-            width: 50.0,
-            containerWidth: 110.0,
+            height: 40.0,
+            width: 40.0,
+            containerWidth: 90.0,
             onTap: () {
               if(widget.listViews[index]['id']==0){
               Navigator.of(context).push(

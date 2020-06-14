@@ -5,9 +5,10 @@ class Category extends StatelessWidget {
   final String name;
   final Function onTap;
   final width;
+  final containerWidth;
   final height;
 
-  Category({this.caption, this.src, this.name, this.onTap, this.height: 70.0, this.width: 70.0});
+  Category({this.caption, this.src, this.name, this.onTap, this.height: 70.0, this.width: 70.0, this.containerWidth:110});
 
   @override
   Widget build(BuildContext context) { 
@@ -17,7 +18,7 @@ class Category extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-            width: 110.0,
+            width: containerWidth,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0),
               color: theme.colorScheme.background,

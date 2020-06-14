@@ -8,6 +8,7 @@ class WhiteAppBar extends StatelessWidget {
   final bool logo;
   final bool leading;
   final bool settings;
+  final bool download;
   final String title;
   final Color titleColor;
   final Color backgroundColor;
@@ -25,6 +26,7 @@ class WhiteAppBar extends StatelessWidget {
       this.tabbar: false,
       this.tabs,
       this.share: false,
+      this.download: false,
       this.titleColor,
       this.controller,
       this.title: "",
@@ -95,7 +97,16 @@ class WhiteAppBar extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {})
-            : Text("")
+            : Text(""),
+            download == true
+            ? IconButton(
+                icon: Icon(
+                  Icons.file_download,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onPressed: () {},
+              )
+            : Text(''),
       ],
     );
   }

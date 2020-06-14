@@ -66,7 +66,7 @@ class _DrawerAppState extends State<DrawerApp> {
                       }
                     })
                 : DrawerHeader(
-                    decoration: BoxDecoration(  
+                    decoration: BoxDecoration(
                       //color: primary,
                       gradient: gradientColor,
                     ),
@@ -161,16 +161,19 @@ class _DrawerAppState extends State<DrawerApp> {
                 //     MaterialPageRoute(builder: (context) => CartPage()));
               },
             ),
-            user != null ?
-            DrawerElements(
-              //Settings
-              title: 'Profile',
-              icon: 'assets/images/drawerIcon/profile.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountPage()));
-              },
-            ): Text(" "),
+            user != null
+                ? DrawerElements(
+                    //Settings
+                    title: 'Profile',
+                    icon: 'assets/images/drawerIcon/profile.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AccountPage()));
+                    },
+                  )
+                : Text(" "),
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -180,10 +183,33 @@ class _DrawerAppState extends State<DrawerApp> {
               title: 'Share',
               icon: 'assets/images/drawerIcon/shareButton.png',
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => HelpCenter()),
-                // );
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: FancyText(
+                            text: "Share",
+                            defaultStyle: true,
+                            fontWeight: FontWeight.w700,
+                            size: 17.0,
+                            opacity: 1.0,
+                          ),
+                          content: Row(
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                            Image.asset(
+                              "assets/images/facebookicon.png",
+                              height: 45.0,
+                              width: 45.0,
+                            ),
+                            SizedBox(width:10.0),
+                            Image.asset(
+                              "assets/images/googleicon.png",
+                              height: 30.0,
+                              width: 30.0,
+                            ),
+                          ]),
+                        ));
               },
             ),
             DrawerElements(
@@ -254,7 +280,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         shape: false),
                   )
                 : Text(' '),
-                SizedBox(height:15.0)
+            SizedBox(height: 15.0)
           ],
         ),
       ),

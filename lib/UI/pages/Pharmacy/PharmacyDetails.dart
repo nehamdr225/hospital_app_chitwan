@@ -1,33 +1,33 @@
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/DetailPageOptions.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
-import 'package:chitwan_hospital/service/appointment.dart';
+import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
+import 'package:chitwan_hospital/service/pharmacyForm.dart';
 import 'package:flutter/material.dart';
 
-class DoctorDetails extends StatelessWidget {
-  final name;
+class PharmacyDetails extends StatelessWidget {
+  final pharmacyName;
   final image;
-  final caption;
+  final pharmacyLocation;
   final phone;
   final status;
   final date;
   final time;
-  DoctorDetails(
+  PharmacyDetails(
       {this.image,
-      this.name,
-      this.caption,
+      this.pharmacyName,
+      this.pharmacyLocation,
       this.phone,
       this.date,
       this.status,
       this.time});
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new Appointments(
-        null, null, caption, name, null, null, null, null, null, null);
+    final newPharmacy = new Pharmacy(null, null, null, null, null, null, null, null);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
@@ -35,7 +35,7 @@ class DoctorDetails extends StatelessWidget {
         preferredSize: Size.fromHeight(50.0),
         child: WhiteAppBar(
           titleColor: theme.colorScheme.primary,
-          title: "Doctor's Details",
+          title: "Pharmacy's Details",
           color: theme.colorScheme.primary,
           share: true,
         ),
@@ -104,29 +104,32 @@ class DoctorDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 FancyText(
-                                  text: name,
+                                  text: pharmacyName,
                                   fontWeight: FontWeight.w700,
                                   size: 18.0,
                                   textAlign: TextAlign.left,
                                   color: textDark_Yellow,
                                 ),
                                 SizedBox(height: 5.0),
-                                FancyText(
-                                  text: "MBBS, MS ($caption)",
-                                  fontWeight: FontWeight.w400,
-                                  size: 14.0,
-                                  textAlign: TextAlign.left,
-                                  color: textDark_Yellow.withOpacity(0.9),
+                                RowInput(
+                                  title: "Location:  ",
+                                  defaultStyle: false,
+                                  titleColor: textDark_Yellow,
+                                  titleSize: 15.0,
+                                  caption: pharmacyLocation,
+                                  capColor: textDark_Yellow,
+                                  capSize: 15.0,
+                                ),
+                                RowInput(
+                                  title: "Contact:  ",
+                                  defaultStyle: false,
+                                  titleColor: textDark_Yellow,
+                                  titleSize: 15.0,
+                                  caption: phone,
+                                  capColor: textDark_Yellow,
+                                  capSize: 15.0,
                                 ),
                                 SizedBox(height: 2.0),
-                                FancyText(
-                                  text: "Consultant- $caption",
-                                  fontWeight: FontWeight.w400,
-                                  size: 14.0,
-                                  textAlign: TextAlign.left,
-                                  color: textDark_Yellow.withOpacity(0.9),
-                                ),
-                                SizedBox(height: 2),
                                 Row(
                                   children: <Widget>[
                                     Icon(
@@ -189,7 +192,7 @@ class DoctorDetails extends StatelessWidget {
               elevation: 1.0,
               width: size.width * 0.95,
               height: 40.0,
-              text: "Book Appointment",
+              text: "Make Order",
               fontSize: 17.0,
               color: textDark_Yellow,
               bg: theme.colorScheme.secondary.withOpacity(0.8),
@@ -199,10 +202,10 @@ class DoctorDetails extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AppointmentForm(
-                              appointment: newAppointment,
-                              doctor: name,
-                              department: caption,
+                        builder: (context) => PharmacyForm(
+                              pharmacyForm: newPharmacy,
+                              doctor: pharmacyName,
+                              department: pharmacyLocation,
                             )));
               },
             ),
@@ -217,7 +220,7 @@ class DoctorDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FancyText(
-                          text: "Pharmacy Information",
+                          text: "Qualification",
                           textAlign: TextAlign.start,
                           size: 15.5,
                           fontWeight: FontWeight.w500,

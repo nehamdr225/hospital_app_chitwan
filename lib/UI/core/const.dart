@@ -117,6 +117,28 @@ const Options = [
   },
 ];
 
+const Detail_Options = [
+  {
+    "name": "Share",
+    "cap": "Share",
+    "src": "assets/images/drawerIcon/shareButton.png",
+    "id":0
+  },
+  {
+    "name": "Review",
+    "cap": "Review",
+    "src": "assets/images/drawerIcon/review.png",
+    "id":1
+  },
+  {
+    "name": "Favorite",
+    "cap": "Favorite",
+    "src": "assets/images/drawerIcon/favorite.png",
+    "id":2
+  },
+  
+];
+
 const Doctor_Tab = [
   {
     "name": "Ayurveda",
@@ -196,3 +218,23 @@ const List<Doodle> doodles = [
 
 ];
 
+const Pharmacy_List = [
+  {
+    "name": "CMC Pharmacy",
+    "location": "Chitwan",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "KMC Pharmacy",
+    "location": "Kathmandu",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "PMC Pharmacy",
+    "location": "Pokhara",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+];
