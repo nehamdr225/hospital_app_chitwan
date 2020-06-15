@@ -11,7 +11,7 @@ import 'package:chitwan_hospital/service/auth.dart';
 
 class BloodBankForm extends StatefulWidget {
   final BloodRequest bloodRequestForm;
-  BloodBankForm({this.bloodRequestForm});
+  BloodBankForm({@required this.bloodRequestForm});
   @override
   _BloodBankFormState createState() => _BloodBankFormState();
 }

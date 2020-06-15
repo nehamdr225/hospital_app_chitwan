@@ -2,8 +2,8 @@ import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorDrawer.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientListCard.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
 import 'package:flutter/material.dart';
 
 class DoctorsModule extends StatelessWidget {

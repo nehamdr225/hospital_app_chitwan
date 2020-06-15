@@ -1,7 +1,11 @@
 import 'package:chitwan_hospital/UI/core/atoms/Category.dart';
+import 'package:chitwan_hospital/UI/pages/Ambulance/AmbulanceTab.dart';
+import 'package:chitwan_hospital/UI/pages/BloodBankForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
+import 'package:chitwan_hospital/UI/pages/Hospital/HospitalTab.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabTab.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
+import 'package:chitwan_hospital/service/BloodRequest.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalList extends StatefulWidget {
@@ -22,6 +26,8 @@ class HorizontalList extends StatefulWidget {
 class _HorizontalListState extends State<HorizontalList> {
   @override
   Widget build(BuildContext context) {
+    final BloodRequest newRequest =
+        BloodRequest(null, null, null, null, null, null, null);
     return ListView.builder(
       scrollDirection: widget.scrollDirection,
       itemCount: widget.listViews.length,
@@ -50,10 +56,30 @@ class _HorizontalListState extends State<HorizontalList> {
                     builder: (context) => PharmacyTab(),
                   ),
                 );
+              } else if (widget.listViews[index]['id'] == 2) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AmbulanceTab(),
+                  ),
+                );
               } else if (widget.listViews[index]['id'] == 3) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => LabTab(),
+                  ),
+                );
+              } else if (widget.listViews[index]['id'] == 4) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => HospitalTab(),
+                  ),
+                );
+              } else if (widget.listViews[index]['id'] == 5) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => BloodBankForm(
+                      bloodRequestForm: newRequest,
+                    ),
                   ),
                 );
               }

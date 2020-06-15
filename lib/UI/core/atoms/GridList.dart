@@ -1,5 +1,5 @@
 import 'package:chitwan_hospital/UI/core/atoms/GridLook.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule//DoctorsModule.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule//DoctorsModule.dart';
 import 'package:flutter/material.dart';
 
 class GridList extends StatelessWidget {

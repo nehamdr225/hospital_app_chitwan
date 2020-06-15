@@ -1,7 +1,7 @@
 import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientEdit.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientHistoryPage.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/RecordForm.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientEdit.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/RecordForm.dart';
 import 'package:chitwan_hospital/service/PatientRecordForm.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';

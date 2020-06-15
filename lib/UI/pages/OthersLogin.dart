@@ -1,7 +1,7 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/DoctorsModule.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 //import 'package:chitwan_hospital/service/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

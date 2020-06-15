@@ -2,7 +2,7 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientDetail.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -33,30 +33,10 @@ class PatientListCard extends StatefulWidget {
   _PatientListCardState createState() => _PatientListCardState();
 }
 
-class _PatientListCardState extends State<PatientListCard>
-    with TickerProviderStateMixin {
-  AnimationController controller;
+class _PatientListCardState extends State<PatientListCard> {
 
-  String get timerString {
-    Duration duration = controller.duration * controller.value;
-    return '${(duration.inHours % 60).toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 20));
-  }
 
-  timer(controller) {
-    // if(controller.value == 0.0){
-    //   controller.stop();
-    // }
-    // else{
-    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {

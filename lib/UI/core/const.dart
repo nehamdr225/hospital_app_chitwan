@@ -259,3 +259,50 @@ const Lab_List = [
     "src": "assets/images/bakery.jpg",
   },
 ];
+
+const Ambulance_List = [
+  {
+    "name": "CMC Hospital Ambulance",
+    "driver": "Jay Morgan",
+    "location": "Chitwan",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "KMC Hospital Ambulance",
+    "driver": "Jay Morgan",
+    "location": "Kathmandu",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "PMC Hospital Ambulance",
+    "driver": "Jay Morgan",
+    "location": "Pokhara",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+];
+const Hospital_List = [
+  {
+    "name": "CMC Hospital",
+    "driver": "Jay Morgan",
+    "location": "Chitwan",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "KMC Hospital",
+    "driver": "Jay Morgan",
+    "location": "Kathmandu",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "PMC Hospital",
+    "driver": "Jay Morgan",
+    "location": "Pokhara",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+];
