@@ -1,28 +1,22 @@
-import 'dart:io';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/pharmacyForm.dart';
+import 'package:chitwan_hospital/service/BloodRequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 
-class PharmacyForm extends StatefulWidget {
-  final Pharmacy pharmacyForm;
-  final doctor;
-  final department;
-  PharmacyForm(
-      {this.doctor, this.department, @required this.pharmacyForm, Key key})
-      : super(key: key);
+class BloodBankForm extends StatefulWidget {
+  final BloodRequest bloodRequestForm;
+  BloodBankForm({this.bloodRequestForm});
   @override
-  _PharmacyFormState createState() => _PharmacyFormState();
+  _BloodBankFormState createState() => _BloodBankFormState();
 }
 
-class _PharmacyFormState extends State<PharmacyForm> {
+class _BloodBankFormState extends State<BloodBankForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
   List name = [];
@@ -30,28 +24,15 @@ class _PharmacyFormState extends State<PharmacyForm> {
   String _lName;
   String _fPhone;
   String _fAddress;
-  File _image;
-  File _image2;
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(pickedFile.path);
-    });
-  }
-
-  Future getImage2() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image2 = File(pickedFile.path);
-    });
-  }
+  String _bGroup;
+  List _group = [
+    "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"
+  ];
 
   @override
   Widget build(BuildContext context) {
     TextEditingController _textController = new TextEditingController();
-    _textController.text = widget.pharmacyForm.firstName;
+    _textController.text = widget.bloodRequestForm.firstName;
     final theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
 
@@ -59,7 +40,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
           child: WhiteAppBar(
-              titleColor: theme.colorScheme.primary, title: "Order Form")),
+              titleColor: theme.colorScheme.primary, title: "Request Blood")),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
@@ -153,83 +134,81 @@ class _PharmacyFormState extends State<PharmacyForm> {
               ),
             ),
             Padding(
-              //date
-              padding:
-                  const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  FancyText(
-                    text: "Upload Prescription: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  _image == null
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 26.0,
-                            color: theme.colorScheme.primary,
-                          ),
-                          onPressed: getImage,
-                        )
-                      : Row(children: <Widget>[
-                          InkWell(
-                            onTap: getImage,
-                            child: Stack(children: <Widget>[
-                              Container(
-                                  height: 100.0,
-                                  width: 100.0,
-                                  decoration:
-                                      BoxDecoration(border: Border.all()),
-                                  child: Image.file(_image)),
-                              Container(
-                                height: 100.0,
-                                width: 100.0,
-                                color: Colors.black26,
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            width: 8.0,
-                          ),
-                          _image2 == null
-                              ? IconButton(
-                                  icon: Icon(
-                                    Icons.add_a_photo,
-                                    size: 26.0,
-                                    color: theme.colorScheme.primary,
-                                  ),
-                                  onPressed: getImage2,
-                                )
-                              : Row(
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: getImage2,
-                                      child: Stack(children: <Widget>[
-                                        Container(
-                                            height: 100.0,
-                                            width: 100.0,
-                                            decoration: BoxDecoration(
-                                                border: Border.all()),
-                                            child: Image.file(_image2)),
-                                        Container(
-                                          height: 100.0,
-                                          width: 100.0,
-                                          color: Colors.black26,
-                                        ),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
-                        ]),
-                ],
+              //phone number
+              padding: const EdgeInsets.all(10.0),
+              child: FForms(
+                icon: Icon(
+                  Icons.question_answer,
+                  color: theme.iconTheme.color,
+                ),
+                text: "Reason",
+                type: TextInputType.text,
+                //width: width * 0.80,
+                borderColor: theme.colorScheme.primary,
+                formColor: Colors.white,
+                textColor: blueGrey.withOpacity(0.7),
+                validator: (val) => val.isEmpty || val.length < 10
+                    ? 'Tell us your requirement reason.'
+                    : null,
+                onSaved: (value) {
+                  _fAddress = value;
+                },
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FancyText(
+                      text: "Blood Group: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.left,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10.0),
+                      height: 40.0,
+                      // width: width * 0.40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 1,
+                            color: theme.colorScheme.primary,
+                          )),
+                      child: DropdownButton(
+                        underline: SizedBox(),
+                        hint: Container(
+                            height: 45.0,
+                            width: width * 0.45,
+                            alignment: Alignment.center,
+                            child: FancyText(
+                              text: "Blood Group",
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            )),
+                        value: _bGroup,
+                        items: _group.map((value) {
+                          return DropdownMenuItem(
+                            child: FancyText(
+                              text: value,
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            value: value,
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _bGroup = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Icon(Icons.timer)
+                  ]),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -250,20 +229,18 @@ class _PharmacyFormState extends State<PharmacyForm> {
                       return;
                     }
                     _formKey.currentState.save();
-                    widget.pharmacyForm.firstName = _fName;
-                    widget.pharmacyForm.lastName = _lName;
-                    widget.pharmacyForm.phoneNum = _fPhone;
-                    widget.pharmacyForm.address = _fAddress;
-                    widget.pharmacyForm.image1 = _image;
-                    widget.pharmacyForm.image2 = _image2;
+                    widget.bloodRequestForm.firstName = _fName;
+                    widget.bloodRequestForm.lastName = _lName;
+                    widget.bloodRequestForm.phoneNum = _fPhone;
+                    widget.bloodRequestForm.address = _fAddress;
 
                     final uid =
                         await Provider.of<AuthService>(context).getCurrentUID();
                     await db
                         .collection("users")
                         .document(uid)
-                        .collection("labs")
-                        .add(widget.pharmacyForm.toJson());
+                        .collection("bloodBank")
+                        .add(widget.bloodRequestForm.toJson());
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));

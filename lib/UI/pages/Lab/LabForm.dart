@@ -1,28 +1,28 @@
 import 'dart:io';
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/pharmacyForm.dart';
+import 'package:chitwan_hospital/service/LabForm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 
-class PharmacyForm extends StatefulWidget {
-  final Pharmacy pharmacyForm;
+class LabForm extends StatefulWidget {
+  final LabForms labForm;
   final doctor;
   final department;
-  PharmacyForm(
-      {this.doctor, this.department, @required this.pharmacyForm, Key key})
+  LabForm(
+      {this.doctor, this.department, @required this.labForm, Key key})
       : super(key: key);
   @override
-  _PharmacyFormState createState() => _PharmacyFormState();
+  _LabFormState createState() => _LabFormState();
 }
 
-class _PharmacyFormState extends State<PharmacyForm> {
+class _LabFormState extends State<LabForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
   List name = [];
@@ -51,7 +51,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _textController = new TextEditingController();
-    _textController.text = widget.pharmacyForm.firstName;
+    _textController.text = widget.labForm.firstName;
     final theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
 
@@ -161,7 +161,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   FancyText(
-                    text: "Upload Prescription: ",
+                    text: "Upload Prescribed lab works: ",
                     size: 16.0,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.left,
@@ -250,12 +250,12 @@ class _PharmacyFormState extends State<PharmacyForm> {
                       return;
                     }
                     _formKey.currentState.save();
-                    widget.pharmacyForm.firstName = _fName;
-                    widget.pharmacyForm.lastName = _lName;
-                    widget.pharmacyForm.phoneNum = _fPhone;
-                    widget.pharmacyForm.address = _fAddress;
-                    widget.pharmacyForm.image1 = _image;
-                    widget.pharmacyForm.image2 = _image2;
+                    widget.labForm.firstName = _fName;
+                    widget.labForm.lastName = _lName;
+                    widget.labForm.phoneNum = _fPhone;
+                    widget.labForm.address = _fAddress;
+                    widget.labForm.image1 = _image;
+                    widget.labForm.image2 = _image2;
 
                     final uid =
                         await Provider.of<AuthService>(context).getCurrentUID();
@@ -263,7 +263,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                         .collection("users")
                         .document(uid)
                         .collection("labs")
-                        .add(widget.pharmacyForm.toJson());
+                        .add(widget.labForm.toJson());
+
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));

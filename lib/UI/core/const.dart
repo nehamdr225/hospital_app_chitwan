@@ -238,3 +238,24 @@ const Pharmacy_List = [
     "src": "assets/images/bakery.jpg",
   },
 ];
+
+const Lab_List = [
+  {
+    "name": "CMC Lab",
+    "location": "Chitwan",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "KMC Lab",
+    "location": "Kathmandu",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+  {
+    "name": "PMC Lab",
+    "location": "Pokhara",
+    "phone": "9841347147",
+    "src": "assets/images/bakery.jpg",
+  },
+];

@@ -9,18 +9,19 @@ import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
 import 'package:chitwan_hospital/service/pharmacyForm.dart';
 import 'package:flutter/material.dart';
 
-class PharmacyDetails extends StatelessWidget {
-  final pharmacyName;
+class LabDetails extends StatelessWidget {
+  final labName;
   final image;
-  final pharmacyLocation;
+  final labLocation;
   final phone;
   final status;
   final date;
   final time;
-  PharmacyDetails(
+  LabDetails
+(
       {this.image,
-      this.pharmacyName,
-      this.pharmacyLocation,
+      this.labName,
+      this.labLocation,
       this.phone,
       this.date,
       this.status,
@@ -35,7 +36,7 @@ class PharmacyDetails extends StatelessWidget {
         preferredSize: Size.fromHeight(50.0),
         child: WhiteAppBar(
           titleColor: theme.colorScheme.primary,
-          title: "Pharmacy's Details",
+          title: "Lab's Details",
           color: theme.colorScheme.primary,
           share: true,
         ),
@@ -104,7 +105,7 @@ class PharmacyDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 FancyText(
-                                  text: pharmacyName,
+                                  text: labName,
                                   fontWeight: FontWeight.w700,
                                   size: 18.0,
                                   textAlign: TextAlign.left,
@@ -116,7 +117,7 @@ class PharmacyDetails extends StatelessWidget {
                                   defaultStyle: false,
                                   titleColor: textDark_Yellow,
                                   titleSize: 15.0,
-                                  caption: pharmacyLocation,
+                                  caption: labLocation,
                                   capColor: textDark_Yellow,
                                   capSize: 15.0,
                                 ),
@@ -204,8 +205,8 @@ class PharmacyDetails extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => PharmacyForm(
                               pharmacyForm: newPharmacy,
-                              doctor: pharmacyName,
-                              department: pharmacyLocation,
+                              doctor: labName,
+                              department: labLocation,
                             )));
               },
             ),

@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/core/atoms/Category.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
+import 'package:chitwan_hospital/UI/pages/Lab/LabTab.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class HorizontalList extends StatefulWidget {
   HorizontalList({
     this.listViews,
     this.border: false,
-    this.scrollDirection:Axis.horizontal,
+    this.scrollDirection: Axis.horizontal,
   });
 
   @override
@@ -37,21 +38,24 @@ class _HorizontalListState extends State<HorizontalList> {
             width: 50.0,
             containerWidth: 110.0,
             onTap: () {
-              if(widget.listViews[index]['id']==0){
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => DoctorsTab(
+              if (widget.listViews[index]['id'] == 0) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DoctorsTab(),
                   ),
-                ),
-              );
-              }
-              else if(widget.listViews[index]['id']==1){
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => PharmacyTab(
+                );
+              } else if (widget.listViews[index]['id'] == 1) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PharmacyTab(),
                   ),
-                ),
-              );
+                );
+              } else if (widget.listViews[index]['id'] == 3) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LabTab(),
+                  ),
+                );
               }
             },
           ),

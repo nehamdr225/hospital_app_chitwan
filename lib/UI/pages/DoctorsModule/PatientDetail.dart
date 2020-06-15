@@ -2,6 +2,7 @@ import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientEdit.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/PatientHistoryPage.dart';
 import 'package:chitwan_hospital/UI/pages/DoctorsModule/RecordForm.dart';
+import 'package:chitwan_hospital/service/PatientRecordForm.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
@@ -33,6 +34,7 @@ class PatientDetail extends StatefulWidget {
 class _PatientDetailState extends State<PatientDetail> {
   @override
   Widget build(BuildContext context) {
+    final newRecord = PatientRecordForm(widget.name, widget.phone, null, null, null, null);
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -46,7 +48,11 @@ class _PatientDetailState extends State<PatientDetail> {
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => RecordForm()));
+                context, MaterialPageRoute(builder: (context) => RecordForm(
+                  name: widget.name,
+                  phone: widget.phone,
+                  patientRecord: newRecord,
+                )));
           },
           icon: Icon(Icons.calendar_today),
           label: FancyText(

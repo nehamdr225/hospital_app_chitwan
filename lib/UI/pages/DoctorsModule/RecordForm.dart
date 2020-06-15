@@ -3,13 +3,19 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
+import 'package:chitwan_hospital/service/PatientRecordForm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:chitwan_hospital/service/auth.dart';
 
 class RecordForm extends StatefulWidget {
-  final doctor;
-  final department;
-  RecordForm({this.doctor, this.department, Key key}) : super(key: key);
+  final PatientRecordForm patientRecord;
+  final name;
+  final phone;
+  RecordForm(
+      {this.name, this.phone, Key key, @required this.patientRecord})
+      : super(key: key);
   @override
   _RecordFormState createState() => _RecordFormState();
 }
@@ -20,6 +26,7 @@ class _RecordFormState extends State<RecordForm> {
   String _medicine;
   String _investigation;
   String _diagnosisTitle;
+  String _followUp;
   DateTime selectedDate = DateTime.now();
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -169,17 +176,20 @@ class _RecordFormState extends State<RecordForm> {
                       return;
                     }
                     _formKey.currentState.save();
-                    // widget.appointment.firstName = _fName;
-                    // widget.appointment.lastName = _lName;
-                    // widget.appointment.phoneNum = _fPhone;
+                    widget.patientRecord.name = widget.name;
+                    widget.patientRecord.phoneNum = widget.phone;
+                    widget.patientRecord.investigation = _investigation;
+                    widget.patientRecord.followUp = _followUp;
+                    widget.patientRecord.medicine = _medicine;
+                    widget.patientRecord.diagnosis = _diagnosisTitle;
 
-                    // final uid =
-                    //     await Provider.of<AuthService>(context).getCurrentUID();
-                    // await db
-                    //     .collection("users")
-                    //     .document(uid)
-                    //     .collection("appointments")
-                    //     .add(widget.appointment.toJson());
+                    final uid =
+                        await Provider.of<AuthService>(context).getCurrentUID();
+                    await db
+                        .collection("users")
+                        .document(uid)
+                        .collection("diagnosis")
+                        .add(widget.patientRecord.toJson());
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));
