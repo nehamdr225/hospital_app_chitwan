@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DoctorAppointmentPage.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
@@ -137,6 +138,15 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                     },
                   )
                 : Text(" "),
+                DrawerElements(
+              //Home
+              title: 'Appointment',
+              icon: 'assets/images/drawerIcon/calendar.png',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DoctorAppointmentPage()));
+              },
+            ),
             DrawerElements(
               //Share
               title: 'Working Schedule',
