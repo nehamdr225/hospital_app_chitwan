@@ -3,7 +3,7 @@ import 'package:chitwan_hospital/UI/Widget/loading.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/LoginAs.dart';
+import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
@@ -231,7 +231,7 @@ class _SignInState extends State<SignIn> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginAs()));
+                                          builder: (context) => OthersLogin()));
                                 },
                                 child: FancyText(
                                   text: "Login As ",

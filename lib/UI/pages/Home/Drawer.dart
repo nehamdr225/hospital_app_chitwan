@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/AccountPage.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
+import 'package:chitwan_hospital/UI/pages/Home/FavoritePage.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn.dart';
@@ -125,15 +126,19 @@ class _DrawerAppState extends State<DrawerApp> {
                     MaterialPageRoute(builder: (context) => HomeScreen()));
               },
             ),
-            DrawerElements(
-              //Favorite
-              title: 'Favorite',
-              icon: 'assets/images/drawerIcon/favorite.png',
-              onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => HomePageApp()));
-              },
-            ),
+            user != null
+                ? DrawerElements(
+                    //Favorite
+                    title: 'Favorite',
+                    icon: 'assets/images/drawerIcon/favorite.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FavoritePage()));
+                    },
+                  )
+                : Text(""),
             DrawerElements(
               //Appointments
               title: 'Appointments',
@@ -194,21 +199,21 @@ class _DrawerAppState extends State<DrawerApp> {
                             opacity: 1.0,
                           ),
                           content: Row(
-                            //crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                            Image.asset(
-                              "assets/images/facebookicon.png",
-                              height: 45.0,
-                              width: 45.0,
-                            ),
-                            SizedBox(width:10.0),
-                            Image.asset(
-                              "assets/images/googleicon.png",
-                              height: 30.0,
-                              width: 30.0,
-                            ),
-                          ]),
+                              //crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "assets/images/facebookicon.png",
+                                  height: 45.0,
+                                  width: 45.0,
+                                ),
+                                SizedBox(width: 10.0),
+                                Image.asset(
+                                  "assets/images/googleicon.png",
+                                  height: 30.0,
+                                  width: 30.0,
+                                ),
+                              ]),
                         ));
               },
             ),
@@ -241,10 +246,6 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Login As...",
                         onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => LoginAs()));
                           Navigator.push(
                               context,
                               MaterialPageRoute(

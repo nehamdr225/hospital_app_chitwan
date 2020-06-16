@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),
           child: Container(
               alignment: Alignment.center,
-              height: 110.0,
+              height: 110.0, 
               child: HorizontalList(
                 listViews: Options,
               )),

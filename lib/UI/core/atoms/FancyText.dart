@@ -11,6 +11,8 @@ class FancyText extends StatelessWidget {
   final Color color;
   final bool defaultStyle;
   final opacity;
+  final letterSpacing;
+  final wordSpacing;
   final fontfamily;
   final TextAlign textAlign;
 
@@ -24,6 +26,8 @@ class FancyText extends StatelessWidget {
       this.opacity: 0.6,
       this.defaultStyle: false,
       this.decoration,
+      this.letterSpacing,
+      this.wordSpacing,
       this.decorationColor: textDark,
       this.textAlign: TextAlign.center});
   @override
@@ -43,6 +47,8 @@ class FancyText extends StatelessWidget {
                     .color
                     .withOpacity(opacity))
             : TextStyle(
+                letterSpacing: letterSpacing,
+                wordSpacing: wordSpacing,
                 fontWeight: fontWeight,
                 fontFamily: fontfamily,
                 fontSize: size,
