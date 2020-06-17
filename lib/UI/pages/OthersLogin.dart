@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -101,10 +102,13 @@ class _OthersLoginState extends State<OthersLogin> {
                             value: _othersList,
                             items: _list.map((value) {
                               return DropdownMenuItem(
-                                child: FancyText(
-                                  text: value,
-                                  color: blueGrey,
-                                  fontWeight: FontWeight.w500,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 11.0),
+                                  child: FancyText(
+                                    text: value,
+                                    color: blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 value: value,
                               );
@@ -136,25 +140,30 @@ class _OthersLoginState extends State<OthersLogin> {
                           height: 45.0,
                           width: size.width * 0.90,
                           child: RaisedButton(
-                            color: theme.primary,
-                            child: FancyText(
-                              text: "SUBMIT",
-                              size: 16.0,
-                              color: textDark_Yellow,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            onPressed: () async {
-                              _checkDoctorID(context, _id);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DoctorsModule(
-                                          name: _checkDoctorID(context, _id)
-                                          //data = snapshot.data
-                                          )));
-                              //Navigator.pop(context);
-                            },
-                          ),
+                              color: theme.primary,
+                              child: FancyText(
+                                text: "SUBMIT",
+                                size: 16.0,
+                                color: textDark_Yellow,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              onPressed: () async {
+                                if (_othersList == 'Doctor') {
+                                  _checkDoctorID(context, _id);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DoctorsModule(
+                                              name: _checkDoctorID(
+                                                  context, _id))));
+                                } else if (_othersList == 'Pharmacy') {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PharmacyModule()));
+                                }
+                              }),
                         ),
                       ],
                     ),

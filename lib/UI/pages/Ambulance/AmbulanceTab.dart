@@ -9,7 +9,7 @@ class AmbulanceTab extends StatelessWidget {
     return Scaffold(
         appBar: PreferredSize(
             child: WhiteAppBar(
-              title: "All Pharmacies",
+              title: "All Ambulances",
               titleColor: Theme.of(context).colorScheme.primary,
             ),
             preferredSize: Size.fromHeight(50.0)),

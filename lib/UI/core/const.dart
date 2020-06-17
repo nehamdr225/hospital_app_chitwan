@@ -220,18 +220,21 @@ const List<Doodle> doodles = [
 
 const Pharmacy_List = [
   {
+    "clients" : "Ms. Bharati Devi Sharma",
     "name": "CMC Pharmacy",
     "location": "Chitwan",
     "phone": "9841347147",
     "src": "assets/images/bakery.jpg",
   },
   {
+    "clients" : "Ms. Bharati Devi Sharma",
     "name": "KMC Pharmacy",
     "location": "Kathmandu",
     "phone": "9841347147",
     "src": "assets/images/bakery.jpg",
   },
   {
+    "clients" : "Ms. Bharati Devi Sharma",
     "name": "PMC Pharmacy",
     "location": "Pokhara",
     "phone": "9841347147",
