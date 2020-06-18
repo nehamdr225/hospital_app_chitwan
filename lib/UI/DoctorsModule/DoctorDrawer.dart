@@ -8,7 +8,7 @@ import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/WorkSchedule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/SignIn.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

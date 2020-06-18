@@ -1,4 +1,4 @@
-import 'package:chitwan_hospital/UI/pages/SignIn.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:flutter/material.dart';
 

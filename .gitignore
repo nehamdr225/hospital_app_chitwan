@@ -1,0 +1,4 @@
+build
+android/build
+**/android/key.properties
+**/android/local.properties

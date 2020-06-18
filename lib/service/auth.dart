@@ -63,8 +63,4 @@ class AuthService with ChangeNotifier{
       return null;
     }
   }
-
-  
-
-
 }

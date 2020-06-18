@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/service/user.dart';
 
-
 Future main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Color(0xff091654),
@@ -34,14 +33,13 @@ class HomeApp extends StatelessWidget {
     final theme = Provider.of<STheme>(context);
 
     return StreamProvider<User>.value(
-      value: AuthService().user,
-      child:     MaterialApp(
-      debugShowCheckedModeBanner: false,
-      //darkTheme: theme.serviceDarkTheme,
-      theme: theme.serviceLightTheme,
-      home: SafeArea(
-        child: Wrapper()//AppointmentPage()
-      )
-    ));
+        value: AuthService().user,
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            //darkTheme: theme.serviceDarkTheme,
+            theme: theme.serviceLightTheme,
+            home: Wrapper() //AppointmentPage()
+
+            ));
   }
 }

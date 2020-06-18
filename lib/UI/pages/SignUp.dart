@@ -3,7 +3,7 @@ import 'package:chitwan_hospital/UI/Widget/loading.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/SignIn.dart';
+import 'package:chitwan_hospital/UI/pages/Signin/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 
