@@ -27,7 +27,7 @@ class ListItem {
             //     )), // new Image.asset(title, height: 20.0, width: 20.0, color: Colors.black87,)),
             new Text(
               subtitle,
-              style: Theme.of(context).textTheme.body1,
+              style: Theme.of(context).textTheme.bodyText2,
             )
           ]);
 }

@@ -37,11 +37,11 @@ class STheme with ChangeNotifier {
     fontFamily: 'Montserrat',
     textSelectionColor: Colors.black38,
     textTheme: TextTheme(
-      headline: TextStyle(
+      headline5: TextStyle(
           fontSize: 24.0, color: textLight, fontWeight: FontWeight.w500),
-      title: TextStyle(fontSize: 18.0, color: textLight),
-      body2: TextStyle(fontSize: 16.0, color: textDark),
-      body1: TextStyle(fontSize: 14.0, color: textLight),
+      headline6: TextStyle(fontSize: 18.0, color: textLight),
+      bodyText1: TextStyle(fontSize: 16.0, color: textDark),
+      bodyText2: TextStyle(fontSize: 14.0, color: textLight),
       overline: TextStyle(fontSize: 10.0, color: textLight),
       caption: TextStyle(fontSize: 12.0, color: textLight),
     ),
@@ -70,11 +70,11 @@ class STheme with ChangeNotifier {
     textSelectionColor: Colors.black38,
     unselectedWidgetColor: Colors.grey[500],
     textTheme: TextTheme(
-      headline: TextStyle(
+      headline5: TextStyle(
           fontSize: 24.0, color: textDark, fontWeight: FontWeight.w500),
-      title: TextStyle(fontSize: 18.0, color: textDark),
-      body2: TextStyle(fontSize: 16.0, color: textLight),
-      body1: TextStyle(fontSize: 14.0, color: textDark),
+      headline6: TextStyle(fontSize: 18.0, color: textDark),
+      bodyText1: TextStyle(fontSize: 16.0, color: textLight),
+      bodyText2: TextStyle(fontSize: 14.0, color: textDark),
       overline: TextStyle(fontSize: 10.0, color: textDark),
       caption: TextStyle(fontSize: 12.0, color: textDark),
     ),

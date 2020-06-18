@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/Wrapper.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,8 +39,16 @@ class HomeApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             //darkTheme: theme.serviceDarkTheme,
             theme: theme.serviceLightTheme,
-            home: Wrapper() //AppointmentPage()
+            home: SafeArea(child: Wrapper() //AppointmentPage()
+                )));
+  }
+}
 
-            ));
+class Wrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    if (user != null && user.uid != null) return HomeScreen();
+    return SignIn();
   }
 }

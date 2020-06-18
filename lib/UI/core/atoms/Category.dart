@@ -55,7 +55,7 @@ class Category extends StatelessWidget {
                   child: Text(
                     caption,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.body1,
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
               ),

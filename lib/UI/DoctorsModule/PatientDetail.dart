@@ -430,7 +430,7 @@ class _PatientDetailState extends State<PatientDetail> {
                   ),
                   Text(
                     doodle.diagnosis,
-                    style: textTheme.title,
+                    style: textTheme.headline6,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(

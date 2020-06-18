@@ -38,12 +38,12 @@ class FancyText extends StatelessWidget {
         text,
         textAlign: textAlign,
         style: defaultStyle == true
-            ? Theme.of(context).textTheme.body1.copyWith(
+            ? Theme.of(context).textTheme.bodyText2.copyWith(
                 fontSize: size,
                 fontWeight: fontWeight,
                 color: Theme.of(context)
                     .textTheme
-                    .body1
+                    .bodyText2
                     .color
                     .withOpacity(opacity))
             : TextStyle(

@@ -46,9 +46,9 @@ class WhiteAppBar extends StatelessWidget {
       bottom: tabbar == true
           ? TabBar(
               indicatorColor: theme.colorScheme.secondaryVariant,
-              unselectedLabelStyle: theme.textTheme.body1,
+              unselectedLabelStyle: theme.textTheme.bodyText2,
               unselectedLabelColor:
-                  theme.textTheme.body1.color, //unselectedWidgetColor,
+                  theme.textTheme.bodyText2.color, //unselectedWidgetColor,
               labelColor: theme.colorScheme.onPrimary,
               tabs: tabs,
               controller: controller,

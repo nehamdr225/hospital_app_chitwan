@@ -8,8 +8,6 @@ import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
-  final Function toggleView;
-  SignUp({this.toggleView});
   @override
   _SignUpState createState() => _SignUpState();
 }

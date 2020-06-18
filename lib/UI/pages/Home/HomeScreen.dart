@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
           child: FancyText(
             text: "Featured",
             fontWeight: FontWeight.w600,
-            color: theme.textTheme.body1.color,
+            color: theme.textTheme.bodyText2.color,
             size: 17.0,
             textAlign: TextAlign.left,
           ),

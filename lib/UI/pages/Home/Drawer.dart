@@ -7,7 +7,6 @@ import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/FavoritePage.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentPage.dart';
 import 'package:chitwan_hospital/service/auth.dart';
@@ -20,11 +19,11 @@ class DrawerApp extends StatefulWidget {
 }
 
 class _DrawerAppState extends State<DrawerApp> {
-  final AuthService _auth = AuthService();
-  final user = AuthService().user;
-
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthService>(context);
+    final user = _auth.user;
+
     //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
     //final uid = Provider.of<AuthService>(context).getCurrentUid;
     final theme = Theme.of(context);

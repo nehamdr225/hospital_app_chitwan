@@ -20,7 +20,7 @@ class CenterText extends StatelessWidget {
             valueColor: AlwaysStoppedAnimation<Color>(Colors.purple[200]),
           ),
           Padding(padding: EdgeInsets.only(bottom: 10.0),),
-          Text(text, style: Theme.of(context).textTheme.body1.copyWith(fontSize: size)),
+          Text(text, style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: size)),
         ],
       ):
       Text(text, style: TextStyle(fontSize: size)),

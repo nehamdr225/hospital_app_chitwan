@@ -19,10 +19,10 @@ class AppBarW extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.primaryVariant,
           centerTitle: true,
           title: Text(title,
-              style: theme.textTheme.body2),
+              style: theme.textTheme.bodyText1),
           leading: 
           logo == true
-          ? Padding(padding: EdgeInsets.only(top:16.0, left: 8.0),child:Text('LOGO', style: theme.textTheme.body2.copyWith(fontWeight: FontWeight.w800),))
+          ? Padding(padding: EdgeInsets.only(top:16.0, left: 8.0),child:Text('LOGO', style: theme.textTheme.bodyText2.copyWith(fontWeight: FontWeight.w800),))
           : IconButton(
             icon: Icon(CupertinoIcons.back),
             onPressed: (){},

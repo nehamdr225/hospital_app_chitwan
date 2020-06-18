@@ -93,7 +93,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                       }),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .body1
+                                          .bodyText2
                                           .copyWith(
                                               color: theme.colorScheme.primary,
                                               fontSize: 24.0,

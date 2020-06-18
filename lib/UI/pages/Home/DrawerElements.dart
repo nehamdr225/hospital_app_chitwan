@@ -20,7 +20,7 @@ class DrawerElements extends StatelessWidget {
     return ListTile(
       title: titleWidgets == false
           ? Text(title,
-              style: Theme.of(context).textTheme.body1.copyWith(
+              style: Theme.of(context).textTheme.bodyText2.copyWith(
                     fontWeight: FontWeight.w500,
                     fontSize: 15.0
             ))

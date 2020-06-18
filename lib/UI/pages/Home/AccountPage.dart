@@ -19,9 +19,10 @@ class _AccountPageState extends State<AccountPage> {
   final picker = ImagePicker();
   Future getProfileImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _profileImg = File(pickedFile.path);
-    });
+    if (pickedFile != null)
+      setState(() {
+        _profileImg = File(pickedFile.path);
+      });
   }
 
   @override
@@ -41,9 +42,9 @@ class _AccountPageState extends State<AccountPage> {
           future: Provider.of<AuthService>(context).getCurrentUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              return ListView(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Stack(
                       alignment: AlignmentDirectional.bottomEnd,
@@ -80,7 +81,7 @@ class _AccountPageState extends State<AccountPage> {
                                       }),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .body1
+                                          .bodyText2
                                           .copyWith(
                                               color: theme.primary,
                                               fontSize: 24.0,
@@ -98,7 +99,7 @@ class _AccountPageState extends State<AccountPage> {
                           borderColor: Colors.transparent,
                           bg: theme.primary,
                           elevation: 0.0,
-                          width: MediaQuery.of(context).size.width*0.50,
+                          width: MediaQuery.of(context).size.width * 0.50,
                           onPressed: getProfileImage,
                         ),
                       ],
