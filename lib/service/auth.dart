@@ -41,7 +41,7 @@ class AuthService with ChangeNotifier {
         email: email, password: password);
     try {
       FirebaseUser user = result.user;
-      await DatabaseService(uid: user.uid).updateUserData(email, phone);
+      await DatabaseService.updateUserData(user.uid, email, phone);
       await updateUserName(name, result.user);
       return result.user.uid;
     } catch (e) {

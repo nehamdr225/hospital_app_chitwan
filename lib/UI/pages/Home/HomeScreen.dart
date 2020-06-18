@@ -6,6 +6,7 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
+import 'package:chitwan_hospital/service/database.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
@@ -64,7 +65,7 @@ class HomeScreen extends StatelessWidget {
         Container(
             height: MediaQuery.of(context).size.height * 0.70,
             child: StreamBuilder(
-              stream: Firestore.instance.collection("doctors").snapshots(),
+              stream: DatabaseService.getDoctors(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const Text("Loading");
                 return ListView.builder(
