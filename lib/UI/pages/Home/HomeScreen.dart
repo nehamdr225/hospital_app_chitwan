@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 appointment: newAppointment,
               )));
         },
-        icon: Icon(Icons.calendar_today),
+        icon: Icon(Icons.calendar_today, color: textDark_Yellow,),
         label: FancyText(
           text: "Make Appointment",
           color: textDark_Yellow,
