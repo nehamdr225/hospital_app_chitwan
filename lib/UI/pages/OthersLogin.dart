@@ -4,6 +4,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/OthersSignUp.dart';
 //import 'package:chitwan_hospital/service/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -71,105 +72,128 @@ class _OthersLoginState extends State<OthersLogin> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => HomeScreen()));
                 }),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: theme.background,
-                    ),
-                    width: size.width * 0.90,
-                    //height: 148.0,
-                    child: Column(
-                      children: <Widget>[
-                        // SizedBox(height: 10.0),
-                        Container(
-                          color: Colors.white,
-                          width: size.width * 0.90,
-                          child: DropdownButton(
-                            underline: SizedBox(),
-                            hint: Container(
-                                height: 45.0,
-                                width: size.width * 0.83,
-                                alignment: Alignment.center,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: theme.background,
+                  ),
+                  width: size.width * 0.90,
+                  //height: 148.0,
+                  child: Column(
+                    children: <Widget>[
+                      // SizedBox(height: 10.0),
+                      Container(
+                        color: Colors.white,
+                        width: size.width * 0.90,
+                        child: DropdownButton(
+                          underline: SizedBox(),
+                          hint: Container(
+                              height: 45.0,
+                              width: size.width * 0.83,
+                              alignment: Alignment.center,
+                              child: FancyText(
+                                text: "Department",
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          value: _othersList,
+                          items: _list.map((value) {
+                            return DropdownMenuItem(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 11.0),
                                 child: FancyText(
-                                  text: "Department",
+                                  text: value,
                                   color: blueGrey,
                                   fontWeight: FontWeight.w500,
-                                )),
-                            value: _othersList,
-                            items: _list.map((value) {
-                              return DropdownMenuItem(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 11.0),
-                                  child: FancyText(
-                                    text: value,
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
                                 ),
-                                value: value,
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _othersList = value;
-                              });
-                            },
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          child: FForms(
-                            borderColor: theme.background,
-                            formColor: Colors.white,
-                            text: "Your ID",
-                            textColor: blueGrey.withOpacity(0.7),
-                            width: size.width * 0.90,
-                            validator: (val) => val.length < 6
-                                ? 'Enter ID given to you by the hospital.'
-                                : null,
-                            onChanged: (val) {
-                              setState(() => _id = val);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 45.0,
-                          width: size.width * 0.90,
-                          child: RaisedButton(
-                              color: theme.primary,
-                              child: FancyText(
-                                text: "SUBMIT",
-                                size: 16.0,
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
                               ),
-                              onPressed: () async {
-                                if (_othersList == 'Doctor') {
-                                  _checkDoctorID(context, _id);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DoctorsModule(
-                                              name: _checkDoctorID(
-                                                  context, _id))));
-                                } else if (_othersList == 'Pharmacy') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PharmacyModule()));
-                                }
-                              }),
+                              value: value,
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _othersList = value;
+                            });
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        color: Colors.white,
+                        child: FForms(
+                          borderColor: theme.background,
+                          formColor: Colors.white,
+                          text: "Your ID",
+                          textColor: blueGrey.withOpacity(0.7),
+                          width: size.width * 0.90,
+                          validator: (val) => val.length < 6
+                              ? 'Enter ID given to you by the hospital.'
+                              : null,
+                          onChanged: (val) {
+                            setState(() => _id = val);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 45.0,
+                        width: size.width * 0.90,
+                        child: RaisedButton(
+                            color: theme.primary,
+                            child: FancyText(
+                              text: "SUBMIT",
+                              size: 16.0,
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            onPressed: () async {
+                              if (_othersList == 'Doctor') {
+                                _checkDoctorID(context, _id);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DoctorsModule(
+                                            name: _checkDoctorID(
+                                                context, _id))));
+                              } else if (_othersList == 'Pharmacy') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PharmacyModule()));
+                              }
+                            }),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                SizedBox(height:5.0),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FancyText(
+                        text: "Don't have an account? ",
+                        color: textDark_Yellow,
+                        fontWeight: FontWeight.w600,
+                        size: 14.0,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OthersSignUp()));
+                        },
+                        child: FancyText(
+                          text: "Sign Up",
+                          color: textLight_Red2,
+                          fontWeight: FontWeight.w700,
+                          size: 14.0,
+                        ),
+                      ),
+                    ]),
+              ],
             )
           ],
         ),
