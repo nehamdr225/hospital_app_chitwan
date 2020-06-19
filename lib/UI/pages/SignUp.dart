@@ -41,7 +41,7 @@ class _SignUpState extends State<SignUp> {
                   width: size.width,
                   child: ListView(children: <Widget>[
                     IconButton(
-                      alignment: Alignment.topLeft,
+                        alignment: Alignment.topLeft,
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: textDark_Yellow,
@@ -169,14 +169,14 @@ class _SignUpState extends State<SignUp> {
                                                     _password,
                                                     _name,
                                                     _phone);
-                                            setState(() => loading = false);
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeScreen()));
-
-                                            if (result == null) {
+                                            if (result != null) {
+                                              setState(() => loading = false);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeScreen()));
+                                            } else {
                                               setState(() {
                                                 loading = false;
                                                 error =

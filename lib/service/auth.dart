@@ -37,13 +37,15 @@ class AuthService with ChangeNotifier {
   // signup with email and password
   Future registerWithEmailAndPassword(
       String email, String password, String name, String phone) async {
-    AuthResult result = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
     try {
-      FirebaseUser user = result.user;
-      await DatabaseService.updateUserData(user.uid, email, phone);
-      await updateUserName(name, result.user);
-      return result.user.uid;
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final FirebaseUser user = result.user;
+      Map<String, dynamic> userData = {'phone': phone, 'role': 'user'};
+
+      await DatabaseService.updateUserData(user.uid, userData);
+      await updateUserName(name, user);
+      return user.uid;
     } catch (e) {
       print(e.toString());
       return null;
@@ -51,10 +53,56 @@ class AuthService with ChangeNotifier {
   }
 
   Future updateUserName(String name, FirebaseUser currentUser) async {
-    var userUpdateInfo = UserUpdateInfo();
+    final userUpdateInfo = UserUpdateInfo();
     userUpdateInfo.displayName = name;
     await currentUser.updateProfile(userUpdateInfo);
     await currentUser.reload();
+  }
+
+  // signup with email and password
+  Future registerDoctor(
+      {String email,
+      String password,
+      String name,
+      String phone,
+      String hospital}) async {
+    try {
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final FirebaseUser user = result.user;
+      await DatabaseService.updateDoctorData(
+          user.uid, {'phone': phone, 'role': 'doctor', 'isVerified': false});
+      await updateUserName(name, user);
+      return user.uid;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+// signup with email and password
+  Future registerHospital({
+    String email,
+    String password,
+    String name,
+    String phone,
+  }) async {
+    try {
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final FirebaseUser user = result.user;
+      await DatabaseService.updateHospitalData(user.uid, {
+        'phone': phone,
+        'role': 'hospital',
+        'name': name,
+        'isVerified': false
+      });
+      await updateUserName(name, user);
+      return user.uid;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   //sign out

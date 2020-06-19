@@ -15,10 +15,17 @@ class DatabaseService {
   static final CollectionReference pharmacyCollection =
       db.collection('pharmacies');
 
-  static Future updateUserData(String uid, String email, String phone) async {
-    return await userCollection
-        .document(uid)
-        .setData({'email': email, 'phone': phone});
+  static Future updateUserData(String uid, Map<String, dynamic> data) async {
+    return await userCollection.document(uid).setData(data);
+  }
+
+  static Future updateDoctorData(String uid, Map<String, dynamic> data) async {
+    return await doctorCollection.document(uid).setData(data);
+  }
+
+  static Future updateHospitalData(
+      String uid, Map<String, dynamic> data) async {
+    return await hospitalCollection.document(uid).setData(data);
   }
 
   static Future createAppointment(Map data) async {

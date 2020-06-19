@@ -8,7 +8,6 @@ import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
 
 class HomeScreen extends StatelessWidget {
