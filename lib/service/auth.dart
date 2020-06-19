@@ -70,8 +70,12 @@ class AuthService with ChangeNotifier {
       final AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final FirebaseUser user = result.user;
-      await DatabaseService.updateDoctorData(
-          user.uid, {'phone': phone, 'role': 'doctor', 'isVerified': false});
+      await DatabaseService.updateDoctorData(user.uid, {
+        'phone': phone,
+        'role': 'doctor',
+        'isVerified': false,
+        'name': name
+      });
       await updateUserName(name, user);
       return user.uid;
     } catch (e) {
