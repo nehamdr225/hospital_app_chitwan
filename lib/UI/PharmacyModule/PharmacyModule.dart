@@ -146,6 +146,7 @@ class PharmacyModule extends StatelessWidget {
                     labLocation: Pharmacy_List[index]['location'],
                     image: Pharmacy_List[index]['src'],
                     phone: Pharmacy_List[index]['phone'],
+                    pharmacyStatus: pharmacistDecision,
                   );
                 })),
       ]),

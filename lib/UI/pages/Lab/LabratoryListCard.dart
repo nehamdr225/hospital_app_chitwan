@@ -1,4 +1,4 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/PPatientDetails.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabDetails.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +10,14 @@ class LabratoryListCard extends StatefulWidget {
   final labLocation;
   final image;
   final phone;
+  final pharmacyStatus;
 
   LabratoryListCard(
       {this.image,
       this.phone,
       this.clientName,
       this.labLocation,
+      this.pharmacyStatus,
       this.labName});
 
   @override
@@ -38,15 +40,17 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
                       labName: widget.labName,
                       phone: widget.phone,
                       image: widget.image,
+                      status: widget.pharmacyStatus,
                     )));
           } else {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PPatientDetails(
-                      // labLocation: widget.labLocation,
-                      // labName: widget.labName,
-                      // phone: widget.phone,
-                      // image: widget.image,
-                    )));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => BuyerDetail(
+                  buyerName: widget.clientName,
+                  buyerLocation: widget.labLocation,
+                  buyerPhone: widget.phone,
+                  status: 'undecided',
+                  buyerPrescriptionimage: widget.image,
+                )));
           }
         },
         child: Container(
