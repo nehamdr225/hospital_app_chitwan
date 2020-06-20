@@ -1,22 +1,14 @@
-import 'package:chitwan_hospital/UI/LabModule/LabDrawer.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
 import 'package:flutter/material.dart';
 
-enum AvalibilityState { online, away, busy }
-
-class LabModule extends StatefulWidget {
+class HospitalModule extends StatelessWidget {
   final name;
-  LabModule({this.name});
-
-  @override
-  _LabModuleState createState() => _LabModuleState();
-}
-
-class _LabModuleState extends State<LabModule> {
+  HospitalModule({this.name});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -25,10 +17,10 @@ class _LabModuleState extends State<LabModule> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: MainAppBar(
-          department: "Labratory",
+          department: "Hospital",
         ),
       ),
-      drawer: LabDrawerApp(),
+      drawer: DoctorDrawerApp(),
       backgroundColor: theme.background,
       body: ListView(children: <Widget>[
         Padding(
@@ -69,7 +61,7 @@ class _LabModuleState extends State<LabModule> {
                         padding: const EdgeInsets.only(
                             top: 8.0, left: 28.0, bottom: 0.0),
                         child: FancyText(
-                            text: "Welcome back!",
+                            text: "Hello Hospital!",
                             textAlign: TextAlign.left,
                             size: 22.0,
                             color: textDark_Yellow,
@@ -102,16 +94,7 @@ class _LabModuleState extends State<LabModule> {
                                 Icons.more_vert,
                                 color: textDark_Yellow,
                               ),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content:
-                                            FancyText(text: "Coming Soon!"),
-                                      );
-                                    });
-                              })
+                              onPressed: () {})
                         ],
                       ),
                     ],
@@ -119,7 +102,7 @@ class _LabModuleState extends State<LabModule> {
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0, left: 28.0),
                     child: FancyText(
-                        text: "NAME",
+                        text: "Welcome Back",
                         size: 16.0,
                         color: textDark_Yellow,
                         fontWeight: FontWeight.w400),
@@ -131,7 +114,7 @@ class _LabModuleState extends State<LabModule> {
                     padding: const EdgeInsets.only(
                         top: 6.0, left: 28.0, right: 28.0),
                     child: FancyText(
-                        text: "All on going lab tests are shown below.",
+                        text: "All inquiries requests are shown below.",
                         textAlign: TextAlign.left,
                         size: 14.0,
                         color: textDark_Yellow,
@@ -148,13 +131,14 @@ class _LabModuleState extends State<LabModule> {
                 itemCount: Pharmacy_List.length,
                 itemBuilder: (BuildContext context, int index) {
                   return LabratoryListCard(
-                      clientName: Pharmacy_List[index]['clients'],
-                      labName: Pharmacy_List[index]['clients'],
-                      labLocation: Pharmacy_List[index]['location'],
-                      image: Pharmacy_List[index]['src'],
-                      phone: Pharmacy_List[index]['phone'],
-                      pharmacyStatus: pharmacistDecision,
-                      id: "Lab");
+                    clientName: Pharmacy_List[index]['clients'],
+                    labName: Pharmacy_List[index]['clients'],
+                    labLocation: Pharmacy_List[index]['location'],
+                    image: Pharmacy_List[index]['src'],
+                    phone: Pharmacy_List[index]['phone'],
+                    pharmacyStatus: pharmacistDecision,
+                    id: "Hospital"
+                  );
                 })),
       ]),
     );

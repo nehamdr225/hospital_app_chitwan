@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
@@ -53,157 +54,163 @@ class _OthersLoginState extends State<OthersLogin> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: theme.background,
-        body: Stack(
-          children: <Widget>[
-            Container(
-                height: size.height,
-                child: Image.asset(
-                  "assets/images/img1.jpeg",
-                  fit: BoxFit.fitHeight,
-                )),
-            IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: textDark_Yellow,
+    return Scaffold(
+      backgroundColor: theme.background,
+      body: Stack(
+        children: <Widget>[
+          Container(
+              height: size.height,
+              child: Image.asset(
+                "assets/images/img1.jpeg",
+                fit: BoxFit.fitHeight,
+              )),
+          IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: textDark_Yellow,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
+              }),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: theme.background, 
                 ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
-                }),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: theme.background,
-                  ),
-                  width: size.width * 0.90,
-                  //height: 148.0,
-                  child: Column(
-                    children: <Widget>[
-                      // SizedBox(height: 10.0),
-                      Container(
-                        color: Colors.white,
-                        width: size.width * 0.90,
-                        child: DropdownButton(
-                          underline: SizedBox(),
-                          hint: Container(
-                              height: 45.0,
-                              width: size.width * 0.83,
-                              alignment: Alignment.center,
-                              child: FancyText(
-                                text: "Department",
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          value: _othersList,
-                          items: _list.map((value) {
-                            return DropdownMenuItem(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 11.0),
-                                child: FancyText(
-                                  text: value,
-                                  color: blueGrey,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              value: value,
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _othersList = value;
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        child: FForms(
-                          borderColor: theme.background,
-                          formColor: Colors.white,
-                          text: "Your ID",
-                          textColor: blueGrey.withOpacity(0.7),
-                          width: size.width * 0.90,
-                          validator: (val) => val.length < 6
-                              ? 'Enter ID given to you by the hospital.'
-                              : null,
-                          onChanged: (val) {
-                            setState(() => _id = val);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 45.0,
-                        width: size.width * 0.90,
-                        child: RaisedButton(
-                            color: theme.primary,
+                width: size.width * 0.90,
+                //height: 148.0,
+                child: Column(
+                  children: <Widget>[
+                    // SizedBox(height: 10.0),
+                    Container(
+                      color: Colors.white,
+                      width: size.width * 0.90,
+                      child: DropdownButton(
+                        underline: SizedBox(),
+                        hint: Container(
+                            height: 45.0,
+                            width: size.width * 0.83,
+                            alignment: Alignment.center,
                             child: FancyText(
-                              text: "SUBMIT",
-                              size: 16.0,
-                              color: textDark_Yellow,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            onPressed: () async {
-                              if (_othersList == 'Doctor') {
-                                _checkDoctorID(context, _id);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DoctorsModule(
-                                            name: _checkDoctorID(
-                                                context, _id))));
-                              } else if (_othersList == 'Pharmacy') {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PharmacyModule()));
-                              }else if (_othersList == 'Labratory') {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            LabModule()));
-                              }
-                            }),
+                              text: "Department",
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            )),
+                        value: _othersList,
+                        items: _list.map((value) {
+                          return DropdownMenuItem(
+                            child: Container(
+                            height: 45.0,
+                            width: size.width * 0.83,
+                            alignment: Alignment.center,
+                            child: FancyText(
+                              text: value,
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            ),), 
+                            
+                            value: value,
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _othersList = value;
+                          });
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      child: FForms(
+                        borderColor: theme.background,
+                        formColor: Colors.white,
+                        text: "Your ID",
+                        textColor: blueGrey.withOpacity(0.7),
+                        width: size.width * 0.90,
+                        validator: (val) => val.length < 6
+                            ? 'Enter ID given to you by the hospital.'
+                            : null,
+                        onChanged: (val) {
+                          setState(() => _id = val);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 45.0,
+                      width: size.width * 0.90,
+                      child: RaisedButton(
+                          color: theme.primary,
+                          child: FancyText(
+                            text: "SUBMIT",
+                            size: 16.0,
+                            color: textDark_Yellow,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onPressed: () async {
+                            if (_othersList == 'Doctor') {
+                              _checkDoctorID(context, _id);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DoctorsModule(
+                                          name: _checkDoctorID(
+                                              context, _id))));
+                            } else if (_othersList == 'Pharmacy') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PharmacyModule()));
+                            } else if (_othersList == 'Labratory') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LabModule()));
+                            } else if (_othersList == 'Hospital') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          HospitalModule()));
+                            }
+                          }),
+                    ),
+                  ],
                 ),
-                SizedBox(height:5.0),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Don't have an account? ",
-                        color: textDark_Yellow,
-                        fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height:5.0),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FancyText(
+                      text: "Don't have an account? ",
+                      color: textDark_Yellow,
+                      fontWeight: FontWeight.w600,
+                      size: 14.0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OthersSignUp()));
+                      },
+                      child: FancyText(
+                        text: "Sign Up",
+                        color: textLight_Red2,
+                        fontWeight: FontWeight.w700,
                         size: 14.0,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OthersSignUp()));
-                        },
-                        child: FancyText(
-                          text: "Sign Up",
-                          color: textLight_Red2,
-                          fontWeight: FontWeight.w700,
-                          size: 14.0,
-                        ),
-                      ),
-                    ]),
-              ],
-            )
-          ],
-        ),
+                    ),
+                  ]),
+            ],
+          )
+        ],
       ),
     );
   }

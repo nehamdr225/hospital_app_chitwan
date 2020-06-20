@@ -1,7 +1,8 @@
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalDetails.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabDetails.dart';
-import 'package:chitwan_hospital/UI/pages/Lab/LabInfoUpload.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -45,19 +46,23 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
                       image: widget.image,
                       status: widget.pharmacyStatus,
                     )));
-          } else if (widget.id == 'Lab'){
+          } else if (widget.id == 'Lab') {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) =>
-                 LabInfoUpload()));
-          }
-          else if (widget.id == "Pharmacy"){
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => BuyerDetail(
-                  buyerName: widget.clientName,
-                  buyerLocation: widget.labLocation,
-                  buyerPhone: widget.phone,
-                  status: 'undecided',
-                  buyerPrescriptionimage: widget.image,
+                .push(MaterialPageRoute(builder: (context) => LabInfoUpload()));
+          } else if (widget.id == "Pharmacy") {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => BuyerDetail(
+                      buyerName: widget.clientName,
+                      buyerLocation: widget.labLocation,
+                      buyerPhone: widget.phone,
+                      status: 'undecided',
+                      buyerPrescriptionimage: widget.image,
+                    )));
+          } else if (widget.id == "Hospital") {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HospitalDetails(
+                  name:widget.clientName,
+                  phone: widget.phone,
                 )));
           }
         },

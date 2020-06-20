@@ -92,7 +92,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   FancyText(
-                    text: "Upload Prescription: ",
+                    text: "Upload Report: ",
                     size: 16.0,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.left,

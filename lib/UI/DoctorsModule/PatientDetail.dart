@@ -54,7 +54,7 @@ class _PatientDetailState extends State<PatientDetail> {
                   patientRecord: newRecord,
                 )));
           },
-          icon: Icon(Icons.calendar_today),
+          icon: Icon(Icons.calendar_today, color: textDark_Yellow,),
           label: FancyText(
             text: "Diagnosis",
             color: textDark_Yellow,
