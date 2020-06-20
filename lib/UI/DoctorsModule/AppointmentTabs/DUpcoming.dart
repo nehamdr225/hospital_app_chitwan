@@ -1,5 +1,5 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/PrescriptionListCard.dart';
 import 'package:flutter/material.dart';
 
 class DUpcoming extends StatelessWidget {
@@ -9,17 +9,16 @@ class DUpcoming extends StatelessWidget {
     return ListView.builder(
           itemCount: PrescriptionData.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListCard(
-              name: PrescriptionData[index]['name'],
-              caption: PrescriptionData[index]['cap'],
-              image: PrescriptionData[index]['src'],
-              phone: PrescriptionData[index]['phone'],
-              status: PrescriptionData[index]['status'],
-              date: PrescriptionData[index]['date'],
-              time:PrescriptionData[index]['time'],
-              take: PrescriptionData[index]['take'],
-              data: true,
-            );
+            return PatientListCard(
+                    name: NearYou[index]['name'],
+                    caption: NearYou[index]['cap'],
+                    image: NearYou[index]['src'],
+                    phone: NearYou[index]['phone'],
+                    status: NearYou[index]['status'],
+                    date: NearYou[index]['date'],
+                    time: NearYou[index]['time'],
+                    gender: NearYou[index]['gender'],
+                  );
           }
     );
   }

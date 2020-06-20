@@ -1,6 +1,5 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/OrderList.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyProfile.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabProfile.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
@@ -12,12 +11,12 @@ import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PharmacyDrawerApp extends StatefulWidget {
+class LabDrawerApp extends StatefulWidget {
   @override
-  _PharmacyDrawerAppState createState() => _PharmacyDrawerAppState();
+  _LabDrawerAppState createState() => _LabDrawerAppState();
 }
 
-class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
+class _LabDrawerAppState extends State<LabDrawerApp> {
   final AuthService _auth = AuthService();
   final user = AuthService().user;
 
@@ -121,7 +120,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
               icon: 'assets/images/drawerIcon/home.png',
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PharmacyModule()));
+                    MaterialPageRoute(builder: (context) => LabModule()));
               },
             ),
             user != null
@@ -133,19 +132,11 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PharmacyProfile()));
+                              builder: (context) => LabProfile()));
                     },
                   )
                 : Text(" "),
-            DrawerElements(
-              //Home
-              title: 'Order List',
-              icon: 'assets/images/drawerIcon/calendar.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => OrderList()));
-              },
-            ),
+            
             Divider(
               color: Colors.grey[500],
               height: 5.0,

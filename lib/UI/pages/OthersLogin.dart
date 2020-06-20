@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -162,6 +163,12 @@ class _OthersLoginState extends State<OthersLogin> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             PharmacyModule()));
+                              }else if (_othersList == 'Labratory') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            LabModule()));
                               }
                             }),
                       ),

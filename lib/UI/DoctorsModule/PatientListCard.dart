@@ -105,8 +105,8 @@ class _PatientListCardState extends State<PatientListCard> {
                       maxRadius: 35.0,
                       child: Image.asset(
                         "assets/images/addProfileImg.png",
-                        height: 50.0,
-                        width: 50.0,
+                        height: 40.0,
+                        width: 40.0,
                       ),
                     ),
                   ),

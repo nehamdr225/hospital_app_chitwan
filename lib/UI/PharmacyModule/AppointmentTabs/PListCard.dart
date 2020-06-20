@@ -1,11 +1,10 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/LabResult.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class LabListCard extends StatefulWidget {
+class PListCard extends StatefulWidget {
   final name;
   final image;
   final caption;
@@ -15,7 +14,7 @@ class LabListCard extends StatefulWidget {
   final time;
   final take;
   final data;
-  LabListCard(
+  PListCard(
       {this.image,
       this.name,
       this.caption,
@@ -27,11 +26,10 @@ class LabListCard extends StatefulWidget {
       this.data = false});
 
   @override
-  _LabListCardState createState() => _LabListCardState();
+  _PListCardState createState() => _PListCardState();
 }
 
-class _LabListCardState extends State<LabListCard>
-{
+class _PListCardState extends State<PListCard> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,32 +38,18 @@ class _LabListCardState extends State<LabListCard>
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: widget.status == "Ready"
-            ? () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => LabResults(
-                          name: widget.name,
-                          caption: widget.caption,
-                          image: widget.image,
-                          phone: widget.phone,
-                          date: widget.date,
-                          time: widget.time,
-                        )));
-              }
-            : () {
-                showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                          content: FancyText(
-                            text:
-                                "Your results are being processed at the moment",
-                            defaultStyle: true,
-                            fontWeight: FontWeight.w700,
-                            size: 17.0,
-                            opacity: 1.0,
-                          ),
-                        ));
-              },
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PatientDetail(
+                    name: widget.name,
+                    caption: widget.caption,
+                    image: widget.image,
+                    phone: widget.phone,
+                    status: widget.status,
+                    date: widget.date,
+                    time: widget.time,
+                  )));
+        },
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
@@ -95,16 +79,29 @@ class _LabListCardState extends State<LabListCard>
               padding: const EdgeInsets.only(left: 18.0),
               child: Flex(
                 direction: Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flexible(
+                    flex: 1,
+                    child: CircleAvatar(
+                      backgroundColor: theme.colorScheme.background,
+                      maxRadius: 35.0,
+                      child: Image.asset(
+                        "assets/images/addProfileImg.png",
+                        height: 40.0,
+                        width: 40.0,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                  Flexible(
                     flex: 3,
-                    child: Padding(
+                                      child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          
                           FancyText(
                             text: widget.name,
                             fontWeight: FontWeight.w700,
@@ -112,24 +109,14 @@ class _LabListCardState extends State<LabListCard>
                             textAlign: TextAlign.left,
                           ),
                           RowInput(
-                            title: "Tests: ",
-                            caption: widget.caption,
+                            title: "Date:  ",
+                            caption: widget.date,
+                            defaultStyle: true,
                           ),
-                          RowInput(
-                            title: "Lab: ",
-                            caption: "CMC Labs",
-                          ),
-                          Padding(
-                              padding: EdgeInsets.all(0.0),
-                              child: widget.data == true &&
-                                      widget.status == "Ready"
-                                  ? RowInput(
-                                      title: "Physical Copy Collection ",
-                                      caption: widget.date,
-                                      capColor:
-                                          theme.colorScheme.secondaryVariant,
-                                      fontWeight: FontWeight.w700)
-                                  : null),
+                          RowInput(title: "Time:  ", caption: widget.time,),
+                          widget.status == "Rejected" 
+                          ? RowInput(title: "Reason:  ", caption: "reason", defaultStyle: true,): SizedBox(height: 1.0,),
+                          
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Row(
@@ -151,27 +138,6 @@ class _LabListCardState extends State<LabListCard>
                       ),
                     ),
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: Container(
-                        width: 80.0,
-                        height: 30.0,
-                        decoration: BoxDecoration(
-                            color: widget.status == "Accepted" ||
-                                    widget.status == "Ready"
-                                ? Colors.green.shade400
-                                : theme.colorScheme.secondary,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(3.0),
-                                bottomLeft: Radius.circular(3.0))),
-                        child: Center(
-                          child: FancyText(
-                            text: widget.status,
-                            opacity: 0.5,
-                            color: textDark_Yellow,
-                          ),
-                        ),
-                      ))
                 ],
               ),
             )

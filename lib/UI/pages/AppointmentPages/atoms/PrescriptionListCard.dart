@@ -29,29 +29,7 @@ class ListCard extends StatefulWidget {
   _ListCardState createState() => _ListCardState();
 }
 
-class _ListCardState extends State<ListCard> with TickerProviderStateMixin {
-  AnimationController controller;
-
-  String get timerString {
-    Duration duration = controller.duration * controller.value;
-    return '${(duration.inHours % 60).toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 20));
-  }
-
-  timer(controller) {
-    // if(controller.value == 0.0){
-    //   controller.stop();
-    // }
-    // else{
-    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
-    // }
-  }
+class _ListCardState extends State<ListCard> {
 
   @override
   Widget build(BuildContext context) {

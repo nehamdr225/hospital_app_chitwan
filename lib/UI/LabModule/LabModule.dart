@@ -6,19 +6,26 @@ import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyDrawer.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
 import 'package:flutter/material.dart';
 
-class PharmacyModule extends StatelessWidget {
+enum AvalibilityState{online, away, busy}
+
+class LabModule extends StatefulWidget {
   final name;
-  PharmacyModule({this.name});
+  LabModule({this.name});
+
+  @override
+  _LabModuleState createState() => _LabModuleState();
+}
+
+class _LabModuleState extends State<LabModule> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    print("THIS THIS THIS IS THE NAME ==== $name");
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: MainAppBar(
-          department: "Pharmacy",
+          department: "Labratory",
         ),
       ),
       drawer: PharmacyDrawerApp(),
@@ -34,15 +41,6 @@ class PharmacyModule extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 gradient: gradientColor,
                 boxShadow: [
-                  BoxShadow(
-                      color: Colors.white60,
-                      //offset: Offset(-4, -4),
-                      blurRadius: 3.0,
-                      spreadRadius: -12.0),
-                  BoxShadow(
-                      color: Colors.white60,
-                      offset: Offset(-4, -4),
-                      blurRadius: 3.0),
                   BoxShadow(
                       color: Colors.white60,
                       offset: Offset(-4, -4),
@@ -104,7 +102,17 @@ class PharmacyModule extends StatelessWidget {
                                 Icons.more_vert,
                                 color: textDark_Yellow,
                               ),
-                              onPressed: () {})
+                              onPressed: () {
+                                showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                               content: FancyText(
+                                 text: "Coming Soon!"
+                               ),
+                              );
+                            });
+                              })
                         ],
                       ),
                     ],
@@ -124,7 +132,7 @@ class PharmacyModule extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         top: 6.0, left: 28.0, right: 28.0),
                     child: FancyText(
-                        text: "All pharmacy requests are shown below.",
+                        text: "All on going lab tests are shown below.",
                         textAlign: TextAlign.left,
                         size: 14.0,
                         color: textDark_Yellow,
@@ -147,7 +155,7 @@ class PharmacyModule extends StatelessWidget {
                     image: Pharmacy_List[index]['src'],
                     phone: Pharmacy_List[index]['phone'],
                     pharmacyStatus: pharmacistDecision,
-                    id: "Pharmacy"
+                    id: "Lab"
                   );
                 })),
       ]),

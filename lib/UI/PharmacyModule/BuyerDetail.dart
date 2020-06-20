@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyReady.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PrescriptionView.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
@@ -48,12 +49,12 @@ class _BuyerDetailState extends State<BuyerDetail> {
       floatingActionButton: pharmacistDecision == "accepted"
           ? FloatingActionButton.extended(
               onPressed: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => AppointmentForm(
-                //               appointment: newAppointment,
-                //             )));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PharmacyReady(
+                              // appointment: newAppointment,
+                            )));
               },
               icon: Icon(
                 Icons.calendar_today,

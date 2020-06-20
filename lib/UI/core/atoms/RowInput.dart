@@ -11,6 +11,8 @@ class RowInput extends StatelessWidget {
   final FontWeight titleWeight;
   final titleSize;
   final capSize;
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
   RowInput(
       {this.caption,
       this.title,
@@ -20,11 +22,14 @@ class RowInput extends StatelessWidget {
       this.defaultStyle: true,
       this.titleSize,
       this.capSize,
-      this.titleWeight});
+      this.titleWeight,
+      this.crossAxisAlignment: CrossAxisAlignment.start,
+      this.mainAxisAlignment: MainAxisAlignment.start,});
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisAlignment: mainAxisAlignment,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 2.0),
