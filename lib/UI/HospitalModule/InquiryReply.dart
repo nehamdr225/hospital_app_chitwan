@@ -19,7 +19,7 @@ class _InquiryReplyState extends State<InquiryReply> {
 
   @override
   Widget build(BuildContext context) {
-    
+    print(_reply);
     final theme = Theme.of(context);
 
     return Scaffold(

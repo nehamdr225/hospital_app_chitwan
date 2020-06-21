@@ -8,7 +8,6 @@ import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersSignUp.dart';
 import 'package:chitwan_hospital/service/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class OthersLogin extends StatefulWidget {

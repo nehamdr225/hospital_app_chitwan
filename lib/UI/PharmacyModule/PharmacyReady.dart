@@ -24,8 +24,9 @@ class _PharmacyReadyState extends State<PharmacyReady> {
 
   @override
   Widget build(BuildContext context) {
+    print('$_medicineName $_quantity $_price');
     final theme = Theme.of(context).colorScheme;
-      final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     _buildAddFieldWidget() {
       return Container(
         height: 190,
@@ -35,24 +36,23 @@ class _PharmacyReadyState extends State<PharmacyReady> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(10.0),
-                child:FForms(
-                
-                borderColor: theme.primary,
-                formColor: Colors.white,
-                text: "Medicine Name",
-                type: TextInputType.text,
-                textColor: blueGrey.withOpacity(0.7),
-                width: size.width * 0.95,
-                validator: (val) =>
-                    val.isEmpty ? 'Name of medicine is required' : null,
-                onSaved: (value) {
-                  _medicineName = value;
-                },
+                child: FForms(
+                  borderColor: theme.primary,
+                  formColor: Colors.white,
+                  text: "Medicine Name",
+                  type: TextInputType.text,
+                  textColor: blueGrey.withOpacity(0.7),
+                  width: size.width * 0.95,
+                  validator: (val) =>
+                      val.isEmpty ? 'Name of medicine is required' : null,
+                  onSaved: (value) {
+                    _medicineName = value;
+                  },
+                ),
               ),
-              ),
-              
               Padding(
-                padding: const EdgeInsets.only(left:10.0, right:10.0, bottom: 10.0),
+                padding: const EdgeInsets.only(
+                    left: 10.0, right: 10.0, bottom: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -81,7 +81,8 @@ class _PharmacyReadyState extends State<PharmacyReady> {
                       type: TextInputType.number,
                       textColor: blueGrey.withOpacity(0.7),
                       width: size.width * 0.515,
-                      validator: (val) => val.isEmpty ? 'Price is required' : null,
+                      validator: (val) =>
+                          val.isEmpty ? 'Price is required' : null,
                       onSaved: (value) {
                         _price = value;
                       },
@@ -94,6 +95,7 @@ class _PharmacyReadyState extends State<PharmacyReady> {
         ),
       );
     }
+
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(50.0),
@@ -112,9 +114,9 @@ class _PharmacyReadyState extends State<PharmacyReady> {
               child: InkWell(
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.add), 
+                    Icon(Icons.add),
                     Padding(
-                      padding: const EdgeInsets.only(left:10.0),
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: FancyText(
                         text: "Add another field",
                         fontWeight: FontWeight.w500,
@@ -123,7 +125,8 @@ class _PharmacyReadyState extends State<PharmacyReady> {
                     )
                   ],
                 ),
-                onTap: () => _buildAddFieldWidget(), // when pressed new fields will be added below the original fields
+                onTap: () =>
+                    _buildAddFieldWidget(), // when pressed new fields will be added below the original fields
               ),
             ),
             Padding(
@@ -163,9 +166,10 @@ class _PharmacyReadyState extends State<PharmacyReady> {
                     // widget.appointment.firstName = _fName;
                     // widget.appointment.lastName = _lName;
                     // widget.appointment.phoneNum = _fPhone;
-                    
+
                     final uid =
                         await Provider.of<AuthService>(context).getCurrentUID();
+                    print(uid);
                     // await db
                     //     .collection("users")
                     //     .document(uid)
