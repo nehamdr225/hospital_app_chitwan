@@ -8,6 +8,7 @@ class DataStore extends ChangeNotifier {
       final auth = AuthService();
       print('Bootstrapping data store\n');
       auth.getCurrentUID().then((value) {
+        print('value $value');
         if (value != null) {
           DatabaseService.getUserData(value).then((userData) {
             if (userData.data != null) {

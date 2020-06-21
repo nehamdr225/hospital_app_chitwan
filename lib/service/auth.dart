@@ -14,7 +14,16 @@ class AuthService with ChangeNotifier {
   }
 
   Future<String> getCurrentUID() async {
-    return (await _auth.currentUser()).uid;
+    try {
+      final currentUser = await _auth.currentUser();
+      if (currentUser != null) {
+        return currentUser.uid;
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   Future getCurrentUser() async {
