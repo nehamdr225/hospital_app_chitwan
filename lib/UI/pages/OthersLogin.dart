@@ -44,250 +44,248 @@ class _OthersLoginState extends State<OthersLogin> {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         resizeToAvoidBottomInset: true,
-          backgroundColor: theme.background,
-          body: Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        image: DecorationImage(
+        backgroundColor: theme.background,
+        body: Container(
           alignment: Alignment.center,
-          fit: BoxFit.cover,
-          image: AssetImage("assets/images/img1.jpeg"),
-        ),
-      ),
-      child: ListView(
-        children: <Widget>[
-          IconButton(
-              alignment: Alignment.topLeft,
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: textDark_Yellow,
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
-              }),
-          Center(
-            heightFactor: 2.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: theme.background,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              alignment: Alignment.center,
+              fit: BoxFit.cover,
+              image: AssetImage("assets/images/img1.jpeg"),
+            ),
+          ),
+          child: Stack(
+            children: <Widget>[
+              IconButton(
+                  alignment: Alignment.topLeft,
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: textDark_Yellow,
                   ),
-                  width: size.width * 0.90,
-                  //height: 148.0,
-                  child: Column(
-                    children: <Widget>[
-                      // SizedBox(height: 10.0),
-                      Container(
-                        color: Colors.white,
-                        width: size.width * 0.90,
-                        child: DropdownButton(
-                          underline: SizedBox(),
-                          hint: Container(
-                              height: 45.0,
-                              width: size.width * 0.83,
-                              alignment: Alignment.center,
-                              child: FancyText(
-                                text: "Department",
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          value: _othersList,
-                          items: _list.map((value) {
-                            return DropdownMenuItem(
-                              child: Container(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                  }),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: theme.background,
+                    ),
+                    width: size.width * 0.90,
+                    //height: 148.0,
+                    child: Column(
+                      children: <Widget>[
+                        // SizedBox(height: 10.0),
+                        Container(
+                          color: theme.background,
+                          width: size.width * 0.90,
+                          child: DropdownButton(
+                            underline: SizedBox(),
+                            hint: Container(
                                 height: 45.0,
                                 width: size.width * 0.83,
                                 alignment: Alignment.center,
                                 child: FancyText(
-                                  text: value,
+                                  text: "Department",
                                   color: blueGrey,
                                   fontWeight: FontWeight.w500,
+                                )),
+                            value: _othersList,
+                            items: _list.map((value) {
+                              return DropdownMenuItem(
+                                child: Container(
+                                  height: 45.0,
+                                  width: size.width * 0.83,
+                                  alignment: Alignment.center,
+                                  child: FancyText(
+                                    text: value,
+                                    color: blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              value: value,
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _othersList = value;
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: theme.background,
-                        ),
-                        padding: EdgeInsets.only(top: 5.0),
-                        width: size.width * 0.90,
-                        //height: 165.0,
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: <Widget>[
-                              // SizedBox(height: 10.0),
-                              FForms(
-                                borderColor: theme.background,
-                                formColor: Colors.white,
-                                text: "Email",
-                                textColor: blueGrey.withOpacity(0.7),
-                                width: size.width * 0.90,
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter an email' : null,
-                                onChanged: (val) {
-                                  setState(() => email = val);
-                                },
-                              ),
-                              FForms(
-                                borderColor: theme.background,
-                                formColor: Colors.white,
-                                text: "Password",
-                                obscure: obscure,
-                                trailingIcon: obscure == true
-                                    ? IconButton(
-                                        icon: Icon(
-                                          Icons.visibility,
-                                          color: theme.primary,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            obscure = false;
-                                          });
-                                        })
-                                    : IconButton(
-                                        icon: Icon(
-                                          Icons.visibility_off,
-                                          color: theme.primary,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            obscure = true;
-                                          });
-                                        }),
-                                textColor: blueGrey.withOpacity(0.7),
-                                width: size.width * 0.90,
-                                validator: (val) => val.length < 6
-                                    ? 'Enter a password 6+ chars long'
-                                    : null,
-                                onChanged: (val) {
-                                  setState(() => password = val);
-                                },
-                              ),
-                              SizedBox(
-                                height: 45.0,
-                                width: size.width * 0.90,
-                                child: RaisedButton(
-                                    color: theme.primary,
-                                    child: FancyText(
-                                      text: "SUBMIT",
-                                      size: 16.0,
-                                      color: textDark_Yellow,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    onPressed: () async {
-                                      if (_formKey.currentState.validate()) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        // Scaffold.of(context).showSnackBar(
-                                        //     SnackBar(
-                                        //         content:
-                                        //             Text('Processing Data')));
-                                        _formKey.currentState.save();
-                                        dynamic result = await _auth
-                                            .signInWithEmailAndPassword(
-                                                email, password);
-                                        if (result == null) {
-                                          setState(() {
-                                            loading = false;
-                                            signedIn = false;
-                                            error =
-                                                'Could not sign in with those credentials';
-                                          });
-                                        } else {
-                                          //   setState(() {
-                                          //   loading = false;
-                                          //   signedIn = true;
-                                          // });
-                                          if (_othersList == 'Doctor') {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DoctorsModule()));
-                                          } else if (_othersList ==
-                                              'Pharmacy') {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PharmacyModule()));
-                                          } else if (_othersList ==
-                                              'Labratory') {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        LabModule()));
-                                          } else if (_othersList ==
-                                              'Hospital') {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HospitalModule()));
-                                          }
-                                        }
-                                      }
-                                    }),
-                              ),
-                            ],
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _othersList = value;
+                              });
+                            },
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: theme.background,
+                          ),
+                          padding: EdgeInsets.only(top: 5.0),
+                          width: size.width * 0.90,
+                          //height: 165.0,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                // SizedBox(height: 10.0),
+                                FForms(
+                                  borderColor: theme.background,
+                                  formColor: Colors.white,
+                                  text: "Email",
+                                  textColor: blueGrey.withOpacity(0.7),
+                                  width: size.width * 0.90,
+                                  validator: (val) =>
+                                      val.isEmpty ? 'Enter an email' : null,
+                                  onChanged: (val) {
+                                    setState(() => email = val);
+                                  },
+                                ),
+                                FForms(
+                                  borderColor: theme.background,
+                                  formColor: Colors.white,
+                                  text: "Password",
+                                  obscure: obscure,
+                                  trailingIcon: obscure == true
+                                      ? IconButton(
+                                          icon: Icon(
+                                            Icons.visibility,
+                                            color: theme.primary,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              obscure = false;
+                                            });
+                                          })
+                                      : IconButton(
+                                          icon: Icon(
+                                            Icons.visibility_off,
+                                            color: theme.primary,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              obscure = true;
+                                            });
+                                          }),
+                                  textColor: blueGrey.withOpacity(0.7),
+                                  width: size.width * 0.90,
+                                  validator: (val) => val.length < 6
+                                      ? 'Enter a password 6+ chars long'
+                                      : null,
+                                  onChanged: (val) {
+                                    setState(() => password = val);
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 45.0,
+                                  width: size.width * 0.90,
+                                  child: RaisedButton(
+                                      color: theme.primary,
+                                      child: FancyText(
+                                        text: "SUBMIT",
+                                        size: 16.0,
+                                        color: textDark_Yellow,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      onPressed: () async {
+                                        if (_formKey.currentState.validate()) {
+                                          setState(() {
+                                            loading = true;
+                                          });
+                                          // Scaffold.of(context).showSnackBar(
+                                          //     SnackBar(
+                                          //         content:
+                                          //             Text('Processing Data')));
+                                          _formKey.currentState.save();
+                                          dynamic result = await _auth
+                                              .signInWithEmailAndPassword(
+                                                  email, password);
+                                          if (result == null) {
+                                            setState(() {
+                                              loading = false;
+                                              signedIn = false;
+                                              error =
+                                                  'Could not sign in with those credentials';
+                                            });
+                                          } else {
+                                            //   setState(() {
+                                            //   loading = false;
+                                            //   signedIn = true;
+                                            // });
+                                            if (_othersList == 'Doctor') {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DoctorsModule()));
+                                            } else if (_othersList ==
+                                                'Pharmacy') {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PharmacyModule()));
+                                            } else if (_othersList ==
+                                                'Labratory') {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LabModule()));
+                                            } else if (_othersList ==
+                                                'Hospital') {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HospitalModule()));
+                                            }
+                                          }
+                                        }
+                                      }),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 5.0),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Don't have an account? ",
-                        color: textDark_Yellow,
-                        fontWeight: FontWeight.w600,
-                        size: 14.0,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OthersSignUp()));
-                        },
-                        child: FancyText(
-                          text: "Sign Up",
-                          color: textLight_Red2,
-                          fontWeight: FontWeight.w700,
+                  SizedBox(height: 5.0),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        FancyText(
+                          text: "Don't have an account? ",
+                          color: textDark_Yellow,
+                          fontWeight: FontWeight.w600,
                           size: 14.0,
                         ),
-                      ),
-                    ]),
-              ],
-            ),
-          ),
-        ],
-      ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OthersSignUp()));
+                          },
+                          child: FancyText(
+                            text: "Sign Up",
+                            color: textLight_Red2,
+                            fontWeight: FontWeight.w700,
+                            size: 14.0,
+                          ),
+                        ),
+                      ]),
+                  FancyText(text: error, color: textDark_Yellow),
+                ],
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

@@ -76,145 +76,138 @@ class _SignInState extends State<SignIn> {
                       alignment: Alignment.center,
                       fit: BoxFit.cover,
                       image: AssetImage("assets/images/img1.jpeg"))),
-              child: ListView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Center(
-                    heightFactor: 2.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: theme.background,
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: theme.background,
+                    ),
+                    padding: EdgeInsets.only(top: 5.0),
+                    width: size.width * 0.90,
+                    //height: 165.0,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          // SizedBox(height: 10.0),
+                          FForms(
+                            borderColor: theme.background,
+                            formColor: Colors.white,
+                            text: "Email",
+                            textColor: blueGrey.withOpacity(0.7),
+                            width: size.width * 0.90,
+                            validator: (val) =>
+                                val.isEmpty ? 'Enter an email' : null,
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            },
                           ),
-                          padding: EdgeInsets.only(top: 5.0),
-                          width: size.width * 0.90,
-                          //height: 165.0,
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: <Widget>[
-                                // SizedBox(height: 10.0),
-                                FForms(
-                                  borderColor: theme.background,
-                                  formColor: Colors.white,
-                                  text: "Email",
-                                  textColor: blueGrey.withOpacity(0.7),
-                                  width: size.width * 0.90,
-                                  validator: (val) =>
-                                      val.isEmpty ? 'Enter an email' : null,
-                                  onChanged: (val) {
-                                    setState(() => email = val);
-                                  },
-                                ),
-                                FForms(
-                                  borderColor: theme.background,
-                                  formColor: Colors.white,
-                                  text: "Password",
-                                  obscure: obscure,
-                                  trailingIcon: obscure == true
-                                      ? IconButton(
-                                          icon: Icon(
-                                            Icons.visibility,
-                                            color: theme.primary,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              obscure = false;
-                                            });
-                                          })
-                                      : IconButton(
-                                          icon: Icon(
-                                            Icons.visibility_off,
-                                            color: theme.primary,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              obscure = true;
-                                            });
-                                          }),
-                                  textColor: blueGrey.withOpacity(0.7),
-                                  width: size.width * 0.90,
-                                  validator: (val) => val.length < 6
-                                      ? 'Enter a password 6+ chars long'
-                                      : null,
-                                  onChanged: (val) {
-                                    setState(() => password = val);
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 45.0,
-                                  width: size.width * 0.90,
-                                  child: RaisedButton(
-                                    color: theme.primary,
-                                    child: FancyText(
-                                      text: "SUBMIT",
-                                      size: 16.0,
-                                      color: textDark_Yellow,
-                                      fontWeight: FontWeight.w600,
+                          FForms(
+                            borderColor: theme.background,
+                            formColor: Colors.white,
+                            text: "Password",
+                            obscure: obscure,
+                            trailingIcon: obscure == true
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.visibility,
+                                      color: theme.primary,
                                     ),
-                                    onPressed: handleSignIn,
-                                  ),
-                                ),
-                              ],
+                                    onPressed: () {
+                                      setState(() {
+                                        obscure = false;
+                                      });
+                                    })
+                                : IconButton(
+                                    icon: Icon(
+                                      Icons.visibility_off,
+                                      color: theme.primary,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        obscure = true;
+                                      });
+                                    }),
+                            textColor: blueGrey.withOpacity(0.7),
+                            width: size.width * 0.90,
+                            validator: (val) => val.length < 6
+                                ? 'Enter a password 6+ chars long'
+                                : null,
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            },
+                          ),
+                          SizedBox(
+                            height: 45.0,
+                            width: size.width * 0.90,
+                            child: RaisedButton(
+                              color: theme.primary,
+                              child: FancyText(
+                                text: "SUBMIT",
+                                size: 16.0,
+                                color: textDark_Yellow,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              onPressed: handleSignIn,
                             ),
                           ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FancyText(
-                                text: "Don't have an account? ",
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
-                                size: 14.0,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUp()));
-                                },
-                                child: FancyText(
-                                  text: "Sign Up",
-                                  color: textLight_Red2,
-                                  fontWeight: FontWeight.w700,
-                                  size: 14.0,
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OthersLogin()));
-                                },
-                                child: FancyText(
-                                  text: "Login As ",
-                                  color: textLight_Red2,
-                                  fontWeight: FontWeight.w700,
-                                  size: 14.0,
-                                ),
-                              ),
-                              FancyText(
-                                text: "others",
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
-                                size: 14.0,
-                              ),
-                            ]),
-                        Text(error),
-                      ],
+                        ],
+                      ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        FancyText(
+                          text: "Don't have an account? ",
+                          color: textDark_Yellow,
+                          fontWeight: FontWeight.w600,
+                          size: 14.0,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUp()));
+                          },
+                          child: FancyText(
+                            text: "Sign Up",
+                            color: textLight_Red2,
+                            fontWeight: FontWeight.w700,
+                            size: 14.0,
+                          ),
+                        ),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OthersLogin()));
+                          },
+                          child: FancyText(
+                            text: "Login As ",
+                            color: textLight_Red2,
+                            fontWeight: FontWeight.w700,
+                            size: 14.0,
+                          ),
+                        ),
+                        FancyText(
+                          text: "others",
+                          color: textDark_Yellow,
+                          fontWeight: FontWeight.w600,
+                          size: 14.0,
+                        ),
+                      ]),
+                  FancyText(text: error, color: textDark_Yellow),
                 ],
               ),
             ),
