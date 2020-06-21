@@ -13,25 +13,30 @@ import 'package:chitwan_hospital/service/appointment.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new Appointments(null, null, "Department", "Dr. ", "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
+    final newAppointment = new Appointments(null, null, "Department", "Dr. ",
+        "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final theme = Theme.of(context);
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: MainAppBar(
-          department: "Hospital",
-        )
-      ),
+          preferredSize: Size.fromHeight(60.0),
+          child: MainAppBar(
+            department: "Hospital",
+          )),
       backgroundColor: theme.colorScheme.background,
       drawer: DrawerApp(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AppointmentForm(
-                appointment: newAppointment,
-              )));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AppointmentForm(
+                        appointment: newAppointment,
+                      )));
         },
-        icon: Icon(Icons.calendar_today, color: textDark_Yellow,),
+        icon: Icon(
+          Icons.calendar_today,
+          color: textDark_Yellow,
+        ),
         label: FancyText(
           text: "Make Appointment",
           color: textDark_Yellow,
@@ -45,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),
           child: Container(
               alignment: Alignment.center,
-              height: 110.0, 
+              height: 110.0,
               child: HorizontalList(
                 listViews: Options,
               )),
@@ -68,7 +73,7 @@ class HomeScreen extends StatelessWidget {
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const Text("Loading");
                 return ListView.builder(
-                    itemCount: snapshot.data.documents.length-1,
+                    itemCount: snapshot.data.documents.length - 1,
                     itemBuilder: (BuildContext context, int index) {
                       return HomeListCard(
                         doctorName: snapshot.data.documents[index]['name'],

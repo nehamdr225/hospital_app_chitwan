@@ -7,6 +7,8 @@ import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:chitwan_hospital/service/store.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -18,18 +20,49 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String error = '';
   bool loading = false;
-  bool signedIn = false;
   bool obscure = true;
-
-  // text field state
   String email = '';
   String password = '';
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final userDataStore = Provider.of<DataStore>(context);
+
+    handleSignIn() async {
+      try {
+        if (_formKey.currentState.validate()) {
+          setState(() {
+            loading = true;
+          });
+          _formKey.currentState.save();
+          dynamic result =
+              await _auth.signInWithEmailAndPassword(email, password);
+          setState(() {
+            loading = false;
+          });
+          if (result == null) {
+            setState(() {
+              error = 'Could not sign in with those credentials';
+            });
+          } else {
+            userDataStore.uid = result.uid;
+            userDataStore.type = 'user';
+            userDataStore.fetchUserData();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          }
+        }
+      } catch (e) {
+        setState(() {
+          loading = false;
+          error = 'Could not sign in with those credentials';
+        });
+      }
+    }
 
     return loading
         ? Loading()
@@ -43,52 +76,8 @@ class _SignInState extends State<SignIn> {
                       alignment: Alignment.center,
                       fit: BoxFit.cover,
                       image: AssetImage("assets/images/img1.jpeg"))),
-              // height: size.height,
-              // width: size.width,
               child: ListView(
                 children: <Widget>[
-                  IconButton(
-                      alignment: Alignment.topLeft,
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: textDark_Yellow,
-                      ),
-                      onPressed: signedIn == false
-                          ? () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        content: FancyText(
-                                          text: "Please Sign In first!",
-                                          defaultStyle: true,
-                                          fontWeight: FontWeight.w700,
-                                          size: 17.0,
-                                          opacity: 1.0,
-                                        ),
-                                        actions: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: InkWell(
-                                              child: FancyText(
-                                                text: "OK",
-                                                fontWeight: FontWeight.w900,
-                                                color: Colors.green[800],
-                                                size: 15.0,
-                                              ),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      ));
-                            }
-                          : () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
-                            }),
                   Center(
                     heightFactor: 2.0,
                     child: Column(
@@ -166,40 +155,7 @@ class _SignInState extends State<SignIn> {
                                       color: textDark_Yellow,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    onPressed: () async {
-                                      if (_formKey.currentState.validate()) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        // Scaffold.of(context).showSnackBar(
-                                        //     SnackBar(
-                                        //         content:
-                                        //             Text('Processing Data')));
-                                        _formKey.currentState.save();
-                                        dynamic result = await _auth
-                                            .signInWithEmailAndPassword(
-                                                email, password);
-                                        if (result == null) {
-                                          setState(() {
-                                            loading = false;
-                                            signedIn = false;
-                                            error =
-                                                'Could not sign in with those credentials';
-                                          });
-                                        } else {
-                                          //   setState(() {
-                                          //   loading = false;
-                                          //   signedIn = true;
-                                          // });
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeScreen()));
-                                        }
-                                      }
-                                      //Navigator.pop(context);
-                                    },
+                                    onPressed: handleSignIn,
                                   ),
                                 ),
                               ],
@@ -260,10 +216,6 @@ class _SignInState extends State<SignIn> {
                     ),
                   )
                 ],
-                // child: Image.asset(
-                //   "assets/images/img1.jpeg",
-                //   fit: BoxFit.fitHeight,
-                // )
               ),
             ),
           );
