@@ -41,7 +41,12 @@ class AuthService with ChangeNotifier {
       final AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final FirebaseUser user = result.user;
-      Map<String, dynamic> userData = {'phone': phone, 'role': 'user'};
+      Map<String, dynamic> userData = {
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'role': 'user',
+      };
 
       await DatabaseService.updateUserData(user.uid, userData);
       await updateUserName(name, user);
