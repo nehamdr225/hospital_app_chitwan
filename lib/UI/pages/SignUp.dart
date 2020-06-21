@@ -29,33 +29,32 @@ class _SignUpState extends State<SignUp> {
     final size = MediaQuery.of(context).size;
     return loading
         ? Loading()
-        : Scaffold(
-            backgroundColor: theme.background,
-            body: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        alignment: Alignment.center,
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/images/img1.jpeg"))),
-                // height: size.height,
-                // width: size.width,
-                child: ListView(children: <Widget>[
-                  IconButton(
-                      alignment: Alignment.topLeft,
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: textDark_Yellow,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
-                      }),
-                  Center(
-                    heightFactor: 1.35,
-                    child: Form(
+        : SafeArea(
+                  child: Scaffold(
+              backgroundColor: theme.background,
+              body: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          alignment: Alignment.center,
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/images/img1.jpeg"))),
+                  // height: size.height,
+                  // width: size.width,
+                  child: Stack(children: <Widget>[
+                    IconButton(
+                        alignment: Alignment.topLeft,
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: textDark_Yellow,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        }),
+                    Form(
                         key: _formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -237,11 +236,11 @@ class _SignUpState extends State<SignUp> {
                                 size: 14.0,
                               ),
                             ),
-                            Text(error),
+                            FancyText(text: error, color: textDark_Yellow),
                           ],
-                        )),
-                  )
-                ])),
-          );
+                        ))
+                  ])),
+            ),
+        );
   }
 }

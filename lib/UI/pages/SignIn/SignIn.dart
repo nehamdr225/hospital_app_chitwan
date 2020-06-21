@@ -45,7 +45,7 @@ class _SignInState extends State<SignIn> {
                       image: AssetImage("assets/images/img1.jpeg"))),
               // height: size.height,
               // width: size.width,
-              child: ListView(
+              child: Stack(
                 children: <Widget>[
                   IconButton(
                       alignment: Alignment.topLeft,
@@ -89,181 +89,174 @@ class _SignInState extends State<SignIn> {
                                   MaterialPageRoute(
                                       builder: (context) => HomeScreen()));
                             }),
-                  Center(
-                    heightFactor: 2.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: theme.background,
-                          ),
-                          padding: EdgeInsets.only(top: 5.0),
-                          width: size.width * 0.90,
-                          //height: 165.0,
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: <Widget>[
-                                // SizedBox(height: 10.0),
-                                FForms(
-                                  borderColor: theme.background,
-                                  formColor: Colors.white,
-                                  text: "Email",
-                                  textColor: blueGrey.withOpacity(0.7),
-                                  width: size.width * 0.90,
-                                  validator: (val) =>
-                                      val.isEmpty ? 'Enter an email' : null,
-                                  onChanged: (val) {
-                                    setState(() => email = val);
-                                  },
-                                ),
-                                FForms(
-                                  borderColor: theme.background,
-                                  formColor: Colors.white,
-                                  text: "Password",
-                                  obscure: obscure,
-                                  trailingIcon: obscure == true
-                                      ? IconButton(
-                                          icon: Icon(
-                                            Icons.visibility,
-                                            color: theme.primary,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              obscure = false;
-                                            });
-                                          })
-                                      : IconButton(
-                                          icon: Icon(
-                                            Icons.visibility_off,
-                                            color: theme.primary,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              obscure = true;
-                                            });
-                                          }),
-                                  textColor: blueGrey.withOpacity(0.7),
-                                  width: size.width * 0.90,
-                                  validator: (val) => val.length < 6
-                                      ? 'Enter a password 6+ chars long'
-                                      : null,
-                                  onChanged: (val) {
-                                    setState(() => password = val);
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 45.0,
-                                  width: size.width * 0.90,
-                                  child: RaisedButton(
-                                    color: theme.primary,
-                                    child: FancyText(
-                                      text: "SUBMIT",
-                                      size: 16.0,
-                                      color: textDark_Yellow,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    onPressed: () async {
-                                      if (_formKey.currentState.validate()) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        // Scaffold.of(context).showSnackBar(
-                                        //     SnackBar(
-                                        //         content:
-                                        //             Text('Processing Data')));
-                                        _formKey.currentState.save();
-                                        dynamic result = await _auth
-                                            .signInWithEmailAndPassword(
-                                                email, password);
-                                        if (result == null) {
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: theme.background,
+                        ),
+                        padding: EdgeInsets.only(top: 5.0),
+                        width: size.width * 0.90,
+                        //height: 165.0,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              // SizedBox(height: 10.0),
+                              FForms(
+                                borderColor: theme.background,
+                                formColor: Colors.white,
+                                text: "Email",
+                                textColor: blueGrey.withOpacity(0.7),
+                                width: size.width * 0.90,
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter an email' : null,
+                                onChanged: (val) {
+                                  setState(() => email = val);
+                                },
+                              ),
+                              FForms(
+                                borderColor: theme.background,
+                                formColor: Colors.white,
+                                text: "Password",
+                                obscure: obscure,
+                                trailingIcon: obscure == true
+                                    ? IconButton(
+                                        icon: Icon(
+                                          Icons.visibility,
+                                          color: theme.primary,
+                                        ),
+                                        onPressed: () {
                                           setState(() {
-                                            loading = false;
-                                            signedIn = false;
-                                            error =
-                                                'Could not sign in with those credentials';
+                                            obscure = false;
                                           });
-                                        } else {
-                                          //   setState(() {
-                                          //   loading = false;
-                                          //   signedIn = true;
-                                          // });
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeScreen()));
-                                        }
-                                      }
-                                      //Navigator.pop(context);
-                                    },
+                                        })
+                                    : IconButton(
+                                        icon: Icon(
+                                          Icons.visibility_off,
+                                          color: theme.primary,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            obscure = true;
+                                          });
+                                        }),
+                                textColor: blueGrey.withOpacity(0.7),
+                                width: size.width * 0.90,
+                                validator: (val) => val.length < 6
+                                    ? 'Enter a password 6+ chars long'
+                                    : null,
+                                onChanged: (val) {
+                                  setState(() => password = val);
+                                },
+                              ),
+                              SizedBox(
+                                height: 45.0,
+                                width: size.width * 0.90,
+                                child: RaisedButton(
+                                  color: theme.primary,
+                                  child: FancyText(
+                                    text: "SUBMIT",
+                                    size: 16.0,
+                                    color: textDark_Yellow,
+                                    fontWeight: FontWeight.w600,
                                   ),
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      // Scaffold.of(context).showSnackBar(
+                                      //     SnackBar(
+                                      //         content:
+                                      //             Text('Processing Data')));
+                                      _formKey.currentState.save();
+                                      dynamic result = await _auth
+                                          .signInWithEmailAndPassword(
+                                              email, password);
+                                      if (result == null) {
+                                        setState(() {
+                                          loading = false;
+                                          signedIn = false;
+                                          error =
+                                              'Could not sign in with those credentials';
+                                        });
+                                      } else {
+                                        //   setState(() {
+                                        //   loading = false;
+                                        //   signedIn = true;
+                                        // });
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeScreen()));
+                                      }
+                                    }
+                                    //Navigator.pop(context);
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 10.0),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FancyText(
-                                text: "Don't have an account? ",
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FancyText(
+                              text: "Don't have an account? ",
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w600,
+                              size: 14.0,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUp()));
+                              },
+                              child: FancyText(
+                                text: "Sign Up",
+                                color: textLight_Red2,
+                                fontWeight: FontWeight.w700,
                                 size: 14.0,
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUp()));
-                                },
-                                child: FancyText(
-                                  text: "Sign Up",
-                                  color: textLight_Red2,
-                                  fontWeight: FontWeight.w700,
-                                  size: 14.0,
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OthersLogin()));
-                                },
-                                child: FancyText(
-                                  text: "Login As ",
-                                  color: textLight_Red2,
-                                  fontWeight: FontWeight.w700,
-                                  size: 14.0,
-                                ),
-                              ),
-                              FancyText(
-                                text: "others",
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
+                            ),
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OthersLogin()));
+                              },
+                              child: FancyText(
+                                text: "Login As ",
+                                color: textLight_Red2,
+                                fontWeight: FontWeight.w700,
                                 size: 14.0,
                               ),
-                            ]),
-                        Text(error),
-                      ],
-                    ),
+                            ),
+                            FancyText(
+                              text: "others",
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w600,
+                              size: 14.0,
+                            ),
+                          ]),
+                      FancyText(text: error, color: textDark_Yellow),
+                    ],
                   )
                 ],
-                // child: Image.asset(
-                //   "assets/images/img1.jpeg",
-                //   fit: BoxFit.fitHeight,
-                // )
               ),
             ),
           );
