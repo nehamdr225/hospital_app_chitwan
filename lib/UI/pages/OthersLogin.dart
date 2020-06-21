@@ -33,6 +33,8 @@ class _OthersLoginState extends State<OthersLogin> {
   bool loading = false;
   bool signedIn = false;
   bool obscure = true;
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
 
   // text field state
   String email = '';
@@ -133,9 +135,12 @@ class _OthersLoginState extends State<OthersLogin> {
                               children: <Widget>[
                                 // SizedBox(height: 10.0),
                                 FForms(
+                                  textInputAction: TextInputAction.next,
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Email",
+                                  currentFocus: _emailFocus,
+                                  nextFocus: _passwordFocus,
                                   textColor: blueGrey.withOpacity(0.7),
                                   width: size.width * 0.90,
                                   validator: (val) =>
@@ -145,9 +150,11 @@ class _OthersLoginState extends State<OthersLogin> {
                                   },
                                 ),
                                 FForms(
+                                  textInputAction: TextInputAction.done,
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Password",
+                                  currentFocus: _passwordFocus,
                                   obscure: obscure,
                                   trailingIcon: obscure == true
                                       ? IconButton(
@@ -243,6 +250,14 @@ class _OthersLoginState extends State<OthersLogin> {
                                                       builder: (context) =>
                                                           HospitalModule()));
                                             }
+                                            else if (_othersList == null){
+                                              setState(() {
+                                              loading = false;
+                                              signedIn = false;
+                                              error =
+                                                  'Select your department';
+                                            });
+                                            }
                                           }
                                         }
                                       }),
@@ -279,7 +294,10 @@ class _OthersLoginState extends State<OthersLogin> {
                           ),
                         ),
                       ]),
-                  FancyText(text: error, color: textDark_Yellow),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(padding: EdgeInsets.all(8.0), color: theme.secondary, child: FancyText(text: error, color: Colors.white)),
+                  ),
                 ],
               ),
             ],

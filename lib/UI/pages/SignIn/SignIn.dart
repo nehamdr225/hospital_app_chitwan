@@ -25,6 +25,8 @@ class _SignInState extends State<SignIn> {
   String email = '';
   String password = '';
   String error = '';
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +96,9 @@ class _SignInState extends State<SignIn> {
                         children: <Widget>[
                           // SizedBox(height: 10.0),
                           FForms(
+                            textInputAction: TextInputAction.next,
+                            currentFocus: _emailFocus,
+                            nextFocus: _passwordFocus,
                             borderColor: theme.background,
                             formColor: Colors.white,
                             text: "Email",
@@ -106,6 +111,8 @@ class _SignInState extends State<SignIn> {
                             },
                           ),
                           FForms(
+                            textInputAction: TextInputAction.done,
+                            currentFocus: _passwordFocus,
                             borderColor: theme.background,
                             formColor: Colors.white,
                             text: "Password",
@@ -207,7 +214,13 @@ class _SignInState extends State<SignIn> {
                           size: 14.0,
                         ),
                       ]),
-                  FancyText(text: error, color: textDark_Yellow),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        color: theme.secondary,
+                        child: FancyText(text: error, color: Colors.white)),
+                  ),
                 ],
               ),
             ),

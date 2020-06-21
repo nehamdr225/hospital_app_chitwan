@@ -22,6 +22,10 @@ class _SignUpState extends State<SignUp> {
   bool obscure = true;
   String _name, uid;
   String _phone;
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _nameFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class _SignUpState extends State<SignUp> {
     return loading
         ? Loading()
         : SafeArea(
-                  child: Scaffold(
+            child: Scaffold(
               backgroundColor: theme.background,
               body: Container(
                   alignment: Alignment.center,
@@ -69,6 +73,9 @@ class _SignUpState extends State<SignUp> {
                               //height: 110.0,
                               child: Column(children: <Widget>[
                                 FForms(
+                                  textInputAction: TextInputAction.next,
+                                  currentFocus: _emailFocus,
+                                  nextFocus: _passwordFocus,
                                   validator: (val) => val.length < 6
                                       ? 'Enter your email'
                                       : null,
@@ -82,6 +89,9 @@ class _SignUpState extends State<SignUp> {
                                   width: size.width * 0.90,
                                 ),
                                 FForms(
+                                  textInputAction: TextInputAction.next,
+                                  currentFocus: _passwordFocus,
+                                  nextFocus: _nameFocus,
                                   validator: (val) => val.length < 6
                                       ? 'Enter a password 6+ chars long'
                                       : null,
@@ -131,6 +141,9 @@ class _SignUpState extends State<SignUp> {
                                 children: <Widget>[
                                   // SizedBox(height: 10.0),
                                   FForms(
+                                    textInputAction: TextInputAction.next,
+                                    currentFocus: _nameFocus,
+                                    nextFocus: _phoneFocus,
                                     validator: (val) => val.length < 6
                                         ? 'Enter full name'
                                         : null,
@@ -144,6 +157,8 @@ class _SignUpState extends State<SignUp> {
                                     width: size.width * 0.90,
                                   ),
                                   FForms(
+                                    textInputAction: TextInputAction.done,
+                                    currentFocus: _phoneFocus,
                                     validator: (val) => val.length < 9
                                         ? 'Enter phone number'
                                         : null,
@@ -236,11 +251,18 @@ class _SignUpState extends State<SignUp> {
                                 size: 14.0,
                               ),
                             ),
-                            FancyText(text: error, color: textDark_Yellow),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  color: theme.secondary,
+                                  child: FancyText(
+                                      text: error, color: Colors.white)),
+                            ),
                           ],
                         ))
                   ])),
             ),
-        );
+          );
   }
 }

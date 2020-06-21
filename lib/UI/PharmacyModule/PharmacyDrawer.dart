@@ -39,13 +39,13 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return UserAccountsDrawerHeader(
                           accountName: FancyText(
-                            text: "Name", //"${snapshot.data.displayName}",
+                            text: "${snapshot.data.displayName}",
                             size: 16.0,
                             fontWeight: FontWeight.w600,
                             color: textDark_Yellow,
                           ),
                           accountEmail: FancyText(
-                            text: "Email", //snapshot.data.email,
+                            text: snapshot.data.email,
                             size: 13.0,
                             fontWeight: FontWeight.w500,
                             color: textDark_Yellow,

@@ -30,6 +30,10 @@ class _OthersSignUpState extends State<OthersSignUp> {
     "Hospital",
     "Blood Bank",
   ];
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _nameFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +130,9 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                   onChanged: (val) {
                                     setState(() => _email = val);
                                   },
+                                  textInputAction: TextInputAction.next,
+                                  currentFocus: _emailFocus,
+                                  nextFocus: _passwordFocus,
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Email",
@@ -161,6 +168,9 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                               obscure = true;
                                             });
                                           }),
+                                  textInputAction: TextInputAction.next,
+                                  currentFocus: _passwordFocus,
+                                  nextFocus: _nameFocus,
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   textColor: blueGrey.withOpacity(0.7),
@@ -182,6 +192,9 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                 children: <Widget>[
                                   // SizedBox(height: 10.0),
                                   FForms(
+                                    textInputAction: TextInputAction.next,
+                                    currentFocus: _nameFocus,
+                                    nextFocus: _phoneFocus,
                                     validator: (val) => val.length < 6
                                         ? 'Enter full name'
                                         : null,
@@ -195,6 +208,8 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                     width: size.width * 0.90,
                                   ),
                                   FForms(
+                                    textInputAction: TextInputAction.done,
+                                    currentFocus: _phoneFocus,
                                     validator: (val) => val.length < 9
                                         ? 'Enter phone number'
                                         : null,
@@ -293,7 +308,14 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                     ),
                                   ),
                                 ]),
-                            FancyText(text: error, color: textDark_Yellow),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  color: theme.secondary,
+                                  child: FancyText(
+                                      text: error, color: Colors.white)),
+                            ),
                           ],
                         ))
                   ])),

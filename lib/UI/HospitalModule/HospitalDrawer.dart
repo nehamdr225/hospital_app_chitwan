@@ -1,10 +1,10 @@
-import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DoctorAppointmentPage.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/PromotionTab.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorProfile.dart';
-import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/WorkSchedule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
@@ -13,12 +13,12 @@ import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DoctorDrawerApp extends StatefulWidget {
+class HospitalDrawerApp extends StatefulWidget {
   @override
-  _DoctorDrawerAppState createState() => _DoctorDrawerAppState();
+  _HospitalDrawerAppState createState() => _HospitalDrawerAppState();
 }
 
-class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
+class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
   final AuthService _auth = AuthService();
   final user = AuthService().user;
 
@@ -122,7 +122,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
               icon: 'assets/images/drawerIcon/home.png',
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DoctorsModule()));
+                    MaterialPageRoute(builder: (context) => HospitalModule()));
               },
             ),
             user != null
@@ -140,11 +140,11 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                 : Text(" "),
                 DrawerElements(
               //Home
-              title: 'Appointment',
+              title: 'Promotions',
               icon: 'assets/images/drawerIcon/calendar.png',
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DoctorAppointmentPage()));
+                    MaterialPageRoute(builder: (context) => PromotionTab()));
               },
             ),
             DrawerElements(
