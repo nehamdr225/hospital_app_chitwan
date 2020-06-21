@@ -109,6 +109,30 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future registerPharmacy({
+    String email,
+    String password,
+    String name,
+    String phone,
+  }) async {
+    try {
+      final AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final FirebaseUser user = result.user;
+      await DatabaseService.updatePharmacyData(user.uid, {
+        'phone': phone,
+        'role': 'pharmacy',
+        'name': name,
+        'isVerified': false
+      });
+      await updateUserName(name, user);
+      return user.uid;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   //sign out
   Future signOut() async {
     try {

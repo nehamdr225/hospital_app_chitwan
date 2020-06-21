@@ -216,12 +216,33 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                           if (_formKey.currentState
                                               .validate()) {
                                             setState(() => loading = true);
-                                            dynamic result = await _auth
-                                                .registerWithEmailAndPassword(
-                                                    _email,
-                                                    _password,
-                                                    _name,
-                                                    _phone);
+                                            print(_othersList);
+                                            dynamic result;
+                                            if (_othersList == 'Hospital') {
+                                              result =
+                                                  await _auth.registerHospital(
+                                                      email: _email,
+                                                      password: _password,
+                                                      name: _name,
+                                                      phone: _phone);
+                                            } else if (_othersList ==
+                                                'Doctor') {
+                                              result =
+                                                  await _auth.registerDoctor(
+                                                      email: _email,
+                                                      password: _password,
+                                                      name: _name,
+                                                      phone: _phone);
+                                            } else if (_othersList ==
+                                                'Pharmacy') {
+                                              result =
+                                                  await _auth.registerPharmacy(
+                                                      email: _email,
+                                                      password: _password,
+                                                      name: _name,
+                                                      phone: _phone);
+                                            }
+
                                             if (result != null) {
                                               setState(() => loading = false);
                                               Navigator.push(

@@ -28,6 +28,11 @@ class DatabaseService {
     return await hospitalCollection.document(uid).setData(data);
   }
 
+  static Future updatePharmacyData(
+      String uid, Map<String, dynamic> data) async {
+    return await pharmacyCollection.document(uid).setData(data);
+  }
+
   static Future createAppointment(Map data) async {
     return await appointmentCollection.document().setData(data);
   }
