@@ -10,6 +10,7 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentPage.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/service/store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +22,10 @@ class DrawerApp extends StatefulWidget {
 class _DrawerAppState extends State<DrawerApp> {
   @override
   Widget build(BuildContext context) {
-    final _auth = Provider.of<AuthService>(context);
-    final user = _auth.user;
-
-    //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
-    //final uid = Provider.of<AuthService>(context).getCurrentUid;
+    final user = Provider.of<DataStore>(context).user;
+    final auth = AuthService();
     final theme = Theme.of(context);
+
     return Drawer(
       child: Container(
         color: Colors.white,
@@ -34,37 +33,29 @@ class _DrawerAppState extends State<DrawerApp> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             user != null
-                ? FutureBuilder(
-                    future: Provider.of<AuthService>(context).getCurrentUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return UserAccountsDrawerHeader(
-                          accountName: FancyText(
-                            text: "${snapshot.data.displayName}",
-                            size: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: textDark_Yellow,
-                          ),
-                          accountEmail: FancyText(
-                            text: snapshot.data.email,
-                            size: 13.0,
-                            fontWeight: FontWeight.w500,
-                            color: textDark_Yellow,
-                          ),
-                          currentAccountPicture: GestureDetector(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white54,
-                              child: Icon(Icons.person, color: Colors.black45),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: gradientColor,
-                          ),
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    })
+                ? UserAccountsDrawerHeader(
+                    accountName: FancyText(
+                      text: user["name"],
+                      size: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textDark_Yellow,
+                    ),
+                    accountEmail: FancyText(
+                      text: user["email"],
+                      size: 13.0,
+                      fontWeight: FontWeight.w500,
+                      color: textDark_Yellow,
+                    ),
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white54,
+                        child: Icon(Icons.person, color: Colors.black45),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: gradientColor,
+                    ),
+                  )
                 : DrawerHeader(
                     decoration: BoxDecoration(
                       //color: primary,
@@ -266,7 +257,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          _auth.signOut();
+                          auth.signOut();
                           setState(() {
                             loggedIn = false;
                           });

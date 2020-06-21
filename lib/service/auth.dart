@@ -14,7 +14,16 @@ class AuthService with ChangeNotifier {
   }
 
   Future<String> getCurrentUID() async {
-    return (await _auth.currentUser()).uid;
+    try {
+      final currentUser = await _auth.currentUser();
+      if (currentUser != null) {
+        return currentUser.uid;
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   Future getCurrentUser() async {
@@ -41,7 +50,12 @@ class AuthService with ChangeNotifier {
       final AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final FirebaseUser user = result.user;
-      Map<String, dynamic> userData = {'phone': phone, 'role': 'user'};
+      Map<String, dynamic> userData = {
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'role': 'user',
+      };
 
       await DatabaseService.updateUserData(user.uid, userData);
       await updateUserName(name, user);

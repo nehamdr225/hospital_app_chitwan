@@ -175,7 +175,7 @@ class _SignUpState extends State<SignUp> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        HomeScreen()));
+                                                        SignIn()));
                                           } else {
                                             setState(() {
                                               loading = false;
