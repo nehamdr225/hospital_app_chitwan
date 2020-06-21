@@ -13,6 +13,7 @@ class DataStore extends ChangeNotifier {
             if (userData.data != null) {
               user = userData.data;
               uid = value;
+              type = userData.data['role'];
             }
           }).catchError((err) {
             print(err);
