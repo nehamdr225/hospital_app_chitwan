@@ -179,17 +179,6 @@ class _SignInState extends State<SignIn> {
                                         dynamic result = await _auth
                                             .signInWithEmailAndPassword(
                                                 email, password);
-                                        print(result);
-                                        setState(() {
-                                          loading = false;
-                                          signedIn = true;
-                                        });
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeScreen()));
-
                                         if (result == null) {
                                           setState(() {
                                             loading = false;
@@ -197,6 +186,16 @@ class _SignInState extends State<SignIn> {
                                             error =
                                                 'Could not sign in with those credentials';
                                           });
+                                        } else {
+                                          //   setState(() {
+                                          //   loading = false;
+                                          //   signedIn = true;
+                                          // });
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeScreen()));
                                         }
                                       }
                                       //Navigator.pop(context);
@@ -232,31 +231,30 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                             ]),
-                        // Row(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     children: <Widget>[
-                        //       InkWell(
-                        //         onTap: () {
-                        //           Navigator.push(
-                        //               context,
-                        //               MaterialPageRoute(
-                        //                   builder: (context) =>
-                        //                       OthersLogin()));
-                        //         },
-                        //         child: FancyText(
-                        //           text: "Login As ",
-                        //           color: textLight_Red2,
-                        //           fontWeight: FontWeight.w700,
-                        //           size: 14.0,
-                        //         ),
-                        //       ),
-                        //       FancyText(
-                        //         text: "others",
-                        //         color: textDark_Yellow,
-                        //         fontWeight: FontWeight.w600,
-                        //         size: 14.0,
-                        //       ),
-                        //     ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => OthersLogin()));
+                                },
+                                child: FancyText(
+                                  text: "Login As ",
+                                  color: textLight_Red2,
+                                  fontWeight: FontWeight.w700,
+                                  size: 14.0,
+                                ),
+                              ),
+                              FancyText(
+                                text: "others",
+                                color: textDark_Yellow,
+                                fontWeight: FontWeight.w600,
+                                size: 14.0,
+                              ),
+                            ]),
                         Text(error),
                       ],
                     ),
