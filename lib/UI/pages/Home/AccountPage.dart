@@ -4,7 +4,6 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/store.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,8 +41,6 @@ class _AccountPageState extends State<AccountPage> {
             color: Colors.white,
           )),
       body: ListView(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
