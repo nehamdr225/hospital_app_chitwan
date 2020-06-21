@@ -1,7 +1,27 @@
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:flutter/cupertino.dart';
 
 class DataStore extends ChangeNotifier {
+  DataStore() {
+    try {
+      final auth = AuthService();
+      print('Bootstrapping data store\n');
+      auth.getCurrentUID().then((value) {
+        if (value != null) {
+          DatabaseService.getUserData(value).then((userData) {
+            if (userData.data != null) {
+              user = userData.data;
+              uid = value;
+            }
+          }).catchError((err) {
+            print(err);
+          });
+        }
+      });
+    } catch (e) {}
+  }
+
   String _id;
   String _userType;
   Map<String, dynamic> _userData;
