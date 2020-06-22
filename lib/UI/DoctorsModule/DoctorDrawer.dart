@@ -10,6 +10,7 @@ import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,14 +20,13 @@ class DoctorDrawerApp extends StatefulWidget {
 }
 
 class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
-  final AuthService _auth = AuthService();
-  final user = AuthService().user;
+  final AuthService auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
-    //final uid = Provider.of<AuthService>(context).getCurrentUid;
+    final user = Provider.of<DoctorDataStore>(context).user;
     final theme = Theme.of(context);
+
     return Drawer(
       child: Container(
         color: Colors.white,
@@ -34,37 +34,29 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             user != null
-                ? FutureBuilder(
-                    future: Provider.of<AuthService>(context).getCurrentUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return UserAccountsDrawerHeader(
-                          accountName: FancyText(
-                            text: "Name",//"${snapshot.data.displayName}",
-                            size: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: textDark_Yellow,
-                          ),
-                          accountEmail: FancyText(
-                            text: "Email",//snapshot.data.email,
-                            size: 13.0,
-                            fontWeight: FontWeight.w500,
-                            color: textDark_Yellow,
-                          ),
-                          currentAccountPicture: GestureDetector(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white54,
-                              child: Icon(Icons.person, color: Colors.black45),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: gradientColor,
-                          ),
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    })
+                ? UserAccountsDrawerHeader(
+                    accountName: FancyText(
+                      text: user["name"], //"${snapshot.data.displayName}",
+                      size: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textDark_Yellow,
+                    ),
+                    accountEmail: FancyText(
+                      text: user["email"], //snapshot.data.email,
+                      size: 13.0,
+                      fontWeight: FontWeight.w500,
+                      color: textDark_Yellow,
+                    ),
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white54,
+                        child: Icon(Icons.person, color: Colors.black45),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: gradientColor,
+                    ),
+                  )
                 : DrawerHeader(
                     decoration: BoxDecoration(
                       //color: primary,
@@ -105,11 +97,6 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                                     MaterialPageRoute(
                                         builder: (context) => SignIn()));
                               },
-                              // onTap: () {
-                              //   setState(() {
-                              //     loggedIn = true;
-                              //   });
-                              // },
                             ),
                           )
                         ])),
@@ -138,13 +125,15 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                     },
                   )
                 : Text(" "),
-                DrawerElements(
+            DrawerElements(
               //Home
               title: 'Appointment',
               icon: 'assets/images/drawerIcon/calendar.png',
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DoctorAppointmentPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DoctorAppointmentPage()));
               },
             ),
             DrawerElements(
@@ -162,7 +151,6 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
               color: Colors.grey[500],
               height: 5.0,
             ),
-            
             DrawerElements(
               // About Us
               title: 'About Us',
@@ -213,7 +201,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          _auth.signOut();
+                          auth.signOut();
                           setState(() {
                             loggedIn = false;
                           });
