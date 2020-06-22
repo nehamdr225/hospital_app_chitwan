@@ -41,7 +41,11 @@ class DatabaseService {
     return await appointmentCollection.document().setData(data);
   }
 
-  static getDoctors() {
+  static Stream<QuerySnapshot> getDoctors() {
     return doctorCollection.snapshots();
+  }
+
+  static Stream<QuerySnapshot> getHospitals() {
+    return hospitalCollection.snapshots();
   }
 }

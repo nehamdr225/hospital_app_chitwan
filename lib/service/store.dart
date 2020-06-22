@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class DataStore extends ChangeNotifier {
@@ -21,6 +22,7 @@ class DataStore extends ChangeNotifier {
           });
         }
       });
+      getAvailableHospitals();
     } catch (e) {}
   }
 
@@ -60,5 +62,23 @@ class DataStore extends ChangeNotifier {
         });
       }
     }
+  }
+
+  void getAvailableDoctors(String hospital) {
+    if (hospital != null) {
+      DatabaseService.getDoctors().listen((QuerySnapshot onData) {
+        print(['Got doctor data\n', onData]);
+      }, onError: (e) {
+        print('Got doctor error\n $e');
+      });
+    }
+  }
+
+  void getAvailableHospitals() {
+    DatabaseService.getDoctors().listen((QuerySnapshot onData) {
+      print(['Got hospital data\n', onData]);
+    }, onError: (e) {
+      print('Got hospital error\n $e');
+    });
   }
 }
