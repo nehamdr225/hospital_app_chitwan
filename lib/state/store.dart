@@ -29,7 +29,8 @@ class UserDataStore extends ChangeNotifier {
   String _id;
   String _userType;
   Map<String, dynamic> _userData;
-  List hospitals;
+  List _hospitals;
+  List _appointments;
 
   get uid => _id;
 
@@ -48,6 +49,20 @@ class UserDataStore extends ChangeNotifier {
 
   set user(newUserData) {
     _userData = newUserData;
+    notifyListeners();
+  }
+
+  get hospitals => _hospitals;
+
+  set hospitals(newHospitalData) {
+    _hospitals = newHospitalData;
+    notifyListeners();
+  }
+
+  get appointments => _appointments;
+
+  set appointments(newAppointmentData) {
+    _appointments = newAppointmentData;
     notifyListeners();
   }
 
@@ -96,5 +111,11 @@ class UserDataStore extends ChangeNotifier {
 
   Future createAppointment(Map data) async {
     return DatabaseService.createAppointment(data);
+  }
+
+  getUserAppointments() {
+    DatabaseService.getAppointments(uid).then((value) {
+      print(value.data);
+    });
   }
 }

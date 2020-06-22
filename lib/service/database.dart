@@ -45,6 +45,10 @@ class DatabaseService {
     }
   }
 
+  static Future getAppointments(String uid) {
+    return appointmentCollection.document(uid).get();
+  }
+
   static Stream<QuerySnapshot> getDoctors() {
     return doctorCollection.snapshots();
   }
