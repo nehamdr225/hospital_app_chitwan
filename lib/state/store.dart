@@ -23,6 +23,7 @@ class UserDataStore extends ChangeNotifier {
         }
       });
       getAvailableHospitals();
+      getUserAppointments();
     } catch (e) {}
   }
 
@@ -114,8 +115,21 @@ class UserDataStore extends ChangeNotifier {
   }
 
   getUserAppointments() {
-    DatabaseService.getAppointments(uid).then((value) {
-      print(value.data);
+    final result = DatabaseService.getAppointments(uid);
+    result.listen((data) {
+      final List addData = data.documents.map<Map>((e) {
+        final Map thisdata = e.data;
+        thisdata['id'] = e.documentID;
+        return thisdata;
+      }).toList();
+      if (appointments != null) {
+        _appointments.addAll(addData);
+        notifyListeners();
+      } else {
+        appointments = addData;
+      }
+    }, onError: (err) {
+      print(err);
     });
   }
 }

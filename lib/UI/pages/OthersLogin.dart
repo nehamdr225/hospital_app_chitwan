@@ -249,14 +249,13 @@ class _OthersLoginState extends State<OthersLogin> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           HospitalModule()));
-                                            }
-                                            else if (_othersList == null){
+                                            } else if (_othersList == null) {
                                               setState(() {
-                                              loading = false;
-                                              signedIn = false;
-                                              error =
-                                                  'Select your department';
-                                            });
+                                                loading = false;
+                                                signedIn = false;
+                                                error =
+                                                    'Select your department';
+                                              });
                                             }
                                           }
                                         }
@@ -296,7 +295,10 @@ class _OthersLoginState extends State<OthersLogin> {
                       ]),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(padding: EdgeInsets.all(8.0), color: theme.secondary, child: FancyText(text: error, color: Colors.white)),
+                    child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        color: theme.secondary,
+                        child: FancyText(text: error, color: Colors.white)),
                   ),
                 ],
               ),

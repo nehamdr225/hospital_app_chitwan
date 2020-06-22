@@ -76,13 +76,13 @@ class HomeScreen extends StatelessWidget {
                     itemCount: snapshot.data.documents.length - 1,
                     itemBuilder: (BuildContext context, int index) {
                       return HomeListCard(
-                        doctorName: snapshot.data.documents[index]['name'],
-                        department: snapshot.data.documents[index]['field'],
-                        image: snapshot.data.documents[index]['src'],
-                        phone: snapshot.data.documents[index]['phone'],
-                        status: snapshot.data.documents[index]['status'],
-                        date: snapshot.data.documents[index]['date'],
-                        time: snapshot.data.documents[index]['time'],
+                        doctorName: snapshot.data.documents[index]['name']??'',
+                        department: snapshot.data.documents[index]['field']??'',
+                        image: snapshot.data.documents[index]['src']??'',
+                        phone: snapshot.data.documents[index]['phone']??'',
+                        status: snapshot.data.documents[index]['status']??'',
+                        date: snapshot.data.documents[index]['date']??'',
+                        time: snapshot.data.documents[index]['time']??'',
                       );
                     });
               },

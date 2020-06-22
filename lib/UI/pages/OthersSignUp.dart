@@ -61,10 +61,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                           color: textDark_Yellow,
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
+                          Navigator.pop(context);
                         }),
                     Form(
                         key: _formKey,

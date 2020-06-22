@@ -45,8 +45,9 @@ class DatabaseService {
     }
   }
 
-  static Future getAppointments(String uid) {
-    return appointmentCollection.document(uid).get();
+  static Stream<QuerySnapshot> getAppointments(String uid) {
+    final result = appointmentCollection.where('userId', isEqualTo: uid);
+    return result.snapshots();
   }
 
   static Stream<QuerySnapshot> getDoctors() {
