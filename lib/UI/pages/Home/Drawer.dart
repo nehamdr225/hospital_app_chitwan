@@ -10,7 +10,7 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentPage.dart';
 import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/service/store.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +22,7 @@ class DrawerApp extends StatefulWidget {
 class _DrawerAppState extends State<DrawerApp> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<DataStore>(context).user;
+    final user = Provider.of<UserDataStore>(context).user;
     final auth = AuthService();
     final theme = Theme.of(context);
 

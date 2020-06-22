@@ -4,7 +4,7 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/service/store.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     var size = MediaQuery.of(context).size;
-    final user = Provider.of<DataStore>(context).user;
+    final user = Provider.of<UserDataStore>(context).user;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

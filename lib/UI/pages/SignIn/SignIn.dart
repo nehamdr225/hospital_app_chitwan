@@ -8,7 +8,7 @@ import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/service/store.dart';
+import 'package:chitwan_hospital/state/store.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -30,7 +30,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    final userDataStore = Provider.of<DataStore>(context);
+    final userDataStore = Provider.of<UserDataStore>(context);
 
     handleSignIn() async {
       try {
