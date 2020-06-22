@@ -2,9 +2,7 @@ import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Apoin
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/LabReports.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Prescription.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AppointmentPage extends StatefulWidget {
   @override

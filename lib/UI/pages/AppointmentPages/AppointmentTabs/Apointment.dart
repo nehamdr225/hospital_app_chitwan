@@ -1,4 +1,3 @@
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/PrescriptionListCard.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
