@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class Appointments {
   String firstName;
   String lastName;
@@ -14,43 +13,43 @@ class Appointments {
   String consultationType;
 
   Appointments(
-      this.date,
-      this.time,
-      this.department,
-      this.doctor,
-      this.gender,
-      this.consultationType,
-      this.firstName,
-      this.hospital,
-      this.lastName, 
-      this.phoneNum,
-      );
+    this.date,
+    this.time,
+    this.department,
+    this.doctor,
+    this.gender,
+    this.consultationType,
+    this.firstName,
+    this.hospital,
+    this.lastName,
+    this.phoneNum,
+  );
 
   // formatting for upload to Firbase when creating the appointments
   Map<String, dynamic> toJson() => {
-    'firstName': firstName,
-    'phoneNum': phoneNum,
-    'date': date,
-    'lastName': lastName,
-    'hospital': hospital,
-    'department': department,
-    'doctor': doctor,
-    'gender': gender,
-  };
+        'firstName': firstName,
+        'phoneNum': phoneNum,
+        'date': date,
+        'lastName': lastName,
+        'hospital': hospital,
+        'department': department,
+        'doctor': doctor,
+        'gender': gender,
+        'time': time,
+        'consultationType': consultationType
+      };
 
   // creating a Trip object from a firebase snapshot
-  Appointments.fromSnapshot(DocumentSnapshot snapshot) :
-      firstName = snapshot['firstName'],
-      lastName = snapshot['lastName'],
-      date = snapshot['date'].toDate(),
-      hospital = snapshot['hospital'],
-      department = snapshot['department'],
-      doctor = snapshot['doctor'],
-      gender = snapshot['gender'],
-      consultationType = snapshot['consultationType'],
-      phoneNum = snapshot['phoneNum'];
-
-
+  Appointments.fromSnapshot(DocumentSnapshot snapshot)
+      : firstName = snapshot['firstName'],
+        lastName = snapshot['lastName'],
+        date = snapshot['date'].toDate(),
+        hospital = snapshot['hospital'],
+        department = snapshot['department'],
+        doctor = snapshot['doctor'],
+        gender = snapshot['gender'],
+        consultationType = snapshot['consultationType'],
+        phoneNum = snapshot['phoneNum'];
 
   // Map<String, Icon> types() => {
   //   "car": Icon(Icons.directions_car, size: 50),

@@ -93,4 +93,8 @@ class UserDataStore extends ChangeNotifier {
       print('Got hospital error\n $e');
     });
   }
+
+  Future createAppointment(Map data) async {
+    return DatabaseService.createAppointment(data);
+  }
 }

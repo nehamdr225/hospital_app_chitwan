@@ -38,11 +38,19 @@ class DatabaseService {
   }
 
   static Future createAppointment(Map data) async {
-    return await appointmentCollection.document().setData(data);
+    try {
+      return await appointmentCollection.document().setData(data);
+    } catch (e) {
+      return 'error';
+    }
   }
 
   static Stream<QuerySnapshot> getDoctors() {
     return doctorCollection.snapshots();
+  }
+
+  static getDoctorsByHospital(String hospital) {
+    return doctorCollection.where('hospital', isEqualTo: hospital);
   }
 
   static Stream<QuerySnapshot> getHospitals() {

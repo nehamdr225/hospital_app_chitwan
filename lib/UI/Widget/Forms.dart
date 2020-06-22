@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FForms extends StatelessWidget {
+  final String initialValue;
   final bool obscure;
   final String text;
   final bool labeltext;
@@ -28,6 +29,7 @@ class FForms extends StatelessWidget {
       color: Colors.grey[400]);
   FForms(
       {this.text,
+      this.initialValue,
       this.labeltext: true,
       this.width,
       this.type,
@@ -53,6 +55,7 @@ class FForms extends StatelessWidget {
     return Container(
       width: width,
       child: TextFormField(
+        initialValue: initialValue,
         onFieldSubmitted: (term) {
           textInputAction != TextInputAction.done
               ? _fieldFocusChange(context, currentFocus, nextFocus)

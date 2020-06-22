@@ -4,10 +4,10 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 
 enum Gender { male, female }
 enum AppointmentT { opd, online }
@@ -34,11 +34,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
   String _fPhone;
   DateTime selectedDate = DateTime.now();
   String _valHospital;
-  List _myHospital = [
-    "Chitwan Hospital",
-    "KMC",
-    "Norvic",
-  ];
+
   String _valDepartment;
   List _myDepartment = [
     "Operation Theater",
@@ -82,6 +78,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
         fontWeight: FontWeight.bold,
         fontSize: 15,
         color: blueGrey.withOpacity(0.9));
+    final userDataStore = Provider.of<UserDataStore>(context);
+    List _myHospital = userDataStore.hospitals.map((e) => e['name']).toList();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -103,6 +101,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
               child: Row(
                 children: <Widget>[
                   FForms(
+                    initialValue: userDataStore.user['name'].split(' ')[0],
                     borderColor: theme.colorScheme.primary,
                     formColor: Colors.white,
                     text: "First Name",
@@ -122,6 +121,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   ),
                   SizedBox(width: 10.0),
                   FForms(
+                    initialValue: userDataStore.user['name'].split(' ')[1],
                     borderColor: theme.colorScheme.primary,
                     formColor: Colors.white,
                     text: "Last Name",
@@ -141,6 +141,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
               //phone number
               padding: const EdgeInsets.all(10.0),
               child: FForms(
+                initialValue: userDataStore.user['phone'],
                 icon: Icon(
                   Icons.phone,
                   color: theme.iconTheme.color,
@@ -546,17 +547,19 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     widget.appointment.hospital = _valHospital;
                     widget.appointment.date = selectedDate;
                     widget.appointment.time = _valTime;
-
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
-                    await db
-                        .collection("users")
-                        .document(uid)
-                        .collection("appointments")
-                        .add(widget.appointment.toJson());
-
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    final updateData = widget.appointment.toJson();
+                    updateData['userId'] = userDataStore.uid;
+                    userDataStore.createAppointment(updateData).then((value) {
+                      print(value);
+                      if (value != 'error') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
+                      }
+                    }).catchError((err) {
+                      print(err);
+                    });
                   },
                 ),
               ),
