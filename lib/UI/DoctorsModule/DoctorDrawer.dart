@@ -34,29 +34,37 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             user != null
-                ? UserAccountsDrawerHeader(
-                    accountName: FancyText(
-                      text: user["name"], //"${snapshot.data.displayName}",
-                      size: 16.0,
-                      fontWeight: FontWeight.w600,
-                      color: textDark_Yellow,
-                    ),
-                    accountEmail: FancyText(
-                      text: user["email"], //snapshot.data.email,
-                      size: 13.0,
-                      fontWeight: FontWeight.w500,
-                      color: textDark_Yellow,
-                    ),
-                    currentAccountPicture: GestureDetector(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white54,
-                        child: Icon(Icons.person, color: Colors.black45),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: gradientColor,
-                    ),
-                  )
+                ? FutureBuilder(
+                    future: Provider.of<AuthService>(context).getCurrentUser(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return UserAccountsDrawerHeader(
+                          accountName: FancyText(
+                            text: "${snapshot.data.displayName}",
+                            size: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: textDark_Yellow,
+                          ),
+                          accountEmail: FancyText(
+                            text: snapshot.data.email,
+                            size: 13.0,
+                            fontWeight: FontWeight.w500,
+                            color: textDark_Yellow,
+                          ),
+                          currentAccountPicture: GestureDetector(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white54,
+                              child: Icon(Icons.person, color: Colors.black45),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: gradientColor,
+                          ),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    })
                 : DrawerHeader(
                     decoration: BoxDecoration(
                       //color: primary,

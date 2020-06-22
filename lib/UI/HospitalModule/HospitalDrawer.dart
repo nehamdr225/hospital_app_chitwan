@@ -1,11 +1,15 @@
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/PromotionTab.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorProfile.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/WorkSchedule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,13 +19,14 @@ class HospitalDrawerApp extends StatefulWidget {
 }
 
 class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
-  final AuthService auth = AuthService();
+  final AuthService _auth = AuthService();
+  final user = AuthService().user;
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<HospitalDataStore>(context).user;
+    //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
+    //final uid = Provider.of<AuthService>(context).getCurrentUid;
     final theme = Theme.of(context);
-
     return Drawer(
       child: Container(
         color: Colors.white,
@@ -29,29 +34,37 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             user != null
-                ? UserAccountsDrawerHeader(
-                    accountName: FancyText(
-                      text: user["name"], //"${snapshot.data.displayName}",
-                      size: 16.0,
-                      fontWeight: FontWeight.w600,
-                      color: textDark_Yellow,
-                    ),
-                    accountEmail: FancyText(
-                      text: user["email"], //snapshot.data.email,
-                      size: 13.0,
-                      fontWeight: FontWeight.w500,
-                      color: textDark_Yellow,
-                    ),
-                    currentAccountPicture: GestureDetector(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white54,
-                        child: Icon(Icons.person, color: Colors.black45),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: gradientColor,
-                    ),
-                  )
+                ? FutureBuilder(
+                    future: Provider.of<AuthService>(context).getCurrentUser(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return UserAccountsDrawerHeader(
+                          accountName: FancyText(
+                            text: "${snapshot.data.displayName}",
+                            size: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: textDark_Yellow,
+                          ),
+                          accountEmail: FancyText(
+                            text: snapshot.data.email,
+                            size: 13.0,
+                            fontWeight: FontWeight.w500,
+                            color: textDark_Yellow,
+                          ),
+                          currentAccountPicture: GestureDetector(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white54,
+                              child: Icon(Icons.person, color: Colors.black45),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: gradientColor,
+                          ),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    })
                 : DrawerHeader(
                     decoration: BoxDecoration(
                       //color: primary,
@@ -92,11 +105,58 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                                     MaterialPageRoute(
                                         builder: (context) => SignIn()));
                               },
+                              // onTap: () {
+                              //   setState(() {
+                              //     loggedIn = true;
+                              //   });
+                              // },
                             ),
                           )
                         ])),
             Padding(
               padding: EdgeInsets.all(3.0),
+            ),
+            DrawerElements(
+              //Home
+              title: 'Home',
+              icon: 'assets/images/drawerIcon/home.png',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HospitalModule()));
+              },
+            ),
+            user != null
+                ? DrawerElements(
+                    //Settings
+                    title: 'Profile',
+                    icon: 'assets/images/drawerIcon/profile.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorProfile()));
+                    },
+                  )
+                : Text(" "),
+            DrawerElements(
+              //Home
+              title: 'Promotions',
+              icon: 'assets/images/drawerIcon/calendar.png',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PromotionTab()));
+              },
+            ),
+            DrawerElements(
+              //Share
+              title: 'Working Schedule',
+              icon: 'assets/images/drawerIcon/shareButton.png',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkSchedule()),
+                );
+              },
             ),
             Divider(
               color: Colors.grey[500],
@@ -129,9 +189,30 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
+                        text: "Login As User",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        },
+                        color: blueGrey,
+                        bg: Colors.white,
+                        shape: false),
+                  )
+                : Text(' '),
+            user != null
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 18.0, right: 18.0),
+                    child: FRaisedButton(
+                        elevation: 0.0,
+                        height: 40.0,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          auth.signOut();
+                          _auth.signOut();
                           setState(() {
                             loggedIn = false;
                           });

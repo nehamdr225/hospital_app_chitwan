@@ -18,6 +18,9 @@ class FForms extends StatelessWidget {
   final Function validator;
   final controller;
   final key;
+  final FocusNode currentFocus;
+  final FocusNode nextFocus;
+  final TextInputAction textInputAction;
   final style = TextStyle(
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.bold,
@@ -38,8 +41,11 @@ class FForms extends StatelessWidget {
       this.formColor: Colors.white,
       this.borderColor: Colors.white,
       this.textColor,
+      this.textInputAction: TextInputAction.none,
       this.validator,
       this.controller,
+      this.currentFocus,
+      this.nextFocus,
       this.key});
 
   @override
@@ -47,6 +53,12 @@ class FForms extends StatelessWidget {
     return Container(
       width: width,
       child: TextFormField(
+        onFieldSubmitted: (term) {
+          textInputAction != TextInputAction.done
+              ? _fieldFocusChange(context, currentFocus, nextFocus)
+              : currentFocus.unfocus();
+        },
+        textInputAction: textInputAction, //TextInputAction.next,
         cursorColor: Theme.of(context).colorScheme.primary,
         key: key,
         controller: controller,
@@ -54,6 +66,7 @@ class FForms extends StatelessWidget {
         validator: validator,
         keyboardType: type,
         autofocus: false,
+        focusNode: currentFocus,
         obscureText: obscure,
         onChanged: onChanged,
         decoration: InputDecoration(
@@ -85,5 +98,11 @@ class FForms extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 }

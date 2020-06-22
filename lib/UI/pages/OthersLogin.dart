@@ -33,6 +33,8 @@ class _OthersLoginState extends State<OthersLogin> {
   bool loading = false;
   bool signedIn = false;
   bool obscure = true;
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
 
   // text field state
   String email = '';
@@ -43,33 +45,34 @@ class _OthersLoginState extends State<OthersLogin> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: theme.background,
-      body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            alignment: Alignment.center,
-            fit: BoxFit.cover,
-            image: AssetImage("assets/images/img1.jpeg"),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: theme.background,
+        body: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              alignment: Alignment.center,
+              fit: BoxFit.cover,
+              image: AssetImage("assets/images/img1.jpeg"),
+            ),
           ),
-        ),
-        child: ListView(
-          children: <Widget>[
-            IconButton(
-                alignment: Alignment.topLeft,
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: textDark_Yellow,
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
-                }),
-            Center(
-              heightFactor: 1.4,
-              child: Column(
+          child: Stack(
+            children: <Widget>[
+              IconButton(
+                  alignment: Alignment.topLeft,
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: textDark_Yellow,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                  }),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
@@ -82,7 +85,7 @@ class _OthersLoginState extends State<OthersLogin> {
                       children: <Widget>[
                         // SizedBox(height: 10.0),
                         Container(
-                          color: Colors.white,
+                          color: theme.background,
                           width: size.width * 0.90,
                           child: DropdownButton(
                             underline: SizedBox(),
@@ -132,9 +135,12 @@ class _OthersLoginState extends State<OthersLogin> {
                               children: <Widget>[
                                 // SizedBox(height: 10.0),
                                 FForms(
+                                  textInputAction: TextInputAction.next,
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Email",
+                                  currentFocus: _emailFocus,
+                                  nextFocus: _passwordFocus,
                                   textColor: blueGrey.withOpacity(0.7),
                                   width: size.width * 0.90,
                                   validator: (val) =>
@@ -144,9 +150,11 @@ class _OthersLoginState extends State<OthersLogin> {
                                   },
                                 ),
                                 FForms(
+                                  textInputAction: TextInputAction.done,
                                   borderColor: theme.background,
                                   formColor: Colors.white,
                                   text: "Password",
+                                  currentFocus: _passwordFocus,
                                   obscure: obscure,
                                   trailingIcon: obscure == true
                                       ? IconButton(
@@ -242,6 +250,14 @@ class _OthersLoginState extends State<OthersLogin> {
                                                       builder: (context) =>
                                                           HospitalModule()));
                                             }
+                                            else if (_othersList == null){
+                                              setState(() {
+                                              loading = false;
+                                              signedIn = false;
+                                              error =
+                                                  'Select your department';
+                                            });
+                                            }
                                           }
                                         }
                                       }),
@@ -278,10 +294,14 @@ class _OthersLoginState extends State<OthersLogin> {
                           ),
                         ),
                       ]),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(padding: EdgeInsets.all(8.0), color: theme.secondary, child: FancyText(text: error, color: Colors.white)),
+                  ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -29,6 +29,7 @@ class UserDataStore extends ChangeNotifier {
   String _id;
   String _userType;
   Map<String, dynamic> _userData;
+  List hospitals;
 
   get uid => _id;
 
@@ -75,8 +76,19 @@ class UserDataStore extends ChangeNotifier {
   }
 
   void getAvailableHospitals() {
-    DatabaseService.getDoctors().listen((QuerySnapshot onData) {
-      print(['Got hospital data\n', onData]);
+    DatabaseService.getHospitals().listen((QuerySnapshot onData) {
+      print(['Got hospital data\n']);
+      final List allHospitals = onData.documents.map<Map>((element) {
+        final Map data = element.data;
+        data['id'] = element.documentID;
+        return data;
+      }).toList();
+      allHospitals.removeWhere((element) => element['name'] == null);
+      if (hospitals != null) {
+        hospitals.addAll(allHospitals);
+      } else {
+        hospitals = allHospitals;
+      }
     }, onError: (e) {
       print('Got hospital error\n $e');
     });

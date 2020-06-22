@@ -49,8 +49,8 @@ class HomeApp extends StatelessWidget {
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    if (user != null && user.uid != null) return HomeScreen();
+    final user = Provider.of<UserDataStore>(context);
+    if (user.uid != null) return HomeScreen();
     return SignIn();
   }
 }
