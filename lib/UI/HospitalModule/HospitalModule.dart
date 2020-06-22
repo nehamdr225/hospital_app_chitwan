@@ -1,8 +1,8 @@
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalDrawer.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class HospitalModule extends StatelessWidget {
           department: "Hospital",
         ),
       ),
-      drawer: DoctorDrawerApp(),
+      drawer: HospitalDrawerApp(),
       backgroundColor: theme.background,
       body: ListView(children: <Widget>[
         Padding(
@@ -131,14 +131,13 @@ class HospitalModule extends StatelessWidget {
                 itemCount: Pharmacy_List.length,
                 itemBuilder: (BuildContext context, int index) {
                   return LabratoryListCard(
-                    clientName: Pharmacy_List[index]['clients'],
-                    labName: Pharmacy_List[index]['clients'],
-                    labLocation: Pharmacy_List[index]['location'],
-                    image: Pharmacy_List[index]['src'],
-                    phone: Pharmacy_List[index]['phone'],
-                    pharmacyStatus: pharmacistDecision,
-                    id: "Hospital"
-                  );
+                      clientName: Pharmacy_List[index]['clients'],
+                      labName: Pharmacy_List[index]['clients'],
+                      labLocation: Pharmacy_List[index]['location'],
+                      image: Pharmacy_List[index]['src'],
+                      phone: Pharmacy_List[index]['phone'],
+                      pharmacyStatus: pharmacistDecision,
+                      id: "Hospital");
                 })),
       ]),
     );
