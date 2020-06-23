@@ -13,8 +13,25 @@ class DoctorsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final doctor = Provider.of<DoctorDataStore>(context).user;
     Provider.of<DoctorDataStore>(context).handleInitialProfileLoad();
-    
+
+    buildAppointmentRequests() {
+      List<Widget> widgets = NearYou.map<Widget>(
+        (each) => PatientListCard(
+          name: each['name'],
+          caption: each['cap'],
+          image: each['src'],
+          phone: each['phone'],
+          status: each['status'],
+          date: each['date'],
+          time: each['time'],
+          gender: each['gender'],
+        ),
+      ).toList();
+      return widgets;
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -72,7 +89,8 @@ class DoctorsModule extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             top: 8.0, left: 28.0, bottom: 0.0),
                         child: FancyText(
-                            text: "Hello Doctor!",
+                            text:
+                                "Hello ${doctor != null ? doctor['name'] : 'Doctor'}!",
                             textAlign: TextAlign.left,
                             size: 22.0,
                             color: textDark_Yellow,
@@ -136,22 +154,10 @@ class DoctorsModule extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            height: MediaQuery.of(context).size.height * 0.70,
-            child: ListView.builder(
-                itemCount: NearYou.length - 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return PatientListCard(
-                    name: NearYou[index]['name'],
-                    caption: NearYou[index]['cap'],
-                    image: NearYou[index]['src'],
-                    phone: NearYou[index]['phone'],
-                    status: NearYou[index]['status'],
-                    date: NearYou[index]['date'],
-                    time: NearYou[index]['time'],
-                    gender: NearYou[index]['gender'],
-                  );
-                })),
+        Column(
+          // height: MediaQuery.of(context).size.height * 0.70,
+          children: buildAppointmentRequests(),
+        ),
       ]),
     );
   }
