@@ -4,13 +4,17 @@ import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DoctorsModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    Provider.of<DoctorDataStore>(context).handleInitialProfileLoad();
+    
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),

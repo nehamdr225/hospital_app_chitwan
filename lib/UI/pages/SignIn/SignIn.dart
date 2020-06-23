@@ -6,6 +6,7 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/state/store.dart';
@@ -54,6 +55,7 @@ class _SignInState extends State<SignIn> {
             userDataStore.uid = result.uid;
             userDataStore.type = 'user';
             userDataStore.fetchUserData();
+            setLocalUserData('userType', 'user');
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => HomeScreen()));
           }

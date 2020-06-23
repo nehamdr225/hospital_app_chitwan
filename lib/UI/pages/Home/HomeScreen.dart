@@ -7,8 +7,10 @@ import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Appoi
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
 import 'package:chitwan_hospital/service/database.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,6 +18,7 @@ class HomeScreen extends StatelessWidget {
     final newAppointment = new Appointments(null, null, "Department", "Dr. ",
         "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final theme = Theme.of(context);
+    Provider.of<UserDataStore>(context).handleInitialProfileLoad();
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
@@ -76,13 +79,15 @@ class HomeScreen extends StatelessWidget {
                     itemCount: snapshot.data.documents.length - 1,
                     itemBuilder: (BuildContext context, int index) {
                       return HomeListCard(
-                        doctorName: snapshot.data.documents[index]['name']??'',
-                        department: snapshot.data.documents[index]['field']??'',
-                        image: snapshot.data.documents[index]['src']??'',
-                        phone: snapshot.data.documents[index]['phone']??'',
-                        status: snapshot.data.documents[index]['status']??'',
-                        date: snapshot.data.documents[index]['date']??'',
-                        time: snapshot.data.documents[index]['time']??'',
+                        doctorName:
+                            snapshot.data.documents[index]['name'] ?? '',
+                        department:
+                            snapshot.data.documents[index]['field'] ?? '',
+                        image: snapshot.data.documents[index]['src'] ?? '',
+                        phone: snapshot.data.documents[index]['phone'] ?? '',
+                        status: snapshot.data.documents[index]['status'] ?? '',
+                        date: snapshot.data.documents[index]['date'] ?? '',
+                        time: snapshot.data.documents[index]['time'] ?? '',
                       );
                     });
               },

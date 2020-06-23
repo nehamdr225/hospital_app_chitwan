@@ -1,8 +1,12 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
+import 'package:chitwan_hospital/blank.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:chitwan_hospital/service/user.dart';
@@ -26,8 +30,8 @@ class BootStrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => new STheme()),
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => UserDataStore()),
-        ChangeNotifierProvider(create: (_) => AppDataStore()),
         ChangeNotifierProvider(create: (_) => HospitalDataStore()),
+        ChangeNotifierProvider(create: (_) => DoctorDataStore()),
       ],
       child: HomeApp(),
     );
@@ -39,23 +43,49 @@ class HomeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<STheme>(context);
 
-    return StreamProvider<User>.value(
-        value: AuthService().user,
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            //darkTheme: theme.serviceDarkTheme,
-            theme: theme.serviceLightTheme,
-            home: SafeArea(child: Wrapper() //AppointmentPage()
-                )));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      //darkTheme: theme.serviceDarkTheme,
+      theme: theme.serviceLightTheme,
+      home: SafeArea(child: Wrapper() //AppointmentPage()
+          ),
+    );
   }
 }
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserDataStore>(context);
-    print(user.uid);
-    if (user.uid != null) return HomeScreen();
-    return SignIn();
+    return StreamBuilder(
+        stream: AuthService().user,
+        builder: (BuildContext context, AsyncSnapshot<User> user) {
+          switch (user.connectionState) {
+            case ConnectionState.waiting:
+              return BlankLoader();
+            default:
+              print(user.data);
+              if (user.data != null && user.data.uid != null) {
+                return FutureBuilder(
+                  future: getLocalUserData('userType'),
+                  builder: (BuildContext context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return BlankLoader();
+                      default:
+                        if (snapshot.data == 'doctor')
+                          return DoctorsModule();
+                        else if (snapshot.data == 'hospital')
+                          return HospitalModule();
+                        return HomeScreen();
+                    }
+                  },
+                );
+              } else {
+                return SignIn();
+              }
+          }
+        });
+
+    // return SignIn();
   }
 }

@@ -23,6 +23,10 @@ class DatabaseService {
     return await userCollection.document(uid).get();
   }
 
+  static Future<DocumentSnapshot> getDoctorData(String uid) async {
+    return await doctorCollection.document(uid).get();
+  }
+
   static Future updateDoctorData(String uid, Map<String, dynamic> data) async {
     return await doctorCollection.document(uid).setData(data);
   }

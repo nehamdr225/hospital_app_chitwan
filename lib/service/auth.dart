@@ -88,7 +88,8 @@ class AuthService with ChangeNotifier {
         'phone': phone,
         'role': 'doctor',
         'isVerified': false,
-        'name': name
+        'name': name,
+        'email': email
       });
       await updateUserName(name, user);
       return user.uid;
@@ -113,7 +114,8 @@ class AuthService with ChangeNotifier {
         'phone': phone,
         'role': 'hospital',
         'name': name,
-        'isVerified': false
+        'isVerified': false,
+        'email': email
       });
       await updateUserName(name, user);
       return user.uid;
@@ -137,7 +139,8 @@ class AuthService with ChangeNotifier {
         'phone': phone,
         'role': 'pharmacy',
         'name': name,
-        'isVerified': false
+        'isVerified': false,
+        'email': email
       });
       await updateUserName(name, user);
       return user.uid;

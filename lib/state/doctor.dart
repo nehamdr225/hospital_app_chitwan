@@ -3,24 +3,27 @@ import 'package:chitwan_hospital/service/database.dart';
 import 'package:flutter/cupertino.dart';
 
 class DoctorDataStore extends ChangeNotifier {
-  DoctorDataStore() {
+  handleInitialProfileLoad() {
     try {
-      final auth = AuthService();
-      print('Bootstrapping data store\n');
-      auth.getCurrentUID().then((value) {
-        print('value $value');
-        if (value != null) {
-          DatabaseService.getUserData(value).then((userData) {
-            if (userData.data != null) {
-              user = userData.data;
-              uid = value;
-              type = userData.data['role'];
-            }
-          }).catchError((err) {
-            print(err);
-          });
-        }
-      });
+      if (user == null) {
+        final auth = AuthService();
+        print('Bootstrapping data store\n');
+        auth.getCurrentUID().then((value) {
+          print('value $value');
+          if (value != null) {
+            DatabaseService.getDoctorData(value).then((userData) {
+              if (userData.data != null) {
+                user = userData.data;
+                uid = value;
+                type = userData.data['role'];
+                notifyListeners();
+              }
+            }).catchError((err) {
+              print(err);
+            });
+          }
+        });
+      }
     } catch (e) {}
   }
 

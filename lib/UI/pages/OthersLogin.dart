@@ -8,6 +8,7 @@ import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersSignUp.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
 
 class OthersLogin extends StatefulWidget {
@@ -223,6 +224,8 @@ class _OthersLoginState extends State<OthersLogin> {
                                             //   signedIn = true;
                                             // });
                                             if (_othersList == 'Doctor') {
+                                              setLocalUserData(
+                                                  'userType', 'doctor');
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -230,13 +233,17 @@ class _OthersLoginState extends State<OthersLogin> {
                                                           DoctorsModule()));
                                             } else if (_othersList ==
                                                 'Pharmacy') {
+                                              setLocalUserData(
+                                                  'userType', 'pharmacy');
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           PharmacyModule()));
                                             } else if (_othersList ==
-                                                'Labratory') {
+                                                'Laboratory') {
+                                              setLocalUserData(
+                                                  'userType', 'laboratory');
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -244,6 +251,8 @@ class _OthersLoginState extends State<OthersLogin> {
                                                           LabModule()));
                                             } else if (_othersList ==
                                                 'Hospital') {
+                                              setLocalUserData(
+                                                  'userType', 'hospital');
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(

@@ -22,7 +22,9 @@ class DrawerApp extends StatefulWidget {
 class _DrawerAppState extends State<DrawerApp> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserDataStore>(context).user;
+    final userDataStore = Provider.of<UserDataStore>(context);
+    final user = userDataStore.user;
+
     final auth = AuthService();
     final theme = Theme.of(context);
 
@@ -258,6 +260,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         text: "Sign Out",
                         onPressed: () async {
                           auth.signOut();
+                          userDataStore.clearState();
                           setState(() {
                             loggedIn = false;
                           });

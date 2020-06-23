@@ -4,26 +4,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserDataStore extends ChangeNotifier {
-  UserDataStore() {
+  handleInitialProfileLoad() {
     try {
-      final auth = AuthService();
-      print('Bootstrapping data store\n');
-      auth.getCurrentUID().then((value) {
-        print('value $value');
-        if (value != null) {
-          DatabaseService.getUserData(value).then((userData) {
-            if (userData.data != null) {
-              user = userData.data;
-              uid = value;
-              type = userData.data['role'];
-            }
-          }).catchError((err) {
-            print(err);
-          });
-        }
-      });
-      getAvailableHospitals();
-      getUserAppointments();
+      if (user == null) {
+        final auth = AuthService();
+        print('Bootstrapping data store\n');
+        auth.getCurrentUID().then((value) {
+          print('value $value');
+          if (value != null) {
+            DatabaseService.getUserData(value).then((userData) {
+              if (userData.data != null) {
+                user = userData.data;
+                uid = value;
+                type = userData.data['role'];
+              }
+            }).catchError((err) {
+              print(err);
+            });
+          }
+        });
+        getAvailableHospitals();
+        getUserAppointments();
+      }
     } catch (e) {}
   }
 
@@ -137,5 +139,14 @@ class UserDataStore extends ChangeNotifier {
 
   getOneAppointment(String id) {
     return _appointments.firstWhere((element) => element['id'] == id);
+  }
+
+  clearState() {
+    _id = null;
+    _userData = null;
+    _userType = null;
+    // _hospitals = null;
+    _appointments = null;
+    notifyListeners();
   }
 }
