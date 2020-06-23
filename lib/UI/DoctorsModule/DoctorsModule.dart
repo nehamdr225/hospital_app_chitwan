@@ -1,5 +1,7 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorProfile.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
@@ -154,6 +156,34 @@ class DoctorsModule extends StatelessWidget {
             ),
           ),
         ),
+        doctor['department'] == null
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 10.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FancyText(
+                      text: 'Please update your account details',
+                      fontWeight: FontWeight.bold,
+                      size: 16.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0),
+                      child: FRaisedButton(
+                        text: 'Update Details',
+                        color: Colors.white,
+                        bgcolor: theme.primary,
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DoctorProfile()));
+                        },
+                      ),
+                    ),
+                  ],
+                ))
+            : Text(''),
         Column(
           // height: MediaQuery.of(context).size.height * 0.70,
           children: buildAppointmentRequests(),

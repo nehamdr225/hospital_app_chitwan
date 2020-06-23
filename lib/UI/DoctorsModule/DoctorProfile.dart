@@ -4,6 +4,7 @@ import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +18,6 @@ class DoctorProfile extends StatefulWidget {
 }
 
 class _DoctorProfileState extends State<DoctorProfile> {
-  AppointmentT _appointment = AppointmentT.opd;
   File _image;
   File _profileImg;
   final picker = ImagePicker();
@@ -36,11 +36,34 @@ class _DoctorProfileState extends State<DoctorProfile> {
     });
   }
 
+  Map<String, String> updateData = {};
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     var size = MediaQuery.of(context).size;
+    AppointmentT _appointment;
     final doctor = Provider.of<DoctorDataStore>(context).user;
+
+    if (doctor['consultationType'] != null) {
+      if (doctor['consultationType'] == 'online')
+        _appointment = AppointmentT.online;
+      if (doctor['consultationType'] == 'on-site')
+        _appointment = AppointmentT.opd;
+      else
+        _appointment = AppointmentT.both;
+    } else {
+      _appointment = AppointmentT.both;
+    }
+    const departments = const ['OPD', 'SURGERY'];
+    String selectedDept = doctor != null ? doctor['department'] ?? null : null;
+    final doctorDataStore = Provider.of<DoctorDataStore>(context);
+    List hospitals = doctorDataStore.hospitals;
+    if (hospitals == null) {
+      doctorDataStore.getHospitals();
+    }
+
+    String selectedHospital = doctor['hospital'] ?? null;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -115,46 +138,143 @@ class _DoctorProfileState extends State<DoctorProfile> {
             child: InputField(
               title: 'Name',
               value: doctor["name"] ?? '',
+              onChanged: (value) {
+                setState(() {
+                  updateData['name'] = value;
+                });
+              },
             ),
           ),
           Padding(
             //Email
             padding: const EdgeInsets.all(10.0),
             child: InputField(
-              title: 'Email',
-              value: doctor["email"] ?? '',
-            ),
+                title: 'Email',
+                value: doctor["email"] ?? '',
+                onChanged: (value) {
+                  setState(() {
+                    updateData['email'] = value;
+                  });
+                }),
           ),
           Container(
             //Contact
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'Contact',
-              value: "9840056679",
-            ),
+                title: 'Contact',
+                value: doctor['phone'] ?? '',
+                onChanged: (value) {
+                  setState(() {
+                    updateData['phone'] = value;
+                  });
+                }),
           ),
           Container(
             //Current Address
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'Current Address',
-              value: "New Baneshwor, Kathmandu",
+                title: 'Current Address',
+                value: doctor['address'] ?? "",
+                onChanged: (value) {
+                  setState(() {
+                    updateData['address'] = value;
+                  });
+                }),
+          ),
+          // Container(
+          //   //Working Hospital
+          //   padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+          //   child: InputField(
+          //       title: 'Working Hospital/Clinic',
+          //       value: doctor['hospital'] ?? '',
+          //       onChanged: (value) {
+          //         setState(() {
+          //           updateData['hospital'] = value;
+          //         });
+          //       }),
+          // ),
+          Container(
+            padding: const EdgeInsets.only(top: 10.0, left: 23.0),
+            alignment: Alignment.centerLeft,
+            child: DropdownButton(
+              underline: SizedBox(),
+              hint: Container(
+                  height: 45.0,
+                  width: size.width * 0.83,
+                  alignment: Alignment.centerLeft,
+                  child: FancyText(
+                    text: "Hospital",
+                    color: blueGrey,
+                    fontWeight: FontWeight.w500,
+                  )),
+              value: selectedHospital,
+              items: hospitals.map((value) {
+                return DropdownMenuItem(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 11.0),
+                    child: FancyText(
+                      text: value['name'],
+                      color: blueGrey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  value: value['name'],
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  updateData['hospital'] = value;
+                  selectedHospital = value;
+                });
+              },
             ),
           ),
           Container(
-            //Working Hospital
-            padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-            child: InputField(
-              title: 'Working Hospital/Clinic',
-              value: "KMC",
+            padding: const EdgeInsets.only(top: 10.0, left: 23.0),
+            alignment: Alignment.centerLeft,
+            child: DropdownButton(
+              underline: SizedBox(),
+              hint: Container(
+                  height: 45.0,
+                  width: size.width * 0.83,
+                  alignment: Alignment.centerLeft,
+                  child: FancyText(
+                    text: "Department",
+                    color: blueGrey,
+                    fontWeight: FontWeight.w500,
+                  )),
+              value: selectedDept,
+              items: departments.map((value) {
+                return DropdownMenuItem(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 11.0),
+                    child: FancyText(
+                      text: value,
+                      color: blueGrey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  value: value,
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  updateData['department'] = value;
+                  selectedDept = value;
+                });
+              },
             ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'NMC Registration Number',
-              value: "xxx-xxx-xxxx",
-            ),
+                title: 'NMC Registration Number',
+                value: doctor['registrationNo'] ?? '',
+                onChanged: (value) {
+                  setState(() {
+                    updateData['registrationNo'] = value;
+                  });
+                }),
           ),
           Padding(
             //Appointment Type
@@ -185,6 +305,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             onChanged: (AppointmentT value) {
                               setState(() {
                                 _appointment = value;
+                                updateData['consultationType'] = 'on-site';
                               });
                             },
                           ),
@@ -202,6 +323,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             onChanged: (AppointmentT value) {
                               setState(() {
                                 _appointment = value;
+                                updateData['consultationType'] = 'online';
                               });
                             },
                           ),
@@ -219,6 +341,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             onChanged: (AppointmentT value) {
                               setState(() {
                                 _appointment = value;
+                                updateData['consultationType'] = 'both';
                               });
                             },
                           ),
@@ -294,7 +417,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 color: theme.colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
                 borderColor: theme.colorScheme.background,
-                onPressed: () {},
+                onPressed: () {
+                  print(updateData);
+                  if (updateData.length > 0)
+                    doctorDataStore
+                        .update(updateData)
+                        .then((value) => print(value));
+                },
               )),
           SizedBox(
             height: 10.0,

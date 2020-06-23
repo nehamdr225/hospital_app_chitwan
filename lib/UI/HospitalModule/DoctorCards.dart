@@ -21,7 +21,7 @@ class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final doctor =
-        Provider.of<HospitalDataStore>(context).getOneDoctor(name: widget.id);
+        Provider.of<HospitalDataStore>(context).getOneDoctor(id: widget.id);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(

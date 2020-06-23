@@ -4,7 +4,9 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HospitalDoctorDetails extends StatelessWidget {
   final id;
@@ -13,6 +15,8 @@ class HospitalDoctorDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final hospitalDataStore = Provider.of<HospitalDataStore>(context);
+    final doctor = hospitalDataStore.getOneDoctor(id: id);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -85,7 +89,7 @@ class HospitalDoctorDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             FancyText(
-                              text: 'name',
+                              text: doctor['name'],
                               fontWeight: FontWeight.w700,
                               size: 18.0,
                               textAlign: TextAlign.left,
@@ -101,7 +105,7 @@ class HospitalDoctorDetails extends StatelessWidget {
                             ),
                             SizedBox(height: 2.0),
                             FancyText(
-                              text: "Consultant",
+                              text: doctor["field"],
                               fontWeight: FontWeight.w400,
                               size: 14.0,
                               textAlign: TextAlign.left,
@@ -142,7 +146,26 @@ class HospitalDoctorDetails extends StatelessWidget {
                               text: " Rating 4.0",
                               color: textDark_Yellow.withOpacity(0.8),
                               size: 13.0,
-                            )
+                            ),
+                            SizedBox(height: 2),
+                            Row(children: [
+                              doctor['isVerified'] ?? false
+                                  ? Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                    )
+                                  : Icon(
+                                      Icons.cancel,
+                                      color: Colors.red,
+                                    ),
+                              SizedBox(
+                                height: 2,
+                                width: 2,
+                              ),
+                              doctor['isVerified'] ?? false
+                                  ? Text('Verified')
+                                  : Text('Not Verified'),
+                            ])
                           ],
                         ),
                       ),
@@ -172,52 +195,53 @@ class HospitalDoctorDetails extends StatelessWidget {
             elevation: 1.0,
             width: size.width * 0.95,
             height: 40.0,
-            text: "Book Appointment",
+            text: doctor['isVerified'] ?? false ? 'Delete' : "Mark Verified",
             fontSize: 17.0,
             color: textDark_Yellow,
-            bg: theme.colorScheme.secondary.withOpacity(0.8),
+            bg: theme.colorScheme.primaryVariant.withOpacity(0.8),
             shape: true,
             radius: 5.0,
-            onPressed: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => AppointmentForm(
-              //               appointment: newAppointment,
-              //               doctor: name,
-              //               department: caption,
-              //             )));
-            },
+            onPressed: doctor['isVerified'] ?? false
+                ? () {}
+                : () async {
+                    bool result =
+                        await hospitalDataStore.verifyDoctor(doctor['id']);
+                    print(result);
+                    if (result) {
+                      hospitalDataStore.updateDoctorValue(
+                          id, 'isVerified', true);
+                    }
+                  },
           ),
         ),
         SizedBox(height: 10.0),
-        SizedBox(
-          width: size.width,
-          child: Card(
-            elevation: 2.0,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FancyText(
-                      text: "Pharmacy Information",
-                      textAlign: TextAlign.start,
-                      size: 15.5,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    SizedBox(height: 2.0),
-                    FancyText(
-                      text:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                      textAlign: TextAlign.start,
-                      size: 13.5,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ]),
-            ),
-          ),
-        ),
+        // SizedBox(
+        //   width: size.width,
+        //   child: Card(
+        //     elevation: 2.0,
+        //     child: Padding(
+        //       padding: const EdgeInsets.all(12.0),
+        //       child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             FancyText(
+        //               text: "Pharmacy Information",
+        //               textAlign: TextAlign.start,
+        //               size: 15.5,
+        //               fontWeight: FontWeight.w500,
+        //             ),
+        //             SizedBox(height: 2.0),
+        //             FancyText(
+        //               text:
+        //                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        //               textAlign: TextAlign.start,
+        //               size: 13.5,
+        //               fontWeight: FontWeight.w400,
+        //             ),
+        //           ]),
+        //     ),
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.only(
               top: 8.0, bottom: 8.0, left: 15.0, right: 8.0),
@@ -241,7 +265,7 @@ class HospitalDoctorDetails extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                       FancyText(
-                        text: "'phone' ",
+                        text: doctor['phone'].toString(),
                         textAlign: TextAlign.left,
                         size: 16.0,
                         color: theme.colorScheme.secondaryVariant,

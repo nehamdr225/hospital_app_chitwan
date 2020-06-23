@@ -31,7 +31,7 @@ class DatabaseService {
     return await hospitalCollection.document(uid).get();
   }
 
-  static Future updateDoctorData(String uid, Map<String, dynamic> data) async {
+  static Future updateDoctorData(String uid, data) async {
     return await doctorCollection.document(uid).setData(data);
   }
 
@@ -64,6 +64,15 @@ class DatabaseService {
 
   static getDoctorsByHospital(String hospital) {
     return doctorCollection.where('hospital', isEqualTo: hospital);
+  }
+
+  static Future<bool> markDoctorVerified(String id) async {
+    try {
+      await doctorCollection.document(id).updateData({'isVerified': true});
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static Stream<QuerySnapshot> getHospitals() {

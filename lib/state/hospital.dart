@@ -106,6 +106,22 @@ class HospitalDataStore extends ChangeNotifier {
     return doctors.firstWhere((element) => element['name'] == name);
   }
 
+  Future<bool> verifyDoctor(String id) {
+    return DatabaseService.markDoctorVerified(id);
+  }
+
+  updateDoctorValue(String id, String key, dynamic value) {
+    final newVal = _doctors.map<Map>((e) {
+      if (e['id'] == id) {
+        final updatedData = e;
+        updatedData[key] = value;
+        return updatedData;
+      }
+      return e;
+    }).toList();
+    doctors = newVal;
+  }
+
   clearState() {
     _id = null;
     _userData = null;

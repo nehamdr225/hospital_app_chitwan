@@ -14,10 +14,10 @@ class DoctorDataStore extends ChangeNotifier {
           if (value != null) {
             DatabaseService.getDoctorData(value).then((userData) {
               if (userData.data != null) {
-                user = userData.data;
-                uid = value;
-                type = userData.data['role'];
-                // notifyListeners();
+                _userData = userData.data;
+                _id = value;
+                _userType = userData.data['role'];
+                notifyListeners();
               }
             }).catchError((err) {
               print(err);
@@ -31,6 +31,7 @@ class DoctorDataStore extends ChangeNotifier {
   String _id;
   String _userType;
   Map<String, dynamic> _userData;
+  List hospitals;
 
   get uid => _id;
 
@@ -64,6 +65,26 @@ class DoctorDataStore extends ChangeNotifier {
         });
       }
     }
+  }
+
+  Future<bool> update(data) async {
+    try {
+      await DatabaseService.updateDoctorData(uid, data);
+      _userData.addAll(data);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  getHospitals() {
+    if (hospitals == null)
+      DatabaseService.getHospitals().listen((onData) {
+        List newData = onData.documents.map<Map>((e) => e.data).toList();
+        hospitals = newData;
+      });
   }
 
   clearState() {

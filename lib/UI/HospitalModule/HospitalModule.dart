@@ -2,7 +2,6 @@ import 'package:chitwan_hospital/UI/HospitalModule/DoctorCards.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalDrawer.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +17,10 @@ class HospitalModule extends StatelessWidget {
     Provider.of<HospitalDataStore>(context).handleInitialProfileLoad();
     final hospital = Provider.of<HospitalDataStore>(context).user;
     final List doctors = Provider.of<HospitalDataStore>(context).doctors;
-    print(doctors);
+    // print(doctors);
     buildHospitalDoctors() {
       return doctors
-          .map<Widget>((e) => HospitalDoctorListCard(id: e['name']))
+          .map<Widget>((e) => HospitalDoctorListCard(id: e['id']))
           .toList();
     }
 
