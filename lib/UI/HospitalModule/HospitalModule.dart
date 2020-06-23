@@ -18,6 +18,17 @@ class HospitalModule extends StatelessWidget {
     Provider.of<HospitalDataStore>(context).handleInitialProfileLoad();
     final hospital = Provider.of<HospitalDataStore>(context).user;
 
+    buildHospitalDoctors() {
+      return Pharmacy_List.map<Widget>((e) => LabratoryListCard(
+          clientName: e['clients'],
+          labName: e['clients'],
+          labLocation: e['location'],
+          image: e['src'],
+          phone: e['phone'],
+          pharmacyStatus: pharmacistDecision,
+          id: "Hospital")).toList();
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -131,20 +142,7 @@ class HospitalModule extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            height: MediaQuery.of(context).size.height * 0.70,
-            child: ListView.builder(
-                itemCount: Pharmacy_List.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return LabratoryListCard(
-                      clientName: Pharmacy_List[index]['clients'],
-                      labName: Pharmacy_List[index]['clients'],
-                      labLocation: Pharmacy_List[index]['location'],
-                      image: Pharmacy_List[index]['src'],
-                      phone: Pharmacy_List[index]['phone'],
-                      pharmacyStatus: pharmacistDecision,
-                      id: "Hospital");
-                })),
+        Column(children: buildHospitalDoctors()),
       ]),
     );
   }

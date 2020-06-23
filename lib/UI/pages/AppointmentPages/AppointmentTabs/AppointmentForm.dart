@@ -36,17 +36,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
   String _valHospital;
 
   String _valDepartment;
-  List _myDepartment = [
-    "Operation Theater",
-    "ENT",
-    "Dermatology",
-  ];
+  // List _myDepartment = [
+  //   "Operation Theater",
+  //   "ENT",
+  //   "Dermatology",
+  // ];
   String _valDoctor;
-  List _myDoctor = [
-    "Dr. Bharati Devi Sharma",
-    "Dr. Amit Jha",
-    "Dr. Sangeeta Paudel",
-  ];
   String _valTime;
   List _time = [
     "12:00 PM",
@@ -78,6 +73,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
         fontWeight: FontWeight.bold,
         fontSize: 15,
         color: blueGrey.withOpacity(0.9));
+
     final userDataStore = Provider.of<UserDataStore>(context);
     List _myHospital = userDataStore.hospitals.map((e) => e['name']).toList();
 
@@ -255,7 +251,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                     fontWeight: FontWeight.w500,
                                   )),
                         value: _valDepartment,
-                        items: _myDepartment.map((value) {
+                        items: userDataStore.hospitals
+                            .firstWhere((element) =>
+                                element['name'] == _valHospital)['departments']
+                            .map((value) {
                           return DropdownMenuItem(
                             child: FancyText(
                               text: value,
@@ -315,7 +314,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                     fontWeight: FontWeight.w500,
                                   )),
                         value: _valDoctor,
-                        items: _myDoctor.map((value) {
+                        items: userDataStore.doctors
+                            .where((element) =>
+                                element['hospital'] == _valHospital)
+                            .toList()
+                            .map((value) {
                           return DropdownMenuItem(
                             child: FancyText(
                               text: value,

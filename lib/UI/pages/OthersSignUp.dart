@@ -1,10 +1,13 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/Widget/loading.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
 
 class OthersSignUp extends StatefulWidget {
@@ -16,7 +19,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
   final AuthService _auth = AuthService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email = "", _password = "";
-  String error = '';
+  String error;
   bool loading = false;
   bool obscure = true;
   String _name, uid;
@@ -235,12 +238,44 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                                     password: _password,
                                                     name: _name,
                                                     phone: _phone);
+                                            if (result != null) {
+                                              setLocalUserData(
+                                                  'userType', 'hospital');
+                                              setState(() => loading = false);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HospitalModule()));
+                                            } else {
+                                              setState(() {
+                                                loading = false;
+                                                error =
+                                                    'Please supply a valid email';
+                                              });
+                                            }
                                           } else if (_othersList == 'Doctor') {
                                             result = await _auth.registerDoctor(
                                                 email: _email,
                                                 password: _password,
                                                 name: _name,
                                                 phone: _phone);
+                                            if (result != null) {
+                                              setLocalUserData(
+                                                  'userType', 'doctor');
+                                              setState(() => loading = false);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DoctorsModule()));
+                                            } else {
+                                              setState(() {
+                                                loading = false;
+                                                error =
+                                                    'Please supply a valid email';
+                                              });
+                                            }
                                           } else if (_othersList ==
                                               'Pharmacy') {
                                             result =
@@ -249,21 +284,22 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                                     password: _password,
                                                     name: _name,
                                                     phone: _phone);
-                                          }
-
-                                          if (result != null) {
-                                            setState(() => loading = false);
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeScreen()));
-                                          } else {
-                                            setState(() {
-                                              loading = false;
-                                              error =
-                                                  'Please supply a valid email';
-                                            });
+                                            if (result != null) {
+                                              setLocalUserData(
+                                                  'userType', 'pharmacy');
+                                              setState(() => loading = false);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PharmacyModule()));
+                                            } else {
+                                              setState(() {
+                                                loading = false;
+                                                error =
+                                                    'Please supply a valid email';
+                                              });
+                                            }
                                           }
                                         }
                                       },
@@ -305,14 +341,16 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                     ),
                                   ),
                                 ]),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  color: theme.secondary,
-                                  child: FancyText(
-                                      text: error, color: Colors.white)),
-                            ),
+                            error != null
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        color: theme.secondary,
+                                        child: FancyText(
+                                            text: error, color: Colors.white)),
+                                  )
+                                : Text(''),
                           ],
                         ))
                   ])),

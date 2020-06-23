@@ -19,7 +19,7 @@ class HospitalDataStore extends ChangeNotifier {
                 // getAvailableDoctors(userData.data['name']);
                 uid = value;
                 type = userData.data['role'];
-                notifyListeners();
+                // notifyListeners();
               }
             }).catchError((err) {
               print(err);

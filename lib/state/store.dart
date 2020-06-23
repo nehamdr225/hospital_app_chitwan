@@ -18,7 +18,7 @@ class UserDataStore extends ChangeNotifier {
                 user = userData.data;
                 uid = value;
                 type = userData.data['role'];
-                notifyListeners();
+                // notifyListeners();
               }
             }).catchError((err) {
               print(err);
@@ -52,28 +52,28 @@ class UserDataStore extends ChangeNotifier {
     _userType = userType;
   }
 
-  get user => _userData;
+  Map get user => _userData;
 
   set user(newUserData) {
     _userData = newUserData;
     notifyListeners();
   }
 
-  get hospitals => _hospitals;
+  List get hospitals => _hospitals;
 
   set hospitals(newHospitalData) {
     _hospitals = newHospitalData;
     notifyListeners();
   }
 
-  get appointments => _appointments;
+  List get appointments => _appointments;
 
   set appointments(newAppointmentData) {
     _appointments = newAppointmentData;
     notifyListeners();
   }
 
-  get doctors => _doctors;
+  List get doctors => _doctors;
 
   set doctors(newDoctorData) {
     _doctors = newDoctorData;

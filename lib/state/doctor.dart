@@ -17,7 +17,7 @@ class DoctorDataStore extends ChangeNotifier {
                 user = userData.data;
                 uid = value;
                 type = userData.data['role'];
-                notifyListeners();
+                // notifyListeners();
               }
             }).catchError((err) {
               print(err);
