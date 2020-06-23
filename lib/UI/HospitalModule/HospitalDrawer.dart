@@ -116,19 +116,19 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                     MaterialPageRoute(builder: (context) => HospitalModule()));
               },
             ),
-            user != null
-                ? DrawerElements(
-                    //Settings
-                    title: 'Profile',
-                    icon: 'assets/images/drawerIcon/profile.png',
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DoctorProfile()));
-                    },
-                  )
-                : Text(" "),
+            // user != null
+            //     ? DrawerElements(
+            //         //Settings
+            //         title: 'Profile',
+            //         icon: 'assets/images/drawerIcon/profile.png',
+            //         onTap: () {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) => DoctorProfile()));
+            //         },
+            //       )
+            //     : Text(" "),
             DrawerElements(
               //Home
               title: 'Promotions',
@@ -138,17 +138,17 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                     MaterialPageRoute(builder: (context) => PromotionTab()));
               },
             ),
-            DrawerElements(
-              //Share
-              title: 'Working Schedule',
-              icon: 'assets/images/drawerIcon/shareButton.png',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WorkSchedule()),
-                );
-              },
-            ),
+            // DrawerElements(
+            //   //Share
+            //   title: 'Working Schedule',
+            //   icon: 'assets/images/drawerIcon/shareButton.png',
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => WorkSchedule()),
+            //     );
+            //   },
+            // ),
             Divider(
               color: Colors.grey[500],
               height: 5.0,

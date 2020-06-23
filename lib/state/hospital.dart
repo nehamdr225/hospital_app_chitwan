@@ -26,12 +26,14 @@ class HospitalDataStore extends ChangeNotifier {
             });
           }
         });
+        getAvailableDoctors();
       }
     } catch (e) {}
   }
 
   String _id;
   String _userType;
+  List _doctors;
   Map<String, dynamic> _userData;
 
   get uid => _id;
@@ -47,10 +49,17 @@ class HospitalDataStore extends ChangeNotifier {
     _userType = userType;
   }
 
-  get user => _userData;
+  Map get user => _userData;
 
   set user(newUserData) {
     _userData = newUserData;
+    notifyListeners();
+  }
+
+  List get doctors => _doctors;
+
+  set doctors(List newDoctors) {
+    _doctors = newDoctors;
     notifyListeners();
   }
 
@@ -68,14 +77,33 @@ class HospitalDataStore extends ChangeNotifier {
     }
   }
 
-  void getAvailableDoctors(String hospital) {
-    if (hospital != null) {
-      DatabaseService.getDoctors().listen((QuerySnapshot onData) {
-        print(['Got doctor data\n', onData]);
-      }, onError: (e) {
-        print('Got doctor error\n $e');
-      });
+  void getAvailableDoctors() {
+    DatabaseService.getDoctors().listen((QuerySnapshot onData) {
+      if (onData.documents.length > 0) {
+        final List newDoctorData = onData.documents.map<Map>((each) {
+          final Map data = each.data;
+          data['id'] = each.documentID;
+          return data;
+        }).toList();
+        if (doctors == null) {
+          doctors = newDoctorData;
+        } else {
+          newDoctorData.removeWhere((element) =>
+              _doctors.firstWhere((doc) => doc['id'] == element['id']));
+          _doctors.addAll(newDoctorData);
+          notifyListeners();
+        }
+      }
+    }, onError: (e) {
+      print('Got doctor error\n $e');
+    });
+  }
+
+  getOneDoctor({String id, String name}) {
+    if (id != null) {
+      return doctors.firstWhere((element) => element['id'] == id);
     }
+    return doctors.firstWhere((element) => element['name'] == name);
   }
 
   clearState() {

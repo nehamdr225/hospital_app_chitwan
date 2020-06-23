@@ -103,17 +103,17 @@ class UserDataStore extends ChangeNotifier {
       });
     } else {
       DatabaseService.getDoctors().listen((QuerySnapshot onData) {
-        final List newHospitalData = onData.documents.map<Map>((each) {
+        final List newDoctorData = onData.documents.map<Map>((each) {
           final Map data = each.data;
-          data['id'] = each.data;
+          data['id'] = each.documentID;
           return data;
         }).toList();
         if (doctors == null) {
-          doctors = newHospitalData;
+          doctors = newDoctorData;
         } else {
-          newHospitalData.removeWhere((element) =>
-              _hospitals.firstWhere((hosp) => hosp['id'] == element['id']));
-          _hospitals.addAll(newHospitalData);
+          newDoctorData.removeWhere((element) =>
+              _doctors.firstWhere((doc) => doc['id'] == element['id']));
+          _doctors.addAll(newDoctorData);
           notifyListeners();
         }
       }, onError: (e) {

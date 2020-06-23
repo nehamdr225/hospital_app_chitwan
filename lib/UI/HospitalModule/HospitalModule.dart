@@ -1,9 +1,9 @@
+import 'package:chitwan_hospital/UI/HospitalModule/DoctorCards.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalDrawer.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,16 +17,12 @@ class HospitalModule extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     Provider.of<HospitalDataStore>(context).handleInitialProfileLoad();
     final hospital = Provider.of<HospitalDataStore>(context).user;
-
+    final List doctors = Provider.of<HospitalDataStore>(context).doctors;
+    print(doctors);
     buildHospitalDoctors() {
-      return Pharmacy_List.map<Widget>((e) => LabratoryListCard(
-          clientName: e['clients'],
-          labName: e['clients'],
-          labLocation: e['location'],
-          image: e['src'],
-          phone: e['phone'],
-          pharmacyStatus: pharmacistDecision,
-          id: "Hospital")).toList();
+      return doctors
+          .map<Widget>((e) => HospitalDoctorListCard(id: e['name']))
+          .toList();
     }
 
     return Scaffold(
