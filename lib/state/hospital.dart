@@ -1,28 +1,32 @@
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class HospitalDataStore extends ChangeNotifier {
-  HospitalDataStore() {
+  handleInitialProfileLoad() {
     try {
-      final auth = AuthService();
-      print('Bootstrapping data store\n');
-      auth.getCurrentUID().then((value) {
-        print('value $value');
-        if (value != null) {
-          DatabaseService.getUserData(value).then((userData) {
-            if (userData.data != null) {
-              user = userData.data;
-              // getAvailableDoctors(userData.data['name']);
-              uid = value;
-              type = userData.data['role'];
-            }
-          }).catchError((err) {
-            print(err);
-          });
-        }
-      });
+      if (user == null) {
+        final auth = AuthService();
+        print('Bootstrapping data store\n');
+        auth.getCurrentUID().then((value) {
+          print('value $value');
+          if (value != null) {
+            DatabaseService.getHospitalData(value).then((userData) {
+              if (userData.data != null) {
+                user = userData.data;
+                // getAvailableDoctors(userData.data['name']);
+                uid = value;
+                type = userData.data['role'];
+                notifyListeners();
+              }
+            }).catchError((err) {
+              print(err);
+            });
+          }
+        });
+      }
     } catch (e) {}
   }
 
@@ -72,5 +76,14 @@ class HospitalDataStore extends ChangeNotifier {
         print('Got doctor error\n $e');
       });
     }
+  }
+
+  clearState() {
+    _id = null;
+    _userData = null;
+    _userType = null;
+    setLocalUserData('userType', null);
+    // _hospitals = null;
+    notifyListeners();
   }
 }

@@ -4,7 +4,9 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
+import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HospitalModule extends StatelessWidget {
   final name;
@@ -13,6 +15,9 @@ class HospitalModule extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    Provider.of<HospitalDataStore>(context).handleInitialProfileLoad();
+    final hospital = Provider.of<HospitalDataStore>(context).user;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -61,7 +66,8 @@ class HospitalModule extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             top: 8.0, left: 28.0, bottom: 0.0),
                         child: FancyText(
-                            text: "Hello Hospital!",
+                            text:
+                                hospital != null ? hospital['name'] : "Hello!",
                             textAlign: TextAlign.left,
                             size: 22.0,
                             color: textDark_Yellow,

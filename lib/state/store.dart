@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,6 +18,7 @@ class UserDataStore extends ChangeNotifier {
                 user = userData.data;
                 uid = value;
                 type = userData.data['role'];
+                notifyListeners();
               }
             }).catchError((err) {
               print(err);
@@ -147,6 +149,7 @@ class UserDataStore extends ChangeNotifier {
     _userType = null;
     // _hospitals = null;
     _appointments = null;
+    setLocalUserData('userType', null);
     notifyListeners();
   }
 }

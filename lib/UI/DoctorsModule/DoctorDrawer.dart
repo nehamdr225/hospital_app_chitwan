@@ -23,7 +23,8 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<DoctorDataStore>(context).user;
+    final doctorDataStore = Provider.of<DoctorDataStore>(context);
+    final user = doctorDataStore.user;
     print(user);
     final theme = Theme.of(context);
 
@@ -42,7 +43,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                       color: textDark_Yellow,
                     ),
                     accountEmail: FancyText(
-                      text: user['email']??user['phone'],
+                      text: user['email'] ?? user['phone'],
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                       color: textDark_Yellow,
@@ -202,6 +203,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                         text: "Sign Out",
                         onPressed: () async {
                           auth.signOut();
+                          doctorDataStore.clearState();
                           setState(() {
                             loggedIn = false;
                           });

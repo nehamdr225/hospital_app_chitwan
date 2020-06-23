@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/cupertino.dart';
 
 class DoctorDataStore extends ChangeNotifier {
@@ -63,5 +64,14 @@ class DoctorDataStore extends ChangeNotifier {
         });
       }
     }
+  }
+
+  clearState() {
+    _id = null;
+    _userData = null;
+    _userType = null;
+    setLocalUserData('userType', null);
+    // _hospitals = null;
+    notifyListeners();
   }
 }
