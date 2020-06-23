@@ -2,6 +2,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/store.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class AppointmentDetail extends StatelessWidget {
     final theme = Theme.of(context);
     final appointment =
         Provider.of<UserDataStore>(context).getOneAppointment(id);
-
+    final Timestamp date = appointment['date'] ?? Timestamp.now();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -99,7 +100,8 @@ class AppointmentDetail extends StatelessWidget {
                                     ),
                                     FancyText(
                                         color: textDark_Yellow,
-                                        text: appointment["date"]),
+                                        text:
+                                            ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}'),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Icon(
@@ -218,7 +220,7 @@ class AppointmentDetail extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                       FancyText(
-                        text: appointment["phone"],
+                        text: appointment["phoneNum"] ?? "",
                         textAlign: TextAlign.left,
                         size: 16.0,
                       ),

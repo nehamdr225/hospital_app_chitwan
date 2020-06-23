@@ -88,7 +88,9 @@ class _ListCardState extends State<ListCard> {
                                         ),
                                         FancyText(
                                             defaultStyle: true,
-                                            text: '${date.toDate()}' ?? ''),
+                                            text:
+                                                ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}' ??
+                                                    ''),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
@@ -124,7 +126,7 @@ class _ListCardState extends State<ListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: displayData['caption'] ?? "",
+                                    text: displayData['department'] ?? "",
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -232,7 +234,7 @@ class _ListCardState extends State<ListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: displayData["phone"] ?? "",
+                                  text: displayData["phoneNum"] ?? "",
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
