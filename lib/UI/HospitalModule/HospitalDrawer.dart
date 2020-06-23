@@ -23,8 +23,6 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
 
   @override
   Widget build(BuildContext context) {
-    //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
-    //final uid = Provider.of<AuthService>(context).getCurrentUid;
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
     final user = hospitalDataStore.user;
     final theme = Theme.of(context);

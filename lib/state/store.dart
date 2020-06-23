@@ -27,6 +27,7 @@ class UserDataStore extends ChangeNotifier {
         });
         getAvailableHospitals();
         getUserAppointments();
+        getAvailableDoctors(null);
       }
     } catch (e) {}
   }
@@ -36,6 +37,7 @@ class UserDataStore extends ChangeNotifier {
   Map<String, dynamic> _userData;
   List _hospitals;
   List _appointments;
+  List _doctors;
 
   get uid => _id;
 
@@ -71,6 +73,13 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  get doctors => _doctors;
+
+  set doctors(newDoctorData) {
+    _doctors = newDoctorData;
+    notifyListeners();
+  }
+
   fetchUserData() {
     if (uid != null && type != null) {
       if (type == 'user') {
@@ -89,6 +98,24 @@ class UserDataStore extends ChangeNotifier {
     if (hospital != null) {
       DatabaseService.getDoctors().listen((QuerySnapshot onData) {
         print(['Got doctor data\n', onData]);
+      }, onError: (e) {
+        print('Got doctor error\n $e');
+      });
+    } else {
+      DatabaseService.getDoctors().listen((QuerySnapshot onData) {
+        final List newHospitalData = onData.documents.map<Map>((each) {
+          final Map data = each.data;
+          data['id'] = each.data;
+          return data;
+        }).toList();
+        if (doctors == null) {
+          doctors = newHospitalData;
+        } else {
+          newHospitalData.removeWhere((element) =>
+              _hospitals.firstWhere((hosp) => hosp['id'] == element['id']));
+          _hospitals.addAll(newHospitalData);
+          notifyListeners();
+        }
       }, onError: (e) {
         print('Got doctor error\n $e');
       });
