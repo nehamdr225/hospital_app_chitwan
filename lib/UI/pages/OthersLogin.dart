@@ -278,37 +278,45 @@ class _OthersLoginState extends State<OthersLogin> {
                     ),
                   ),
                   SizedBox(height: 5.0),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        FancyText(
-                          text: "Don't have an account? ",
-                          color: textDark_Yellow,
-                          fontWeight: FontWeight.w600,
-                          size: 14.0,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OthersSignUp()));
-                          },
-                          child: FancyText(
-                            text: "Sign Up",
-                            color: textLight_Red2,
-                            fontWeight: FontWeight.w700,
-                            size: 14.0,
-                          ),
-                        ),
-                      ]),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OthersSignUp()));
+                    },
                     child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        color: theme.secondary,
-                        child: FancyText(text: error, color: Colors.white)),
+                      padding: EdgeInsets.all(8.0),
+                      color: Colors.black38,
+                      width: 300.0,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FancyText(
+                              text: "Don't have an account? ",
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w600,
+                              size: 14.0,
+                            ),
+                            FancyText(
+                              text: "Sign Up",
+                              color: textLight_Red2,
+                              fontWeight: FontWeight.w700,
+                              size: 14.0,
+                            ),
+                          ]),
+                    ),
                   ),
+                  error == ''
+                      ? Container(child: Text(" "))
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              padding: EdgeInsets.all(8.0),
+                              color: theme.secondary,
+                              child:
+                                  FancyText(text: error, color: Colors.white)),
+                        ),
                 ],
               ),
             ],

@@ -31,30 +31,8 @@ class HomeListCard extends StatefulWidget {
   _HomeListCardState createState() => _HomeListCardState();
 }
 
-class _HomeListCardState extends State<HomeListCard>
-    with TickerProviderStateMixin {
-  AnimationController controller;
+class _HomeListCardState extends State<HomeListCard>{
 
-  String get timerString {
-    Duration duration = controller.duration * controller.value;
-    return '${(duration.inHours % 60).toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 20));
-  }
-
-  timer(controller) {
-    // if(controller.value == 0.0){
-    //   controller.stop();
-    // }
-    // else{
-    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +86,7 @@ class _HomeListCardState extends State<HomeListCard>
                     blurRadius: 1.0),
               ],
             ),
-            width: size.width * 0.90,
+            width: size.width * 0.95,
             height: 160.0,
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0),

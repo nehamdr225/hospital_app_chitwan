@@ -19,7 +19,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
   final AuthService _auth = AuthService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email = "", _password = "";
-  String error;
+  String error = '';
   bool loading = false;
   bool obscure = true;
   String _name, uid;
@@ -49,6 +49,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
               resizeToAvoidBottomInset: true,
               backgroundColor: theme.background,
               body: Container(
+                alignment: Alignment.center,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           alignment: Alignment.center,
@@ -56,7 +57,8 @@ class _OthersSignUpState extends State<OthersSignUp> {
                           image: AssetImage("assets/images/img1.jpeg"))),
                   height: size.height,
                   width: size.width,
-                  child: Stack(children: <Widget>[
+                  child: Stack(
+                    children: <Widget>[
                     IconButton(
                         alignment: Alignment.topLeft,
                         icon: Icon(
@@ -69,6 +71,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                     Form(
                         key: _formKey,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Container(
@@ -209,6 +212,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                   ),
                                   FForms(
                                     textInputAction: TextInputAction.done,
+                                    type: TextInputType.number,
                                     currentFocus: _phoneFocus,
                                     validator: (val) => val.length < 9
                                         ? 'Enter phone number'
@@ -316,41 +320,45 @@ class _OthersSignUpState extends State<OthersSignUp> {
                               ),
                             ),
                             SizedBox(height: 10.0),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  FancyText(
-                                    text: "Already have an account? ",
-                                    color: textDark_Yellow,
-                                    fontWeight: FontWeight.w600,
-                                    size: 14.0,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OthersLogin()));
-                                    },
-                                    child: FancyText(
-                                      text: "Sign In",
-                                      color: textLight_Red2,
-                                      fontWeight: FontWeight.w700,
-                                      size: 14.0,
-                                    ),
-                                  ),
-                                ]),
-                            error != null
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        color: theme.secondary,
-                                        child: FancyText(
-                                            text: error, color: Colors.white)),
-                                  )
-                                : Text(''),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OthersLogin()));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8.0),
+                                color: Colors.black38,
+                                width: 300.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      FancyText(
+                                        text: "Already have an account? ",
+                                        color: textDark_Yellow,
+                                        fontWeight: FontWeight.w600,
+                                        size: 14.0,
+                                      ),
+                                      FancyText(
+                                        text: "Sign In",
+                                        color: textLight_Red2,
+                                        fontWeight: FontWeight.w700,
+                                        size: 14.0,
+                                      ),
+                                    ]),
+                              ),
+                            ),
+                            error == '' ?
+                            Text(" "):
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  color: theme.secondary,
+                                  child: FancyText(
+                                      text: error, color: Colors.white)),
+                            ),
                           ],
                         ))
                   ])),

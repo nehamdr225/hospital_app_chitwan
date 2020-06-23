@@ -90,7 +90,7 @@ class _PatientListCardState extends State<PatientListCard> {
                     blurRadius: 1.0),
               ],
             ),
-            width: size.width * 0.90,
+            width: size.width * 0.95,
             height: 160.0,
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0),

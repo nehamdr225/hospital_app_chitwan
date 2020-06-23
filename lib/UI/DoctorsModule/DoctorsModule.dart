@@ -161,27 +161,43 @@ class DoctorsModule extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    FancyText(
-                      text: 'Please update your account details',
-                      fontWeight: FontWeight.bold,
-                      size: 16.0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: FRaisedButton(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    needIcon: true,
+                    leadingIcon: Stack(
+                      alignment: Alignment.topRight,
+                      children: <Widget>[
+                        Icon(
+                          Icons.notifications,
+                          color: textDark_Yellow,
+                        ),
+                        Container(
+                          width: 10.0,
+                          height: 10.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: RadialGradient(colors: [
+                                Colors.red,
+                                theme.secondary,
+                              ])),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18.0),
-                      child: FRaisedButton(
-                        text: 'Update Details',
-                        color: Colors.white,
-                        bgcolor: theme.primary,
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DoctorProfile()));
-                        },
-                      ),
-                    ),
-                  ],
+                    trailingIcon: Text(""),
+                    shape: true,
+                    radius: 5.0,
+                    elevation: 1.0,
+                    fontSize: 14.5,
+                    text: 'Update your Profile!',
+                    color: textDark_Yellow,
+                    bgcolor: blueGrey,
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DoctorProfile()));
+                    },
+                  ),
                 ))
             : Text(''),
         Column(

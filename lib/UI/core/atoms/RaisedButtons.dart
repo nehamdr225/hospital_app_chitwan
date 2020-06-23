@@ -47,7 +47,7 @@ class FRaisedButton extends StatelessWidget {
           elevation: elevation,
           color: bgcolor,
           child: needIcon == true
-              ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+              ? Row(mainAxisAlignment: mainAxisAlignment, 
               children: [
                   leadingIcon,
                   Text(
@@ -58,32 +58,14 @@ class FRaisedButton extends StatelessWidget {
                   ),
                   trailingIcon
                 ])
-              : Flex(
-                  direction: Axis.vertical,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    // Padding(
-                    //   padding: EdgeInsets.all(5.0),
-                    // ),
-                    Row(
-                      mainAxisAlignment: mainAxisAlignment,
-                      children: <Widget>[
-                        Flexible(
-                          flex: 2,
-                          child: Text(
-                            text,
-                            textAlign: textAlign,
-                            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                                fontSize: fontSize,
-                                color: color,
-                                fontWeight: fontWeight),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+              : Text(
+                text,
+                textAlign: textAlign,
+                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    fontSize: fontSize,
+                    color: color,
+                    fontWeight: fontWeight),
+              ),
           shape: shape == false
               ? Border.all(
                   width: 0.0, color: Theme.of(context).colorScheme.background)

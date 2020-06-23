@@ -168,61 +168,75 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        FancyText(
-                          text: "Don't have an account? ",
-                          color: textDark_Yellow,
-                          fontWeight: FontWeight.w600,
-                          size: 14.0,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUp()));
-                          },
-                          child: FancyText(
-                            text: "Sign Up",
-                            color: textLight_Red2,
-                            fontWeight: FontWeight.w700,
-                            size: 14.0,
-                          ),
-                        ),
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OthersLogin()));
-                          },
-                          child: FancyText(
-                            text: "Login As ",
-                            color: textLight_Red2,
-                            fontWeight: FontWeight.w700,
-                            size: 14.0,
-                          ),
-                        ),
-                        FancyText(
-                          text: "others",
-                          color: textDark_Yellow,
-                          fontWeight: FontWeight.w600,
-                          size: 14.0,
-                        ),
-                      ]),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  InkWell(
+                     onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUp()));
+                            },
                     child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        color: theme.secondary,
-                        child: FancyText(text: error, color: Colors.white)),
+                       padding: EdgeInsets.all(8.0),
+                      color: Colors.black38,
+                      width: 250.0,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FancyText(
+                              text: "Don't have an account? ",
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w600,
+                              size: 14.0,
+                            ),
+                            FancyText(
+                              text: "Sign Up",
+                              color: textLight_Red2,
+                              fontWeight: FontWeight.w700,
+                              size: 14.0,
+                            ),
+                          ]),
+                    ),
                   ),
+                  SizedBox(height:10.0),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OthersLogin()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      color: Colors.black38,
+                      width: 150.0,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FancyText(
+                              text: "Login As ",
+                              color: textLight_Red2,
+                              fontWeight: FontWeight.w700,
+                              size: 14.0,
+                            ),
+                            FancyText(
+                              text: "others",
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w600,
+                              size: 14.0,
+                            ),
+                          ]),
+                    ),
+                  ),
+                  error == '' ?
+                            Container(child: Text(" ")):Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              padding: EdgeInsets.all(8.0),
+                              color: theme.secondary,
+                              child:
+                                  FancyText(text: error, color: Colors.white)),
+                        )
+                     
                 ],
               ),
             ),

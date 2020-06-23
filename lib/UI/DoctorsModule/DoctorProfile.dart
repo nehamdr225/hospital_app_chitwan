@@ -4,7 +4,6 @@ import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -208,7 +207,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     fontWeight: FontWeight.w500,
                   )),
               value: selectedHospital,
-              items: hospitals.map((value) {
+              items: hospitals != null ?
+              hospitals.map((value) {
                 return DropdownMenuItem(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 11.0),
@@ -220,7 +220,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   ),
                   value: value['name'],
                 );
-              }).toList(),
+              }).toList(): [],
               onChanged: (value) {
                 setState(() {
                   updateData['hospital'] = value;
