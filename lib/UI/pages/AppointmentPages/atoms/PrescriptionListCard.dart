@@ -1,54 +1,40 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
+import 'package:chitwan_hospital/state/store.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class ListCard extends StatefulWidget {
-  final name;
-  final image;
-  final caption;
-  final phone;
-  final status;
-  final date;
-  final time;
-  final take;
+  final id;
   final data;
-  ListCard(
-      {this.image,
-      this.name,
-      this.caption,
-      this.phone,
-      this.date,
-      this.status,
-      this.time,
-      this.take,
-      this.data = false});
+  ListCard({this.id, this.data = false});
 
   @override
   _ListCardState createState() => _ListCardState();
 }
 
 class _ListCardState extends State<ListCard> {
-
   @override
   Widget build(BuildContext context) {
-    print("THIS IS THE STUFF: ${widget.name},${widget.caption}, ${widget.phone}");
+    // print("THIS IS THE STUFF: ${widget.name},${widget.caption}, ${widget.phone}");
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+
+    Map displayData = {};
+    if (!widget.data)
+      displayData =
+          Provider.of<UserDataStore>(context).getOneAppointment(widget.id);
+    final Timestamp date = displayData['date'] ?? Timestamp.now();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AppointmentDetail(
-                    name: widget.name,
-                    caption: widget.caption,
-                    image: widget.image,
-                    phone: widget.phone,
-                    status: widget.status,
-                    date: widget.date,
-                    time: widget.time,
+                    id: widget.id,
                   )));
         },
         child: Container(
@@ -102,7 +88,7 @@ class _ListCardState extends State<ListCard> {
                                         ),
                                         FancyText(
                                             defaultStyle: true,
-                                            text: "  ${widget.date}"),
+                                            text: '${date.toDate()}' ?? ''),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 8.0),
@@ -114,12 +100,12 @@ class _ListCardState extends State<ListCard> {
                                         ),
                                         FancyText(
                                             defaultStyle: true,
-                                            text: " ${widget.time}")
+                                            text: displayData["time"] ?? '')
                                       ],
                                     )
                                   : null),
                           FancyText(
-                            text: widget.name,
+                            text: displayData['doctor'] ?? '',
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -138,7 +124,7 @@ class _ListCardState extends State<ListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: widget.caption,
+                                    text: displayData['caption'] ?? "",
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -159,13 +145,13 @@ class _ListCardState extends State<ListCard> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 3.0),
                                       child: FancyText(
-                                          text: "CMC Hospital",
+                                          text: displayData['hospital'] ?? '',
                                           textAlign: TextAlign.left,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
                                 )
-                              : widget.status == "Ready"
+                              : displayData['status'] ?? '' == "Ready"
                                   ? Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -183,7 +169,7 @@ class _ListCardState extends State<ListCard> {
                                           padding:
                                               const EdgeInsets.only(top: 3.0),
                                           child: FancyText(
-                                            text: widget.take,
+                                            text: displayData['take'] ?? "",
                                             textAlign: TextAlign.left,
                                             size: 14.5,
                                             fontWeight: FontWeight.w700,
@@ -206,7 +192,8 @@ class _ListCardState extends State<ListCard> {
                           Padding(
                               padding: EdgeInsets.all(0.0),
                               child: widget.data == true &&
-                                      widget.status == "Ready"
+                                      displayData['status'] != null &&
+                                      displayData['status'] == "Ready"
                                   ? Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -225,7 +212,7 @@ class _ListCardState extends State<ListCard> {
                                               const EdgeInsets.only(top: 2.0),
                                           child: FancyText(
                                               text:
-                                                  "${widget.date} at ${widget.time}",
+                                                  "${date.toDate()} at ${displayData['time']}",
                                               textAlign: TextAlign.left,
                                               size: 14.5,
                                               color: theme
@@ -245,7 +232,7 @@ class _ListCardState extends State<ListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: "  ${widget.phone}",
+                                  text: displayData["phone"] ?? "",
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -262,8 +249,9 @@ class _ListCardState extends State<ListCard> {
                         width: 80.0,
                         height: 30.0,
                         decoration: BoxDecoration(
-                            color: widget.status == "Accepted" ||
-                                    widget.status == "Ready"
+                            color: displayData['status'] != null &&
+                                        displayData['status'] == "Accepted" ||
+                                    displayData['status'] == "Ready"
                                 ? Colors.green.shade400
                                 : theme.colorScheme.secondary,
                             borderRadius: BorderRadius.only(
@@ -271,7 +259,7 @@ class _ListCardState extends State<ListCard> {
                                 bottomLeft: Radius.circular(3.0))),
                         child: Center(
                           child: FancyText(
-                            text: widget.status,
+                            text: displayData['status'] ?? 'Pending',
                             opacity: 0.5,
                             color: textDark_Yellow,
                           ),

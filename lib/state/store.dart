@@ -123,6 +123,8 @@ class UserDataStore extends ChangeNotifier {
         return thisdata;
       }).toList();
       if (appointments != null) {
+        addData.removeWhere((element) =>
+            _appointments.any((check) => check['id'] == element['id']));
         _appointments.addAll(addData);
         notifyListeners();
       } else {
@@ -131,5 +133,9 @@ class UserDataStore extends ChangeNotifier {
     }, onError: (err) {
       print(err);
     });
+  }
+
+  getOneAppointment(String id) {
+    return _appointments.firstWhere((element) => element['id'] == id);
   }
 }

@@ -1,33 +1,27 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppointmentDetail extends StatelessWidget {
-  final name;
-  final image;
-  final caption;
-  final phone;
-  final status;
-  final date;
-  final time;
-  AppointmentDetail(
-      {this.image,
-      this.name,
-      this.caption,
-      this.phone,
-      this.date,
-      this.status,
-      this.time});
+  final id;
+  AppointmentDetail({
+    this.id,
+  });
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final appointment =
+        Provider.of<UserDataStore>(context).getOneAppointment(id);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: WhiteAppBar(
-            titleColor: theme.colorScheme.primary,
+          titleColor: theme.colorScheme.primary,
           title: "Appointment Detail",
         ),
       ),
@@ -104,7 +98,8 @@ class AppointmentDetail extends StatelessWidget {
                                       color: textDark_Yellow,
                                     ),
                                     FancyText(
-                                        color: textDark_Yellow, text: " $date"),
+                                        color: textDark_Yellow,
+                                        text: appointment["date"]),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Icon(
@@ -114,14 +109,14 @@ class AppointmentDetail extends StatelessWidget {
                                       ),
                                     ),
                                     FancyText(
-                                      text: " $time",
+                                      text: appointment["time"],
                                       color: textDark_Yellow,
                                     )
                                   ],
                                 ),
                               ),
                               FancyText(
-                                text: name,
+                                text: appointment['doctor'],
                                 fontWeight: FontWeight.w700,
                                 size: 15.5,
                                 textAlign: TextAlign.left,
@@ -141,7 +136,7 @@ class AppointmentDetail extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 2.0),
                                     child: FancyText(
-                                      text: caption,
+                                      text: appointment['department'] ?? '',
                                       textAlign: TextAlign.left,
                                       fontWeight: FontWeight.w500,
                                       color: textDark_Yellow,
@@ -163,7 +158,7 @@ class AppointmentDetail extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 3.0),
                                     child: FancyText(
-                                        text: "CMC Hospital",
+                                        text: appointment['hospital'],
                                         textAlign: TextAlign.left,
                                         color: textDark_Yellow,
                                         fontWeight: FontWeight.w500),
@@ -180,7 +175,7 @@ class AppointmentDetail extends StatelessWidget {
                                       color: textDark_Yellow,
                                     ),
                                     FancyText(
-                                      text: "  $status",
+                                      text: appointment["status"] ?? 'pending',
                                       textAlign: TextAlign.left,
                                       size: 15.0,
                                       fontWeight: FontWeight.w700,
@@ -223,7 +218,7 @@ class AppointmentDetail extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                       FancyText(
-                        text: "$phone ",
+                        text: appointment["phone"],
                         textAlign: TextAlign.left,
                         size: 16.0,
                       ),
@@ -248,7 +243,7 @@ class AppointmentDetail extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             height: size.height * 0.35,
-            width: size.width*0.95,
+            width: size.width * 0.95,
             decoration: BoxDecoration(
               border: Border.all(
                 color: theme.colorScheme.primary.withOpacity(0.2),
@@ -265,11 +260,13 @@ class AppointmentDetail extends StatelessWidget {
                     text: "Description",
                     size: 15.0,
                     fontWeight: FontWeight.w500,
-                    
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 16.0,),
+                  padding: const EdgeInsets.only(
+                    top: 8.0,
+                    left: 16.0,
+                  ),
                   child: FancyText(
                     text: "- Having severe head ache from 3 years.\n- Diabetic",
                     size: 15.5,
