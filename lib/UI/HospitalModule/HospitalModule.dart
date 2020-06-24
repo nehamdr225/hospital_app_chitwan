@@ -2,7 +2,9 @@ import 'package:chitwan_hospital/UI/HospitalModule/DoctorCards.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalDrawer.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Hospital/HospitalProfile.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -137,6 +139,50 @@ class HospitalModule extends StatelessWidget {
             ),
           ),
         ),
+        hospital != null && hospital['departments'] == null
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 10.0,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: FRaisedButton(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    needIcon: true,
+                    leadingIcon: Stack(
+                      alignment: Alignment.topRight,
+                      children: <Widget>[
+                        Icon(
+                          Icons.notifications,
+                          color: textDark_Yellow,
+                        ),
+                        Container(
+                          width: 10.0,
+                          height: 10.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: RadialGradient(colors: [
+                                Colors.red,
+                                theme.secondary,
+                              ])),
+                        ),
+                      ],
+                    ),
+                    trailingIcon: Text(""),
+                    shape: true,
+                    radius: 5.0,
+                    elevation: 1.0,
+                    fontSize: 14.5,
+                    text: 'Update your Profile!',
+                    color: textDark_Yellow,
+                    bgcolor: blueGrey,
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HospitalProfile()));
+                    },
+                  ),
+                ))
+            : Text(''),
         Column(children: buildHospitalDoctors()),
       ]),
     );
