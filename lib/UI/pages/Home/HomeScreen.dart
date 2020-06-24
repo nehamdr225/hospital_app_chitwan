@@ -84,30 +84,6 @@ class HomeScreen extends StatelessWidget {
                         ))
                     .toList()
                 : [Text('')]),
-        // Container(
-        //     height: MediaQuery.of(context).size.height * 0.70,
-        //     child: StreamBuilder(
-        //       stream: DatabaseService.getDoctors(),
-        //       builder: (context, snapshot) {
-        //         if (!snapshot.hasData) return Text('');
-        //         print(snapshot.data.documents);
-        //         return ListView.builder(
-        //             itemCount: snapshot.data.documents.length,
-        //             itemBuilder: (BuildContext context, int index) {
-        //               return HomeListCard(
-        //                 doctorName:
-        //                     snapshot.data.documents[index]['name'] ?? '',
-        //                 department:
-        //                     snapshot.data.documents[index]['field'] ?? '',
-        //                 image: snapshot.data.documents[index]['src'] ?? '',
-        //                 phone: snapshot.data.documents[index]['phone'] ?? '',
-        //                 status: snapshot.data.documents[index]['status'] ?? '',
-        //                 date: snapshot.data.documents[index]['date'] ?? '',
-        //                 time: snapshot.data.documents[index]['time'] ?? '',
-        //               );
-        //             });
-        //       },
-        //     )),
       ]),
     );
   }

@@ -207,7 +207,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     fontWeight: FontWeight.w500,
                   )),
               value: selectedHospital,
-              items: hospitals.map((value) {
+              items: hospitals != null ?
+              hospitals.map((value) {
                 return DropdownMenuItem(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 11.0),
@@ -219,7 +220,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   ),
                   value: value['name'],
                 );
-              }).toList(),
+              }).toList(): [],
               onChanged: (value) {
                 setState(() {
                   updateData['hospital'] = value;

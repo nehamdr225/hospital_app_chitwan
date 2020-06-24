@@ -168,6 +168,7 @@ class _SignUpState extends State<SignUp> {
                                     borderColor: theme.background,
                                     formColor: Colors.white,
                                     text: "Phone Number",
+                                    type: TextInputType.number,
                                     textColor: blueGrey.withOpacity(0.7),
                                     width: size.width * 0.90,
                                   ),
@@ -213,30 +214,36 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             SizedBox(height: 10.0),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  FancyText(
-                                    text: "Already have an account? ",
-                                    color: textDark_Yellow,
-                                    fontWeight: FontWeight.w600,
-                                    size: 14.0,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SignIn()));
-                                    },
-                                    child: FancyText(
-                                      text: "Sign In",
-                                      color: textLight_Red2,
-                                      fontWeight: FontWeight.w700,
-                                      size: 14.0,
-                                    ),
-                                  ),
-                                ]),
+                            InkWell(
+                              onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SignIn()));
+                                        },
+                              child: Container(
+                                padding: EdgeInsets.all(8.0),
+                                color: Colors.black38,width: 300.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      FancyText(
+                                        text: "Already have an account? ",
+                                        color: textDark_Yellow,
+                                        fontWeight: FontWeight.w600,
+                                        size: 14.0,
+                                      ),
+                                      FancyText(
+                                        text: "Sign In",
+                                        color: textLight_Red2,
+                                        fontWeight: FontWeight.w700,
+                                        size: 14.0,
+                                      ),
+                                    ]),
+                              ),
+                            ),
+                            SizedBox(height:10.0),
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -244,13 +251,20 @@ class _SignUpState extends State<SignUp> {
                                     MaterialPageRoute(
                                         builder: (context) => OthersSignUp()));
                               },
-                              child: FancyText(
-                                text: "Signup As ",
-                                color: textLight_Red2,
-                                fontWeight: FontWeight.w700,
-                                size: 14.0,
+                              child: Container(
+                                padding: EdgeInsets.all(8.0),
+                                color: Colors.black38,
+                                width:150.0,
+                                child: FancyText(
+                                  text: "Signup As ",
+                                  color: textLight_Red2,
+                                  fontWeight: FontWeight.w700,
+                                  size: 14.0,
+                                ),
                               ),
                             ),
+                            error == '' ?
+                            Container(child: Text(" ")):
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
