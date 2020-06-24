@@ -4,7 +4,6 @@ import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
