@@ -6,6 +6,7 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersSignUp.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -187,11 +188,15 @@ class _SignUpState extends State<SignUp> {
                                                   _phone);
                                           if (result != null) {
                                             setState(() => loading = false);
-                                            Navigator.push(
+                                            setLocalUserData(
+                                                'userType', 'user');
+                                            Navigator.pushAndRemoveUntil(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        SignIn()));
+                                                        HomeScreen()),
+                                                (Route<dynamic> route) =>
+                                                    false);
                                           } else {
                                             setState(() {
                                               loading = false;
@@ -216,15 +221,15 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(height: 10.0),
                             InkWell(
                               onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignIn()));
-                                        },
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignIn()));
+                              },
                               child: Container(
                                 padding: EdgeInsets.all(8.0),
-                                color: Colors.black38,width: 300.0,
+                                color: Colors.black38,
+                                width: 300.0,
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
@@ -243,7 +248,7 @@ class _SignUpState extends State<SignUp> {
                                     ]),
                               ),
                             ),
-                            SizedBox(height:10.0),
+                            SizedBox(height: 10.0),
                             InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -254,7 +259,7 @@ class _SignUpState extends State<SignUp> {
                               child: Container(
                                 padding: EdgeInsets.all(8.0),
                                 color: Colors.black38,
-                                width:150.0,
+                                width: 150.0,
                                 child: FancyText(
                                   text: "Signup As ",
                                   color: textLight_Red2,
@@ -263,16 +268,16 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                             ),
-                            error == '' ?
-                            Container(child: Text(" ")):
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  color: theme.secondary,
-                                  child: FancyText(
-                                      text: error, color: Colors.white)),
-                            ),
+                            error == ''
+                                ? Container(child: Text(" "))
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        color: theme.secondary,
+                                        child: FancyText(
+                                            text: error, color: Colors.white)),
+                                  ),
                           ],
                         ))
                   ])),

@@ -226,38 +226,46 @@ class _OthersLoginState extends State<OthersLogin> {
                                             if (_othersList == 'Doctor') {
                                               setLocalUserData(
                                                   'userType', 'doctor');
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DoctorsModule()));
+                                                          DoctorsModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else if (_othersList ==
                                                 'Pharmacy') {
                                               setLocalUserData(
                                                   'userType', 'pharmacy');
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          PharmacyModule()));
+                                                          PharmacyModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else if (_othersList ==
                                                 'Laboratory') {
                                               setLocalUserData(
                                                   'userType', 'laboratory');
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          LabModule()));
+                                                          LabModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else if (_othersList ==
                                                 'Hospital') {
                                               setLocalUserData(
                                                   'userType', 'hospital');
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          HospitalModule()));
+                                                          HospitalModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else if (_othersList == null) {
                                               setState(() {
                                                 loading = false;

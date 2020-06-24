@@ -39,14 +39,6 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
     final hospital = hospitalDataStore.user;
     // final departments =  hospitalDataStore.departments;
-    final dialog = SimpleDialog(
-      children: <Widget>[
-        SimpleDialogOption(
-          child: Container(child: FForms()),
-        ),
-        SimpleDialogOption(child: Container(child: FRaisedButton(text: 'Done')))
-      ],
-    );
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -164,33 +156,69 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                   });
                 }),
           ),
-          Column(
-            //Current Address
-            // padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
-            children: [
-              Column(
-                children: <Widget>[
-                  FancyText(text: 'Departments'),
-                  InkWell(
-                    onTap: () {},
-                    child: Row(
-                      children: <Widget>[
-                        FancyText(text: 'Add Departments'),
-                        Icon(
-                          Icons.add,
-                          color: theme.primaryColor.withOpacity(0.8),
-                        ),
-                      ],
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 5.0,
+              left: 22.0,
+              right: 20.0
+            ),
+            child: Column(
+              //Current Address
+              // padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Departments',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
                     ),
+                    InkWell(
+                      onTap: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SimpleDialog(
+                                children: <Widget>[
+                                  SimpleDialogOption(
+                                    child: Container(child: FForms()),
+                                  ),
+                                  SimpleDialogOption(
+                                      child: Container(
+                                          child: FRaisedButton(text: 'Done')))
+                                ],
+                              );
+                            });
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          FancyText(text: 'Add '),
+                          Icon(
+                            Icons.add,
+                            color: theme.primaryColor.withOpacity(0.8),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Column(children: [
+                  Chip(
+                    backgroundColor: theme.primaryColorDark,
+                    label: FancyText(text: 'Surgery', color: textDark_Yellow,),
+                    // deleteIcon: Icon(Icons.delete),
+                    deleteIconColor: textDark_Yellow,
+                    onDeleted: (){},
                   )
-                ],
-              ),
-              Column(children: [
-                Chip(
-                  label: FancyText(text: 'Surgery'),
-                )
-              ])
-            ],
+                ])
+              ],
+            ),
           ),
           SizedBox(
             height: 30.0,

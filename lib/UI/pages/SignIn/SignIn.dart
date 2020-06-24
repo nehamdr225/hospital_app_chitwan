@@ -56,8 +56,10 @@ class _SignInState extends State<SignIn> {
             userDataStore.type = 'user';
             userDataStore.fetchUserData();
             setLocalUserData('userType', 'user');
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (Route<dynamic> route) => false);
           }
         }
       } catch (e) {
@@ -169,14 +171,12 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 10.0),
                   InkWell(
-                     onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUp()));
-                            },
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
                     child: Container(
-                       padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       color: Colors.black38,
                       width: 250.0,
                       child: Row(
@@ -197,7 +197,7 @@ class _SignInState extends State<SignIn> {
                           ]),
                     ),
                   ),
-                  SizedBox(height:10.0),
+                  SizedBox(height: 10.0),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -227,8 +227,9 @@ class _SignInState extends State<SignIn> {
                           ]),
                     ),
                   ),
-                  error == '' ?
-                            Container(child: Text(" ")):Padding(
+                  error == ''
+                      ? Container(child: Text(" "))
+                      : Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                               padding: EdgeInsets.all(8.0),
@@ -236,7 +237,6 @@ class _SignInState extends State<SignIn> {
                               child:
                                   FancyText(text: error, color: Colors.white)),
                         )
-                     
                 ],
               ),
             ),

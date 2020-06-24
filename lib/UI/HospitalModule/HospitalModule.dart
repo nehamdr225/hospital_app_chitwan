@@ -1,10 +1,10 @@
 import 'package:chitwan_hospital/UI/HospitalModule/DoctorCards.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalDrawer.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalProfile.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Hospital/HospitalProfile.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -178,7 +178,7 @@ class HospitalModule extends StatelessWidget {
                     bgcolor: blueGrey,
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => HospitalProfile()));
+                          builder: (context) => HospitalProfileSettings()));
                     },
                   ),
                 ))

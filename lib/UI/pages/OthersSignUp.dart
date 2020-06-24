@@ -49,7 +49,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
               resizeToAvoidBottomInset: true,
               backgroundColor: theme.background,
               body: Container(
-                alignment: Alignment.center,
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           alignment: Alignment.center,
@@ -57,8 +57,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                           image: AssetImage("assets/images/img1.jpeg"))),
                   height: size.height,
                   width: size.width,
-                  child: Stack(
-                    children: <Widget>[
+                  child: Stack(children: <Widget>[
                     IconButton(
                         alignment: Alignment.topLeft,
                         icon: Icon(
@@ -246,11 +245,13 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                               setLocalUserData(
                                                   'userType', 'hospital');
                                               setState(() => loading = false);
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          HospitalModule()));
+                                                          HospitalModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else {
                                               setState(() {
                                                 loading = false;
@@ -268,11 +269,13 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                               setLocalUserData(
                                                   'userType', 'doctor');
                                               setState(() => loading = false);
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DoctorsModule()));
+                                                          DoctorsModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else {
                                               setState(() {
                                                 loading = false;
@@ -292,11 +295,13 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                               setLocalUserData(
                                                   'userType', 'pharmacy');
                                               setState(() => loading = false);
-                                              Navigator.push(
+                                              Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          PharmacyModule()));
+                                                          PharmacyModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                             } else {
                                               setState(() {
                                                 loading = false;
@@ -349,16 +354,16 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                     ]),
                               ),
                             ),
-                            error == '' ?
-                            Text(" "):
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  color: theme.secondary,
-                                  child: FancyText(
-                                      text: error, color: Colors.white)),
-                            ),
+                            error == ''
+                                ? Text(" ")
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        color: theme.secondary,
+                                        child: FancyText(
+                                            text: error, color: Colors.white)),
+                                  ),
                           ],
                         ))
                   ])),
