@@ -14,10 +14,10 @@ class DoctorDataStore extends ChangeNotifier {
           if (value != null) {
             DatabaseService.getDoctorData(value).then((userData) {
               if (userData.data != null) {
-                _userData = userData.data;
-                _id = value;
-                _userType = userData.data['role'];
-                notifyListeners();
+                user = userData.data;
+                uid = value;
+                type = userData.data['role'];
+                getAppointments();
               }
             }).catchError((err) {
               print(err);
@@ -32,6 +32,7 @@ class DoctorDataStore extends ChangeNotifier {
   String _userType;
   Map<String, dynamic> _userData;
   List hospitals;
+  List _appointments;
 
   get uid => _id;
 
@@ -50,6 +51,13 @@ class DoctorDataStore extends ChangeNotifier {
 
   set user(newUserData) {
     _userData = newUserData;
+    notifyListeners();
+  }
+
+  get appointments => _appointments;
+
+  set appointments(newUserData) {
+    _appointments = newUserData;
     notifyListeners();
   }
 
@@ -85,6 +93,15 @@ class DoctorDataStore extends ChangeNotifier {
         List newData = onData.documents.map<Map>((e) => e.data).toList();
         hospitals = newData;
       });
+  }
+
+  getAppointments() {
+    if (appointments == null) {
+      DatabaseService.getDoctorAppointments(uid).listen((onData) {
+        List newData = onData.documents.map<Map>((e) => e.data).toList();
+        appointments = newData;
+      });
+    }
   }
 
   clearState() {

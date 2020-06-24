@@ -62,6 +62,11 @@ class DatabaseService {
     return doctorCollection.snapshots();
   }
 
+  static Stream<QuerySnapshot> getDoctorAppointments(String uid) {
+    final result = appointmentCollection.where('doctorId', isEqualTo: uid);
+    return result.snapshots();
+  }
+
   static getDoctorsByHospital(String hospital) {
     return doctorCollection.where('hospital', isEqualTo: hospital);
   }
