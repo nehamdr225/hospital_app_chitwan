@@ -18,6 +18,9 @@ class UserDataStore extends ChangeNotifier {
                 user = userData.data;
                 uid = value;
                 type = userData.data['role'];
+                getAvailableHospitals();
+                getUserAppointments();
+                getAvailableDoctors(null);
                 // notifyListeners();
               }
             }).catchError((err) {
@@ -25,9 +28,6 @@ class UserDataStore extends ChangeNotifier {
             });
           }
         });
-        getAvailableHospitals();
-        getUserAppointments();
-        getAvailableDoctors(null);
       }
     } catch (e) {}
   }
@@ -130,8 +130,9 @@ class UserDataStore extends ChangeNotifier {
         data['id'] = element.documentID;
         return data;
       }).toList();
-      allHospitals.removeWhere((element) => element['name'] == null);
       if (hospitals != null) {
+        allHospitals.removeWhere((element) =>
+            hospitals.any((hosp) => element['name'] == hosp['name']));
         hospitals.addAll(allHospitals);
       } else {
         hospitals = allHospitals;

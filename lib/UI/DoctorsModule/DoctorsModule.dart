@@ -138,8 +138,40 @@ class DoctorsModule extends StatelessWidget {
                         color: textDark_Yellow,
                         fontWeight: FontWeight.w400),
                   ),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0.0, left: 26.0),
+                    child: Row(children: [
+                      doctor != null && doctor['isVerified']
+                          ? Icon(
+                              Icons.verified_user,
+                              color: Colors.green,
+                            )
+                          : Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            ),
+                      SizedBox(
+                        height: 2,
+                        width: 2,
+                      ),
+                      doctor != null && doctor['isVerified']
+                          ? Text(
+                              'Verified',
+                              style: TextStyle(
+                                color: textDark_Yellow,
+                              ),
+                            )
+                          : Text(
+                              'Not Verified',
+                              style: TextStyle(
+                                color: textDark_Yellow,
+                              ),
+                            ),
+                    ]),
+                  ),
                   SizedBox(
-                    height: 40.0,
+                    height: 20.0,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -156,7 +188,7 @@ class DoctorsModule extends StatelessWidget {
             ),
           ),
         ),
-        doctor['department'] == null
+        doctor != null && doctor['department'] == null
             ? Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,

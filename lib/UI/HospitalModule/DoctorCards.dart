@@ -108,7 +108,7 @@ class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: doctor['field'],
+                                    text: doctor['department']??'Not set',
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),

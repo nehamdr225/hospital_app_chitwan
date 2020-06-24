@@ -105,7 +105,7 @@ class HospitalDoctorDetails extends StatelessWidget {
                             ),
                             SizedBox(height: 2.0),
                             FancyText(
-                              text: doctor["field"],
+                              text: doctor["department"] ?? 'Not set',
                               fontWeight: FontWeight.w400,
                               size: 14.0,
                               textAlign: TextAlign.left,
@@ -150,10 +150,8 @@ class HospitalDoctorDetails extends StatelessWidget {
                             SizedBox(height: 2),
                             Row(children: [
                               doctor['isVerified'] ?? false
-                                  ? Icon(
-                                      Icons.check,
-                                      color: Colors.white,
-                                    )
+                                  ? Icon(Icons.verified_user,
+                                      color: Colors.green)
                                   : Icon(
                                       Icons.cancel,
                                       color: Colors.red,
@@ -163,8 +161,14 @@ class HospitalDoctorDetails extends StatelessWidget {
                                 width: 2,
                               ),
                               doctor['isVerified'] ?? false
-                                  ? Text('Verified')
-                                  : Text('Not Verified'),
+                                  ? Text(
+                                      'Verified',
+                                      style: TextStyle(color: textDark_Yellow.withOpacity(0.8)),
+                                    )
+                                  : Text(
+                                      'Not Verified',
+                                      style: TextStyle(color: textDark_Yellow.withOpacity(0.8)),
+                                    ),
                             ])
                           ],
                         ),

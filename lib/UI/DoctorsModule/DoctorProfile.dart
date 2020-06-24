@@ -207,20 +207,35 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     fontWeight: FontWeight.w500,
                   )),
               value: selectedHospital,
-              items: hospitals != null ?
-              hospitals.map((value) {
-                return DropdownMenuItem(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 11.0),
-                    child: FancyText(
-                      text: value['name'],
-                      color: blueGrey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  value: value['name'],
-                );
-              }).toList(): [],
+              items: hospitals != null
+                  ? hospitals.map((value) {
+                      return DropdownMenuItem(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 11.0),
+                          child: FancyText(
+                            text: value['name'],
+                            color: blueGrey,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        value: value['name'],
+                      );
+                    }).toList()
+                  : selectedHospital != null
+                      ? [selectedHospital].map((value) {
+                          return DropdownMenuItem(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 11.0),
+                              child: FancyText(
+                                text: value,
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            value: value,
+                          );
+                        }).toList()
+                      : [],
               onChanged: (value) {
                 setState(() {
                   updateData['hospital'] = value;

@@ -75,7 +75,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
         color: blueGrey.withOpacity(0.9));
 
     final userDataStore = Provider.of<UserDataStore>(context);
-    List _myHospital = userDataStore.hospitals.map((e) => e['name']).toList();
+    print(userDataStore.hospitals);
+    List _myHospital = userDataStore.hospitals != null
+        ? userDataStore.hospitals.map((e) => e['name']).toList()
+        : [];
 
     return Scaffold(
       appBar: PreferredSize(
@@ -251,19 +254,32 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                     fontWeight: FontWeight.w500,
                                   )),
                         value: _valDepartment,
-                        items: userDataStore.hospitals
-                            .firstWhere((element) =>
-                                element['name'] == _valHospital)['departments']
-                            .map((value) {
-                          return DropdownMenuItem(
-                            child: FancyText(
-                              text: value,
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            value: value,
-                          );
-                        }).toList(),
+                        items: userDataStore.hospitals != null &&
+                                _valHospital != null
+                            ? userDataStore.hospitals
+                                .firstWhere((element) =>
+                                    element['name'] ==
+                                    _valHospital)['departments']
+                                .map((value) {
+                                return DropdownMenuItem(
+                                  child: FancyText(
+                                    text: value,
+                                    color: blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  value: value,
+                                );
+                              }).toList()
+                            : [
+                                DropdownMenuItem(
+                                  child: FancyText(
+                                    text: '',
+                                    color: blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  value: '',
+                                )
+                              ],
                         onChanged: (value) {
                           setState(() {
                             _valDepartment = value;
@@ -314,20 +330,32 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                     fontWeight: FontWeight.w500,
                                   )),
                         value: _valDoctor,
-                        items: userDataStore.doctors
-                            .where((element) =>
-                                element['hospital'] == _valHospital)
-                            .toList()
-                            .map((value) {
-                          return DropdownMenuItem(
-                            child: FancyText(
-                              text: value,
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            value: value,
-                          );
-                        }).toList(),
+                        items: _valHospital != null &&
+                                userDataStore.doctors != null
+                            ? userDataStore.doctors
+                                .where((element) =>
+                                    element['hospital'] == _valHospital)
+                                .toList()
+                                .map((value) {
+                                return DropdownMenuItem(
+                                  child: FancyText(
+                                    text: value,
+                                    color: blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  value: value,
+                                );
+                              }).toList()
+                            : [
+                                DropdownMenuItem(
+                                  child: FancyText(
+                                    text: '',
+                                    color: blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  value: '',
+                                )
+                              ],
                         onChanged: (value) {
                           setState(() {
                             _valDoctor = value;
