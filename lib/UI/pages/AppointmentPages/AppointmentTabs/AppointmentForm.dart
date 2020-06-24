@@ -36,11 +36,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
   String _valHospital;
 
   String _valDepartment;
-  // List _myDepartment = [
-  //   "Operation Theater",
-  //   "ENT",
-  //   "Dermatology",
-  // ];
+  List _myDepartment = [
+    "Operation Theater",
+    "ENT",
+    "Dermatology",
+  ];
   String _valDoctor;
   String _valTime;
   List _time = [
@@ -77,9 +77,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
     final userDataStore = Provider.of<UserDataStore>(context);
     print(userDataStore.hospitals);
     List _myHospital = userDataStore.hospitals != null
-        ? userDataStore.hospitals.map((e) => e['name']).toList()
+        ? userDataStore.hospitals.map<String>((e) => e['name']).toList()
         : [];
-
+  print(_myHospital);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
@@ -254,32 +254,32 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                     fontWeight: FontWeight.w500,
                                   )),
                         value: _valDepartment,
-                        items: userDataStore.hospitals != null &&
-                                _valHospital != null
-                            ? userDataStore.hospitals
-                                .firstWhere((element) =>
-                                    element['name'] ==
-                                    _valHospital)['departments']
-                                .map((value) {
-                                return DropdownMenuItem(
-                                  child: FancyText(
-                                    text: value,
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  value: value,
-                                );
-                              }).toList()
-                            : [
-                                DropdownMenuItem(
-                                  child: FancyText(
-                                    text: '',
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  value: '',
-                                )
-                              ],
+                        // items: userDataStore.hospitals != null &&
+                        //         _valHospital != null
+                        //     ? userDataStore.hospitals
+                        //         .firstWhere((element) =>
+                        //             element['name'] ==
+                        //             _valHospital)['departments']
+                        items: _myDepartment.map((value) {
+                          return DropdownMenuItem(
+                            child: FancyText(
+                              text: value,
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            value: value,
+                          );
+                        }).toList(),
+                        // : [
+                        //     DropdownMenuItem(
+                        //       child: FancyText(
+                        //         text: '',
+                        //         color: blueGrey,
+                        //         fontWeight: FontWeight.w500,
+                        //       ),
+                        //       value: '',
+                        //     )
+                        //   ],
                         onChanged: (value) {
                           setState(() {
                             _valDepartment = value;
@@ -333,17 +333,17 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         items: _valHospital != null &&
                                 userDataStore.doctors != null
                             ? userDataStore.doctors
-                                .where((element) =>
-                                    element['hospital'] == _valHospital)
-                                .toList()
+                                // .where((element) =>
+                                //     element['hospital'] == _valHospital)
+                                // .toList()
                                 .map((value) {
                                 return DropdownMenuItem(
                                   child: FancyText(
-                                    text: value,
+                                    text: value['name'],
                                     color: blueGrey,
                                     fontWeight: FontWeight.w500,
                                   ),
-                                  value: value,
+                                  value: value['name'],
                                 );
                               }).toList()
                             : [
@@ -580,6 +580,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     widget.appointment.time = _valTime;
                     final updateData = widget.appointment.toJson();
                     updateData['userId'] = userDataStore.uid;
+                    final doctor = userDataStore.doctors
+                        .firstWhere((element) => element['name'] == _valDoctor);
+                    updateData['doctorId'] = doctor['id'];
                     userDataStore.createAppointment(updateData).then((value) {
                       print(value);
                       if (value != 'error') {

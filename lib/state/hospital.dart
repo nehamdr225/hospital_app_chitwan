@@ -122,6 +122,10 @@ class HospitalDataStore extends ChangeNotifier {
     doctors = newVal;
   }
 
+  updateDepartments(Map data) {
+    DatabaseService.updateHospitalData(uid, data);
+  }
+
   clearState() {
     _id = null;
     _userData = null;
