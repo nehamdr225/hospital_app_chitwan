@@ -7,6 +7,7 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,21 +17,37 @@ class DoctorsModule extends StatelessWidget {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final doctor = Provider.of<DoctorDataStore>(context).user;
+    final appointments = Provider.of<DoctorDataStore>(context).appointments;
     Provider.of<DoctorDataStore>(context).handleInitialProfileLoad();
-
+    print(appointments);
     buildAppointmentRequests() {
-      List<Widget> widgets = NearYou.map<Widget>(
-        (each) => PatientListCard(
-          name: each['name'],
-          caption: each['cap'],
-          image: each['src'],
-          phone: each['phone'],
-          status: each['status'],
-          date: each['date'],
-          time: each['time'],
-          gender: each['gender'],
-        ),
-      ).toList();
+      List<Widget> widgets = appointments != null
+          ? appointments.map<Widget>((each) {
+              Timestamp date = each['date'];
+              return PatientListCard(
+                name: each['firstName'] + ' ' + each['lastName'],
+                caption: each['department'],
+                image: "assets/images/doctor.png",
+                phone: each['phoneNum'],
+                status: each['status'] ?? 'Pending',
+                date:
+                    ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}',
+                time: each['time'],
+                gender: each['gender'].split('.')[1],
+              );
+            }).toList()
+          : NearYou.map<Widget>(
+              (each) => PatientListCard(
+                name: each['name'],
+                caption: each['cap'],
+                image: each['src'],
+                phone: each['phone'],
+                status: each['status'],
+                date: each['date'],
+                time: each['time'],
+                gender: each['gender'],
+              ),
+            ).toList();
       return widgets;
     }
 
