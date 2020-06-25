@@ -136,7 +136,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                               builder: (context) => PharmacyProfile()));
                     },
                   )
-                : Text(" "),
+                : SizedBox(height:0.0),
             DrawerElements(
               //Home
               title: 'Order List',
@@ -188,7 +188,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                         bg: Colors.white,
                         shape: false),
                   )
-                : Text(' '),
+                : SizedBox(height:0.0),
             user != null
                 ? Padding(
                     padding: const EdgeInsets.only(
@@ -213,7 +213,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                         bg: theme.colorScheme.secondary,
                         shape: false),
                   )
-                : Text(' '),
+                : SizedBox(height:0.0),
             SizedBox(height: 15.0)
           ],
         ),

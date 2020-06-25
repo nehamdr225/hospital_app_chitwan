@@ -125,7 +125,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                               builder: (context) => DoctorProfile()));
                     },
                   )
-                : Text(" "),
+                : SizedBox(height:0),
             DrawerElements(
               //Home
               title: 'Appointment',

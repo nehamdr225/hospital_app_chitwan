@@ -192,10 +192,131 @@ class _DoctorProfileState extends State<DoctorProfile> {
           //         });
           //       }),
           // ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FancyText(
+                    text: "Hospital",
+                    size: 16.0,
+                    fontWeight: FontWeight.w500,
+                    textAlign: TextAlign.left,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10.0),
+                    height: 40.0,
+                    // width: width * 0.40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.white,
+                        border: Border.all(
+                          width: 1,
+                          color: theme.colorScheme.primary,
+                        )),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      hint: Container(
+                          height: 45.0,
+                          width: size.width * 0.50,
+                          alignment: Alignment.center,
+                          child: FancyText(
+                            text: "Select Hospital",
+                            color: blueGrey,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      value: selectedHospital,
+                      items: hospitals != null
+                          ? hospitals.map((value) {
+                              return DropdownMenuItem(
+                                child: FancyText(
+                                  text: value['name'],
+                                  color: blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                value: value['name'],
+                              );
+                            }).toList()
+                          : selectedHospital != null
+                              ? [selectedHospital].map((value) {
+                                  return DropdownMenuItem(
+                                    child: FancyText(
+                                      text: value,
+                                      color: blueGrey,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    value: value,
+                                  );
+                                }).toList()
+                              : [],
+                      onChanged: (value) {
+                        setState(() {
+                          updateData['hospital'] = value;
+                          selectedHospital = value;
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+            child: Column(children: <Widget>[
+              FancyText(
+                text: "Select Department: ",
+                size: 16.0,
+                fontWeight: FontWeight.w500,
+                textAlign: TextAlign.left,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 10.0),
+                height: 40.0,
+                // width: width * 0.40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 1,
+                      color: theme.colorScheme.primary,
+                    )),
+                child: DropdownButton(
+                  underline: SizedBox(),
+                  hint: Container(
+                      height: 45.0,
+                      width: size.width * 0.40,
+                      alignment: Alignment.center,
+                      child: FancyText(
+                        text: "Select Department",
+                        color: blueGrey,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  value: selectedDept,
+                  items: departments.map((value) {
+                    return DropdownMenuItem(
+                      child: FancyText(
+                        text: value,
+                        color: blueGrey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      value: value,
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      updateData['department'] = value;
+                      selectedDept = value;
+                    });
+                  },
+                ),
+              ),
+            ]),
+          ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 23.0),
             alignment: Alignment.centerLeft,
-            child: DropdownButton(
+            child: DropdownButton(    
               underline: SizedBox(),
               hint: Container(
                   height: 45.0,
@@ -284,7 +405,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
                 title: 'NMC Registration Number',
-                value: doctor['registrationNo'] ?? '',
+                value: doctor['registrationNo'] ?? 'xxx-xxxx',
                 onChanged: (value) {
                   setState(() {
                     updateData['registrationNo'] = value;

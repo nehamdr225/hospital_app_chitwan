@@ -126,7 +126,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
             //                   builder: (context) => DoctorProfile()));
             //         },
             //       )
-            //     : Text(" "),
+            //     : SizedBox(height:0.0),
             DrawerElements(
               //Home
               title: 'Promotions',
@@ -189,7 +189,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
             //             bg: Colors.white,
             //             shape: false),
             //       )
-            //     : Text(' '),
+            //     : SizedBox(height:0.0),
             user != null
                 ? Padding(
                     padding: const EdgeInsets.only(
@@ -215,7 +215,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                         bg: theme.colorScheme.secondary,
                         shape: false),
                   )
-                : Text(' '),
+                : SizedBox(height:0.0),
             SizedBox(height: 15.0)
           ],
         ),

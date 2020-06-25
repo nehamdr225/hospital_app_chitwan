@@ -130,7 +130,7 @@ class _DrawerAppState extends State<DrawerApp> {
                               builder: (context) => FavoritePage()));
                     },
                   )
-                : Text(""),
+                : SizedBox(height:0.0),
             DrawerElements(
               //Appointments
               title: 'Appointments',
@@ -170,7 +170,7 @@ class _DrawerAppState extends State<DrawerApp> {
                               builder: (context) => AccountPage()));
                     },
                   )
-                : Text(" "),
+                : SizedBox(height:0.0),
             Divider(
               color: Colors.grey[500],
               height: 5.0,
