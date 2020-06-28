@@ -59,6 +59,8 @@ class _PatientDetailState extends State<PatientDetail> {
                 builder: (context) => PatientHistoryPage(
                       date: doodle.time,
                       diagnosis: doodle.diagnosis,
+                      medicine: doodle.medicines,
+                      title: doodle.title,
                     )));
           },
           child: Container(
@@ -78,7 +80,10 @@ class _PatientDetailState extends State<PatientDetail> {
                     const SizedBox(
                       height: 2.0,
                     ),
-                    Text(doodle.title, style: textTheme.caption,),
+                    Text(
+                      doodle.title,
+                      style: textTheme.caption,
+                    ),
                     const SizedBox(
                       height: 8.0,
                     ),

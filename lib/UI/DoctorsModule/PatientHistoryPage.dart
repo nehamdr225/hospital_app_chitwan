@@ -6,14 +6,14 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 class PatientHistoryPage extends StatelessWidget {
   final String date;
   final String diagnosis;
-  final String investigation;
+  final String title;
   final String medicine;
   final String followUp;
   PatientHistoryPage(
       {this.date,
       this.diagnosis: "no data",
       this.followUp: "no data",
-      this.investigation: "no data",
+      this.title: "no data",
       this.medicine: "no data"});
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,29 @@ class PatientHistoryPage extends StatelessWidget {
               fontSize: 15.0,
             ),
             preferredSize: Size.fromHeight(50.0)),
-        
         body: Table(children: <TableRow>[
+          TableRow(children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+              child: FancyText(
+                text: "Title: ",
+                textAlign: TextAlign.left,
+                fontWeight: FontWeight.w800,
+                size: 15.0,
+                color: blueGrey.withOpacity(0.7),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: FancyText(
+                text: title,
+                textAlign: TextAlign.left,
+                size: 15.5,
+                fontWeight: FontWeight.w700,
+                color: blueGrey,
+              ),
+            )
+          ]),
           TableRow(children: [
             Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 8.0),
@@ -55,29 +76,7 @@ class PatientHistoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 8.0),
               child: FancyText(
-                text: "Investigation: ",
-                textAlign: TextAlign.left,
-                fontWeight: FontWeight.w800,
-                size: 15.0,
-                color: blueGrey.withOpacity(0.7),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: FancyText(
-                text: investigation,
-                textAlign: TextAlign.left,
-                size: 15.5,
-                fontWeight: FontWeight.w700,
-                color: blueGrey,
-              ),
-            )
-          ]),
-          TableRow(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
-              child: FancyText(
-                text: "Medicine: ",
+                text: "Medicines: ",
                 textAlign: TextAlign.left,
                 fontWeight: FontWeight.w800,
                 size: 15.0,
