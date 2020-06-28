@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                 ? doctors
                     .map<Widget>((each) => HomeListCard(
                           doctorName: each['name'] ?? '',
-                          department: each['field'] ?? '',
+                          department: each['department'] ?? '',
                           image: each['src'] ?? '',
                           phone: each['phone'] ?? '',
                           status: each['status'] ?? '',

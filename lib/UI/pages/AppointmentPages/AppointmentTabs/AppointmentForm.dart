@@ -33,7 +33,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
   String _lName;
   String _fPhone;
   DateTime selectedDate = DateTime.now();
-  String _valHospital;
+  String _valHospital = "Chitwan Hospital";
 
   String _valDepartment;
   List _myDepartment = [
@@ -64,6 +64,17 @@ class _AppointmentFormState extends State<AppointmentForm> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.department != null) {
+      setState(() {
+        _valDepartment = widget.department.toString();
+        _myDepartment = [widget.department.toString()];
+      });
+    }
+    if (widget.doctor != null) {
+      setState(() {
+        _valDoctor = widget.doctor.toString();
+      });
+    }
     TextEditingController _textController = new TextEditingController();
     _textController.text = widget.appointment.firstName;
     final theme = Theme.of(context);
@@ -76,10 +87,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
 
     final userDataStore = Provider.of<UserDataStore>(context);
     print(userDataStore.hospitals);
-    List _myHospital = userDataStore.hospitals != null
-        ? userDataStore.hospitals.map<String>((e) => e['name']).toList()
-        : [];
-  print(_myHospital);
+    List _myHospital = [_valHospital];
+    //  userDataStore.hospitals != null
+    //     ? userDataStore.hospitals.map<String>((e) => e['name']).toList()
+    //     : [];
+    // print(_myHospital);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
@@ -242,17 +254,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
                             height: 45.0,
                             width: width * 0.40,
                             alignment: Alignment.center,
-                            child: widget.doctor != null
-                                ? FancyText(
-                                    text: widget.department,
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                : FancyText(
-                                    text: "Select Department",
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  )),
+                            child: FancyText(
+                              text: "Select Department",
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            )),
                         value: _valDepartment,
                         // items: userDataStore.hospitals != null &&
                         //         _valHospital != null
@@ -318,44 +324,49 @@ class _AppointmentFormState extends State<AppointmentForm> {
                             height: 45.0,
                             width: width * 0.50,
                             alignment: Alignment.center,
-                            child: widget.doctor != null
-                                ? FancyText(
-                                    text: widget.doctor,
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                : FancyText(
-                                    text: "Select Doctor",
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  )),
+                            child: FancyText(
+                              text: "Select Doctor",
+                              color: blueGrey,
+                              fontWeight: FontWeight.w500,
+                            )),
                         value: _valDoctor,
-                        items: _valHospital != null &&
-                                userDataStore.doctors != null
-                            ? userDataStore.doctors
-                                // .where((element) =>
-                                //     element['hospital'] == _valHospital)
-                                // .toList()
-                                .map((value) {
-                                return DropdownMenuItem(
-                                  child: FancyText(
-                                    text: value['name'],
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  value: value['name'],
-                                );
-                              }).toList()
-                            : [
+                        items: _valDoctor != null
+                            ? [
                                 DropdownMenuItem(
                                   child: FancyText(
-                                    text: '',
+                                    text: _valDoctor,
                                     color: blueGrey,
                                     fontWeight: FontWeight.w500,
                                   ),
-                                  value: '',
+                                  value: _valDoctor,
                                 )
-                              ],
+                              ]
+                            : _valHospital != null &&
+                                    userDataStore.doctors != null
+                                ? userDataStore.doctors
+                                    // .where((element) =>
+                                    //     element['hospital'] == _valHospital)
+                                    // .toList()
+                                    .map((value) {
+                                    return DropdownMenuItem(
+                                      child: FancyText(
+                                        text: value['name'],
+                                        color: blueGrey,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      value: value['name'],
+                                    );
+                                  }).toList()
+                                : [
+                                    DropdownMenuItem(
+                                      child: FancyText(
+                                        text: '',
+                                        color: blueGrey,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      value: '',
+                                    )
+                                  ],
                         onChanged: (value) {
                           setState(() {
                             _valDoctor = value;
@@ -580,8 +591,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     widget.appointment.time = _valTime;
                     final updateData = widget.appointment.toJson();
                     updateData['userId'] = userDataStore.uid;
-                    final doctor = userDataStore.doctors
-                        .firstWhere((element) => element['name'] == _valDoctor);
+                    final doctor = userDataStore.doctors.firstWhere(
+                        (element) => element['name'] == _valDoctor,
+                        orElse: () => {name:''});
                     updateData['doctorId'] = doctor['id'];
                     userDataStore.createAppointment(updateData).then((value) {
                       print(value);

@@ -18,7 +18,7 @@ class UserDataStore extends ChangeNotifier {
                 user = userData.data;
                 uid = value;
                 type = userData.data['role'];
-                getAvailableHospitals();
+                // getAvailableHospitals();
                 getUserAppointments();
                 getAvailableDoctors(null);
                 // notifyListeners();

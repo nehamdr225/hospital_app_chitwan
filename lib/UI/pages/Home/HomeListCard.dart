@@ -31,12 +31,20 @@ class HomeListCard extends StatefulWidget {
   _HomeListCardState createState() => _HomeListCardState();
 }
 
-class _HomeListCardState extends State<HomeListCard>{
-
-
+class _HomeListCardState extends State<HomeListCard> {
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new Appointments(null, null, widget.department, widget.doctorName, "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
+    final newAppointment = new Appointments(
+        null,
+        null,
+        widget.department,
+        widget.doctorName,
+        "Female",
+        "online",
+        "Neha",
+        "KMC",
+        "Mdr",
+        "9840056679");
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Padding(
@@ -158,7 +166,8 @@ class _HomeListCardState extends State<HomeListCard>{
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
+                            padding:
+                                const EdgeInsets.only(top: 5.0, bottom: 8.0),
                             child: Row(
                               children: <Widget>[
                                 Icon(
@@ -177,16 +186,21 @@ class _HomeListCardState extends State<HomeListCard>{
                           SizedBox(
                             height: 30.0,
                             child: RaisedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AppointmentForm(
-                                      appointment: newAppointment,
-                                      doctor: widget.doctorName,
-                                      department: widget.department,
-                                    )));
-                              },
+                              onPressed: widget.department != null &&
+                                      widget.department.length > 0
+                                  ? () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AppointmentForm(
+                                                    appointment: newAppointment,
+                                                    doctor: widget.doctorName,
+                                                    department:
+                                                        widget.department,
+                                                  )));
+                                    }
+                                  : null,
                               color: theme.colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0)),

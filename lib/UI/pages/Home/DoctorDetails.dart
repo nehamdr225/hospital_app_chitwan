@@ -195,16 +195,18 @@ class DoctorDetails extends StatelessWidget {
             bg: theme.colorScheme.secondary.withOpacity(0.8),
             shape: true,
             radius: 5.0,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AppointmentForm(
-                            appointment: newAppointment,
-                            doctor: name,
-                            department: caption,
-                          )));
-            },
+            onPressed: caption != null && caption.length > 0
+                ? () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AppointmentForm(
+                                  appointment: newAppointment,
+                                  doctor: name,
+                                  department: caption,
+                                )));
+                  }
+                : null,
           ),
         ),
         SizedBox(height: 10.0),

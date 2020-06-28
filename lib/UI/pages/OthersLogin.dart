@@ -25,7 +25,7 @@ class _OthersLoginState extends State<OthersLogin> {
     "Ambulance",
     "Pharmacy",
     "Labratory",
-    "Hospital",
+    // "Hospital",
     "Blood Bank",
   ];
 

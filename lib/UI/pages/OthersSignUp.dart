@@ -30,7 +30,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
     "Ambulance",
     "Pharmacy",
     "Labratory",
-    "Hospital",
+    // "Hospital",
     "Blood Bank",
   ];
   final FocusNode _emailFocus = FocusNode();
