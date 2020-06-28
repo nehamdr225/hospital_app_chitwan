@@ -23,31 +23,9 @@ class DoctorsModule extends StatelessWidget {
     buildAppointmentRequests() {
       List<Widget> widgets = appointments != null
           ? appointments.map<Widget>((each) {
-              Timestamp date = each['date'];
-              return PatientListCard(
-                name: each['firstName'] + ' ' + each['lastName'],
-                caption: each['department'],
-                image: "assets/images/doctor.png",
-                phone: each['phoneNum'],
-                status: each['status'] ?? 'Pending',
-                date:
-                    ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}',
-                time: each['time'],
-                gender: each['gender'].split('.')[1],
-              );
+              return PatientListCard(id: each['id']);
             }).toList()
-          : NearYou.map<Widget>(
-              (each) => PatientListCard(
-                name: each['name'],
-                caption: each['cap'],
-                image: each['src'],
-                phone: each['phone'],
-                status: each['status'],
-                date: each['date'],
-                time: each['time'],
-                gender: each['gender'],
-              ),
-            ).toList();
+          : [Text('')];
       return widgets;
     }
 

@@ -83,4 +83,14 @@ class DatabaseService {
   static Stream<QuerySnapshot> getHospitals() {
     return hospitalCollection.snapshots();
   }
+
+  static Future<bool> setAppointmentStatus(String uid, dynamic status) async {
+    try {
+      await appointmentCollection.document(uid).setData({status: status});
+      print('done');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

@@ -54,7 +54,7 @@ class DoctorDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  get appointments => _appointments;
+  List get appointments => _appointments;
 
   set appointments(newUserData) {
     _appointments = newUserData;
@@ -98,10 +98,30 @@ class DoctorDataStore extends ChangeNotifier {
   getAppointments() {
     if (appointments == null) {
       DatabaseService.getDoctorAppointments(uid).listen((onData) {
-        List newData = onData.documents.map<Map>((e) => e.data).toList();
+        List newData = onData.documents.map<Map>((e) {
+          final data = e.data;
+          data['id'] = e.documentID;
+          return data;
+        }).toList();
         appointments = newData;
       });
     }
+  }
+
+  setAppointmentStatus(String uid, dynamic status) {
+    DatabaseService.setAppointmentStatus(uid, status).then((value) {
+      if (value) {
+        final newAppointments = _appointments.map<Map>((each) {
+          if (each['id'] == uid) {
+            final data = each;
+            data['status'] = status;
+            return data;
+          }
+          return each;
+        }).toList();
+        appointments = newAppointments;
+      }
+    });
   }
 
   clearState() {

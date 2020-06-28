@@ -1,61 +1,49 @@
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientDetail.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class PatientListCard extends StatefulWidget {
-  final name;
-  final image;
-  final caption;
-  final phone;
-  final status;
-  final date;
-  final time;
-  final take;
-  final data;
-  final gender;
-  PatientListCard(
-      {this.image,
-      this.name,
-      this.caption,
-      this.phone,
-      this.date,
-      this.status,
-      this.time,
-      this.take,
-      this.gender,
-      this.data = false});
+  final id;
+  PatientListCard({
+    this.id,
+  });
 
   @override
   _PatientListCardState createState() => _PatientListCardState();
 }
 
 class _PatientListCardState extends State<PatientListCard> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    final patientName = widget.name.replaceAll('Dr. ', '');
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final doctorDataStore = Provider.of<DoctorDataStore>(context);
+    final appointment = doctorDataStore.appointments
+        .firstWhere((element) => element['id'] == widget.id);
+    Timestamp date = appointment['date'];
+    String status = appointment['status'] ?? null;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => PatientDetail(
-                    name: patientName,
-                    caption: widget.caption,
-                    image: widget.image,
-                    phone: widget.phone,
-                    status: widget.status,
-                    date: widget.date,
-                    time: widget.time,
+                    name: appointment['firstName'] +
+                        ' ' +
+                        appointment['lastName'],
+                    caption: appointment['department'],
+                    image: "assets/images/doctor.png",
+                    phone: appointment['phoneNum'],
+                    status: status,
+                    date:
+                        ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}',
+                    time: appointment['time'],
                   )));
         },
         child: Container(
@@ -119,7 +107,9 @@ class _PatientListCardState extends State<PatientListCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: patientName,
+                            text: appointment['firstName'] +
+                                ' ' +
+                                appointment['lastName'],
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -138,7 +128,7 @@ class _PatientListCardState extends State<PatientListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
                                 child: FancyText(
-                                    text: widget.gender,
+                                    text: appointment['gender'].split('.')[1],
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -158,7 +148,7 @@ class _PatientListCardState extends State<PatientListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: widget.time,
+                                    text: appointment['time'],
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -175,14 +165,14 @@ class _PatientListCardState extends State<PatientListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: "  ${widget.phone}",
+                                  text: appointment['phoneNum'],
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ],
                             ),
                           ),
-                          doctorDecision == "undecided"
+                          status == null
                               ? Row(
                                   children: <Widget>[
                                     FRaisedButton(
@@ -194,9 +184,10 @@ class _PatientListCardState extends State<PatientListCard> {
                                       color: textDark_Yellow,
                                       bg: theme.colorScheme.secondary,
                                       onPressed: () {
-                                        setState(() {
-                                          doctorDecision = "rejected";
-                                        });
+                                        // doctorDataStore.setAppointmentStatus(appointment['id'], 'rejected');
+                                        // setState(() {
+                                        //   status = "rejected";
+                                        // });
                                         showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
@@ -220,10 +211,10 @@ class _PatientListCardState extends State<PatientListCard> {
                                                             .secondary,
                                                       ),
                                                       onPressed: () {
-                                                        setState(() {
-                                                          doctorDecision =
-                                                              "undecided";
-                                                        });
+                                                        // doctorDataStore.setAppointmentStatus(appointment['id'], null);
+                                                        // setState(() {
+                                                        //   status = null;
+                                                        // });
                                                         Navigator.pop(context);
                                                       }),
                                                   IconButton(
@@ -233,10 +224,14 @@ class _PatientListCardState extends State<PatientListCard> {
                                                             Colors.green[600],
                                                       ),
                                                       onPressed: () {
-                                                        setState(() {
-                                                          doctorDecision =
-                                                              "rejected";
-                                                        });
+                                                        doctorDataStore
+                                                            .setAppointmentStatus(
+                                                                appointment[
+                                                                    'id'],
+                                                                'rejected');
+                                                        // setState(() {
+                                                        //   status = "rejected";
+                                                        // });
                                                         Navigator.pop(context);
                                                       }),
                                                 ],
@@ -254,14 +249,16 @@ class _PatientListCardState extends State<PatientListCard> {
                                       color: textDark_Yellow,
                                       bg: Colors.green[600],
                                       onPressed: () {
-                                        setState(() {
-                                          doctorDecision = "accepted";
-                                        });
+                                        doctorDataStore.setAppointmentStatus(
+                                            appointment['id'], 'accepted');
+                                        // setState(() {
+                                        //   status = "accepted";
+                                        // });
                                       },
                                     )
                                   ],
                                 )
-                              : doctorDecision == "rejected"
+                              : status == "rejected"
                                   ? Row(children: [
                                       FancyText(
                                         text: "Rejected",
@@ -272,12 +269,14 @@ class _PatientListCardState extends State<PatientListCard> {
                                       SizedBox(width: 20.0),
                                       InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            doctorDecision = "undecided";
-                                          });
+                                          doctorDataStore.setAppointmentStatus(
+                                              appointment['id'], null);
+                                          // setState(() {
+                                          //   status = null;
+                                          // });
                                         },
                                         child: FancyText(
-                                          text: "undo",
+                                          text: "Undo",
                                           decoration: TextDecoration.underline,
                                           decorationColor:
                                               theme.colorScheme.secondary,
