@@ -148,7 +148,7 @@ class _PatientListCardState extends State<PatientListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: appointment['time'],
+                                    text: appointment['time']??'',
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),

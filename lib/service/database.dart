@@ -86,7 +86,7 @@ class DatabaseService {
 
   static Future<bool> setAppointmentStatus(String uid, dynamic status) async {
     try {
-      await appointmentCollection.document(uid).setData({status: status});
+      await appointmentCollection.document(uid).updateData({'status': status});
       print('done');
       return true;
     } catch (e) {
