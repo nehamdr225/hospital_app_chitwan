@@ -2,43 +2,34 @@ import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/PatientRecordForm.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 
 class RecordForm extends StatefulWidget {
-  final PatientRecordForm patientRecord;
-  final name;
-  final phone;
-  RecordForm(
-      {this.name, this.phone, Key key, @required this.patientRecord})
-      : super(key: key);
+  final id;
+  RecordForm({this.id, Key key}) : super(key: key);
   @override
   _RecordFormState createState() => _RecordFormState();
 }
 
 class _RecordFormState extends State<RecordForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final db = Firestore.instance;
-  String _medicine;
-  String _investigation;
-  String _diagnosisTitle;
-  String _followUp;
-  DateTime selectedDate = DateTime.now();
-
+  Timestamp selectedDate = Timestamp.fromDate(DateTime.now());
+  // final appointment = doctorDataStore.appointments
+  //     .firstWhere((element) => element['id'] == widget.id);
+  final Map<String, dynamic> diagnosis = {};
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: DateTime.now(),
       firstDate: DateTime(2020, 1),
       lastDate: DateTime(2020, 9),
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && Timestamp.fromDate(picked) != selectedDate)
       setState(() {
-        selectedDate = picked;
+        selectedDate = Timestamp.fromDate(picked);
       });
   }
 
@@ -46,6 +37,11 @@ class _RecordFormState extends State<RecordForm> {
   Widget build(BuildContext context) {
     // TextEditingController _textController = new TextEditingController();
     //_textController.text = widget.appointment.firstName;
+    final doctorDataStore = Provider.of<DoctorDataStore>(context);
+    final List appointmentDiagnosis = doctorDataStore.appointments
+            .firstWhere((element) => element['id'] == widget.id)['diagnosis'] ??
+        [];
+
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     var style = TextStyle(
@@ -79,10 +75,10 @@ class _RecordFormState extends State<RecordForm> {
                 formColor: Colors.white,
                 textColor: blueGrey.withOpacity(0.7),
                 validator: (val) =>
-                    val.isEmpty || val.length < 15 ? 'Diagnosis Title' : null,
-                onSaved: (value) {
-                  _diagnosisTitle = value;
-                },
+                    val.isEmpty || val.length < 5 ? 'Diagnosis Title' : null,
+                onChanged: (value) => setState(() {
+                  diagnosis['title'] = value;
+                }),
               ),
             ),
             Padding(
@@ -96,9 +92,11 @@ class _RecordFormState extends State<RecordForm> {
                 formColor: Colors.white,
                 textColor: blueGrey.withOpacity(0.7),
                 validator: (val) =>
-                    val.isEmpty || val.length < 15 ? 'Medicine' : null,
-                onSaved: (value) {
-                  _medicine = value;
+                    val.isEmpty || val.length < 5 ? 'Medicine' : null,
+                onChanged: (value) {
+                  setState(() {
+                    diagnosis['medicines'] = value;
+                  });
                 },
               ),
             ),
@@ -113,9 +111,11 @@ class _RecordFormState extends State<RecordForm> {
                 formColor: Colors.white,
                 textColor: blueGrey.withOpacity(0.7),
                 validator: (val) =>
-                    val.isEmpty || val.length > 15 ? 'Investigation' : null,
-                onSaved: (value) {
-                  _investigation = value;
+                    val.isEmpty || val.length < 5 ? 'Investigation' : null,
+                onChanged: (value) {
+                  setState(() {
+                    diagnosis['diagnosis'] = value;
+                  });
                 },
               ),
             ),
@@ -144,7 +144,7 @@ class _RecordFormState extends State<RecordForm> {
                         )),
                     child: Center(
                       child: Text(
-                        "${selectedDate.day.toString()}-${selectedDate.month.toString()}-${selectedDate.year.toString()}",
+                        "${selectedDate.toDate().day}-${selectedDate.toDate().month}-${selectedDate.toDate().year}",
                         style: style,
                         textAlign: TextAlign.center,
                       ),
@@ -175,24 +175,11 @@ class _RecordFormState extends State<RecordForm> {
                     if (!_formKey.currentState.validate()) {
                       return;
                     }
-                    _formKey.currentState.save();
-                    widget.patientRecord.name = widget.name;
-                    widget.patientRecord.phoneNum = widget.phone;
-                    widget.patientRecord.investigation = _investigation;
-                    widget.patientRecord.followUp = _followUp;
-                    widget.patientRecord.medicine = _medicine;
-                    widget.patientRecord.diagnosis = _diagnosisTitle;
-
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
-                    await db
-                        .collection("users")
-                        .document(uid)
-                        .collection("diagnosis")
-                        .add(widget.patientRecord.toJson());
-
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    diagnosis['date'] = selectedDate;
+                    final List update = appointmentDiagnosis + [diagnosis];
+                    final result =
+                        await doctorDataStore.setDiagnosis(widget.id, update);
+                    if (result) Navigator.pop(context);
                   },
                 ),
               ),

@@ -93,4 +93,14 @@ class DatabaseService {
       return false;
     }
   }
+
+  static Future<bool> setDiagnosis(String uid, List data) async {
+    try {
+      await appointmentCollection.document(uid).updateData({'diagnosis': data});
+      return true;
+    } catch (e) {
+      print('Error $e');
+      return false;
+    }
+  }
 }

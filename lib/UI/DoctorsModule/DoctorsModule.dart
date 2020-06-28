@@ -2,12 +2,10 @@ import 'package:chitwan_hospital/UI/DoctorsModule/DoctorProfile.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

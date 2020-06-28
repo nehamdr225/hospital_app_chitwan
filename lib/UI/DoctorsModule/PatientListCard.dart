@@ -3,7 +3,6 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientDetail.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +25,7 @@ class _PatientListCardState extends State<PatientListCard> {
     final doctorDataStore = Provider.of<DoctorDataStore>(context);
     final appointment = doctorDataStore.appointments
         .firstWhere((element) => element['id'] == widget.id);
-    Timestamp date = appointment['date'];
+    // Timestamp date = appointment['date'];
     String status = appointment['status'] ?? null;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -34,16 +33,7 @@ class _PatientListCardState extends State<PatientListCard> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => PatientDetail(
-                    name: appointment['firstName'] +
-                        ' ' +
-                        appointment['lastName'],
-                    caption: appointment['department'],
-                    image: "assets/images/doctor.png",
-                    phone: appointment['phoneNum'],
-                    status: status,
-                    date:
-                        ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}',
-                    time: appointment['time'],
+                    id: appointment['id'],
                   )));
         },
         child: Container(
@@ -148,7 +138,7 @@ class _PatientListCardState extends State<PatientListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: appointment['time']??'',
+                                    text: appointment['time'] ?? '',
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),

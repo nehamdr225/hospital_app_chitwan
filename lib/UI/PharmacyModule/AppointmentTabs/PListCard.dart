@@ -30,7 +30,6 @@ class PListCard extends StatefulWidget {
 }
 
 class _PListCardState extends State<PListCard> {
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -41,13 +40,7 @@ class _PListCardState extends State<PListCard> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => PatientDetail(
-                    name: widget.name,
-                    caption: widget.caption,
-                    image: widget.image,
-                    phone: widget.phone,
-                    status: widget.status,
-                    date: widget.date,
-                    time: widget.time,
+                    id: '',
                   )));
         },
         child: Container(
@@ -95,13 +88,12 @@ class _PListCardState extends State<PListCard> {
                   ),
                   Flexible(
                     flex: 3,
-                                      child: Padding(
+                    child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          
                           FancyText(
                             text: widget.name,
                             fontWeight: FontWeight.w700,
@@ -113,10 +105,19 @@ class _PListCardState extends State<PListCard> {
                             caption: widget.date,
                             defaultStyle: true,
                           ),
-                          RowInput(title: "Time:  ", caption: widget.time,),
-                          widget.status == "Rejected" 
-                          ? RowInput(title: "Reason:  ", caption: "reason", defaultStyle: true,): SizedBox(height: 1.0,),
-                          
+                          RowInput(
+                            title: "Time:  ",
+                            caption: widget.time,
+                          ),
+                          widget.status == "Rejected"
+                              ? RowInput(
+                                  title: "Reason:  ",
+                                  caption: "reason",
+                                  defaultStyle: true,
+                                )
+                              : SizedBox(
+                                  height: 1.0,
+                                ),
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
 var loggedIn = false;
-var doctorDecision =  "undecided"; //doctor has accepted the patient request
+var doctorDecision = "undecided"; //doctor has accepted the patient request
 var pharmacistDecision = "undecided";
 const NearYou = [
   {
@@ -83,37 +84,37 @@ const Options = [
     "name": "Doctors",
     "cap": "Doctors",
     "src": "assets/images/Qdoctors.png",
-    "id":0
+    "id": 0
   },
   {
     "name": "Pharmacy",
     "cap": "Pharmacy",
     "src": "assets/images/Qpharmacy.png",
-    "id":1
+    "id": 1
   },
   {
     "name": "Ambulance",
     "cap": "Ambulance",
     "src": "assets/images/Qambulance.png",
-    "id":2
+    "id": 2
   },
   {
     "name": "Laboratory",
     "cap": "Laboratory",
     "src": "assets/images/QLab.png",
-    "id":3
+    "id": 3
   },
   {
     "name": "Hospital",
     "cap": "Hospital",
     "src": "assets/images/Qhospital.png",
-    "id":4
+    "id": 4
   },
   {
     "name": "Blood Bank",
     "cap": "Blood Bank",
     "src": "assets/images/QbloodBank.png",
-    "id":5
+    "id": 5
   },
 ];
 
@@ -122,21 +123,20 @@ const Detail_Options = [
     "name": "Share",
     "cap": "Share",
     "src": "assets/images/drawerIcon/shareButton.png",
-    "id":0
+    "id": 0
   },
   {
     "name": "Review",
     "cap": "Review",
     "src": "assets/images/drawerIcon/review.png",
-    "id":1
+    "id": 1
   },
   {
     "name": "Favorite",
     "cap": "Favorite",
     "src": "assets/images/drawerIcon/favorite.png",
-    "id":2
+    "id": 2
   },
-  
 ];
 
 const Doctor_Tab = [
@@ -144,50 +144,52 @@ const Doctor_Tab = [
     "name": "Ayurveda",
     "cap": "Ayurveda",
     "src": "assets/images/Qdoctors.png",
-    "id":0
+    "id": 0
   },
   {
     "name": "Cardiologist",
     "cap": "Cardiologist",
     "src": "assets/images/Qpharmacy.png",
-    "id":1
+    "id": 1
   },
   {
     "name": "Dentist",
     "cap": "Dentist",
     "src": "assets/images/Qambulance.png",
-    "id":2
+    "id": 2
   },
   {
     "name": "Dermatologist",
     "cap": "Dermatologist",
     "src": "assets/images/QLab.png",
-    "id":3
+    "id": 3
   },
   {
     "name": "Eye Care",
     "cap": "Eye Care",
     "src": "assets/images/Qhospital.png",
-    "id":4
+    "id": 4
   },
   {
     "name": "Endocrinologist",
     "cap": "Endocrinologist",
     "src": "assets/images/QbloodBank.png",
-    "id":5
+    "id": 5
   },
 ];
 
 class Doodle {
-  final String name;
   final String time;
   final String diagnosis;
   final String doodle;
   final Color iconBackground;
   final Icon icon;
   final List image;
+  final String medicines;
+  final title;
   const Doodle(
-      {this.name,
+      {this.medicines,
+      this.title,
       this.time,
       this.diagnosis,
       this.doodle,
@@ -198,48 +200,53 @@ class Doodle {
 
 const List<Doodle> doodles = [
   Doodle(
-      name: "Bharati Devi Sharma",
+      // name: "Bharati Devi Sharma",
       time: "07-05-2020, 10:00 am",
-      diagnosis:
-          "High Blood Pressure",      
+      diagnosis: "High Blood Pressure",
       iconBackground: Color(0xff173A7B),
-      image: ["assets/images/img3.jpeg", "assets/images/img4.jpeg", ]),
+      image: [
+        "assets/images/img3.jpeg",
+        "assets/images/img4.jpeg",
+      ]),
   Doodle(
-      name: "Sangeeta Paudel",
+      // name: "Sangeeta Paudel",
       time: "19-04-2020, 08:00 pm",
-      diagnosis:
-          "Dermatology",      
+      diagnosis: "Dermatology",
       iconBackground: Color(0xff173A7B),
-      image: ["assets/images/img3.jpeg", "assets/images/img4.jpeg", ]),
+      image: [
+        "assets/images/img3.jpeg",
+        "assets/images/img4.jpeg",
+      ]),
   Doodle(
-      name: "Amit Jha",
+      // name: "Amit Jha",
       time: "10-05-2020, 05:00 PM",
-      diagnosis:
-          "Diabetic",
+      diagnosis: "Diabetic",
       // doodle:
       //     "rthday-5436382608621568-hp2x.jpg",
       iconBackground: Color(0xff173A7B),
-      image: ["assets/images/img3.jpeg", "assets/images/img4.jpeg", ]),
-
+      image: [
+        "assets/images/img3.jpeg",
+        "assets/images/img4.jpeg",
+      ]),
 ];
 
 const Pharmacy_List = [
   {
-    "clients" : "Ms. Bharati Devi Sharma",
+    "clients": "Ms. Bharati Devi Sharma",
     "name": "CMC Pharmacy",
     "location": "Chitwan",
     "phone": "9841347147",
     "src": "assets/images/bakery.jpg",
   },
   {
-    "clients" : "Ms. Bharati Devi Sharma",
+    "clients": "Ms. Bharati Devi Sharma",
     "name": "KMC Pharmacy",
     "location": "Kathmandu",
     "phone": "9841347147",
     "src": "assets/images/bakery.jpg",
   },
   {
-    "clients" : "Ms. Bharati Devi Sharma",
+    "clients": "Ms. Bharati Devi Sharma",
     "name": "PMC Pharmacy",
     "location": "Pokhara",
     "phone": "9841347147",

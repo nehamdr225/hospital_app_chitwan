@@ -32,7 +32,7 @@ class DoctorDataStore extends ChangeNotifier {
   String _userType;
   Map<String, dynamic> _userData;
   List hospitals;
-  List _appointments;
+  List<Map> _appointments;
 
   get uid => _id;
 
@@ -54,7 +54,7 @@ class DoctorDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get appointments => _appointments;
+  List<Map> get appointments => _appointments;
 
   set appointments(newUserData) {
     _appointments = newUserData;
@@ -122,6 +122,24 @@ class DoctorDataStore extends ChangeNotifier {
         appointments = newAppointments;
       }
     });
+  }
+
+  Future<bool> setDiagnosis(String uid, List data) async {
+    try {
+      bool result = await DatabaseService.setDiagnosis(uid, data);
+      final newAppointments = _appointments.map<Map>((e) {
+        if (e['id'] == uid) {
+          final newData = e;
+          newData['diagnosis'] = data;
+          return newData;
+        }
+        return e;
+      }).toList();
+      appointments = newAppointments;
+      return result;
+    } catch (e) {
+      return false;
+    }
   }
 
   clearState() {
