@@ -193,7 +193,7 @@ class AppointmentDetail extends StatelessWidget {
                                       ),
                                     ),
                                     FancyText(
-                                      text: appointment["time"],
+                                      text: appointment["time"]??'Not set',
                                       color: textDark_Yellow,
                                     )
                                   ],
