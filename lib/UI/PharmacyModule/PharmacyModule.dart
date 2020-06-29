@@ -1,19 +1,32 @@
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyCard.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyDrawer.dart';
-import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
+import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PharmacyModule extends StatelessWidget {
-  final name;
-  PharmacyModule({this.name});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    print("THIS THIS THIS IS THE NAME ==== $name");
+    Provider.of<PharmacyDataStore>(context).handleInitialProfileLoad();
+    final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
+    final user = pharmacyDataStore.user;
+    final List orders = pharmacyDataStore.orders;
+
+    buildOrderWidgets() {
+      return orders != null
+          ? orders
+              .map<Widget>(
+                (each) => PharmacyCard(id: each['id']),
+              )
+              .toList()
+          : [Text('')];
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -112,7 +125,7 @@ class PharmacyModule extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0, left: 28.0),
                     child: FancyText(
-                        text: "NAME",
+                        text: user != null ? user['name'] : 'Loading...',
                         size: 16.0,
                         color: textDark_Yellow,
                         fontWeight: FontWeight.w400),
@@ -135,20 +148,7 @@ class PharmacyModule extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            height: MediaQuery.of(context).size.height * 0.70,
-            child: ListView.builder(
-                itemCount: Pharmacy_List.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return LabratoryListCard(
-                      clientName: Pharmacy_List[index]['clients'],
-                      labName: Pharmacy_List[index]['clients'],
-                      labLocation: Pharmacy_List[index]['location'],
-                      image: Pharmacy_List[index]['src'],
-                      phone: Pharmacy_List[index]['phone'],
-                      pharmacyStatus: pharmacistDecision,
-                      id: "Pharmacy");
-                })),
+        Column(children: buildOrderWidgets())
       ]),
     );
   }

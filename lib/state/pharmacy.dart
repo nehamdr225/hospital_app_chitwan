@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class PharmacyDataStore extends ChangeNotifier {
@@ -13,6 +14,7 @@ class PharmacyDataStore extends ChangeNotifier {
           print('value $value');
           if (value != null) {
             DatabaseService.getPharmacyData(value).then((userData) {
+              print(userData.data);
               if (userData.data != null) {
                 user = userData.data;
                 uid = value;
@@ -54,7 +56,7 @@ class PharmacyDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  get orders => _orders;
+  List get orders => _orders;
 
   set orders(orderData) {
     _orders = orderData;
@@ -98,6 +100,14 @@ class PharmacyDataStore extends ChangeNotifier {
         orders = newData;
       });
     }
+  }
+
+  getOneOrder(String id) {
+    return orders.firstWhere((element) => element['id'] == id);
+  }
+
+  Future<DocumentSnapshot> getUserInfo(String id) async {
+    return DatabaseService.getUserData(id);
   }
 
   setOrderStatus(String uid, dynamic status) {
