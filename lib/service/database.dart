@@ -32,6 +32,10 @@ class DatabaseService {
     return await hospitalCollection.document(uid).get();
   }
 
+  static Future<DocumentSnapshot> getPharmacyData(String uid) async {
+    return await pharmacyCollection.document(uid).get();
+  }
+
   static Future updateDoctorData(String uid, data) async {
     return await doctorCollection.document(uid).setData(data);
   }
@@ -75,6 +79,15 @@ class DatabaseService {
   static Future<bool> markDoctorVerified(String id) async {
     try {
       await doctorCollection.document(id).updateData({'isVerified': true});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<bool> updateOrderStatus(String id, String status) async {
+    try {
+      await pOrderCollection.document(id).updateData({'status': status});
       return true;
     } catch (e) {
       return false;

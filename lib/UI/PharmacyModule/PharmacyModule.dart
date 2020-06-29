@@ -138,17 +138,16 @@ class PharmacyModule extends StatelessWidget {
         Container(
             height: MediaQuery.of(context).size.height * 0.70,
             child: ListView.builder(
-                itemCount: Pharmacy_List.length ,
+                itemCount: Pharmacy_List.length,
                 itemBuilder: (BuildContext context, int index) {
                   return LabratoryListCard(
-                    clientName: Pharmacy_List[index]['clients'],
-                    labName: Pharmacy_List[index]['clients'],
-                    labLocation: Pharmacy_List[index]['location'],
-                    image: Pharmacy_List[index]['src'],
-                    phone: Pharmacy_List[index]['phone'],
-                    pharmacyStatus: pharmacistDecision,
-                    id: "Pharmacy"
-                  );
+                      clientName: Pharmacy_List[index]['clients'],
+                      labName: Pharmacy_List[index]['clients'],
+                      labLocation: Pharmacy_List[index]['location'],
+                      image: Pharmacy_List[index]['src'],
+                      phone: Pharmacy_List[index]['phone'],
+                      pharmacyStatus: pharmacistDecision,
+                      id: "Pharmacy");
                 })),
       ]),
     );
