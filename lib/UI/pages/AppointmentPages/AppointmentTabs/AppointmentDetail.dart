@@ -1,10 +1,14 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:timeline_list/timeline.dart';
+import 'package:timeline_list/timeline_model.dart';
 
 class AppointmentDetail extends StatelessWidget {
   final id;
@@ -18,6 +22,84 @@ class AppointmentDetail extends StatelessWidget {
     final appointment =
         Provider.of<UserDataStore>(context).getOneAppointment(id);
     final Timestamp date = appointment['date'] ?? Timestamp.now();
+    final diagnosis = appointment['diagnosis'] ?? [];
+    TimelineModel centerTimelineBuilder(BuildContext context, int i) {
+      final textTheme = Theme.of(context).textTheme;
+      Timestamp date = diagnosis[i]['date'];
+      String time =
+          ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day},  ';
+      if (date.toDate().hour > 12) {
+        time +=
+            '${date.toDate().hour - 12}:${date.toDate().minute}:${date.toDate().second} PM';
+      } else {
+        time +=
+            '${date.toDate().hour}:${date.toDate().minute}:${date.toDate().second} AM';
+      }
+      final doodle = Doodle(
+          title: diagnosis[i]['title'],
+          time: time,
+          diagnosis: diagnosis[i]['diagnosis'],
+          iconBackground: Color(0xff173A7B),
+          medicines: diagnosis[i]['medicines'],
+          image: [
+            "assets/images/img3.jpeg",
+            "assets/images/img4.jpeg",
+          ]);
+      return TimelineModel(
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PatientHistoryPage(
+                      date: doodle.time,
+                      diagnosis: doodle.diagnosis,
+                      medicine: doodle.medicines,
+                      title: doodle.title,
+                      patient: true,
+                    )));
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.80,
+            child: Card(
+              margin: EdgeInsets.symmetric(vertical: 16.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(doodle.time, style: textTheme.caption),
+                    const SizedBox(
+                      height: 2.0,
+                    ),
+                    Text(
+                      doodle.title,
+                      style: textTheme.caption,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      doodle.diagnosis,
+                      style: textTheme.headline6.copyWith(fontSize: 16.0),
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        position: TimelineItemPosition.left,
+        iconBackground: doodle.iconBackground,
+      );
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -27,8 +109,7 @@ class AppointmentDetail extends StatelessWidget {
         ),
       ),
       backgroundColor: theme.colorScheme.background,
-      body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <
-          Widget>[
+      body: ListView(children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
           child: Center(
@@ -241,44 +322,55 @@ class AppointmentDetail extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: size.height * 0.35,
-            width: size.width * 0.95,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: theme.colorScheme.primary.withOpacity(0.2),
-              ),
-              color: theme.colorScheme.background,
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: FancyText(
-                    text: "Description",
-                    size: 15.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8.0,
-                    left: 16.0,
-                  ),
-                  child: FancyText(
-                    text: "- Having severe head ache from 3 years.\n- Diabetic",
-                    size: 15.5,
-                    fontWeight: FontWeight.w400,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ],
-            ),
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Container(
+        //     height: size.height * 0.35,
+        //     width: size.width * 0.95,
+        //     decoration: BoxDecoration(
+        //       border: Border.all(
+        //         color: theme.colorScheme.primary.withOpacity(0.2),
+        //       ),
+        //       color: theme.colorScheme.background,
+        //       borderRadius: BorderRadius.circular(5.0),
+        //     ),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: <Widget>[
+        //         Padding(
+        //           padding: const EdgeInsets.all(16.0),
+        //           child: FancyText(
+        //             text: "Description",
+        //             size: 15.0,
+        //             fontWeight: FontWeight.w500,
+        //           ),
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(
+        //             top: 8.0,
+        //             left: 16.0,
+        //           ),
+        //           child: FancyText(
+        //             text: "- Having severe head ache from 3 years.\n- Diabetic",
+        //             size: 15.5,
+        //             fontWeight: FontWeight.w400,
+        //             textAlign: TextAlign.left,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // )
+        Container(
+          constraints: BoxConstraints(
+            minHeight: size.height * 0.60,
           ),
+          height: size.height * 0.60,
+          child: Timeline.builder(
+              physics: ClampingScrollPhysics(),
+              position: TimelinePosition.Left,
+              itemCount: diagnosis.length,
+              itemBuilder: centerTimelineBuilder),
         )
       ]),
     );

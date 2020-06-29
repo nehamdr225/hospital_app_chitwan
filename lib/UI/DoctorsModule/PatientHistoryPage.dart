@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,14 @@ class PatientHistoryPage extends StatelessWidget {
   final String title;
   final String medicine;
   final String followUp;
+  final bool patient;
   PatientHistoryPage(
       {this.date,
-      this.diagnosis: "no data",
+      this.diagnosis,
       this.followUp: "no data",
       this.title: "no data",
-      this.medicine: "no data"});
+      this.medicine,
+      this.patient: false});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,95 +30,108 @@ class PatientHistoryPage extends StatelessWidget {
               fontSize: 15.0,
             ),
             preferredSize: Size.fromHeight(50.0)),
-        body: Table(children: <TableRow>[
-          TableRow(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
-              child: FancyText(
-                text: "Title: ",
-                textAlign: TextAlign.left,
-                fontWeight: FontWeight.w800,
-                size: 15.0,
-                color: blueGrey.withOpacity(0.7),
+        body: ListView(children: [
+          Table(children: <TableRow>[
+            TableRow(children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+                child: FancyText(
+                  text: "Title: ",
+                  textAlign: TextAlign.left,
+                  fontWeight: FontWeight.w800,
+                  size: 15.0,
+                  color: blueGrey.withOpacity(0.7),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: FancyText(
-                text: title,
-                textAlign: TextAlign.left,
-                size: 15.5,
-                fontWeight: FontWeight.w700,
-                color: blueGrey,
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: FancyText(
+                  text: title,
+                  textAlign: TextAlign.left,
+                  size: 15.5,
+                  fontWeight: FontWeight.w700,
+                  color: blueGrey,
+                ),
+              )
+            ]),
+            TableRow(children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+                child: FancyText(
+                  text: "Diagnosis: ",
+                  textAlign: TextAlign.left,
+                  fontWeight: FontWeight.w800,
+                  size: 15.0,
+                  color: blueGrey.withOpacity(0.7),
+                ),
               ),
-            )
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: FancyText(
+                  text: diagnosis,
+                  textAlign: TextAlign.left,
+                  size: 15.5,
+                  fontWeight: FontWeight.w700,
+                  color: blueGrey,
+                ),
+              )
+            ]),
+            TableRow(children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+                child: FancyText(
+                  text: "Medicines: ",
+                  textAlign: TextAlign.left,
+                  fontWeight: FontWeight.w800,
+                  size: 15.0,
+                  color: blueGrey.withOpacity(0.7),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: FancyText(
+                  text: medicine ?? 'none',
+                  textAlign: TextAlign.left,
+                  size: 15.5,
+                  fontWeight: FontWeight.w700,
+                  color: blueGrey,
+                ),
+              )
+            ]),
+            TableRow(children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0, left: 8.0),
+                child: FancyText(
+                  text: "Follow Up: ",
+                  textAlign: TextAlign.left,
+                  fontWeight: FontWeight.w800,
+                  size: 15.0,
+                  color: blueGrey.withOpacity(0.7),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: FancyText(
+                  text: followUp,
+                  textAlign: TextAlign.left,
+                  size: 15.5,
+                  fontWeight: FontWeight.w700,
+                  color: blueGrey,
+                ),
+              ),
+            ]),
           ]),
-          TableRow(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
-              child: FancyText(
-                text: "Diagnosis: ",
-                textAlign: TextAlign.left,
-                fontWeight: FontWeight.w800,
-                size: 15.0,
-                color: blueGrey.withOpacity(0.7),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: FancyText(
-                text: diagnosis,
-                textAlign: TextAlign.left,
-                size: 15.5,
-                fontWeight: FontWeight.w700,
-                color: blueGrey,
-              ),
-            )
-          ]),
-          TableRow(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
-              child: FancyText(
-                text: "Medicines: ",
-                textAlign: TextAlign.left,
-                fontWeight: FontWeight.w800,
-                size: 15.0,
-                color: blueGrey.withOpacity(0.7),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: FancyText(
-                text: medicine,
-                textAlign: TextAlign.left,
-                size: 15.5,
-                fontWeight: FontWeight.w700,
-                color: blueGrey,
-              ),
-            )
-          ]),
-          TableRow(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0, left: 8.0),
-              child: FancyText(
-                text: "Follow Up: ",
-                textAlign: TextAlign.left,
-                fontWeight: FontWeight.w800,
-                size: 15.0,
-                color: blueGrey.withOpacity(0.7),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: FancyText(
-                text: followUp,
-                textAlign: TextAlign.left,
-                size: 15.5,
-                fontWeight: FontWeight.w700,
-                color: blueGrey,
-              ),
-            )
-          ]),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: patient && medicine != null && medicine.length > 0
+                ? FRaisedButton(
+                    text: 'Order Medicine',
+                    onPressed: () {},
+                    bgcolor: Theme.of(context).primaryColorDark,
+                    color: textDark_Yellow,
+                  )
+                : Text(''),
+          )
         ]));
   }
 }
