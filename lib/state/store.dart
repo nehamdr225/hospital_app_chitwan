@@ -21,6 +21,7 @@ class UserDataStore extends ChangeNotifier {
                 // getAvailableHospitals();
                 getUserAppointments();
                 getAvailableDoctors(null);
+                getUserPrescriptions();
                 // notifyListeners();
               }
             }).catchError((err) {
@@ -38,6 +39,7 @@ class UserDataStore extends ChangeNotifier {
   List _hospitals;
   List _appointments;
   List _doctors;
+  List _prescriptions;
 
   get uid => _id;
 
@@ -77,6 +79,13 @@ class UserDataStore extends ChangeNotifier {
 
   set doctors(newDoctorData) {
     _doctors = newDoctorData;
+    notifyListeners();
+  }
+
+  List get prescriptions => _prescriptions;
+
+  set prescriptions(newData) {
+    _prescriptions = newData;
     notifyListeners();
   }
 
@@ -167,8 +176,25 @@ class UserDataStore extends ChangeNotifier {
     });
   }
 
+  getUserPrescriptions() {
+    DatabaseService.getUserPharmacyOrders(uid).listen((data) {
+      final List addData = data.documents.map((e) {
+        final Map thisData = e.data;
+        thisData['id'] = e.documentID;
+        return thisData;
+      }).toList();
+      prescriptions = addData;
+    });
+  }
+
   getOneAppointment(String id) {
     return _appointments.firstWhere((element) => element['id'] == id);
+  }
+
+  Future<bool> orderMedicine(String aid, String medicine, String title) async {
+    final result =
+        await DatabaseService.createPharmacyOrder(uid, aid, medicine);
+    return result;
   }
 
   clearState() {

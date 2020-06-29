@@ -55,6 +55,7 @@ class AppointmentDetail extends StatelessWidget {
                       medicine: doodle.medicines,
                       title: doodle.title,
                       patient: true,
+                      id: appointment['id'],
                     )));
           },
           child: Container(

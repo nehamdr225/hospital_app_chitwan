@@ -1,8 +1,11 @@
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:provider/provider.dart';
 
 class PatientHistoryPage extends StatelessWidget {
   final String date;
@@ -11,15 +14,19 @@ class PatientHistoryPage extends StatelessWidget {
   final String medicine;
   final String followUp;
   final bool patient;
-  PatientHistoryPage(
-      {this.date,
-      this.diagnosis,
-      this.followUp: "no data",
-      this.title: "no data",
-      this.medicine,
-      this.patient: false});
+  final String id;
+  PatientHistoryPage({
+    this.date,
+    this.diagnosis,
+    this.followUp: "no data",
+    this.title: "no data",
+    this.medicine,
+    this.patient: false,
+    this.id,
+  });
   @override
   Widget build(BuildContext context) {
+    final userDataStore = Provider.of<UserDataStore>(context);
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: PreferredSize(
@@ -126,7 +133,16 @@ class PatientHistoryPage extends StatelessWidget {
             child: patient && medicine != null && medicine.length > 0
                 ? FRaisedButton(
                     text: 'Order Medicine',
-                    onPressed: () {},
+                    onPressed: () {
+                      userDataStore
+                          .orderMedicine(id, medicine, title)
+                          .then((bool result) {
+                        if (result) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                        }
+                      });
+                    },
                     bgcolor: Theme.of(context).primaryColorDark,
                     color: textDark_Yellow,
                   )
