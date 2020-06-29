@@ -14,6 +14,7 @@ class DatabaseService {
       db.collection('ambulances');
   static final CollectionReference pharmacyCollection =
       db.collection('pharmacies');
+  static final CollectionReference pOrderCollection = db.collection('porders');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
     return await userCollection.document(uid).setData(data);
@@ -102,5 +103,27 @@ class DatabaseService {
       print('Error $e');
       return false;
     }
+  }
+
+  static Future<bool> createPharmacyOrder(
+      String uid, String aid, String medicine) async {
+    try {
+      await pOrderCollection.document().setData({
+        'appointmentId': aid,
+        'userId': uid,
+        'medicine': medicine,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Stream<QuerySnapshot> getUserPharmacyOrders(String uid) {
+    return pOrderCollection.where('userId', isEqualTo: uid).snapshots();
+  }
+
+  static Future<QuerySnapshot> getPharmacyOrders(String uid) {
+    return pOrderCollection.getDocuments();
   }
 }
