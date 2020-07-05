@@ -63,20 +63,6 @@ class PharmacyDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchUserData() {
-    if (uid != null && type != null) {
-      if (type == 'user') {
-        DatabaseService.getPharmacyData(uid).then((value) {
-          if (value.data != null) {
-            user = value.data;
-          }
-        }).catchError((err) {
-          print(err);
-        });
-      }
-    }
-  }
-
   Future<bool> update(data) async {
     try {
       await DatabaseService.updatePharmacyData(uid, data);
@@ -140,6 +126,10 @@ class PharmacyDataStore extends ChangeNotifier {
         orders = newOrders;
       }
     });
+  }
+
+  Future<DocumentSnapshot> getAppointment(String id) {
+    return DatabaseService.getOneAppointment(id);
   }
 
   clearState() {

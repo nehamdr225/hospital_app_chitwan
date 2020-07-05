@@ -1,9 +1,11 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyReady.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PrescriptionView.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
@@ -35,12 +37,96 @@ class BuyerDetail extends StatefulWidget {
 }
 
 class _BuyerDetailState extends State<BuyerDetail> {
+  List diagnosis;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final order = pharmacyDataStore.getOneOrder(widget.id);
+    if (diagnosis == null)
+      pharmacyDataStore
+          .getAppointment(order['appointmentId'])
+          .then((value) => setState(() {
+                diagnosis = value.data['diagnosis'];
+              }));
+
+    // print(appointment);
+    TimelineModel centerTimelineBuilder(BuildContext context, int i) {
+      final textTheme = Theme.of(context).textTheme;
+      Timestamp date = diagnosis[i]['date'];
+      String time =
+          ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day},  ';
+      if (date.toDate().hour > 12) {
+        time +=
+            '${date.toDate().hour - 12}:${date.toDate().minute}:${date.toDate().second} PM';
+      } else {
+        time +=
+            '${date.toDate().hour}:${date.toDate().minute}:${date.toDate().second} AM';
+      }
+      final doodle = Doodle(
+          title: diagnosis[i]['title'],
+          time: time,
+          diagnosis: diagnosis[i]['diagnosis'],
+          iconBackground: Color(0xff173A7B),
+          medicines: diagnosis[i]['medicines'],
+          image: [
+            "assets/images/img3.jpeg",
+            "assets/images/img4.jpeg",
+          ]);
+      return TimelineModel(
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PatientHistoryPage(
+                      date: doodle.time,
+                      diagnosis: doodle.diagnosis,
+                      medicine: doodle.medicines,
+                      title: doodle.title,
+                    )));
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.80,
+            child: Card(
+              margin: EdgeInsets.symmetric(vertical: 16.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(doodle.time, style: textTheme.caption),
+                    const SizedBox(
+                      height: 2.0,
+                    ),
+                    Text(
+                      doodle.title,
+                      style: textTheme.caption,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      doodle.diagnosis,
+                      style: textTheme.headline6.copyWith(fontSize: 16.0),
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        position: TimelineItemPosition.left,
+        iconBackground: doodle.iconBackground,
+      );
+    }
 
     return Scaffold(
       appBar: PreferredSize(
@@ -321,7 +407,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
           child: Timeline.builder(
               physics: ClampingScrollPhysics(),
               position: TimelinePosition.Left,
-              itemCount: doodles.length,
+              itemCount: diagnosis.length,
               itemBuilder: centerTimelineBuilder),
         )
       ]),

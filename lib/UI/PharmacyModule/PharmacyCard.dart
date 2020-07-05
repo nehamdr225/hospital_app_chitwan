@@ -22,14 +22,14 @@ class _PharmacyCardState extends State<PharmacyCard> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final order = pharmacyDataStore.getOneOrder(widget.id);
-    print(order);
-    pharmacyDataStore.getUserInfo(order['userId']).then(
-          (value) => setState(
-            () {
-              userInfo = value.data;
-            },
-          ),
-        );
+    if (userInfo == null)
+      pharmacyDataStore.getUserInfo(order['userId']).then(
+            (value) => setState(
+              () {
+                userInfo = value.data;
+              },
+            ),
+          );
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

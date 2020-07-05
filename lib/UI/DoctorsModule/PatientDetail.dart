@@ -471,7 +471,7 @@ class _PatientDetailState extends State<PatientDetail> {
           child: Timeline.builder(
               physics: ClampingScrollPhysics(),
               position: TimelinePosition.Left,
-              itemCount: diagnosis.length,
+              itemCount: appointment['diagnosis'].length,
               itemBuilder: centerTimelineBuilder),
         )
       ]),
