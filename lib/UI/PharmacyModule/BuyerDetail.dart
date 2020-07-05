@@ -407,7 +407,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
           child: Timeline.builder(
               physics: ClampingScrollPhysics(),
               position: TimelinePosition.Left,
-              itemCount: diagnosis.length,
+              itemCount: diagnosis != null ? diagnosis.length : 0,
               itemBuilder: centerTimelineBuilder),
         )
       ]),
