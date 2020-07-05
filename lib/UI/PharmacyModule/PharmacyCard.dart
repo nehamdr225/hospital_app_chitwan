@@ -22,11 +22,13 @@ class _PharmacyCardState extends State<PharmacyCard> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final order = pharmacyDataStore.getOneOrder(widget.id);
-
+    print(order);
     pharmacyDataStore.getUserInfo(order['userId']).then(
-          (value) => setState(() {
-            userInfo = value.data;
-          },),
+          (value) => setState(
+            () {
+              userInfo = value.data;
+            },
+          ),
         );
 
     return Padding(
@@ -35,11 +37,10 @@ class _PharmacyCardState extends State<PharmacyCard> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => BuyerDetail(
-                    buyerName: widget.clientName,
-                    buyerLocation: widget.labLocation,
-                    buyerPhone: widget.phone,
-                    status: 'undecided',
-                    buyerPrescriptionimage: widget.image,
+                  buyerName: userInfo['name'],
+                  buyerPhone: userInfo['phone'],
+                  id: order['id']
+                  // date: order['date'],
                   )));
         },
         child: Container(

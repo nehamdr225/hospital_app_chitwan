@@ -1,28 +1,26 @@
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/PharmacyRemark.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 
 class RejectRemarkForm extends StatefulWidget {
-  final PharmacyRemark rejectRemark;
-  RejectRemarkForm({@required this.rejectRemark});
+  final id;
+  RejectRemarkForm({this.id});
   @override
   _RejectRemarkFormState createState() => _RejectRemarkFormState();
 }
 
 class _RejectRemarkFormState extends State<RejectRemarkForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final db = Firestore.instance;
   String _remark;
 
   @override
   Widget build(BuildContext context) {
+    final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final theme = Theme.of(context);
     return Scaffold(
       appBar: PreferredSize(
@@ -51,15 +49,15 @@ class _RejectRemarkFormState extends State<RejectRemarkForm> {
                 borderColor: theme.colorScheme.primary,
                 formColor: Colors.white,
                 textColor: blueGrey.withOpacity(0.7),
-                validator: (val) => val.isEmpty || val.length < 8
-                    ? 'Remark is required'
-                    : null,
-                onSaved: (value) {
-                  _remark = value;
+                validator: (val) =>
+                    val.isEmpty || val.length < 8 ? 'Remark is required' : null,
+                onChanged: (value) {
+                  setState(() {
+                    _remark = value;
+                  });
                 },
               ),
             ),
-            
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: SizedBox(
@@ -79,17 +77,12 @@ class _RejectRemarkFormState extends State<RejectRemarkForm> {
                       return;
                     }
                     _formKey.currentState.save();
-                    widget.rejectRemark.remark = _remark;
-
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
-                    await db
-                        .collection("users")
-                        .document(uid)
-                        .collection("pharmacy")
-                        .add(widget.rejectRemark.toJson());
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    pharmacyDataStore.setOrderRemark(widget.id, _remark);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PharmacyModule()),
+                        (Route<dynamic> route) => false);
                   },
                 ),
               ),

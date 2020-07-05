@@ -126,6 +126,22 @@ class PharmacyDataStore extends ChangeNotifier {
     });
   }
 
+  setOrderRemark(String uid, String remark) {
+    DatabaseService.updateOrderRemark(uid, remark).then((value) {
+      if (value) {
+        final newOrders = _orders.map<Map>((each) {
+          if (each['id'] == uid) {
+            final data = each;
+            data['remark'] = remark;
+            return data;
+          }
+          return each;
+        }).toList();
+        orders = newOrders;
+      }
+    });
+  }
+
   clearState() {
     _id = null;
     _userData = null;

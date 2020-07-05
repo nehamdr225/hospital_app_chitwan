@@ -94,6 +94,15 @@ class DatabaseService {
     }
   }
 
+  static Future<bool> updateOrderRemark(String id, String remark) async {
+    try {
+      await pOrderCollection.document(id).updateData({'remark': remark});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Stream<QuerySnapshot> getHospitals() {
     return hospitalCollection.snapshots();
   }

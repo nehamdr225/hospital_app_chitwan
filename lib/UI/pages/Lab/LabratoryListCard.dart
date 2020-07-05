@@ -53,10 +53,9 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => BuyerDetail(
                       buyerName: widget.clientName,
-                      buyerLocation: widget.labLocation,
                       buyerPhone: widget.phone,
                       status: 'undecided',
-                      buyerPrescriptionimage: widget.image,
+                      // buyerPrescriptionimage: widget.image,
                     )));
           } else if (widget.id == "Hospital") {
             Navigator.of(context).push(MaterialPageRoute(

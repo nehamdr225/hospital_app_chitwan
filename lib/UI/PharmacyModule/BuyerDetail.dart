@@ -3,30 +3,32 @@ import 'package:chitwan_hospital/UI/PharmacyModule/PrescriptionView.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/service/PharmacyRemark.dart';
+import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:provider/provider.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 
 class BuyerDetail extends StatefulWidget {
   final buyerName;
-  final buyerPrescriptionimage;
-  final buyerLocation;
+  // final buyerPrescriptionimage;
   final buyerPhone;
   final status;
-  final date;
+  // final date;
   final time;
+  final id;
   BuyerDetail(
-      {this.buyerPrescriptionimage,
+      {
+      // this.buyerPrescriptionimage,
       this.buyerName,
-      this.buyerLocation,
       this.buyerPhone,
-      this.date,
+      // this.date,
       this.status,
-      this.time});
+      this.time,
+      this.id});
 
   @override
   _BuyerDetailState createState() => _BuyerDetailState();
@@ -35,9 +37,11 @@ class BuyerDetail extends StatefulWidget {
 class _BuyerDetailState extends State<BuyerDetail> {
   @override
   Widget build(BuildContext context) {
-    final PharmacyRemark newRemark = PharmacyRemark(null);
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
+    final order = pharmacyDataStore.getOneOrder(widget.id);
+
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
@@ -46,14 +50,14 @@ class _BuyerDetailState extends State<BuyerDetail> {
           ),
           preferredSize: Size.fromHeight(60.0)),
       backgroundColor: theme.background,
-      floatingActionButton: pharmacistDecision == "accepted"
+      floatingActionButton: order['status'] == "accepted"
           ? FloatingActionButton.extended(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => PharmacyReady(
-                              // appointment: newAppointment,
+                            // appointment: newAppointment,
                             )));
               },
               icon: Icon(
@@ -127,13 +131,13 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                 textAlign: TextAlign.left,
                                 color: textDark_Yellow,
                               ),
-                              RowInput(
-                                title: "Location:  ",
-                                caption: widget.buyerLocation,
-                                titleColor: textDark_Yellow,
-                                capColor: textDark_Yellow,
-                                defaultStyle: false,
-                              ),
+                              // RowInput(
+                              //   title: "Date:  ",
+                              //   caption: '',
+                              //   titleColor: textDark_Yellow,
+                              //   capColor: textDark_Yellow,
+                              //   defaultStyle: false,
+                              // ),
                               RowInput(
                                 title: "Phone Number:  ",
                                 caption: widget.buyerPhone,
@@ -151,7 +155,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                       textAlign: TextAlign.left,
                                       color: textDark_Yellow,
                                     ),
-                                    pharmacistDecision == "undecided"
+                                    order['status'] == null
                                         ? Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -160,20 +164,16 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 icon: Icon(Icons.check_circle),
                                                 color: Colors.green,
                                                 onPressed: () {
-                                                  setState(() {
-                                                    pharmacistDecision =
-                                                        "accepted";
-                                                  });
+                                                  pharmacyDataStore
+                                                      .setOrderStatus(
+                                                          order['id'],
+                                                          'accepted');
                                                 },
                                               ),
                                               IconButton(
                                                 icon: Icon(Icons.cancel),
                                                 color: Colors.red,
                                                 onPressed: () {
-                                                  setState(() {
-                                                    pharmacistDecision =
-                                                        "rejected";
-                                                  });
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -203,10 +203,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                       .secondary,
                                                                 ),
                                                                 onPressed: () {
-                                                                  setState(() {
-                                                                    pharmacistDecision =
-                                                                        "undecided";
-                                                                  });
                                                                   Navigator.pop(
                                                                       context);
                                                                 }),
@@ -219,20 +215,18 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                       600],
                                                                 ),
                                                                 onPressed: () {
-                                                                  setState(() {
-                                                                    pharmacistDecision =
-                                                                        "rejected";
-                                                                  });
+                                                                  pharmacyDataStore
+                                                                      .setOrderStatus(
+                                                                          order[
+                                                                              'id'],
+                                                                          'rejected');
                                                                   Navigator.of(
                                                                           context)
                                                                       .push(
                                                                     MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              RejectRemarkForm(
-                                                                        rejectRemark:
-                                                                            newRemark,
-                                                                      ),
+                                                                      builder: (context) =>
+                                                                          RejectRemarkForm(
+                                                                              id: order['id']),
                                                                     ),
                                                                   );
                                                                 }),
@@ -244,7 +238,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                               SizedBox(width: 10.0),
                                             ],
                                           )
-                                        : pharmacistDecision == "rejected"
+                                        : order['status'] == "rejected"
                                             ? Row(children: [
                                                 FancyText(
                                                   text: "Rejected",
@@ -255,10 +249,9 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 SizedBox(width: 10.0),
                                                 InkWell(
                                                   onTap: () {
-                                                    setState(() {
-                                                      pharmacistDecision =
-                                                          "undecided";
-                                                    });
+                                                    pharmacyDataStore
+                                                        .setOrderStatus(
+                                                            order['id'], null);
                                                   },
                                                   child: FancyText(
                                                     text: "undo",
@@ -282,10 +275,10 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                   SizedBox(width: 10.0),
                                                   InkWell(
                                                     onTap: () {
-                                                      setState(() {
-                                                        pharmacistDecision =
-                                                            "undecided";
-                                                      });
+                                                      pharmacyDataStore
+                                                          .setOrderStatus(
+                                                              order['id'],
+                                                              null);
                                                     },
                                                     child: FancyText(
                                                       text: "undo",
@@ -303,6 +296,15 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                   ],
                                 ),
                               ),
+                              order['status'] == 'rejected'
+                                  ? RowInput(
+                                      title: "Remark:  ",
+                                      caption: order['remark'] ?? '',
+                                      titleColor: textDark_Yellow,
+                                      capColor: textDark_Yellow,
+                                      defaultStyle: false,
+                                    )
+                                  : Text(''),
                             ],
                           ),
                         ),
