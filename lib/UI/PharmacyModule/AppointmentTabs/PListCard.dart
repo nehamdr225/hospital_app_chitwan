@@ -38,6 +38,9 @@ class _PListCardState extends State<PListCard> {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => BuyerDetail(
                     id: widget.id,
+                    buyerName: userInfo != null ? userInfo['name'] : '',
+                    buyerPhone: userInfo != null ? userInfo['phone'] : '',
+                    status: order != null ? order['status'] : '',
                   )));
         },
         child: Container(

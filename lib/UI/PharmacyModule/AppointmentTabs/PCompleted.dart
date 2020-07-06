@@ -10,7 +10,7 @@ class PCompleted extends StatelessWidget {
     final orders = Provider.of<PharmacyDataStore>(context)
         .orders
         .where((element) =>
-            element['status'] != null && element['status'] == 'completed')
+            element['status'] != null && element['status'] == 'ready')
         .toList();
 
     return ListView.builder(
