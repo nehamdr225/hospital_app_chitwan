@@ -2,6 +2,7 @@ import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyReady.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PrescriptionView.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
@@ -38,6 +39,8 @@ class BuyerDetail extends StatefulWidget {
 
 class _BuyerDetailState extends State<BuyerDetail> {
   List diagnosis;
+  bool isActive = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -159,8 +162,10 @@ class _BuyerDetailState extends State<BuyerDetail> {
             )
           : null,
       body: ListView(children: <Widget>[
+        Indicator(diagnosis),
+        BoolIndicator(isActive),
         Padding(
-          padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
+          padding: const EdgeInsets.only(top: 6.0, bottom: 8.0),
           child: Center(
             child: Container(
                 height: 180.0,
@@ -249,12 +254,22 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                               IconButton(
                                                 icon: Icon(Icons.check_circle),
                                                 color: Colors.green,
-                                                onPressed: () {
-                                                  pharmacyDataStore
-                                                      .setOrderStatus(
-                                                          order['id'],
-                                                          'accepted');
-                                                },
+                                                onPressed: isActive
+                                                    ? null
+                                                    : () {
+                                                        setState(() {
+                                                          isActive = true;
+                                                        });
+                                                        pharmacyDataStore
+                                                            .setOrderStatus(
+                                                                order['id'],
+                                                                'accepted')
+                                                            .then((value) =>
+                                                                setState(() {
+                                                                  isActive =
+                                                                      false;
+                                                                }));
+                                                      },
                                               ),
                                               IconButton(
                                                 icon: Icon(Icons.cancel),
@@ -301,20 +316,32 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                       600],
                                                                 ),
                                                                 onPressed: () {
+                                                                  setState(() {
+                                                                    isActive =
+                                                                        true;
+                                                                  });
                                                                   pharmacyDataStore
                                                                       .setOrderStatus(
                                                                           order[
                                                                               'id'],
-                                                                          'rejected');
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .push(
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          RejectRemarkForm(
-                                                                              id: order['id']),
-                                                                    ),
-                                                                  );
+                                                                          'rejected')
+                                                                      .then(
+                                                                          (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      isActive =
+                                                                          false;
+                                                                    });
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .push(
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                RejectRemarkForm(id: order['id']),
+                                                                      ),
+                                                                    );
+                                                                  });
                                                                 }),
                                                           ],
                                                         );
@@ -334,11 +361,22 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 ),
                                                 SizedBox(width: 10.0),
                                                 InkWell(
-                                                  onTap: () {
-                                                    pharmacyDataStore
-                                                        .setOrderStatus(
-                                                            order['id'], null);
-                                                  },
+                                                  onTap: isActive
+                                                      ? null
+                                                      : () {
+                                                          setState(() {
+                                                            isActive = true;
+                                                          });
+                                                          pharmacyDataStore
+                                                              .setOrderStatus(
+                                                                  order['id'],
+                                                                  null)
+                                                              .then((value) =>
+                                                                  setState(() {
+                                                                    isActive =
+                                                                        false;
+                                                                  }));
+                                                        },
                                                   child: FancyText(
                                                     text: "undo",
                                                     decoration: TextDecoration
@@ -360,12 +398,23 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                   ),
                                                   SizedBox(width: 10.0),
                                                   InkWell(
-                                                    onTap: () {
-                                                      pharmacyDataStore
-                                                          .setOrderStatus(
-                                                              order['id'],
-                                                              null);
-                                                    },
+                                                    onTap: isActive
+                                                        ? null
+                                                        : () {
+                                                            setState(() {
+                                                              isActive = true;
+                                                            });
+                                                            pharmacyDataStore
+                                                                .setOrderStatus(
+                                                                    order['id'],
+                                                                    null)
+                                                                .then((value) =>
+                                                                    setState(
+                                                                        () {
+                                                                      isActive =
+                                                                          false;
+                                                                    }));
+                                                          },
                                                     child: FancyText(
                                                       text: "undo",
                                                       decoration: TextDecoration

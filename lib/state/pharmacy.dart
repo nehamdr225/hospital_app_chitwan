@@ -96,8 +96,8 @@ class PharmacyDataStore extends ChangeNotifier {
     return DatabaseService.getUserData(id);
   }
 
-  setOrderStatus(String uid, dynamic status) {
-    DatabaseService.updateOrderStatus(uid, status).then((value) {
+  Future setOrderStatus(String uid, dynamic status) {
+    return DatabaseService.updateOrderStatus(uid, status).then((value) {
       if (value) {
         final newOrders = _orders.map<Map>((each) {
           if (each['id'] == uid) {
@@ -109,6 +109,7 @@ class PharmacyDataStore extends ChangeNotifier {
         }).toList();
         orders = newOrders;
       }
+      return null;
     });
   }
 
