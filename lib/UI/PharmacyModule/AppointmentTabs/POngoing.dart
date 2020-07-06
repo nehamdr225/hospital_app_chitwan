@@ -15,8 +15,9 @@ class POngoing extends StatelessWidget {
     return ListView.builder(
         itemCount: orders.length,
         itemBuilder: (BuildContext context, int index) {
-          return PListCard(
+          return PListCard( 
             id: orders[index]['id'],
+            status: "ongoing"
           );
         });
   }

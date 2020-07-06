@@ -16,6 +16,7 @@ class PRejected extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return PListCard(
             id: orders[index]['id'],
+            status: "rejected"
           );
         });
   }

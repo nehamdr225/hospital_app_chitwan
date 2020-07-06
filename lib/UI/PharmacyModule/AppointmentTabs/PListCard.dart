@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +9,8 @@ import 'package:provider/provider.dart';
 
 class PListCard extends StatefulWidget {
   final id;
-  PListCard({this.id});
+  final status;
+  PListCard({this.id, this.status});
 
   @override
   _PListCardState createState() => _PListCardState();
@@ -81,7 +83,7 @@ class _PListCardState extends State<PListCard> {
                         "assets/images/addProfileImg.png",
                         height: 40.0,
                         width: 40.0,
-                        color: Colors.green,
+                        color: blueGrey,
                       ),
                     ),
                   ),
@@ -93,23 +95,24 @@ class _PListCardState extends State<PListCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          FancyText(
-                            text: userInfo == null
-                                ? 'Loading...'
-                                : userInfo['name'],
-                            fontWeight: FontWeight.w700,
-                            size: 15.5,
-                            textAlign: TextAlign.left,
+                          widget.status == "completed"
+                              ? RowInput(
+                                  title: "Date:  ",
+                                  caption: "07-05-2020", //(MM-DD-YYYY)
+                                  defaultStyle: true,
+                                )
+                              : SizedBox.shrink(),
+                          Padding(
+                            padding: const EdgeInsets.only(top:5.0),
+                            child: FancyText(
+                              text: userInfo == null
+                                  ? 'Loading...'
+                                  : userInfo['name'],
+                              fontWeight: FontWeight.w700,
+                              size: 15.5,
+                              textAlign: TextAlign.left,
+                            ),
                           ),
-                          // RowInput(
-                          //   title: "Date:  ",
-                          //   caption: widget.date,
-                          //   defaultStyle: true,
-                          // ),
-                          // RowInput(
-                          //   title: "Time:  ",
-                          //   caption: widget.time,
-                          // ),
                           order['status'] == "rejected"
                               ? RowInput(
                                   title: "Reason:  ",
