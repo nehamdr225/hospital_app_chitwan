@@ -1,29 +1,24 @@
 import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DoctorListCard.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/PListCard.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
+import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PRejected extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   // final theme = Theme.of(context);
+    // final theme = Theme.of(context);
+    final orders = Provider.of<PharmacyDataStore>(context)
+        .orders
+        .where((element) => element['status'] == 'rejected')
+        .toList();
     return ListView.builder(
-          itemCount: PrescriptionData.length,
-          itemBuilder: (BuildContext context, int index) {
-            return 
-            
-            DoctorListCard(
-              name: PrescriptionData[index]['name'],
-              caption: PrescriptionData[index]['cap'],
-              image: PrescriptionData[index]['src'],
-              phone: PrescriptionData[index]['phone'],
-              //status: PrescriptionData[index]['status'],
-              status: "Rejected",
-              date: PrescriptionData[index]['date'],
-              time:PrescriptionData[index]['time'],
-              take: PrescriptionData[index]['take'],
-              data: true,
-            );
-          }
-    );
+        itemCount: orders.length,
+        itemBuilder: (BuildContext context, int index) {
+          return PListCard(
+            id: orders[index]['id'],
+          );
+        });
   }
 }

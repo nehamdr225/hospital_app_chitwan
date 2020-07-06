@@ -1,46 +1,43 @@
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientDetail.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
+import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class PListCard extends StatefulWidget {
-  final name;
-  final image;
-  final caption;
-  final phone;
-  final status;
-  final date;
-  final time;
-  final take;
-  final data;
-  PListCard(
-      {this.image,
-      this.name,
-      this.caption,
-      this.phone,
-      this.date,
-      this.status,
-      this.time,
-      this.take,
-      this.data = false});
+  final id;
+  PListCard({this.id});
 
   @override
   _PListCardState createState() => _PListCardState();
 }
 
 class _PListCardState extends State<PListCard> {
+  Map userInfo;
   @override
   Widget build(BuildContext context) {
+    final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final order = pharmacyDataStore.getOneOrder(widget.id);
+    if (userInfo == null)
+      pharmacyDataStore.getUserInfo(order['userId']).then(
+            (value) => setState(
+              () {
+                userInfo = value.data;
+              },
+            ),
+          );
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PatientDetail(
-                    id: '',
+              builder: (context) => BuyerDetail(
+                    id: widget.id,
                   )));
         },
         child: Container(
@@ -95,24 +92,26 @@ class _PListCardState extends State<PListCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: widget.name,
+                            text: userInfo == null
+                                ? 'Loading...'
+                                : userInfo['name'],
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
                           ),
-                          RowInput(
-                            title: "Date:  ",
-                            caption: widget.date,
-                            defaultStyle: true,
-                          ),
-                          RowInput(
-                            title: "Time:  ",
-                            caption: widget.time,
-                          ),
-                          widget.status == "Rejected"
+                          // RowInput(
+                          //   title: "Date:  ",
+                          //   caption: widget.date,
+                          //   defaultStyle: true,
+                          // ),
+                          // RowInput(
+                          //   title: "Time:  ",
+                          //   caption: widget.time,
+                          // ),
+                          order['status'] == "rejected"
                               ? RowInput(
                                   title: "Reason:  ",
-                                  caption: "reason",
+                                  caption: order['remark'],
                                   defaultStyle: true,
                                 )
                               : SizedBox(
@@ -128,7 +127,9 @@ class _PListCardState extends State<PListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: "  ${widget.phone}",
+                                  text: userInfo == null
+                                      ? 'Loading...'
+                                      : userInfo['phone'],
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
