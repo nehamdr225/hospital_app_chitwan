@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -18,6 +19,7 @@ class PListCard extends StatefulWidget {
 
 class _PListCardState extends State<PListCard> {
   Map userInfo;
+  String boolStatus;
   @override
   Widget build(BuildContext context) {
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
@@ -103,7 +105,7 @@ class _PListCardState extends State<PListCard> {
                                 )
                               : SizedBox.shrink(),
                           Padding(
-                            padding: const EdgeInsets.only(top:5.0),
+                            padding: const EdgeInsets.only(top: 5.0),
                             child: FancyText(
                               text: userInfo == null
                                   ? 'Loading...'
@@ -141,6 +143,119 @@ class _PListCardState extends State<PListCard> {
                               ],
                             ),
                           ),
+                          widget.status == "ongoing"
+                              ? boolStatus == null
+                                  ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                        children: <Widget>[
+                                          FRaisedButton(
+                                            elevation: 0.0,
+                                            height: 30.0,
+                                            width: 100.0,
+                                            text: "Reject",
+                                            borderColor: Colors.transparent,
+                                            color: textDark_Yellow,
+                                            bg: theme.colorScheme.secondary,
+                                            onPressed: () {
+                                              // doctorDataStore.setAppointmentStatus(appointment['id'], 'rejected');
+                                              // setState(() {
+                                              //   status = "rejected";
+                                              // });
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: FancyText(
+                                                          text: "Are you sure?",
+                                                          size: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: blueGrey),
+                                                      content: FancyText(
+                                                          text:
+                                                              "Are you sure you want to reject patient request?",
+                                                          size: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: blueGrey),
+                                                      actions: <Widget>[
+                                                        IconButton(
+                                                            icon: Icon(
+                                                              Icons.cancel,
+                                                              color: theme
+                                                                  .colorScheme
+                                                                  .secondary,
+                                                            ),
+                                                            onPressed: () {
+                                                              // doctorDataStore.setAppointmentStatus(appointment['id'], null);
+                                                              setState(() {
+                                                                boolStatus = null;
+                                                              });
+                                                              Navigator.pop(
+                                                                  context);
+                                                            }),
+                                                        IconButton(
+                                                            icon: Icon(
+                                                              Icons.check_circle,
+                                                              color: Colors
+                                                                  .green[600],
+                                                            ),
+                                                            onPressed: () {}),
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                          ),
+                                          SizedBox(width: 10.0),
+                                          FRaisedButton(
+                                            elevation: 0.0,
+                                            height: 30.0,
+                                            width: 100.0,
+                                            text: "Accept",
+                                            borderColor: Colors.transparent,
+                                            color: textDark_Yellow,
+                                            bg: Colors.green[600],
+                                            onPressed: () {
+                                              setState(() {
+                                                boolStatus = "accepted";
+                                              });
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                  )
+                                  : widget.status == "rejected"
+                                      ? Row(children: [
+                                          FancyText(
+                                            text: "Rejected",
+                                            color: theme.colorScheme.secondary,
+                                            fontWeight: FontWeight.w700,
+                                            size: 15.0,
+                                          ),
+                                          SizedBox(width: 20.0),
+                                          InkWell(
+                                            onTap: () {},
+                                            child: FancyText(
+                                              text: "Undo",
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationColor:
+                                                  theme.colorScheme.secondary,
+                                              color:
+                                                  theme.colorScheme.secondary,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          )
+                                        ])
+                                      : FancyText(
+                                          text: "Accepted",
+                                          color: Colors.green[600],
+                                          fontWeight: FontWeight.w700,
+                                          size: 15.0,
+                                        )
+                              : SizedBox.shrink(),
                         ],
                       ),
                     ),
