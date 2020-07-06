@@ -1,5 +1,4 @@
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/PrescriptionView.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
@@ -16,21 +15,12 @@ import 'package:timeline_list/timeline_model.dart';
 
 class BuyerDetail extends StatefulWidget {
   final buyerName;
-  // final buyerPrescriptionimage;
   final buyerPhone;
   final status;
-  // final date;
   final time;
   final id;
   BuyerDetail(
-      {
-      // this.buyerPrescriptionimage,
-      this.buyerName,
-      this.buyerPhone,
-      // this.date,
-      this.status,
-      this.time,
-      this.id});
+      {this.buyerName, this.buyerPhone, this.status, this.time, this.id});
 
   @override
   _BuyerDetailState createState() => _BuyerDetailState();
@@ -100,19 +90,22 @@ class _BuyerDetailState extends State<BuyerDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          "Tap to view...",
+                          style: TextStyle(
+                              fontSize: 12.0, color: blueGrey.withOpacity(0.7)),
+                        )),
                     Text(doodle.time, style: textTheme.caption),
                     const SizedBox(
                       height: 2.0,
-                    ),
-                    Text(
-                      doodle.title,
-                      style: textTheme.caption,
                     ),
                     const SizedBox(
                       height: 8.0,
                     ),
                     Text(
-                      doodle.diagnosis,
+                      doodle.medicines,
                       style: textTheme.headline6.copyWith(fontSize: 16.0),
                       textAlign: TextAlign.start,
                     ),
@@ -259,7 +252,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
-                                child: Row(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     FancyText(
@@ -272,9 +265,14 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(Icons.check_circle),
-                                                color: Colors.green,
+                                              ActionChip(
+                                                label: FancyText(
+                                                  text: "Accept",
+                                                  size: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                backgroundColor:
+                                                    Colors.green.shade400,
                                                 onPressed: isActive
                                                     ? null
                                                     : () {
@@ -292,9 +290,16 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                 }));
                                                       },
                                               ),
-                                              IconButton(
-                                                icon: Icon(Icons.cancel),
-                                                color: Colors.red,
+                                              SizedBox(width: 10.0),
+                                              ActionChip(
+                                                label: FancyText(
+                                                  text: "Reject ",
+                                                  size: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  wordSpacing: 1.2,
+                                                ),
+                                                backgroundColor: theme.secondary
+                                                    .withOpacity(0.7),
                                                 onPressed: () {
                                                   showDialog(
                                                       context: context,
@@ -318,24 +323,27 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                       .w400,
                                                               color: blueGrey),
                                                           actions: <Widget>[
-                                                            IconButton(
-                                                                icon: Icon(
-                                                                  Icons.cancel,
-                                                                  color: theme
-                                                                      .secondary,
-                                                                ),
-                                                                onPressed: () {
+                                                            InkWell(
+                                                                child: FancyText(
+                                                                    text:
+                                                                        "Cancel",
+                                                                    color: theme
+                                                                        .secondary),
+                                                                onTap: () {
                                                                   Navigator.pop(
                                                                       context);
                                                                 }),
-                                                            IconButton(
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .check_circle,
+                                                            ActionChip(
+                                                                label:
+                                                                    FancyText(
+                                                                  text:
+                                                                      "Reject",
                                                                   color: Colors
-                                                                          .green[
-                                                                      600],
+                                                                      .black54,
                                                                 ),
+                                                                backgroundColor:
+                                                                    Colors.green
+                                                                        .shade400,
                                                                 onPressed: () {
                                                                   setState(() {
                                                                     isActive =
@@ -378,7 +386,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                   text: "Rejected",
                                                   color: theme.secondary,
                                                   fontWeight: FontWeight.w700,
-                                                  size: 15.0,
+                                                  size: 15.5,
                                                 ),
                                                 SizedBox(width: 10.0),
                                                 InkWell(
@@ -418,7 +426,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                         : "Accepted",
                                                     color: Colors.green,
                                                     fontWeight: FontWeight.w700,
-                                                    size: 15.0,
+                                                    size: 15.5,
                                                   ),
                                                   SizedBox(width: 10.0),
                                                   order['status'] == 'ready'
@@ -490,58 +498,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
               itemBuilder: centerTimelineBuilder),
         )
       ]),
-    );
-  }
-
-  TimelineModel centerTimelineBuilder(BuildContext context, int i) {
-    final textTheme = Theme.of(context).textTheme;
-    final doodle = doodles[i];
-    return TimelineModel(
-      InkWell(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PrescriptionView(images: doodle.image)));
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.80,
-          child: Card(
-            margin: EdgeInsets.symmetric(vertical: 16.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0)),
-            clipBehavior: Clip.antiAlias,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        "Tap to view...",
-                        style: TextStyle(
-                            fontSize: 12.0, color: blueGrey.withOpacity(0.7)),
-                      )),
-                  Text(doodle.time, style: textTheme.caption),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(
-                    doodle.diagnosis,
-                    style: textTheme.headline6,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 18.0,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      position: TimelineItemPosition.left,
-      iconBackground: doodle.iconBackground,
     );
   }
 }

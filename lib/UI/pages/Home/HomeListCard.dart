@@ -200,7 +200,16 @@ class _HomeListCardState extends State<HomeListCard> {
                                                         widget.department,
                                                   )));
                                     }
-                                  : null,
+                                  : () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AppointmentForm(
+                                                    appointment: newAppointment,
+                                                    doctor: widget.doctorName,
+                                                  )));
+                                    },
                               color: theme.colorScheme.secondary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0)),

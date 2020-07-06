@@ -11,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 
+enum PickupOptions { pickup, delivery }
+
 class PharmacyForm extends StatefulWidget {
   final Pharmacy pharmacyForm;
   final doctor;
@@ -25,6 +27,7 @@ class PharmacyForm extends StatefulWidget {
 class _PharmacyFormState extends State<PharmacyForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
+  PickupOptions _poptions;
   List name = [];
   String _fName;
   String _lName;
@@ -152,6 +155,57 @@ class _PharmacyFormState extends State<PharmacyForm> {
                 },
               ),
             ),
+            Padding(
+              //gender
+              padding: const EdgeInsets.only(
+                  top: 10.0, left: 10.0, right: 10.0, bottom: 0.0),
+              child: Row(
+                children: <Widget>[
+                  FancyText(
+                    text: "Pickup Options: ",
+                    size: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  SizedBox(width: 10.0),
+                  Radio(
+                    value: PickupOptions.pickup,
+                    activeColor: theme.iconTheme.color,
+                    groupValue: _poptions,
+                    onChanged: (PickupOptions value) {
+                      setState(() {
+                        _poptions = value;
+                      });
+                    },
+                  ),
+                  FancyText(
+                    text: "Pick-Up",
+                    size: 15.0,
+                    color: blueGrey.withOpacity(0.9),
+                  ),
+                  Radio(
+                    value: PickupOptions.delivery,
+                    activeColor: theme.iconTheme.color,
+                    groupValue: _poptions,
+                    onChanged: (PickupOptions value) {
+                      setState(() {
+                        _poptions = value;
+                      }); 
+                    },
+                  ),
+                  FancyText(
+                    text: "Delivery",
+                    size: 15.0,
+                    color: blueGrey.withOpacity(0.9),
+                  ),
+                ],
+              ),
+            ),
+            _poptions == PickupOptions.delivery
+                ? Padding(
+                  padding: const EdgeInsets.only(left:10.0, bottom: 10.0),
+                  child: FancyText(text: 'Delivery charge Rs.100', color: blueGrey.withOpacity(0.6), textAlign: TextAlign.start,),
+                )
+                : Text(' '),
             Padding(
               //date
               padding:

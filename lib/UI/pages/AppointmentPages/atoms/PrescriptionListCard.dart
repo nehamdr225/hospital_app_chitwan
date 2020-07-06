@@ -253,7 +253,7 @@ class _ListCardState extends State<ListCard> {
                         decoration: BoxDecoration(
                             color: displayData['status'] != null &&
                                         displayData['status'] == "Accepted" ||
-                                    displayData['status'] == "Ready"
+                                    displayData['status'] == "Ready" || displayData['status'] == "accepted"
                                 ? Colors.green.shade400
                                 : theme.colorScheme.secondary,
                             borderRadius: BorderRadius.only(

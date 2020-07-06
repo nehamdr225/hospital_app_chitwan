@@ -276,16 +276,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                             value: value,
                           );
                         }).toList(),
-                        // : [
-                        //     DropdownMenuItem(
-                        //       child: FancyText(
-                        //         text: '',
-                        //         color: blueGrey,
-                        //         fontWeight: FontWeight.w500,
-                        //       ),
-                        //       value: '',
-                        //     )
-                        //   ],
                         onChanged: (value) {
                           setState(() {
                             _valDepartment = value;
@@ -548,7 +538,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     onChanged: (Gender value) {
                       setState(() {
                         _gender = value;
-                      });
+                      }); 
                     },
                   ),
                   FancyText(
@@ -593,7 +583,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     updateData['userId'] = userDataStore.uid;
                     final doctor = userDataStore.doctors.firstWhere(
                         (element) => element['name'] == _valDoctor,
-                        orElse: () => {name:''});
+                        orElse: () => {name: ''});
                     updateData['doctorId'] = doctor['id'];
                     userDataStore.createAppointment(updateData).then((value) {
                       print(value);
