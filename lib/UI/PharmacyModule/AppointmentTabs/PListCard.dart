@@ -1,4 +1,3 @@
-import 'package:chitwan_hospital/UI/DoctorsModule/PatientDetail.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';

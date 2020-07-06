@@ -1,5 +1,4 @@
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyReady.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PrescriptionView.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';

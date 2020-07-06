@@ -24,7 +24,7 @@ class _PharmacyReadyState extends State<PharmacyReady> {
 
   @override
   Widget build(BuildContext context) {
-    // print('$_medicineName $_quantity $_price');
+    print('$_medicineName $_quantity $_price');
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     _buildAddFieldWidget() {

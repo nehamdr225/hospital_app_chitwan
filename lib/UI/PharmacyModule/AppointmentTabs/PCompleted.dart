@@ -1,5 +1,4 @@
 import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/PListCard.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -16,7 +16,9 @@ class PharmacyModule extends StatelessWidget {
     Provider.of<PharmacyDataStore>(context).handleInitialProfileLoad();
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final user = pharmacyDataStore.user;
-    final List orders = pharmacyDataStore.orders;
+    final List orders = pharmacyDataStore.orders
+        .where((element) => element['status'] == null)
+        .toList();
 
     buildOrderWidgets() {
       return orders != null
