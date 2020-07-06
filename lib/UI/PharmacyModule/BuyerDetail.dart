@@ -139,22 +139,44 @@ class _BuyerDetailState extends State<BuyerDetail> {
           ),
           preferredSize: Size.fromHeight(60.0)),
       backgroundColor: theme.background,
-      floatingActionButton: order['status'] == "accepted"
+      floatingActionButton: order['status'] == "accepted" ||
+              order['status'] == "ready"
           ? FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PharmacyReady(
-                            // appointment: newAppointment,
-                            )));
-              },
+              onPressed: isActive
+                  ? null
+                  : () {
+                      if (order['status'] != 'ready') {
+                        setState(() {
+                          isActive = true;
+                        });
+                        pharmacyDataStore
+                            .setOrderStatus(order['id'], 'ready')
+                            .then((value) => setState(() {
+                                  isActive = false;
+                                }));
+                      } else {
+                        setState(() {
+                          isActive = true;
+                        });
+                        pharmacyDataStore
+                            .setOrderStatus(order['id'], 'accepted')
+                            .then((value) => setState(() {
+                                  isActive = false;
+                                }));
+                      }
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => PharmacyReady(
+                      //             // appointment: newAppointment,
+                      //             )));
+                    },
               icon: Icon(
                 Icons.calendar_today,
                 color: textDark_Yellow,
               ),
               label: FancyText(
-                text: "Mark Ready",
+                text: order['status'] == "ready" ? 'Undo Ready' : "Mark Ready",
                 color: textDark_Yellow,
                 fontWeight: FontWeight.w600,
               ),
@@ -391,41 +413,50 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                             : Row(
                                                 children: <Widget>[
                                                   FancyText(
-                                                    text: "Accepted",
+                                                    text: order['status'] ==
+                                                            'ready'
+                                                        ? 'Ready'
+                                                        : "Accepted",
                                                     color: Colors.green,
                                                     fontWeight: FontWeight.w700,
                                                     size: 15.0,
                                                   ),
                                                   SizedBox(width: 10.0),
-                                                  InkWell(
-                                                    onTap: isActive
-                                                        ? null
-                                                        : () {
-                                                            setState(() {
-                                                              isActive = true;
-                                                            });
-                                                            pharmacyDataStore
-                                                                .setOrderStatus(
-                                                                    order['id'],
-                                                                    null)
-                                                                .then((value) =>
-                                                                    setState(
-                                                                        () {
-                                                                      isActive =
-                                                                          false;
-                                                                    }));
-                                                          },
-                                                    child: FancyText(
-                                                      text: "undo",
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      decorationColor:
-                                                          Colors.red[200],
-                                                      color: Colors.red[200],
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                  )
+                                                  order['status'] == 'ready'
+                                                      ? SizedBox.shrink()
+                                                      : InkWell(
+                                                          onTap: isActive
+                                                              ? null
+                                                              : () {
+                                                                  setState(() {
+                                                                    isActive =
+                                                                        true;
+                                                                  });
+                                                                  pharmacyDataStore
+                                                                      .setOrderStatus(
+                                                                          order[
+                                                                              'id'],
+                                                                          null)
+                                                                      .then((value) =>
+                                                                          setState(
+                                                                              () {
+                                                                            isActive =
+                                                                                false;
+                                                                          }));
+                                                                },
+                                                          child: FancyText(
+                                                            text: "undo",
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                            decorationColor:
+                                                                Colors.red[200],
+                                                            color:
+                                                                Colors.red[200],
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                        )
                                                 ],
                                               ),
                                   ],
