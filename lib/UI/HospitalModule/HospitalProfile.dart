@@ -158,7 +158,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 5.0,
+              top: 8.0,
               left: 22.0,
               right: 20.0
             ),
@@ -201,7 +201,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                           FancyText(text: 'Add '),
                           Icon(
                             Icons.add,
-                            color: theme.primaryColor.withOpacity(0.8),
+                            color: blueGrey,
                           ),
                         ],
                       ),
@@ -210,7 +210,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 ),
                 Column(children: [
                   Chip(
-                    backgroundColor: theme.primaryColorDark,
+                    backgroundColor: blueGrey,
                     label: FancyText(text: 'Surgery', color: textDark_Yellow,),
                     // deleteIcon: Icon(Icons.delete),
                     deleteIconColor: textDark_Yellow,

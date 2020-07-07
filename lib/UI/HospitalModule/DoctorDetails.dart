@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/DetailPageOptions.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -88,12 +89,52 @@ class HospitalDoctorDetails extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            FancyText(
-                              text: doctor['name'],
-                              fontWeight: FontWeight.w700,
-                              size: 18.0,
-                              textAlign: TextAlign.left,
-                              color: textDark_Yellow,
+                            Row(
+                              children: <Widget>[
+                                FancyText(
+                                  text: doctor['name'],
+                                  fontWeight: FontWeight.w700,
+                                  size: 18.0,
+                                  textAlign: TextAlign.left,
+                                  color: textDark_Yellow,
+                                ),
+                                SizedBox(
+                                  height: 2,
+                                  width: 18,
+                                ),
+                                doctor['isVerified'] ?? false
+                                    ? Icon(Icons.verified_user, size: 20.0,
+                                        color: Colors.green)
+                                    : Icon(
+                                        Icons.cancel, size: 20.0,
+                                        color: Colors.red,
+                                      ),
+                                SizedBox(
+                                  height: 2,
+                                  width: 2,
+                                ),
+                                doctor['isVerified'] ?? false
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Verified',
+                                          style: TextStyle(
+                                              color: textDark_Yellow
+                                                  .withOpacity(0.8)),
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Not Verified',
+                                          style: TextStyle(
+                                              color: textDark_Yellow
+                                                  .withOpacity(0.8)),
+                                        ),
+                                      ),
+                              ],
                             ),
                             SizedBox(height: 5.0),
                             FancyText(
@@ -104,12 +145,13 @@ class HospitalDoctorDetails extends StatelessWidget {
                               color: textDark_Yellow.withOpacity(0.9),
                             ),
                             SizedBox(height: 2.0),
-                            FancyText(
-                              text: doctor["department"] ?? 'Not set',
-                              fontWeight: FontWeight.w400,
-                              size: 14.0,
-                              textAlign: TextAlign.left,
-                              color: textDark_Yellow.withOpacity(0.9),
+                            RowInput(
+                              title: "Department: ",
+                              caption: doctor["department"] ?? 'Not set',
+                              capColor: textDark_Yellow,
+                              titleColor: textDark_Yellow,
+                              defaultStyle: false,
+                              fontWeight: FontWeight.w500,
                             ),
                             SizedBox(height: 2),
                             Row(
@@ -148,28 +190,6 @@ class HospitalDoctorDetails extends StatelessWidget {
                               size: 13.0,
                             ),
                             SizedBox(height: 2),
-                            Row(children: [
-                              doctor['isVerified'] ?? false
-                                  ? Icon(Icons.verified_user,
-                                      color: Colors.green)
-                                  : Icon(
-                                      Icons.cancel,
-                                      color: Colors.red,
-                                    ),
-                              SizedBox(
-                                height: 2,
-                                width: 2,
-                              ),
-                              doctor['isVerified'] ?? false
-                                  ? Text(
-                                      'Verified',
-                                      style: TextStyle(color: textDark_Yellow.withOpacity(0.8)),
-                                    )
-                                  : Text(
-                                      'Not Verified',
-                                      style: TextStyle(color: textDark_Yellow.withOpacity(0.8)),
-                                    ),
-                            ])
                           ],
                         ),
                       ),
@@ -194,7 +214,7 @@ class HospitalDoctorDetails extends StatelessWidget {
               )),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 7.0),
+          padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 9.0),
           child: FRaisedButton(
             elevation: 1.0,
             width: size.width * 0.95,

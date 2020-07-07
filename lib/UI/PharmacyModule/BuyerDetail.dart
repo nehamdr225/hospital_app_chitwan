@@ -269,7 +269,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 label: FancyText(
                                                   text: "Accept",
                                                   size: 14.0,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                                 backgroundColor:
                                                     Colors.green.shade400,
@@ -295,7 +294,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 label: FancyText(
                                                   text: "Reject ",
                                                   size: 14.0,
-                                                  fontWeight: FontWeight.bold,
                                                   wordSpacing: 1.2,
                                                 ),
                                                 backgroundColor: theme.secondary

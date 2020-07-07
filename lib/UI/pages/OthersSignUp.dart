@@ -27,11 +27,11 @@ class _OthersSignUpState extends State<OthersSignUp> {
   String _othersList;
   List _list = [
     "Doctor",
-    "Ambulance",
+    //"Ambulance",
     "Pharmacy",
     "Labratory",
     // "Hospital",
-    "Blood Bank",
+    //"Blood Bank",
   ];
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();

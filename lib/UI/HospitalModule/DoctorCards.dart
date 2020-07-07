@@ -36,15 +36,7 @@ class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-                BoxShadow(
-                    color: Colors.white60,
-                    //offset: Offset(-4, -4),
-                    blurRadius: 3.0,
-                    spreadRadius: -12.0),
-                BoxShadow(
-                    color: Colors.white60,
-                    offset: Offset(-4, -4),
-                    blurRadius: 3.0),
+               
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),
@@ -63,7 +55,7 @@ class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
                     blurRadius: 1.0),
               ],
             ),
-            width: size.width * 0.90,
+            width: size.width * 0.95,
             height: 160.0,
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0),
