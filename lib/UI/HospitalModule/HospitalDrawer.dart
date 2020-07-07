@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalProfile.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/PromotionTab.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -136,17 +137,16 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                     MaterialPageRoute(builder: (context) => PromotionTab()));
               },
             ),
-            // DrawerElements(
-            //   //Share
-            //   title: 'Working Schedule',
-            //   icon: 'assets/images/drawerIcon/shareButton.png',
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => WorkSchedule()),
-            //     );
-            //   },
-            // ),
+            DrawerElements(
+              //Home
+              title: 'Profile',
+              icon: 'assets/images/drawerIcon/profile.png',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HospitalProfileSettings()));
+              },
+            ),
+            
             Divider(
               color: Colors.grey[500],
               height: 5.0,

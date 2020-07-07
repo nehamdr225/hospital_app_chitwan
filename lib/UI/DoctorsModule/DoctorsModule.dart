@@ -47,15 +47,7 @@ class DoctorsModule extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 gradient: gradientColor,
                 boxShadow: [
-                  BoxShadow(
-                      color: Colors.white60,
-                      //offset: Offset(-4, -4),
-                      blurRadius: 3.0,
-                      spreadRadius: -12.0),
-                  BoxShadow(
-                      color: Colors.white60,
-                      offset: Offset(-4, -4),
-                      blurRadius: 3.0),
+                  
                   BoxShadow(
                       color: Colors.white60,
                       offset: Offset(-4, -4),

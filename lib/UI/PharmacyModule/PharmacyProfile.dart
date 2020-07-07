@@ -55,56 +55,68 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView(children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 20.0),
-                  alignment: Alignment.topCenter,
-                  height: 200.0,
-                  width: size.width,
-                  color: theme.colorScheme.primary,
-                  child: CircleAvatar(
-                    radius: 55.0,
-                    backgroundColor: theme.colorScheme.primary,
-                    child: Stack(
-                      children: <Widget>[
-                        CircleAvatar(
-                          //backgroundImage: FileImage(_profileImg),//Image.file(_profileImg),
-                          backgroundColor: theme.colorScheme.background,
-                          foregroundColor: Colors.white,
-                          radius: 54.0,
-                          child: _profileImg != null
-                              ? Container(
-                                  height: 100.0,
-                                  width: 100.0,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: FileImage(_profileImg),
-                                          fit: BoxFit.cover)),
-                                  //child: Image.file(_profileImg)
-                                )
-                              : Text(
-                                  snapshot.data.displayName
-                                      .split(' ')
-                                      .reduce((a, b) {
-                                    return '${a[0]} ${b[0]}';
-                                  }),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      .copyWith(
-                                          color: theme.colorScheme.primary,
-                                          fontSize: 24.0,
-                                          fontWeight: FontWeight.w700),
-                                ),
+                Stack(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(top: 20.0),
+                      alignment: Alignment.topCenter,
+                      height: 200.0,
+                      width: size.width,
+                      color: theme.colorScheme.primary,
+                      child: CircleAvatar(
+                        radius: 55.0,
+                        backgroundColor: theme.colorScheme.primary,
+                        child: Stack(
+                          children: <Widget>[
+                            CircleAvatar(
+                              //backgroundImage: FileImage(_profileImg),//Image.file(_profileImg),
+                              backgroundColor: theme.colorScheme.background,
+                              foregroundColor: Colors.white,
+                              radius: 54.0,
+                              child: _profileImg != null
+                                  ? Container(
+                                      height: 100.0,
+                                      width: 100.0,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: FileImage(_profileImg),
+                                              fit: BoxFit.cover)),
+                                      //child: Image.file(_profileImg)
+                                    )
+                                  : Text(
+                                      snapshot.data.displayName
+                                          .split(' ')
+                                          .reduce((a, b) {
+                                        return '${a[0]} ${b[0]}';
+                                      }),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          .copyWith(
+                                              color: theme.colorScheme.primary,
+                                              fontSize: 24.0,
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                            ),
+                          ],
                         ),
-                        Align(
-                            alignment: Alignment.bottomRight,
-                            child: IconButton(
-                                icon: Icon(Icons.photo_camera, color: blueGrey),
-                                onPressed: getProfileImage))
-                      ],
+                      ),
                     ),
-                  ),
+                    FRaisedButton(
+                      needIcon: true,
+                      image: "assets/images/camera.png",
+                      imgcolor: textDark_Yellow,
+                      text: "Change Photo",
+                      color: textDark_Yellow,
+                      borderColor: Colors.transparent,
+                      bg: theme.colorScheme.primary,
+                      elevation: 0.0,
+                      width: MediaQuery.of(context).size.width * 0.50,
+                      onPressed: getProfileImage,
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.all(10.0),
