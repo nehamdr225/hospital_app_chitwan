@@ -74,6 +74,10 @@ class LabDataStore extends ChangeNotifier {
   //   }
   // }
 
+  Future<bool> createOrder(Map data) {
+    return DatabaseService.createLabOrder(data);
+  }
+
   getOrders() {
     if (orders == null) {
       DatabaseService.getLabOrders(uid).then((onData) {
@@ -91,8 +95,8 @@ class LabDataStore extends ChangeNotifier {
     return orders.firstWhere((element) => element['id'] == id);
   }
 
-  Future<DocumentSnapshot> getUserInfo(String id) async {
-    return DatabaseService.getUserData(id);
+  Stream<QuerySnapshot> getUserInfo(String name) {
+    return DatabaseService.getUserByName(name);
   }
 
   Future setOrderStatus(String uid, dynamic status) {

@@ -26,6 +26,10 @@ class DatabaseService {
     return await userCollection.document(uid).get();
   }
 
+  static Stream<QuerySnapshot> getUserByName(String name) {
+    return userCollection.where('name', isEqualTo: name).snapshots();
+  }
+
   static Future<DocumentSnapshot> getDoctorData(String uid) async {
     return await doctorCollection.document(uid).get();
   }
@@ -179,6 +183,21 @@ class DatabaseService {
 
   static Future<QuerySnapshot> getPharmacyOrders(String uid) {
     return pOrderCollection.getDocuments();
+  }
+
+  static Future<bool> createLabOrder(Map data) async {
+    try {
+      await labOrderCollection.document().setData({
+        'name': data['name'],
+        'email': data['email'],
+        'phone': data['phone'],
+        'uid': data['id'],
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   static Future<QuerySnapshot> getLabOrders(String uid) {

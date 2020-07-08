@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/UI/LabModule/LabDrawer.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
@@ -24,17 +25,34 @@ class _LabModuleState extends State<LabModule> {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final labDataStore = Provider.of<LabDataStore>(context);
+    labDataStore.handleInitialProfileLoad();
     final user = labDataStore.user;
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: MainAppBar(
-          department: "Labratory",
+          department: "Laboratory",
         ),
       ),
       drawer: LabDrawerApp(),
       backgroundColor: theme.background,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LabOrder()));
+        },
+        icon: Icon(
+          Icons.calendar_today,
+          color: textDark_Yellow,
+        ),
+        label: FancyText(
+          text: "Create Order",
+          color: textDark_Yellow,
+          fontWeight: FontWeight.w600,
+        ),
+        backgroundColor: theme.primary,
+      ),
       body: ListView(children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
