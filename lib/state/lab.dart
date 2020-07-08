@@ -80,7 +80,7 @@ class LabDataStore extends ChangeNotifier {
 
   getOrders() {
     if (orders == null) {
-      DatabaseService.getLabOrders(uid).then((onData) {
+      DatabaseService.getLabOrders().then((onData) {
         List newData = onData.documents.map<Map>((e) {
           final data = e.data;
           data['id'] = e.documentID;

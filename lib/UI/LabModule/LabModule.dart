@@ -1,4 +1,6 @@
+import 'package:chitwan_hospital/UI/LabModule/LabCard.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabDrawer.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -27,6 +29,7 @@ class _LabModuleState extends State<LabModule> {
     final labDataStore = Provider.of<LabDataStore>(context);
     labDataStore.handleInitialProfileLoad();
     final user = labDataStore.user;
+    final orders = labDataStore.orders;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -165,20 +168,26 @@ class _LabModuleState extends State<LabModule> {
             ),
           ),
         ),
-        Container(
-            height: MediaQuery.of(context).size.height * 0.70,
-            child: ListView.builder(
-                itemCount: Pharmacy_List.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return LabratoryListCard(
-                      clientName: Pharmacy_List[index]['clients'],
-                      labName: Pharmacy_List[index]['clients'],
-                      labLocation: Pharmacy_List[index]['location'],
-                      image: Pharmacy_List[index]['src'],
-                      phone: Pharmacy_List[index]['phone'],
-                      pharmacyStatus: pharmacistDecision,
-                      id: "Lab");
-                })),
+        orders != null
+            ? Column(
+                children: orders
+                    .map<Widget>((e) => InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LabInfoUpload()),
+                            );
+                          },
+                          child: LabCard(
+                            name: e['name'],
+                            email: e['email'],
+                            phone: e['phone'],
+                          ),
+                        ))
+                    .toList(),
+              )
+            : SizedBox.shrink(),
       ]),
     );
   }

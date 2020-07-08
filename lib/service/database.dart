@@ -200,7 +200,7 @@ class DatabaseService {
     }
   }
 
-  static Future<QuerySnapshot> getLabOrders(String uid) {
+  static Future<QuerySnapshot> getLabOrders() {
     return labOrderCollection.getDocuments();
   }
 }
