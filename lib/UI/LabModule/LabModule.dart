@@ -4,7 +4,9 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
+import 'package:chitwan_hospital/state/lab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum AvalibilityState { online, away, busy }
 
@@ -21,6 +23,9 @@ class _LabModuleState extends State<LabModule> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final labDataStore = Provider.of<LabDataStore>(context);
+    final user = labDataStore.user;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -119,7 +124,7 @@ class _LabModuleState extends State<LabModule> {
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0, left: 28.0),
                     child: FancyText(
-                        text: "NAME",
+                        text: user != null ? user['name'] : 'Loading...',
                         size: 16.0,
                         color: textDark_Yellow,
                         fontWeight: FontWeight.w400),

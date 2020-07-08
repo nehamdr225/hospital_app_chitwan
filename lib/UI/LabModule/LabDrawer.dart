@@ -8,6 +8,7 @@ import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/lab.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +19,12 @@ class LabDrawerApp extends StatefulWidget {
 
 class _LabDrawerAppState extends State<LabDrawerApp> {
   final AuthService _auth = AuthService();
-  final user = AuthService().user;
+  // final user = AuthService().user;
 
   @override
   Widget build(BuildContext context) {
+    final labDataStore = Provider.of<LabDataStore>(context);
+    final user = labDataStore.user;
     //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
     //final uid = Provider.of<AuthService>(context).getCurrentUid;
     final theme = Theme.of(context);
@@ -32,37 +35,29 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             user != null
-                ? FutureBuilder(
-                    future: Provider.of<AuthService>(context).getCurrentUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return UserAccountsDrawerHeader(
-                          accountName: FancyText(
-                            text: "${snapshot.data.displayName}",
-                            size: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: textDark_Yellow,
-                          ),
-                          accountEmail: FancyText(
-                            text: snapshot.data.email,
-                            size: 13.0,
-                            fontWeight: FontWeight.w500,
-                            color: textDark_Yellow,
-                          ),
-                          currentAccountPicture: GestureDetector(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white54,
-                              child: Icon(Icons.person, color: Colors.black45),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: gradientColor,
-                          ),
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    })
+                ? UserAccountsDrawerHeader(
+                    accountName: FancyText(
+                      text: user['name'],
+                      size: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textDark_Yellow,
+                    ),
+                    accountEmail: FancyText(
+                      text: user['email'],
+                      size: 13.0,
+                      fontWeight: FontWeight.w500,
+                      color: textDark_Yellow,
+                    ),
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white54,
+                        child: Icon(Icons.person, color: Colors.black45),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: gradientColor,
+                    ),
+                  )
                 : DrawerHeader(
                     decoration: BoxDecoration(
                       //color: primary,
@@ -136,7 +131,6 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                     },
                   )
                 : Text(" "),
-            
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -192,6 +186,7 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                         text: "Sign Out",
                         onPressed: () async {
                           _auth.signOut();
+                          labDataStore.clearState();
                           setState(() {
                             loggedIn = false;
                           });

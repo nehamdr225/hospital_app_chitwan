@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
@@ -83,6 +84,7 @@ class Wrapper extends StatelessWidget {
                           return HospitalModule();
                         else if (snapshot.data == 'pharmacy')
                           return PharmacyModule();
+                        else if (snapshot.data == 'lab') return LabModule();
                         return HomeScreen();
                     }
                   },
