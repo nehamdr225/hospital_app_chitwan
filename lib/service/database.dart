@@ -15,6 +15,8 @@ class DatabaseService {
   static final CollectionReference pharmacyCollection =
       db.collection('pharmacies');
   static final CollectionReference pOrderCollection = db.collection('porders');
+  static final CollectionReference labOrderCollection =
+      db.collection('labOrders');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
     return await userCollection.document(uid).setData(data);
@@ -36,6 +38,10 @@ class DatabaseService {
     return await pharmacyCollection.document(uid).get();
   }
 
+  static Future<DocumentSnapshot> getLabData(String uid) async {
+    return await labCollection.document(uid).get();
+  }
+
   static Future updateDoctorData(String uid, data) async {
     return await doctorCollection.document(uid).setData(data);
   }
@@ -48,6 +54,10 @@ class DatabaseService {
   static Future updatePharmacyData(
       String uid, Map<String, dynamic> data) async {
     return await pharmacyCollection.document(uid).setData(data);
+  }
+
+  static Future updateLabData(String uid, Map<String, dynamic> data) async {
+    return await pharmacyCollection.document(uid).updateData(data);
   }
 
   static Future createAppointment(Map data) async {

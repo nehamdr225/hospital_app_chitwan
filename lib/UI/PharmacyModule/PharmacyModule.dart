@@ -27,7 +27,7 @@ class PharmacyModule extends StatelessWidget {
                 (each) => PharmacyCard(id: each['id']),
               )
               .toList()
-          : [Text('')];
+          : [SizedBox.shrink()];
     }
 
     return Scaffold(

@@ -331,13 +331,15 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                   Navigator.pop(
                                                                       context);
                                                                 }),
-                                                                SizedBox(width: 4.0),
+                                                            SizedBox(
+                                                                width: 4.0),
                                                             ActionChip(
                                                                 label:
                                                                     FancyText(
                                                                   text:
                                                                       "Reject",
-                                                                  color: textDark_Yellow,
+                                                                  color:
+                                                                      textDark_Yellow,
                                                                 ),
                                                                 backgroundColor:
                                                                     Colors.green
