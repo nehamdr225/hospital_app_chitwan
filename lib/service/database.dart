@@ -57,7 +57,7 @@ class DatabaseService {
   }
 
   static Future updateLabData(String uid, Map<String, dynamic> data) async {
-    return await pharmacyCollection.document(uid).updateData(data);
+    return await labCollection.document(uid).setData(data);
   }
 
   static Future createAppointment(Map data) async {

@@ -22,7 +22,7 @@ class _OthersLoginState extends State<OthersLogin> {
   String _othersList;
   List _list = [
     "Doctor",
-   // "Ambulance",
+    // "Ambulance",
     "Pharmacy",
     "Labratory",
     "Hospital",
@@ -247,7 +247,7 @@ class _OthersLoginState extends State<OthersLogin> {
                                             } else if (_othersList ==
                                                 'Laboratory') {
                                               setLocalUserData(
-                                                  'userType', 'laboratory');
+                                                  'userType', 'lab');
                                               Navigator.pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(

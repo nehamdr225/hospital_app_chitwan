@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/Widget/loading.dart';
@@ -29,7 +30,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
     "Doctor",
     //"Ambulance",
     "Pharmacy",
-    "Labratory",
+    "Laboratory",
     // "Hospital",
     //"Blood Bank",
   ];
@@ -300,6 +301,31 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           PharmacyModule()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                            } else {
+                                              setState(() {
+                                                loading = false;
+                                                error =
+                                                    'Please supply a valid email';
+                                              });
+                                            }
+                                          } else if (_othersList ==
+                                              'Laboratory') {
+                                            result = await _auth.registerLab(
+                                                email: _email,
+                                                password: _password,
+                                                name: _name,
+                                                phone: _phone);
+                                            if (result != null) {
+                                              setLocalUserData(
+                                                  'userType', 'lab');
+                                              setState(() => loading = false);
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LabModule()),
                                                   (Route<dynamic> route) =>
                                                       false);
                                             } else {
