@@ -41,15 +41,7 @@ class _PatientListCardState extends State<PatientListCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-                BoxShadow(
-                    color: Colors.white60,
-                    //offset: Offset(-4, -4),
-                    blurRadius: 3.0,
-                    spreadRadius: -12.0),
-                BoxShadow(
-                    color: Colors.white60,
-                    offset: Offset(-4, -4),
-                    blurRadius: 3.0),
+                
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),

@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientEdit.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
@@ -30,6 +31,7 @@ class _PatientDetailState extends State<PatientDetail> {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final diagnosis = appointment['diagnosis'] ?? [];
+
     TimelineModel centerTimelineBuilder(BuildContext context, int i) {
       final textTheme = Theme.of(context).textTheme;
       Timestamp date = diagnosis[i]['date'];
@@ -152,21 +154,12 @@ class _PatientDetailState extends State<PatientDetail> {
           padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
           child: Center(
             child: Container(
-                height: 180.0,
+                height: 200.0,
                 width: size.width * 0.95,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   gradient: gradientColor,
                   boxShadow: [
-                    BoxShadow(
-                        color: Colors.white60,
-                        //offset: Offset(-4, -4),
-                        blurRadius: 3.0,
-                        spreadRadius: -12.0),
-                    BoxShadow(
-                        color: Colors.white60,
-                        offset: Offset(-4, -4),
-                        blurRadius: 3.0),
                     BoxShadow(
                         color: Colors.white60,
                         offset: Offset(-4, -4),
@@ -240,22 +233,33 @@ class _PatientDetailState extends State<PatientDetail> {
                                       size: 16.0,
                                       color: textDark_Yellow,
                                     ),
-                                    FancyText(
-                                        color: textDark_Yellow,
-                                        text:
-                                            ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}'),
+                                    date != null
+                                        ? FancyText(
+                                            color: textDark_Yellow,
+                                            text:
+                                                ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}')
+                                        : FancyText(
+                                            text: "Not set",
+                                            color: textDark_Yellow,
+                                          ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, right: 3.0),
                                       child: Icon(
                                         Icons.timer,
                                         size: 16.0,
                                         color: textDark_Yellow,
                                       ),
                                     ),
-                                    FancyText(
-                                      text: appointment['time'],
-                                      color: textDark_Yellow,
-                                    )
+                                    appointment['time'] != null
+                                        ? FancyText(
+                                            text: appointment['time'],
+                                            color: textDark_Yellow,
+                                          )
+                                        : FancyText(
+                                            text: "Not set",
+                                            color: textDark_Yellow,
+                                          )
                                   ],
                                 ),
                               ),
@@ -267,31 +271,18 @@ class _PatientDetailState extends State<PatientDetail> {
                                 textAlign: TextAlign.left,
                                 color: textDark_Yellow,
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 3.0),
-                                    child: FancyText(
-                                      text: "Last Appointment: ",
-                                      textAlign: TextAlign.left,
-                                      color: textDark_Yellow,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 3.0),
-                                    child: FancyText(
-                                        text:
-                                            ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}',
-                                        textAlign: TextAlign.left,
-                                        color: textDark_Yellow,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
+                              RowInput(
+                                defaultStyle: false,
+                                title: "Last Appointment: ",
+                                titleColor: textDark_Yellow,
+                                capColor: textDark_Yellow,
+                                caption: appointment['diagnosis'] != null
+                                    ? ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day}'
+                                    : ' No history',
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
-                                child: Row(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     FancyText(
@@ -304,26 +295,29 @@ class _PatientDetailState extends State<PatientDetail> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(Icons.check_circle),
-                                                color: Colors.green,
+                                              ActionChip(
+                                                  label: FancyText(
+                                                    text: "Accept",
+                                                    size: 14.0,
+                                                  ),
+                                                  backgroundColor:
+                                                      Colors.green.shade400,
+                                                  onPressed: () {
+                                                    doctorDataStore
+                                                        .setAppointmentStatus(
+                                                            widget.id,
+                                                            'accepted');
+                                                  }),
+                                              SizedBox(width: 10.0),
+                                              ActionChip(
+                                                label: FancyText(
+                                                  text: "Reject ",
+                                                  size: 14.0,
+                                                  wordSpacing: 1.2,
+                                                ),
+                                                backgroundColor: theme.secondary
+                                                    .withOpacity(0.6),
                                                 onPressed: () {
-                                                  doctorDataStore
-                                                      .setAppointmentStatus(
-                                                          widget.id,
-                                                          'accepted');
-                                                  // setState(() {
-                                                  //   doctorDecision = "accepted";
-                                                  // });
-                                                },
-                                              ),
-                                              IconButton(
-                                                icon: Icon(Icons.cancel),
-                                                color: Colors.red,
-                                                onPressed: () {
-                                                  // setState(() {
-                                                  //   doctorDecision = "rejected";
-                                                  // });
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -339,40 +333,35 @@ class _PatientDetailState extends State<PatientDetail> {
                                                               color: blueGrey),
                                                           content: FancyText(
                                                               text:
-                                                                  "Are you sure you want to reject patient request?",
+                                                                  "Are you sure you want to reject buyer request?",
                                                               size: 15.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400,
                                                               color: blueGrey),
                                                           actions: <Widget>[
-                                                            IconButton(
-                                                                icon: Icon(
-                                                                  Icons.cancel,
-                                                                  color: theme
-                                                                      .secondary,
-                                                                ),
-                                                                onPressed: () {
-                                                                  // setState(() {
-                                                                  //   doctorDecision =
-                                                                  //       "undecided";
-                                                                  // });
+                                                            InkWell(
+                                                                child: FancyText(
+                                                                    text:
+                                                                        "Cancel",
+                                                                    color: theme
+                                                                        .secondary),
+                                                                onTap: () {
                                                                   Navigator.pop(
                                                                       context);
                                                                 }),
-                                                            IconButton(
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .check_circle,
-                                                                  color: Colors
-                                                                          .green[
-                                                                      600],
+                                                                SizedBox(width: 4.0),
+                                                            ActionChip(
+                                                                label:
+                                                                    FancyText(
+                                                                  text:
+                                                                      "Reject",
+                                                                  color: textDark_Yellow,
                                                                 ),
+                                                                backgroundColor:
+                                                                    Colors.green
+                                                                        .shade400,
                                                                 onPressed: () {
-                                                                  // setState(() {
-                                                                  //   doctorDecision =
-                                                                  //       "rejected";
-                                                                  // });
                                                                   doctorDataStore
                                                                       .setAppointmentStatus(
                                                                           widget
@@ -386,6 +375,7 @@ class _PatientDetailState extends State<PatientDetail> {
                                                       });
                                                 },
                                               ),
+                                              
                                               SizedBox(width: 10.0),
                                             ],
                                           )
@@ -471,7 +461,13 @@ class _PatientDetailState extends State<PatientDetail> {
           child: Timeline.builder(
               physics: ClampingScrollPhysics(),
               position: TimelinePosition.Left,
-              itemCount: appointment['diagnosis'].length,
+              itemCount: appointment['diagnosis'] != null
+                  ? appointment['diagnosis'].length
+                  : 0,
+              //
+              // appointment['diagnosis'].length
+              // : 0,
+
               itemBuilder: centerTimelineBuilder),
         )
       ]),

@@ -52,15 +52,7 @@ class DoctorDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.0),
                   gradient: gradientColor,
                   boxShadow: [
-                    BoxShadow(
-                        color: Colors.white60,
-                        //offset: Offset(-4, -4),
-                        blurRadius: 3.0,
-                        spreadRadius: -12.0),
-                    BoxShadow(
-                        color: Colors.white60,
-                        offset: Offset(-4, -4),
-                        blurRadius: 3.0),
+                    
                     BoxShadow(
                         color: Colors.white60,
                         offset: Offset(-4, -4),
@@ -206,7 +198,16 @@ class DoctorDetails extends StatelessWidget {
                                   department: caption,
                                 )));
                   }
-                : null,
+                :  () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AppointmentForm(
+                                                    appointment: newAppointment,
+                                                    doctor: name,
+                                                  )));
+                                    },
           ),
         ),
         SizedBox(height: 10.0),

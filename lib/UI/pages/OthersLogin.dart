@@ -22,11 +22,11 @@ class _OthersLoginState extends State<OthersLogin> {
   String _othersList;
   List _list = [
     "Doctor",
-    "Ambulance",
+   // "Ambulance",
     "Pharmacy",
     "Labratory",
-    // "Hospital",
-    "Blood Bank",
+    "Hospital",
+    //"Blood Bank",
   ];
 
   final _formKey = GlobalKey<FormState>();

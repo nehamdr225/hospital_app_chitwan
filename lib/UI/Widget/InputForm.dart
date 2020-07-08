@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class InputField extends StatefulWidget {
@@ -29,9 +30,11 @@ class _InputFieldState extends State<InputField> {
       controller: _controller,
       // obscureText: true,
       onChanged: widget.onChanged,
+      cursorColor: blueGrey,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderSide: BorderSide.none),
         labelText: widget.title,
+        labelStyle: TextStyle(color:blueGrey),
       ),
     );
   }

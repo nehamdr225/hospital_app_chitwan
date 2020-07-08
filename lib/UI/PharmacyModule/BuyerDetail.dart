@@ -269,7 +269,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 label: FancyText(
                                                   text: "Accept",
                                                   size: 14.0,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                                 backgroundColor:
                                                     Colors.green.shade400,
@@ -295,11 +294,10 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 label: FancyText(
                                                   text: "Reject ",
                                                   size: 14.0,
-                                                  fontWeight: FontWeight.bold,
                                                   wordSpacing: 1.2,
                                                 ),
                                                 backgroundColor: theme.secondary
-                                                    .withOpacity(0.7),
+                                                    .withOpacity(0.6),
                                                 onPressed: () {
                                                   showDialog(
                                                       context: context,
@@ -333,13 +331,13 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                   Navigator.pop(
                                                                       context);
                                                                 }),
+                                                                SizedBox(width: 4.0),
                                                             ActionChip(
                                                                 label:
                                                                     FancyText(
                                                                   text:
                                                                       "Reject",
-                                                                  color: Colors
-                                                                      .black54,
+                                                                  color: textDark_Yellow,
                                                                 ),
                                                                 backgroundColor:
                                                                     Colors.green
