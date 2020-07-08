@@ -4,9 +4,7 @@ import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -176,7 +174,9 @@ class _LabModuleState extends State<LabModule> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LabInfoUpload()),
+                                  builder: (context) => LabInfoUpload(
+                                        id: e['id'],
+                                      )),
                             );
                           },
                           child: LabCard(
