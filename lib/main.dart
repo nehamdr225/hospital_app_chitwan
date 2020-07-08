@@ -9,6 +9,7 @@ import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:chitwan_hospital/state/lab.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:chitwan_hospital/service/user.dart';
@@ -35,6 +36,7 @@ class BootStrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HospitalDataStore()),
         ChangeNotifierProvider(create: (_) => DoctorDataStore()),
         ChangeNotifierProvider(create: (_) => PharmacyDataStore()),
+        ChangeNotifierProvider(create: (_) => LabDataStore()),
       ],
       child: HomeApp(),
     );

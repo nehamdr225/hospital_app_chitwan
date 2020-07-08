@@ -117,6 +117,24 @@ class DatabaseService {
     }
   }
 
+  static Future<bool> updateLabOrderStatus(String id, String status) async {
+    try {
+      await labOrderCollection.document(id).updateData({'status': status});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<bool> updateLabOrderRemark(String id, String remark) async {
+    try {
+      await labOrderCollection.document(id).updateData({'remark': remark});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Stream<QuerySnapshot> getHospitals() {
     return hospitalCollection.snapshots();
   }
@@ -161,5 +179,9 @@ class DatabaseService {
 
   static Future<QuerySnapshot> getPharmacyOrders(String uid) {
     return pOrderCollection.getDocuments();
+  }
+
+  static Future<QuerySnapshot> getLabOrders(String uid) {
+    return labOrderCollection.getDocuments();
   }
 }
