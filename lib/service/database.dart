@@ -191,7 +191,8 @@ class DatabaseService {
         'name': data['name'],
         'email': data['email'],
         'phone': data['phone'],
-        'uid': data['id'],
+        'uid': data['uid'],
+        'title': data['title'],
       });
       return true;
     } catch (e) {

@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
@@ -49,12 +47,16 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
-          child: WhiteAppBar(), preferredSize: Size.fromHeight(40.0)),
+          child: WhiteAppBar(
+            title: 'Order Details',
+            titleColor: Colors.black,
+          ),
+          preferredSize: Size.fromHeight(40.0)),
       backgroundColor: theme.background,
       body: ListView(children: <Widget>[
         BoolIndicator(isActive),
         Padding(
-          padding: const EdgeInsets.only(top: 6.0, bottom: 8.0),
+          padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
           child: Center(
             child: Container(
                 height: 180.0,
@@ -119,7 +121,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                               //   defaultStyle: false,
                               // ),
                               RowInput(
-                                title: "Phone Number:  ",
+                                title: "",
                                 caption: order['phone'],
                                 titleColor: textDark_Yellow,
                                 capColor: textDark_Yellow,

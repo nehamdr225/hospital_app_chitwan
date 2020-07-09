@@ -2,13 +2,15 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:flutter/material.dart';
 
 class LabCard extends StatelessWidget {
-  final String name, email, phone;
-  const LabCard({Key key, this.name, this.email, this.phone}) : super(key: key);
+  final String name, email, phone, title;
+  const LabCard({Key key, this.name, this.email, this.phone, this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
+        margin: EdgeInsets.symmetric(vertical: 9.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: Theme.of(context).colorScheme.background,
@@ -60,6 +62,14 @@ class LabCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      title != null
+                          ? FancyText(
+                              text: title,
+                              fontWeight: FontWeight.w700,
+                              size: 15.5,
+                              textAlign: TextAlign.left,
+                            )
+                          : SizedBox.shrink(),
                       FancyText(
                         text: name,
                         fontWeight: FontWeight.w700,

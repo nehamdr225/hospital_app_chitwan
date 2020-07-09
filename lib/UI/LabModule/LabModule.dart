@@ -183,6 +183,7 @@ class _LabModuleState extends State<LabModule> {
                             name: e['name'],
                             email: e['email'],
                             phone: e['phone'],
+                            title: e['title'],
                           ),
                         ))
                     .toList(),

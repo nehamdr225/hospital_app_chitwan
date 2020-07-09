@@ -17,7 +17,7 @@ class LabOrder extends StatefulWidget {
 }
 
 class _LabOrderState extends State<LabOrder> {
-  String name;
+  String name, title;
   List search;
   Map orderData;
   bool isActive = false;
@@ -26,7 +26,8 @@ class _LabOrderState extends State<LabOrder> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final labDataStore = Provider.of<LabDataStore>(context);
-
+    print(search);
+    print(orderData);
     return Scaffold(
         appBar: PreferredSize(
             child: WhiteAppBar(
@@ -64,6 +65,7 @@ class _LabOrderState extends State<LabOrder> {
                           });
                           print(value);
                           if (value) {
+                            labDataStore.addOrder(orderData);
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -92,6 +94,29 @@ class _LabOrderState extends State<LabOrder> {
               padding: const EdgeInsets.all(10.0),
               child: FForms(
                 icon: Icon(
+                  Icons.title,
+                  color: theme.iconTheme.color,
+                ),
+                text: "Title",
+                type: TextInputType.text,
+                //width: width * 0.80,
+                borderColor: theme.colorScheme.primary,
+                formColor: Colors.white,
+                textColor: blueGrey.withOpacity(0.7),
+                validator: (val) =>
+                    val.isEmpty || val.length < 8 ? 'Title is required' : null,
+                onChanged: (value) {
+                  setState(() {
+                    title = value;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              //phone number
+              padding: const EdgeInsets.all(10.0),
+              child: FForms(
+                icon: Icon(
                   Icons.people,
                   color: theme.iconTheme.color,
                 ),
@@ -112,7 +137,10 @@ class _LabOrderState extends State<LabOrder> {
             ),
             FlatButton(
               // color: theme.primaryColor,
-              onPressed: name != null && name.length > 8
+              onPressed: name != null &&
+                      title != null &&
+                      name.length > 8 &&
+                      title.length > 8
                   ? () {
                       setState(() {
                         orderData = null;
@@ -138,7 +166,10 @@ class _LabOrderState extends State<LabOrder> {
                     'Find User ',
                     style: TextStyle(
                         fontSize: 18.0,
-                        color: name != null && name.length > 8
+                        color: name != null &&
+                                name.length > 8 &&
+                                title != null &&
+                                title.length > 8
                             ? theme.primaryColor
                             : theme.disabledColor),
                   ),
@@ -163,6 +194,7 @@ class _LabOrderState extends State<LabOrder> {
                                     'email': e['email'],
                                     'phone': e['phone'],
                                     'uid': e['id'],
+                                    'title': title
                                   };
                                 });
                               },

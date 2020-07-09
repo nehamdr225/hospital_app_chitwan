@@ -62,6 +62,11 @@ class LabDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  addOrder(Map orderData) {
+    _orders.add(orderData);
+    notifyListeners();
+  }
+
   // Future<bool> update(data) async {
   //   try {
   //     await DatabaseService.updatePharmacyData(uid, data);
