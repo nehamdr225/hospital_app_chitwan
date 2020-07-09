@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabOrderTab.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabProfile.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -136,6 +137,19 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
               height: 5.0,
             ),
             DrawerElements(
+              //Home
+              title: 'Orders',
+              icon: 'assets/images/drawerIcon/calendar.png',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LabOrderTab()));
+              },
+            ),
+            Divider(
+              color: Colors.grey[500],
+              height: 5.0,
+            ),
+            DrawerElements(
               // About Us
               title: 'About Us',
               icon: 'assets/images/drawerIcon/about.png',
@@ -162,27 +176,6 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
-                        text: "Login As User",
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
-                        },
-                        color: blueGrey,
-                        bg: Colors.white,
-                        shape: false),
-                  )
-                : Text(' '),
-            user != null
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10.0, left: 18.0, right: 18.0),
-                    child: FRaisedButton(
-                        elevation: 0.0,
-                        height: 40.0,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
                           _auth.signOut();
@@ -199,7 +192,7 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                         bg: theme.colorScheme.secondary,
                         shape: false),
                   )
-                : Text(' '),
+                : SizedBox.shrink(),
             SizedBox(height: 15.0)
           ],
         ),

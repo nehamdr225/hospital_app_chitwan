@@ -53,6 +53,37 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
           ),
           preferredSize: Size.fromHeight(40.0)),
       backgroundColor: theme.background,
+      floatingActionButton: order['status'] != null &&
+                  order['status'] == 'ready' ||
+              order['status'] == 'complete'
+          ? FloatingActionButton.extended(
+              onPressed: isActive
+                  ? null
+                  : () {
+                      setState(() {
+                        isActive = true;
+                      });
+                      labDataStore
+                          .setOrderStatus(order['id'],
+                              order['status'] == 'ready' ? 'complete' : 'ready')
+                          .then((value) => setState(() {
+                                isActive = false;
+                              }));
+                    },
+              icon: Icon(
+                Icons.calendar_today,
+                color: textDark_Yellow,
+              ),
+              label: FancyText(
+                text: order['status'] == 'ready'
+                    ? "Mark Delivered"
+                    : order['status'] == 'complete' ? "Undo Delivered" : '',
+                color: textDark_Yellow,
+                fontWeight: FontWeight.w600,
+              ),
+              backgroundColor: theme.primary,
+            )
+          : SizedBox.shrink(),
       body: ListView(children: <Widget>[
         BoolIndicator(isActive),
         Padding(
@@ -288,46 +319,59 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                                   ),
                                                 )
                                               ])
-                                            : Row(
-                                                children: <Widget>[
-                                                  FancyText(
-                                                    text: 'Ready',
+                                            : order['status'] == 'complete'
+                                                ? FancyText(
+                                                    text:
+                                                        'Completed & Delivered',
                                                     color: Colors.green,
                                                     fontWeight: FontWeight.w700,
                                                     size: 15.5,
-                                                  ),
-                                                  SizedBox(width: 10.0),
-                                                  InkWell(
-                                                    onTap: isActive
-                                                        ? null
-                                                        : () {
-                                                            setState(() {
-                                                              isActive = true;
-                                                            });
-                                                            labDataStore
-                                                                .setOrderStatus(
-                                                                    order['id'],
-                                                                    null)
-                                                                .then((value) =>
-                                                                    setState(
-                                                                        () {
-                                                                      isActive =
-                                                                          false;
-                                                                    }));
-                                                          },
-                                                    child: FancyText(
-                                                      text: "undo",
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      decorationColor:
-                                                          Colors.red[200],
-                                                      color: Colors.red[200],
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
                                                   )
-                                                ],
-                                              ),
+                                                : Row(
+                                                    children: <Widget>[
+                                                      FancyText(
+                                                        text: 'Ready',
+                                                        color: Colors.green,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        size: 15.5,
+                                                      ),
+                                                      SizedBox(width: 10.0),
+                                                      InkWell(
+                                                        onTap: isActive
+                                                            ? null
+                                                            : () {
+                                                                setState(() {
+                                                                  isActive =
+                                                                      true;
+                                                                });
+                                                                labDataStore
+                                                                    .setOrderStatus(
+                                                                        order[
+                                                                            'id'],
+                                                                        null)
+                                                                    .then((value) =>
+                                                                        setState(
+                                                                            () {
+                                                                          isActive =
+                                                                              false;
+                                                                        }));
+                                                              },
+                                                        child: FancyText(
+                                                          text: "undo",
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          decorationColor:
+                                                              Colors.red[200],
+                                                          color:
+                                                              Colors.red[200],
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                   ],
                                 ),
                               ),
