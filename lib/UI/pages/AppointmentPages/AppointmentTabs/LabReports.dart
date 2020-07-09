@@ -1,26 +1,23 @@
-import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/LabListCard.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabCard.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LabReports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   // final theme = Theme.of(context);
+    // final theme = Theme.of(context);
+    final labs = Provider.of<UserDataStore>(context).labs;
     return ListView.builder(
-          itemCount: PrescriptionData.length,
-          itemBuilder: (BuildContext context, int index) {
-            return LabListCard(
-              name: PrescriptionData[index]['name'],
-              caption: PrescriptionData[index]['cap'],
-              image: PrescriptionData[index]['src'],
-              phone: PrescriptionData[index]['phone'],
-              status: PrescriptionData[index]['status'],
-              date: PrescriptionData[index]['date'],
-              time:PrescriptionData[index]['time'],
-              take: PrescriptionData[index]['take'],
-              data: true,
-            );
-          }
-    );
+        itemCount: labs != null ? labs.length : 0,
+        itemBuilder: (BuildContext context, int index) {
+          return LabCard(
+            email: labs[index]['email'],
+            name: labs[index]['name'],
+            phone: labs[index]['phone'],
+            title: labs[index]['title'],
+            status: labs[index]['status'] ?? null,
+          );
+        });
   }
 }

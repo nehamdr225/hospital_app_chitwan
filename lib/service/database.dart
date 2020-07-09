@@ -204,4 +204,8 @@ class DatabaseService {
   static Future<QuerySnapshot> getLabOrders() {
     return labOrderCollection.getDocuments();
   }
+
+  static Stream<QuerySnapshot> getUserLabOrders(String uid) {
+    return labOrderCollection.where('uid', isEqualTo: uid).snapshots();
+  }
 }

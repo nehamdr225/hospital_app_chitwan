@@ -2,15 +2,16 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:flutter/material.dart';
 
 class LabCard extends StatelessWidget {
-  final String name, email, phone, title;
-  const LabCard({Key key, this.name, this.email, this.phone, this.title})
+  final String name, email, phone, title, status;
+  const LabCard(
+      {Key key, this.name, this.email, this.phone, this.title, this.status})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 9.0),
+        margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 9.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: Theme.of(context).colorScheme.background,
@@ -65,7 +66,7 @@ class LabCard extends StatelessWidget {
                       title != null
                           ? FancyText(
                               text: title,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
                               size: 15.5,
                               textAlign: TextAlign.left,
                             )
@@ -100,6 +101,18 @@ class LabCard extends StatelessWidget {
                           ],
                         ),
                       ),
+                      status != null
+                          ? FancyText(
+                              text: status == 'ready'
+                                  ? 'Ready for pickup'
+                                  : status.substring(0, 1).toUpperCase() +
+                                      status.substring(1),
+                              fontWeight: FontWeight.w500,
+                              size: 15.5,
+                              textAlign: TextAlign.left,
+                              color: theme.primaryColorDark,
+                            )
+                          : SizedBox.shrink(),
                     ],
                   ),
                 ),

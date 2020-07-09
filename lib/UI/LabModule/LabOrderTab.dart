@@ -1,8 +1,5 @@
 import 'package:chitwan_hospital/UI/LabModule/LabCard.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/PCompleted.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/POngoing.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/PRejected.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:flutter/material.dart';

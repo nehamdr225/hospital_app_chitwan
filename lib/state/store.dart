@@ -22,6 +22,7 @@ class UserDataStore extends ChangeNotifier {
                 getUserAppointments();
                 getAvailableDoctors(null);
                 getUserPrescriptions();
+                getUserLabs();
                 // notifyListeners();
               }
             }).catchError((err) {
@@ -40,6 +41,7 @@ class UserDataStore extends ChangeNotifier {
   List _appointments;
   List _doctors;
   List _prescriptions;
+  List _labs;
 
   get uid => _id;
 
@@ -86,6 +88,13 @@ class UserDataStore extends ChangeNotifier {
 
   set prescriptions(newData) {
     _prescriptions = newData;
+    notifyListeners();
+  }
+
+  List get labs => _labs;
+
+  set labs(newData) {
+    _labs = newData;
     notifyListeners();
   }
 
@@ -184,6 +193,17 @@ class UserDataStore extends ChangeNotifier {
         return thisData;
       }).toList();
       prescriptions = addData;
+    });
+  }
+
+  getUserLabs() {
+    DatabaseService.getUserLabOrders(uid).listen((data) {
+      final List addData = data.documents.map((e) {
+        final Map thisData = e.data;
+        thisData['id'] = e.documentID;
+        return thisData;
+      }).toList();
+      labs = addData;
     });
   }
 
