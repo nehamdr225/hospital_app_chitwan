@@ -130,7 +130,7 @@ class _DrawerAppState extends State<DrawerApp> {
                               builder: (context) => FavoritePage()));
                     },
                   )
-                : SizedBox(height:0.0),
+                : SizedBox(height: 0.0),
             DrawerElements(
               //Appointments
               title: 'Appointments',
@@ -170,7 +170,7 @@ class _DrawerAppState extends State<DrawerApp> {
                               builder: (context) => AccountPage()));
                     },
                   )
-                : SizedBox(height:0.0),
+                : SizedBox(height: 0.0),
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -264,10 +264,10 @@ class _DrawerAppState extends State<DrawerApp> {
                           setState(() {
                             loggedIn = false;
                           });
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignIn()));
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                              (Route<dynamic> route) => false);
                         },
                         color: textDark_Yellow,
                         bg: theme.colorScheme.secondary,

@@ -204,10 +204,10 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                           setState(() {
                             loggedIn = false;
                           });
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignIn()));
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                              (Route<dynamic> route) => false);
                         },
                         color: textDark_Yellow,
                         bg: theme.colorScheme.secondary,

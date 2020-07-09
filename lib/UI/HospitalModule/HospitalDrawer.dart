@@ -142,11 +142,13 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
               title: 'Profile',
               icon: 'assets/images/drawerIcon/profile.png',
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HospitalProfileSettings()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HospitalProfileSettings()));
               },
             ),
-            
+
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -206,16 +208,16 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                           setState(() {
                             loggedIn = false;
                           });
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignIn()));
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                              (Route<dynamic> route) => false);
                         },
                         color: textDark_Yellow,
                         bg: theme.colorScheme.secondary,
                         shape: false),
                   )
-                : SizedBox(height:0.0),
+                : SizedBox(height: 0.0),
             SizedBox(height: 15.0)
           ],
         ),

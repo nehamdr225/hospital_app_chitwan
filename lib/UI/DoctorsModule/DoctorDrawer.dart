@@ -125,7 +125,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                               builder: (context) => DoctorProfile()));
                     },
                   )
-                : SizedBox(height:0),
+                : SizedBox(height: 0),
             DrawerElements(
               //Home
               title: 'Appointment',
@@ -207,10 +207,10 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                           setState(() {
                             loggedIn = false;
                           });
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignIn()));
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                              (Route<dynamic> route) => false);
                         },
                         color: textDark_Yellow,
                         bg: theme.colorScheme.secondary,
