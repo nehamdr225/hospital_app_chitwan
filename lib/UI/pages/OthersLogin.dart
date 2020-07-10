@@ -44,6 +44,9 @@ class _OthersLoginState extends State<OthersLogin> {
 
   @override
   Widget build(BuildContext context) {
+    
+
+
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return SafeArea(

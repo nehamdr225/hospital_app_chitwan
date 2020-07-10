@@ -273,7 +273,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 backgroundColor:
                                                     Colors.green.shade400,
                                                 onPressed: isActive
-                                                    ? null
+                                                    ? (){}
                                                     : () {
                                                         setState(() {
                                                           isActive = true;

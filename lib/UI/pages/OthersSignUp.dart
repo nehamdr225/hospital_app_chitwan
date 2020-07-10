@@ -58,7 +58,9 @@ class _OthersSignUpState extends State<OthersSignUp> {
                           image: AssetImage("assets/images/img1.jpeg"))),
                   height: size.height,
                   width: size.width,
-                  child: Stack(children: <Widget>[
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
                     IconButton(
                         alignment: Alignment.topLeft,
                         icon: Icon(
@@ -68,6 +70,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                         onPressed: () {
                           Navigator.pop(context);
                         }),
+                        SizedBox(height: 10.0),
                     Form(
                         key: _formKey,
                         child: Column(

@@ -131,10 +131,7 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                     },
                   )
                 : Text(" "),
-            Divider(
-              color: Colors.grey[500],
-              height: 5.0,
-            ),
+            
             DrawerElements(
               //Home
               title: 'Orders',

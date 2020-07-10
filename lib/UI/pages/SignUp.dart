@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                           image: AssetImage("assets/images/img1.jpeg"))),
                   // height: size.height,
                   // width: size.width,
-                  child: Stack(children: <Widget>[
+                  child: ListView(shrinkWrap: true, children: <Widget>[
                     IconButton(
                         alignment: Alignment.topLeft,
                         icon: Icon(
@@ -59,6 +59,7 @@ class _SignUpState extends State<SignUp> {
                               MaterialPageRoute(
                                   builder: (context) => HomeScreen()));
                         }),
+                    SizedBox(height: 10.0),
                     Form(
                         key: _formKey,
                         child: Column(
