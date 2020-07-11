@@ -14,13 +14,13 @@ class DoctorsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    final doctor = Provider.of<DoctorDataStore>(context).user;
-    final appointments = Provider.of<DoctorDataStore>(context)
-        .appointments
-        .where((element) => element['status'] == null)
-        .toList();
     Provider.of<DoctorDataStore>(context).handleInitialProfileLoad();
-    print(appointments);
+    final doctor = Provider.of<DoctorDataStore>(context).user;
+    List appointments = Provider.of<DoctorDataStore>(context).appointments;
+    appointments = appointments != null
+        ? appointments.where((element) => element['status'] == null).toList()
+        : [];
+    // print(appointments);
     buildAppointmentRequests() {
       List<Widget> widgets = appointments != null
           ? appointments.map<Widget>((each) {

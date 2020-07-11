@@ -21,9 +21,11 @@ class HospitalModule extends StatelessWidget {
     final List doctors = Provider.of<HospitalDataStore>(context).doctors;
     // print(doctors);
     buildHospitalDoctors() {
-      return doctors
-          .map<Widget>((e) => HospitalDoctorListCard(id: e['id']))
-          .toList();
+      return doctors != null
+          ? doctors
+              .map<Widget>((e) => HospitalDoctorListCard(id: e['id']))
+              .toList()
+          : [];
     }
 
     return Scaffold(
