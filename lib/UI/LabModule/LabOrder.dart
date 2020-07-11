@@ -21,6 +21,7 @@ class _LabOrderState extends State<LabOrder> {
   List search;
   Map orderData;
   bool isActive = false;
+  final FocusNode _patientNameFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +115,11 @@ class _LabOrderState extends State<LabOrder> {
             ),
             Padding(
               //phone number
+
               padding: const EdgeInsets.all(10.0),
               child: FForms(
+                textInputAction: TextInputAction.done,
+                currentFocus: _patientNameFocus,
                 icon: Icon(
                   Icons.people,
                   color: theme.iconTheme.color,

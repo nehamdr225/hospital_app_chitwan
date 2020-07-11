@@ -1,6 +1,5 @@
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/DoctorsModule/PatientEdit.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/RecordForm.dart';
 import 'package:chitwan_hospital/state/doctor.dart';

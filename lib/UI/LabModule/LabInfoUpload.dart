@@ -286,7 +286,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                             ? Row(children: [
                                                 FancyText(
                                                   text: "Rejected",
-                                                  color: theme.secondary,
+                                                  color: Colors.red.shade400,
                                                   fontWeight: FontWeight.w700,
                                                   size: 15.5,
                                                 ),
