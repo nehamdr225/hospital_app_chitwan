@@ -137,19 +137,19 @@ class _PatientDetailState extends State<PatientDetail> {
         backgroundColor: theme.primary,
       ),
       body: ListView(children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 12.0),
-          child: FancyText(
-              text: "Edit",
-              color: Colors.blueGrey.withOpacity(0.7),
-              fontWeight: FontWeight.w700,
-              size: 15.0,
-              textAlign: TextAlign.end,
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PatientEdit()));
-              }),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(right: 12.0),
+        //   child: FancyText(
+        //       text: "Edit",
+        //       color: Colors.blueGrey.withOpacity(0.7),
+        //       fontWeight: FontWeight.w700,
+        //       size: 15.0,
+        //       textAlign: TextAlign.end,
+        //       onTap: () {
+        //         Navigator.of(context).push(
+        //             MaterialPageRoute(builder: (context) => PatientEdit()));
+        //       }),
+        // ),
         Padding(
           padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
           child: Center(
@@ -350,13 +350,15 @@ class _PatientDetailState extends State<PatientDetail> {
                                                                   Navigator.pop(
                                                                       context);
                                                                 }),
-                                                                SizedBox(width: 4.0),
+                                                            SizedBox(
+                                                                width: 4.0),
                                                             ActionChip(
                                                                 label:
                                                                     FancyText(
                                                                   text:
                                                                       "Reject",
-                                                                  color: textDark_Yellow,
+                                                                  color:
+                                                                      textDark_Yellow,
                                                                 ),
                                                                 backgroundColor:
                                                                     Colors.green
@@ -375,7 +377,6 @@ class _PatientDetailState extends State<PatientDetail> {
                                                       });
                                                 },
                                               ),
-                                              
                                               SizedBox(width: 10.0),
                                             ],
                                           )
@@ -457,7 +458,9 @@ class _PatientDetailState extends State<PatientDetail> {
           ),
         ),
         Container(
-          height: size.height * 0.60,
+          height: size.height * 0.6,
+          constraints: BoxConstraints(
+              minHeight: size.height * 0.6, maxHeight: double.infinity),
           child: Timeline.builder(
               physics: ClampingScrollPhysics(),
               position: TimelinePosition.Left,

@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
@@ -15,6 +16,7 @@ class RecordForm extends StatefulWidget {
 }
 
 class _RecordFormState extends State<RecordForm> {
+  bool isActive = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Timestamp selectedDate = Timestamp.fromDate(DateTime.now());
   // final appointment = doctorDataStore.appointments
@@ -61,6 +63,7 @@ class _RecordFormState extends State<RecordForm> {
         key: _formKey,
         child: ListView(
           children: <Widget>[
+            isActive ? BoolIndicator(isActive) : SizedBox.shrink(),
             SizedBox(
               height: 10.0,
             ),
@@ -91,8 +94,7 @@ class _RecordFormState extends State<RecordForm> {
                 borderColor: theme.colorScheme.primary,
                 formColor: Colors.white,
                 textColor: blueGrey.withOpacity(0.7),
-                validator: (val) =>
-                    val.isEmpty || val.length < 5 ? 'Medicine' : null,
+                validator: (val) => null,
                 onChanged: (value) {
                   setState(() {
                     diagnosis['medicines'] = value;
@@ -171,16 +173,25 @@ class _RecordFormState extends State<RecordForm> {
                     color: textDark_Yellow,
                     fontWeight: FontWeight.w600,
                   ),
-                  onPressed: () async {
-                    if (!_formKey.currentState.validate()) {
-                      return;
-                    }
-                    diagnosis['date'] = selectedDate;
-                    final List update = appointmentDiagnosis + [diagnosis];
-                    final result =
-                        await doctorDataStore.setDiagnosis(widget.id, update);
-                    if (result) Navigator.pop(context);
-                  },
+                  onPressed: isActive
+                      ? null
+                      : () async {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          setState(() {
+                            isActive = true;
+                          });
+                          diagnosis['date'] = selectedDate;
+                          final List update =
+                              appointmentDiagnosis + [diagnosis];
+                          final result = await doctorDataStore.setDiagnosis(
+                              widget.id, update);
+                          setState(() {
+                            isActive = false;
+                          });
+                          if (result) Navigator.pop(context);
+                        },
                 ),
               ),
             )

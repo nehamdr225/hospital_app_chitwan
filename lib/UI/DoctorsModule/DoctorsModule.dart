@@ -15,7 +15,10 @@ class DoctorsModule extends StatelessWidget {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final doctor = Provider.of<DoctorDataStore>(context).user;
-    final appointments = Provider.of<DoctorDataStore>(context).appointments;
+    final appointments = Provider.of<DoctorDataStore>(context)
+        .appointments
+        .where((element) => element['status'] == null)
+        .toList();
     Provider.of<DoctorDataStore>(context).handleInitialProfileLoad();
     print(appointments);
     buildAppointmentRequests() {
@@ -47,7 +50,6 @@ class DoctorsModule extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 gradient: gradientColor,
                 boxShadow: [
-                  
                   BoxShadow(
                       color: Colors.white60,
                       offset: Offset(-4, -4),
