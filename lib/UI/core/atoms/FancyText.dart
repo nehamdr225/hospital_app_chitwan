@@ -36,6 +36,7 @@ class FancyText extends StatelessWidget {
       onTap: onTap,
       child: Text(
         text,
+        overflow: TextOverflow.ellipsis,
         textAlign: textAlign,
         style: defaultStyle == true
             ? Theme.of(context).textTheme.bodyText2.copyWith(

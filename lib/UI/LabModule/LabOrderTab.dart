@@ -32,7 +32,7 @@ class _LabOrderTabState extends State<LabOrderTab>
             logo: false,
             settings: false,
             tabbar: true,
-            title: "Pharmacy",
+            title: "Laboratory",
             controller: _tabController,
             tabs: <Widget>[
               Tab(
