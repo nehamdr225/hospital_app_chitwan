@@ -4,6 +4,7 @@ import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,7 @@ class _LabModuleState extends State<LabModule> {
         backgroundColor: theme.primary,
       ),
       body: ListView(children: <Widget>[
+        Indicator(user),
         Padding(
           padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
           child: Center(
