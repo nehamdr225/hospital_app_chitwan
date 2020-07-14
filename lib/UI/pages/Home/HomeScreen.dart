@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/HoizontalList.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
@@ -49,6 +50,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: theme.colorScheme.primary,
       ),
       body: ListView(children: <Widget>[
+        Indicator(doctors),
         Padding(
           padding: const EdgeInsets.only(
               top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),

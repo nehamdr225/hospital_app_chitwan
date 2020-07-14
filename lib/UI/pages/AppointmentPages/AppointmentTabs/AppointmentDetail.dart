@@ -15,6 +15,7 @@ class AppointmentDetail extends StatelessWidget {
   AppointmentDetail({
     this.id,
   });
+  // bool isActive = false;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -111,6 +112,7 @@ class AppointmentDetail extends StatelessWidget {
       ),
       backgroundColor: theme.colorScheme.background,
       body: ListView(children: <Widget>[
+        // Indicator(isActive),
         Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
           child: Center(
@@ -193,7 +195,7 @@ class AppointmentDetail extends StatelessWidget {
                                       ),
                                     ),
                                     FancyText(
-                                      text: appointment["time"]??'Not set',
+                                      text: appointment["time"] ?? 'Not set',
                                       color: textDark_Yellow,
                                     )
                                   ],

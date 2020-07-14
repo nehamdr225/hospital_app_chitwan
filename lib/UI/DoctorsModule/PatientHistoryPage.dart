@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:provider/provider.dart';
 
-class PatientHistoryPage extends StatelessWidget {
+class PatientHistoryPage extends StatefulWidget {
   final String date;
   final String diagnosis;
   final String title;
@@ -24,6 +25,13 @@ class PatientHistoryPage extends StatelessWidget {
     this.patient: false,
     this.id,
   });
+
+  @override
+  _PatientHistoryPageState createState() => _PatientHistoryPageState();
+}
+
+class _PatientHistoryPageState extends State<PatientHistoryPage> {
+  bool isActive = false;
   @override
   Widget build(BuildContext context) {
     final userDataStore = Provider.of<UserDataStore>(context);
@@ -33,11 +41,12 @@ class PatientHistoryPage extends StatelessWidget {
             child: WhiteAppBar(
               titleColor: Theme.of(context).colorScheme.primary,
               leading: true,
-              title: date,
+              title: widget.date,
               fontSize: 15.0,
             ),
             preferredSize: Size.fromHeight(50.0)),
         body: ListView(children: [
+          BoolIndicator(isActive),
           Table(children: <TableRow>[
             TableRow(children: [
               Padding(
@@ -53,7 +62,7 @@ class PatientHistoryPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
                 child: FancyText(
-                  text: title,
+                  text: widget.title,
                   textAlign: TextAlign.left,
                   size: 15.5,
                   fontWeight: FontWeight.w700,
@@ -75,7 +84,7 @@ class PatientHistoryPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
                 child: FancyText(
-                  text: diagnosis,
+                  text: widget.diagnosis,
                   textAlign: TextAlign.left,
                   size: 15.5,
                   fontWeight: FontWeight.w700,
@@ -97,7 +106,7 @@ class PatientHistoryPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
                 child: FancyText(
-                  text: medicine ?? 'none',
+                  text: widget.medicine ?? 'none',
                   textAlign: TextAlign.left,
                   size: 15.5,
                   fontWeight: FontWeight.w700,
@@ -119,7 +128,7 @@ class PatientHistoryPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
                 child: FancyText(
-                  text: followUp,
+                  text: widget.followUp,
                   textAlign: TextAlign.left,
                   size: 15.5,
                   fontWeight: FontWeight.w700,
@@ -130,19 +139,30 @@ class PatientHistoryPage extends StatelessWidget {
           ]),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: patient && medicine != null && medicine.length > 0
+            child: widget.patient &&
+                    widget.medicine != null &&
+                    widget.medicine.length > 0
                 ? FRaisedButton(
                     text: 'Order Medicine',
-                    onPressed: () {
-                      userDataStore
-                          .orderMedicine(id, medicine, title)
-                          .then((bool result) {
-                        if (result) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
-                        }
-                      });
-                    },
+                    onPressed: isActive
+                        ? null
+                        : () {
+                            setState(() {
+                              isActive = true;
+                            });
+                            userDataStore
+                                .orderMedicine(
+                                    widget.id, widget.medicine, widget.title)
+                                .then((bool result) {
+                              setState(() {
+                                isActive = false;
+                              });
+                              if (result) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                              }
+                            });
+                          },
                     bgcolor: Theme.of(context).primaryColorDark,
                     color: textDark_Yellow,
                   )

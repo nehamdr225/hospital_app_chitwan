@@ -56,14 +56,13 @@ class _RecordFormState extends State<RecordForm> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
           child: WhiteAppBar(
-              titleColor: theme.colorScheme.primary,
-              title: "Appointment Form")),
+              titleColor: theme.colorScheme.primary, title: "Diagnosis Form")),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            isActive ? BoolIndicator(isActive) : SizedBox.shrink(),
+            BoolIndicator(isActive),
             SizedBox(
               height: 10.0,
             ),

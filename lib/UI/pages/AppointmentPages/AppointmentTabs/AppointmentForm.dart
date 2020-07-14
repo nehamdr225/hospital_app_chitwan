@@ -1,11 +1,11 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/service/appointment.dart';
 import 'package:chitwan_hospital/state/store.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +25,6 @@ class AppointmentForm extends StatefulWidget {
 
 class _AppointmentFormState extends State<AppointmentForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final db = Firestore.instance;
   Gender _gender = Gender.male;
   AppointmentT _appointment = AppointmentT.opd;
   List name = [];
@@ -48,6 +47,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     "5:00 PM",
     "7:00 PM",
   ];
+  bool isActive = false;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -103,6 +103,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
         key: _formKey,
         child: ListView(
           children: <Widget>[
+            BoolIndicator(isActive),
             SizedBox(
               height: 10.0,
             ),
@@ -538,7 +539,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     onChanged: (Gender value) {
                       setState(() {
                         _gender = value;
-                      }); 
+                      });
                     },
                   ),
                   FancyText(
@@ -567,6 +568,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     if (!_formKey.currentState.validate()) {
                       return;
                     }
+                    setState(() {
+                      isActive = true;
+                    });
                     _formKey.currentState.save();
                     widget.appointment.firstName = _fName;
                     widget.appointment.lastName = _lName;
@@ -587,13 +591,20 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     updateData['doctorId'] = doctor['id'];
                     userDataStore.createAppointment(updateData).then((value) {
                       print(value);
+                      setState(() {
+                        isActive = false;
+                      });
                       if (value != 'error') {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                                builder: (context) => HomeScreen()),
+                            (route) => false);
                       }
                     }).catchError((err) {
+                      setState(() {
+                        isActive = false;
+                      });
                       print(err);
                     });
                   },
