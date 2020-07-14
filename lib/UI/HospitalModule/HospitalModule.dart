@@ -25,7 +25,7 @@ class HospitalModule extends StatelessWidget {
           ? doctors
               .map<Widget>((e) => HospitalDoctorListCard(id: e['id']))
               .toList()
-          : [];
+          : <Widget>[];
     }
 
     return Scaffold(

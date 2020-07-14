@@ -15,11 +15,11 @@ class HospitalDataStore extends ChangeNotifier {
           if (value != null) {
             DatabaseService.getHospitalData(value).then((userData) {
               if (userData.data != null) {
-                user = userData.data;
+                _userData = userData.data;
                 // getAvailableDoctors(userData.data['name']);
-                uid = value;
-                type = userData.data['role'];
-                // notifyListeners();
+                _id = value;
+                _userType = userData.data['role'];
+                notifyListeners();
               }
             }).catchError((err) {
               print(err);
@@ -88,8 +88,11 @@ class HospitalDataStore extends ChangeNotifier {
         if (doctors == null) {
           doctors = newDoctorData;
         } else {
-          newDoctorData.removeWhere((element) =>
-              _doctors.firstWhere((doc) => doc['id'] == element['id']));
+          newDoctorData.removeWhere((element) {
+            final firstVal =
+                _doctors.firstWhere((doc) => doc['id'] == element['id']);
+            return firstVal != null ? true : false;
+          });
           _doctors.addAll(newDoctorData);
           notifyListeners();
         }
