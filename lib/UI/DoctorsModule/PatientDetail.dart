@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
@@ -21,6 +22,7 @@ class PatientDetail extends StatefulWidget {
 }
 
 class _PatientDetailState extends State<PatientDetail> {
+  bool isActive = false;
   @override
   Widget build(BuildContext context) {
     final doctorDataStore = Provider.of<DoctorDataStore>(context);
@@ -149,8 +151,9 @@ class _PatientDetailState extends State<PatientDetail> {
         //             MaterialPageRoute(builder: (context) => PatientEdit()));
         //       }),
         // ),
+        BoolIndicator(isActive),
         Padding(
-          padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
+          padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
           child: Center(
             child: Container(
                 height: 200.0,
@@ -302,10 +305,17 @@ class _PatientDetailState extends State<PatientDetail> {
                                                   backgroundColor:
                                                       Colors.green.shade400,
                                                   onPressed: () {
+                                                    setState(() {
+                                                      isActive = true;
+                                                    });
                                                     doctorDataStore
                                                         .setAppointmentStatus(
                                                             widget.id,
-                                                            'accepted');
+                                                            'accepted')
+                                                        .then((value) =>
+                                                            setState(() {
+                                                              isActive = false;
+                                                            }));
                                                   }),
                                               SizedBox(width: 10.0),
                                               ActionChip(
@@ -363,13 +373,25 @@ class _PatientDetailState extends State<PatientDetail> {
                                                                     Colors.green
                                                                         .shade400,
                                                                 onPressed: () {
+                                                                  setState(() {
+                                                                    isActive =
+                                                                        true;
+                                                                  });
                                                                   doctorDataStore
                                                                       .setAppointmentStatus(
                                                                           widget
                                                                               .id,
-                                                                          'rejected');
-                                                                  Navigator.pop(
-                                                                      context);
+                                                                          'rejected')
+                                                                      .then(
+                                                                          (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      isActive =
+                                                                          false;
+                                                                    });
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  });
                                                                 }),
                                                           ],
                                                         );
@@ -394,9 +416,16 @@ class _PatientDetailState extends State<PatientDetail> {
                                                     //   doctorDecision =
                                                     //       "undecided";
                                                     // });
+                                                    setState(() {
+                                                      isActive = true;
+                                                    });
                                                     doctorDataStore
                                                         .setAppointmentStatus(
-                                                            widget.id, null);
+                                                            widget.id, null)
+                                                        .then((value) =>
+                                                            setState(() {
+                                                              isActive = false;
+                                                            }));
                                                   },
                                                   child: FancyText(
                                                     text: "Undo",
@@ -424,9 +453,17 @@ class _PatientDetailState extends State<PatientDetail> {
                                                       //   doctorDecision =
                                                       //       "undecided";
                                                       // });
+                                                      setState(() {
+                                                        isActive = true;
+                                                      });
                                                       doctorDataStore
                                                           .setAppointmentStatus(
-                                                              widget.id, null);
+                                                              widget.id, null)
+                                                          .then((value) =>
+                                                              setState(() {
+                                                                isActive =
+                                                                    false;
+                                                              }));
                                                     },
                                                     child: FancyText(
                                                       text: "Undo",

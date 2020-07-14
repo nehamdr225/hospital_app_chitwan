@@ -108,20 +108,20 @@ class DoctorDataStore extends ChangeNotifier {
     }
   }
 
-  setAppointmentStatus(String uid, dynamic status) {
-    DatabaseService.setAppointmentStatus(uid, status).then((value) {
-      if (value) {
-        final newAppointments = _appointments.map<Map>((each) {
-          if (each['id'] == uid) {
-            final data = each;
-            data['status'] = status;
-            return data;
-          }
-          return each;
-        }).toList();
-        appointments = newAppointments;
-      }
-    });
+  Future<bool> setAppointmentStatus(String uid, dynamic status) async {
+    bool value = await DatabaseService.setAppointmentStatus(uid, status);
+    if (value) {
+      final newAppointments = _appointments.map<Map>((each) {
+        if (each['id'] == uid) {
+          final data = each;
+          data['status'] = status;
+          return data;
+        }
+        return each;
+      }).toList();
+      appointments = newAppointments;
+    }
+    return value;
   }
 
   Future<bool> setDiagnosis(String uid, List data) async {

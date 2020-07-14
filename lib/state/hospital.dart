@@ -113,6 +113,16 @@ class HospitalDataStore extends ChangeNotifier {
     return DatabaseService.markDoctorVerified(id);
   }
 
+  Future<bool> deleteDoctor(String id) async {
+    bool status = await DatabaseService.deleteDoctor(id);
+    if (status) {
+      _doctors.removeWhere((element) => element['id'] == id);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
   updateDoctorValue(String id, String key, dynamic value) {
     final newVal = _doctors.map<Map>((e) {
       if (e['id'] == id) {

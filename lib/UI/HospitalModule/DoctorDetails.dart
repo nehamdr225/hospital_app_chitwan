@@ -1,6 +1,8 @@
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/DetailPageOptions.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
@@ -9,15 +11,23 @@ import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HospitalDoctorDetails extends StatelessWidget {
+class HospitalDoctorDetails extends StatefulWidget {
   final id;
   HospitalDoctorDetails({this.id});
+
+  @override
+  _HospitalDoctorDetailsState createState() => _HospitalDoctorDetailsState();
+}
+
+class _HospitalDoctorDetailsState extends State<HospitalDoctorDetails> {
+  bool isActive = false;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
-    final doctor = hospitalDataStore.getOneDoctor(id: id);
+    final doctor = hospitalDataStore.getOneDoctor(id: widget.id);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -30,6 +40,7 @@ class HospitalDoctorDetails extends StatelessWidget {
       ),
       backgroundColor: theme.colorScheme.background,
       body: ListView(children: <Widget>[
+        BoolIndicator(isActive),
         Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
           child: Center(
@@ -103,10 +114,11 @@ class HospitalDoctorDetails extends StatelessWidget {
                                   width: 18,
                                 ),
                                 doctor['isVerified'] ?? false
-                                    ? Icon(Icons.verified_user, size: 20.0,
-                                        color: Colors.green)
+                                    ? Icon(Icons.verified_user,
+                                        size: 20.0, color: Colors.green)
                                     : Icon(
-                                        Icons.cancel, size: 20.0,
+                                        Icons.cancel,
+                                        size: 20.0,
                                         color: Colors.red,
                                       ),
                                 SizedBox(
@@ -226,15 +238,75 @@ class HospitalDoctorDetails extends StatelessWidget {
             shape: true,
             radius: 5.0,
             onPressed: doctor['isVerified'] ?? false
-                ? () {}
+                ? () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: FancyText(
+                                text: "Are you sure?",
+                                size: 15.0,
+                                fontWeight: FontWeight.w600,
+                                color: blueGrey),
+                            content: FancyText(
+                                text:
+                                    "Are you sure you want to delete this Doctor?",
+                                size: 15.0,
+                                fontWeight: FontWeight.w400,
+                                color: blueGrey),
+                            actions: <Widget>[
+                              InkWell(
+                                  child: FancyText(
+                                      text: "Cancel",
+                                      color: theme.colorScheme.secondary),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  }),
+                              SizedBox(width: 4.0),
+                              ActionChip(
+                                  label: FancyText(
+                                    text: "Delete",
+                                    color: textDark_Yellow,
+                                  ),
+                                  backgroundColor: Colors.green.shade400,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      isActive = true;
+                                    });
+                                    hospitalDataStore
+                                        .deleteDoctor(widget.id)
+                                        .then((value) {
+                                      setState(() {
+                                        isActive = false;
+                                      });
+                                      if (value) {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HospitalModule()),
+                                                (route) => false);
+                                      }
+                                    });
+                                  }),
+                            ],
+                          );
+                        });
+                  }
                 : () async {
+                    setState(() {
+                      isActive = true;
+                    });
                     bool result =
                         await hospitalDataStore.verifyDoctor(doctor['id']);
-                    print(result);
                     if (result) {
                       hospitalDataStore.updateDoctorValue(
-                          id, 'isVerified', true);
+                          widget.id, 'isVerified', true);
                     }
+                    setState(() {
+                      isActive = false;
+                    });
                   },
           ),
         ),

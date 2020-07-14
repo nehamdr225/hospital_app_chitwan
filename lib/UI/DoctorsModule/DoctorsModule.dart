@@ -1,6 +1,8 @@
+import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DoctorAppointmentPage.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorProfile.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
@@ -22,11 +24,33 @@ class DoctorsModule extends StatelessWidget {
         : [];
     // print(appointments);
     buildAppointmentRequests() {
-      List<Widget> widgets = appointments != null
+      print(appointments);
+      List<Widget> widgets = appointments != null && appointments.length > 0
           ? appointments.map<Widget>((each) {
               return PatientListCard(id: each['id']);
             }).toList()
-          : [Text('')];
+          : [
+              Text(
+                'You have no new appointments!',
+                style: TextStyle(color: Colors.black),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: FRaisedButton(
+                  text: 'View all appointments',
+                  color: textDark_Yellow,
+                  width: size.width * 0.95,
+                  bgcolor: theme.primary,
+                  fontSize: 16.0,
+                  radius: 6.0,
+                  shape: true,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DoctorAppointmentPage()));
+                  },
+                ),
+              )
+            ];
       return widgets;
     }
 
@@ -40,6 +64,7 @@ class DoctorsModule extends StatelessWidget {
       drawer: DoctorDrawerApp(),
       backgroundColor: theme.background,
       body: ListView(children: <Widget>[
+        Indicator(doctor),
         Padding(
           padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
           child: Center(

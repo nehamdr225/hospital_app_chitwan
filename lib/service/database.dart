@@ -177,6 +177,15 @@ class DatabaseService {
     }
   }
 
+  static Future<bool> deleteDoctor(String uid) async {
+    try {
+      await doctorCollection.document(uid).delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Stream<QuerySnapshot> getUserPharmacyOrders(String uid) {
     return pOrderCollection.where('userId', isEqualTo: uid).snapshots();
   }
