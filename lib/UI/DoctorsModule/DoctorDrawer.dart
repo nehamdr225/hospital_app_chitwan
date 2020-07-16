@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/Chat/ChatHome.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DoctorAppointmentPage.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -135,6 +136,15 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => DoctorAppointmentPage()));
+              },
+            ),
+            DrawerElements(
+              //Appointments
+              title: 'Messages',
+              icon: 'assets/images/drawerIcon/chat.png',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ChatHome()));
               },
             ),
             DrawerElements(

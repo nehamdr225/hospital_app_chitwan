@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/Chat/ChatScreen.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
@@ -214,7 +215,11 @@ class _PatientDetailState extends State<PatientDetail> {
                                           Icons.chat,
                                           color: textDark_Yellow,
                                         ),
-                                        onPressed: () {}),
+                                        onPressed: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChatScreen()))),
                                     IconButton(
                                         icon: Icon(
                                           Icons.video_call,

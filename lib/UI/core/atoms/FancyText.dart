@@ -15,6 +15,7 @@ class FancyText extends StatelessWidget {
   final wordSpacing;
   final fontfamily;
   final TextAlign textAlign;
+  final TextOverflow textOverflow;
 
   FancyText(
       {this.text,
@@ -29,7 +30,7 @@ class FancyText extends StatelessWidget {
       this.letterSpacing,
       this.wordSpacing,
       this.decorationColor: textDark,
-      this.textAlign: TextAlign.center});
+      this.textAlign: TextAlign.center, this.textOverflow: TextOverflow.visible});
   @override
   Widget build(BuildContext context) {
     return InkWell(
