@@ -23,6 +23,7 @@ class UserDataStore extends ChangeNotifier {
                 getAvailableDoctors(null);
                 getUserPrescriptions();
                 getUserLabs();
+                fetchMessages();
                 // notifyListeners();
               }
             }).catchError((err) {
@@ -110,6 +111,23 @@ class UserDataStore extends ChangeNotifier {
     if (messages == null) return null;
     return messages.firstWhere((element) =>
         element['userId'] == userId && element['doctorId'] == doctorId);
+  }
+
+  fetchMessages() {
+    DatabaseService.getMessagesUser(uid).listen((event) {
+      final data = event.documents.map((e) {
+        final Map messageData = e.data;
+        messageData['id'] = e.documentID;
+        return messageData;
+      });
+      if (messages != null) {
+        _messages.add(data);
+        notifyListeners();
+        return;
+      }
+      messages = data;
+      return;
+    });
   }
 
   fetchUserData() {

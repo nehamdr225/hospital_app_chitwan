@@ -220,11 +220,12 @@ class DatabaseService {
     return labOrderCollection.where('uid', isEqualTo: uid).snapshots();
   }
 
-  static Stream<QuerySnapshot> getMessages(String uid, String docId) {
-    return messageCollection
-        .where('user', isEqualTo: uid)
-        .where('doctor', isEqualTo: docId)
-        .snapshots();
+  static Stream<QuerySnapshot> getMessagesUser(String uid) {
+    return messageCollection.where('user', isEqualTo: uid).snapshots();
+  }
+
+  static Stream<QuerySnapshot> getMessagesDoctor(String uid) {
+    return messageCollection.where('doctor', isEqualTo: uid).snapshots();
   }
 
   static Future<void> createMessageDocument(String userId, String docId) {

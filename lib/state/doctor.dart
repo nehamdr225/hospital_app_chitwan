@@ -18,6 +18,7 @@ class DoctorDataStore extends ChangeNotifier {
                 uid = value;
                 type = userData.data['role'];
                 getAppointments();
+                fetchMessages();
               }
             }).catchError((err) {
               print(err);
@@ -73,6 +74,23 @@ class DoctorDataStore extends ChangeNotifier {
     if (messages == null) return null;
     return messages.firstWhere((element) =>
         element['userId'] == userId && element['doctorId'] == doctorId);
+  }
+
+  fetchMessages() {
+    DatabaseService.getMessagesDoctor(uid).listen((event) {
+      final data = event.documents.map((e) {
+        final Map messageData = e.data;
+        messageData['id'] = e.documentID;
+        return messageData;
+      });
+      if (messages != null) {
+        _messages.add(data);
+        notifyListeners();
+        return;
+      }
+      messages = data;
+      return;
+    });
   }
 
   fetchUserData() {
