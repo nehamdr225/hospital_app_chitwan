@@ -221,17 +221,22 @@ class DatabaseService {
   }
 
   static Stream<QuerySnapshot> getMessagesUser(String uid) {
-    return messageCollection.where('user', isEqualTo: uid).snapshots();
+    return messageCollection.where('uid', isEqualTo: uid).snapshots();
   }
 
   static Stream<QuerySnapshot> getMessagesDoctor(String uid) {
-    return messageCollection.where('doctor', isEqualTo: uid).snapshots();
+    return messageCollection.where('docId', isEqualTo: uid).snapshots();
   }
 
-  static Future<void> createMessageDocument(String userId, String docId) {
-    return messageCollection
-        .document()
-        .setData({'user': userId, 'doctor': docId, 'conversations': []});
+  static Future<void> createMessageDocument(
+      String userId, String docId, String userName, String docName) {
+    return messageCollection.document().setData({
+      'uid': userId,
+      'docId': docId,
+      'user': userName,
+      'doctor': docName,
+      'conversations': []
+    });
   }
 
   static Future<void> updateMessages(String uid, Map data) {

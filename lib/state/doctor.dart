@@ -70,10 +70,23 @@ class DoctorDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  createMessageCollection(String userId, String userName) {
+    DatabaseService.createMessageDocument(userId, uid, userName, user['name'])
+        .then((value) {
+      _messages.add({
+        'uid': userId,
+        'docId': uid,
+        'user': userName,
+        'doctor': user['name'],
+        'conversations': []
+      });
+    });
+  }
+
   getSpecificMessages(String userId, String doctorId) {
     if (messages == null) return null;
-    return messages.firstWhere((element) =>
-        element['userId'] == userId && element['doctorId'] == doctorId);
+    return messages.firstWhere(
+        (element) => element['uid'] == userId && element['docId'] == doctorId);
   }
 
   fetchMessages() {

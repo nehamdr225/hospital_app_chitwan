@@ -107,10 +107,37 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  createMessageCollection(String docId, String docName) {
+    DatabaseService.createMessageDocument(uid, docId, user['name'], docName)
+        .then((value) {
+      if (_messages != null)
+        _messages.add({
+          'uid': uid,
+          'docId': docId,
+          'user': user['name'],
+          'doctor': docName,
+          'conversations': []
+        });
+      else
+        _messages = [
+          {
+            'uid': uid,
+            'docId': docId,
+            'user': user['name'],
+            'doctor': docName,
+            'conversations': []
+          }
+        ];
+      notifyListeners();
+    });
+  }
+
   getSpecificMessages(String userId, String doctorId) {
-    if (messages == null) return null;
-    return messages.firstWhere((element) =>
-        element['userId'] == userId && element['doctorId'] == doctorId);
+    if (messages == null || messages.length == 0) return null;
+    return messages.firstWhere(
+      (element) => element['uid'] == userId && element['docId'] == doctorId,
+      orElse: () => null,
+    );
   }
 
   fetchMessages() {
@@ -119,12 +146,14 @@ class UserDataStore extends ChangeNotifier {
         final Map messageData = e.data;
         messageData['id'] = e.documentID;
         return messageData;
-      });
+      }).toList();
       if (messages != null) {
-        _messages.add(data);
+        _messages.addAll(data);
         notifyListeners();
         return;
       }
+      print('Message Data');
+      print(data);
       messages = data;
       return;
     });

@@ -372,9 +372,10 @@ class AppointmentDetail extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChatScreen(
-                              userId: appointment['userId'],
-                              doctorId: appointment[
-                                  'doctorId']))), //user: chats[index].sender))),
+                                userId: appointment['userId'],
+                                doctorId: appointment['doctorId'],
+                                docName: appointment['doctor'],
+                              ))), //user: chats[index].sender))),
                 ),
               )
             : SizedBox.shrink(),

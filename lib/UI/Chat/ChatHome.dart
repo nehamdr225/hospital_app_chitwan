@@ -19,6 +19,7 @@ class ChatHome extends StatefulWidget {
 
 class _ChatHomeState extends State<ChatHome> {
   String loading;
+
   @override
   Widget build(BuildContext context) {
     var userDataStore;
@@ -96,8 +97,9 @@ class _ChatHomeState extends State<ChatHome> {
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ChatScreen(
-                              userId: messages[0]['userId'],
-                              doctorId: messages[0]['doctorId'],
+                              userId: messages[index]['userId'],
+                              doctorId: messages[index]['doctorId'],
+                              docName: messages[index]['doctor'],
                             ),
                           ),
                         ),

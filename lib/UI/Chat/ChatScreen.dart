@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  final userId, doctorId, userType;
-  ChatScreen({this.userId, this.doctorId, this.userType = 'user'});
+  final userId, doctorId, userType, docName;
+  ChatScreen(
+      {this.userId, this.doctorId, this.userType = 'user', this.docName});
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -151,7 +152,10 @@ class _ChatScreenState extends State<ChatScreen> {
       userDataStore = Provider.of<DoctorDataStore>(context);
     Map messages =
         userDataStore.getSpecificMessages(widget.userId, widget.doctorId);
-
+    if (messages == null) {
+      userDataStore.createMessageCollection(widget.doctorId, widget.docName);
+    }
+    print(messages);
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.primaryVariant,
