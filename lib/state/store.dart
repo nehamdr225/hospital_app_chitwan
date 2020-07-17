@@ -110,7 +110,10 @@ class UserDataStore extends ChangeNotifier {
   createMessageCollection(String docId, String docName) {
     DatabaseService.createMessageDocument(uid, docId, user['name'], docName)
         .then((value) {
-      if (_messages != null)
+      if (_messages != null) {
+        final isThereAnEntry = _messages.any(
+            (element) => element['uid'] == uid && element['docId'] == docId);
+        if (isThereAnEntry != null) return;
         _messages.add({
           'uid': uid,
           'docId': docId,
@@ -118,7 +121,7 @@ class UserDataStore extends ChangeNotifier {
           'doctor': docName,
           'conversations': []
         });
-      else
+      } else
         _messages = [
           {
             'uid': uid,
@@ -148,6 +151,18 @@ class UserDataStore extends ChangeNotifier {
         return messageData;
       }).toList();
       if (messages != null) {
+        data.removeWhere((element) {
+          final match = _messages.firstWhere(
+            (check) {
+              return check['uid'] == element['uid'] &&
+                  check['docId'] == element['docId'];
+            },
+            orElse: () => null,
+          );
+
+          if (match != null) return true;
+          return false;
+        });
         _messages.addAll(data);
         notifyListeners();
         return;

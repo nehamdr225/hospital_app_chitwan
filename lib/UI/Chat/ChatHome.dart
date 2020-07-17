@@ -87,18 +87,22 @@ class _ChatHomeState extends State<ChatHome> {
             child: messages != null && messages.length > 0
                 ? ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: chats.length,
+                    itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {
+                      final List conversations =
+                          messages[index]['conversations'];
                       return MsgList(
-                        name: chats[index].sender.name,
-                        unRead: chats[index].unread,
-                        profileImg: chats[index].sender.imageUrl,
-                        messageText: chats[index].text,
+                        name: messages[index]['doctor'],
+                        unRead: false,
+                        profileImg: null,
+                        messageText: conversations.length == 0
+                            ? 'Start a conversation'
+                            : conversations[conversations.length - 1],
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ChatScreen(
-                              userId: messages[index]['userId'],
-                              doctorId: messages[index]['doctorId'],
+                              userId: messages[index]['uid'],
+                              doctorId: messages[index]['docId'],
                               docName: messages[index]['doctor'],
                             ),
                           ),
