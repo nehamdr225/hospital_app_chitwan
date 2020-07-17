@@ -9,25 +9,22 @@ class MsgList extends StatelessWidget {
   final messageText;
   final onTap;
   MsgList(
-      {this.profileImg,
-      this.name,
-      this.unRead,
-      this.messageText,
-      this.onTap});
+      {this.profileImg, this.name, this.unRead, this.messageText, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    print(profileImg);
     final theme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
-          child: Container(
-            
+      child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade300, width: 0.7),
-          color:
-              unRead == true ? blueGrey.withOpacity(0.2) : theme.background,
+          color: unRead == true ? blueGrey.withOpacity(0.2) : theme.background,
         ),
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),//left: 8.0, top: 8.0, bottom: 8.0, right: 20.0),
+        padding: EdgeInsets.symmetric(
+            horizontal: 10.0,
+            vertical: 8.0), //left: 8.0, top: 8.0, bottom: 8.0, right: 20.0),
         width: MediaQuery.of(context).size.width,
         height: 80.0,
         child: Row(
@@ -73,9 +70,9 @@ class MsgList extends StatelessWidget {
                       ),
                       SizedBox(height: 5.0),
                       Container(
-                        width: MediaQuery.of(context).size.width *0.45,
+                        width: MediaQuery.of(context).size.width * 0.45,
                         child: FancyText(
-                          text: messageText == null? "Message": messageText,
+                          text: messageText == null ? "Message" : messageText,
                           textAlign: TextAlign.start,
                           textOverflow: TextOverflow.ellipsis,
                         ),
@@ -83,8 +80,7 @@ class MsgList extends StatelessWidget {
                     ]),
               ),
               SizedBox(width: 15.0),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              Column(mainAxisAlignment: MainAxisAlignment.center,
                   //crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     FancyText(
@@ -94,16 +90,13 @@ class MsgList extends StatelessWidget {
                       textAlign: TextAlign.start,
                       color: blueGrey.withOpacity(0.5),
                     ),
+                    unRead == true ? SizedBox(height: 5.0) : SizedBox.shrink(),
                     unRead == true
-                        ? SizedBox(height: 5.0)
-                        : SizedBox.shrink(),
-                    unRead  == true
                         ? Container(
-                          padding: EdgeInsets.all(4.0),
-                            
+                            padding: EdgeInsets.all(4.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(11.0),
-                               color: theme.primary),
+                                borderRadius: BorderRadius.circular(11.0),
+                                color: theme.primary),
                             child: FancyText(
                               text: "New",
                               color: textDark_Yellow,

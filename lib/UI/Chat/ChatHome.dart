@@ -5,9 +5,14 @@ import 'package:chitwan_hospital/UI/core/atoms/AppBarW.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/ChatModels/messageModel.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatHome extends StatefulWidget {
+  final userType;
+  ChatHome({this.userType = 'user'});
   @override
   _ChatHomeState createState() => _ChatHomeState();
 }
@@ -16,14 +21,22 @@ class _ChatHomeState extends State<ChatHome> {
   String loading;
   @override
   Widget build(BuildContext context) {
+    var userDataStore;
+    if (widget.userType == 'user')
+      userDataStore = Provider.of<UserDataStore>(context);
+    else
+      userDataStore = Provider.of<DoctorDataStore>(context);
+
+    final messages = userDataStore.messages;
     final theme = Theme.of(context).colorScheme;
+    print(messages);
     return Scaffold(
       backgroundColor: theme.background,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: AppBarW(
           backButtonColor: textDark_Yellow,
-          title: "Chat Screen",
+          title: "Messages",
         ),
       ),
       body: Column(children: <Widget>[
@@ -70,24 +83,28 @@ class _ChatHomeState extends State<ChatHome> {
         Expanded(
           child: Container(
             height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: chats.length,
-              itemBuilder: (BuildContext context, int index) {
-                return MsgList(
-                  name: chats[index].sender.name,
-                  unRead: chats[index].unread,
-                  profileImg: chats[index].sender.imageUrl,
-                  messageText: chats[index].text,
-                  onTap: () =>
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ChatScreen(user: chats[index].sender,),
-                      ),
-                    ),
-                );
-              }, //
-            ),
+            child: messages != null && messages.length > 0
+                ? ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: chats.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return MsgList(
+                        name: chats[index].sender.name,
+                        unRead: chats[index].unread,
+                        profileImg: chats[index].sender.imageUrl,
+                        messageText: chats[index].text,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ChatScreen(
+                              userId: messages[0]['userId'],
+                              doctorId: messages[0]['doctorId'],
+                            ),
+                          ),
+                        ),
+                      );
+                    }, //
+                  )
+                : Text('You have no conversations!'),
           ),
         )
       ]),

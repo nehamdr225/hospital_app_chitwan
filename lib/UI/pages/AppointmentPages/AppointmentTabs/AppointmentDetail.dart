@@ -5,7 +5,6 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/state/ChatModels/messageModel.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -358,16 +357,27 @@ class AppointmentDetail extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        
-        appointment['status'] == 'accepted' ?
-        FRaisedButton(
-          width: size.width * 0.95,
-          bg: theme.colorScheme.primary,
-          color: textDark_Yellow,
-          text: "Chat with Doctor",
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ChatScreen())),//user: chats[index].sender))),
-        ): SizedBox.shrink(),
+
+        appointment['status'] == 'accepted'
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: FRaisedButton(
+                  // width: size.width * 0.95,
+                  bg: theme.colorScheme.primary,
+                  color: textDark_Yellow,
+                  text: "Chat with Doctor",
+                  shape: true,
+                  radius: 12.0,
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChatScreen(
+                              userId: appointment['userId'],
+                              doctorId: appointment[
+                                  'doctorId']))), //user: chats[index].sender))),
+                ),
+              )
+            : SizedBox.shrink(),
         Container(
           constraints: BoxConstraints(
             minHeight: size.height * 0.60,

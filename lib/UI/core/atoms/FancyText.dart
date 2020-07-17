@@ -30,14 +30,15 @@ class FancyText extends StatelessWidget {
       this.letterSpacing,
       this.wordSpacing,
       this.decorationColor: textDark,
-      this.textAlign: TextAlign.center, this.textOverflow: TextOverflow.visible});
+      this.textAlign: TextAlign.center,
+      this.textOverflow: TextOverflow.visible});
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Text(
         text,
-        overflow: TextOverflow.ellipsis,
+        overflow: textOverflow,
         textAlign: textAlign,
         style: defaultStyle == true
             ? Theme.of(context).textTheme.bodyText2.copyWith(

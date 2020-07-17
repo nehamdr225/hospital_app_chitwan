@@ -1,5 +1,3 @@
-
-
 import 'package:chitwan_hospital/state/ChatModels/userModel.dart';
 
 class Message {
@@ -13,13 +11,13 @@ class Message {
 }
 
 final UserModel currentUser =
-    UserModel(id: 0, name: 'Neha Mdr.', imageUrl: "assets/nm.jpg");
+    UserModel(id: 0, name: 'Neha Mdr.', imageUrl: null);
 
 //users
 
-final UserModel neha = UserModel(id: 1, name: "Neha Mdr.", imageUrl: "assets/nm.jpg");
+final UserModel neha = UserModel(id: 1, name: "Neha Mdr.", imageUrl: null);
 
-final UserModel ashish = UserModel(id: 2, name: "Ashish Kafle", imageUrl: "assets/ak2.jpg");
+final UserModel ashish = UserModel(id: 2, name: "Ashish Kafle", imageUrl: null);
 
 List<Message> chats = [
   Message(
@@ -28,16 +26,10 @@ List<Message> chats = [
     text: 'Hey, How are you? I hope you are doing well.',
     unread: true,
   ),
-  Message(
-    sender: neha,
-    time: '5:30 PM',
-    text: 'Hey!',
-    unread: false
-  ),
+  Message(sender: neha, time: '5:30 PM', text: 'Hey!', unread: false),
 ];
 
 List<Message> messages = [
-  
   Message(
     sender: ashish,
     time: '7:11 PM',
@@ -66,6 +58,4 @@ List<Message> messages = [
     isLiked: true,
     unread: true,
   ),
-  
-  
 ];

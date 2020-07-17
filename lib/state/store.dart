@@ -42,11 +42,19 @@ class UserDataStore extends ChangeNotifier {
   List _doctors;
   List _prescriptions;
   List _labs;
+  List _messages;
 
   get uid => _id;
 
   set uid(userId) {
     _id = userId;
+    notifyListeners();
+  }
+
+  List get messages => _messages;
+
+  set messages(messageList) {
+    _messages = messageList;
     notifyListeners();
   }
 
@@ -96,6 +104,12 @@ class UserDataStore extends ChangeNotifier {
   set labs(newData) {
     _labs = newData;
     notifyListeners();
+  }
+
+  getSpecificMessages(String userId, String doctorId) {
+    if (messages == null) return null;
+    return messages.firstWhere((element) =>
+        element['userId'] == userId && element['doctorId'] == doctorId);
   }
 
   fetchUserData() {

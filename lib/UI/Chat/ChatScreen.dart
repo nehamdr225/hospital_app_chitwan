@@ -1,14 +1,16 @@
-
 import 'package:chitwan_hospital/UI/core/atoms/AppBarW.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/ChatModels/messageModel.dart';
 import 'package:chitwan_hospital/state/ChatModels/userModel.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
+import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  final UserModel user;
-  ChatScreen({this.user});
+  final userId, doctorId, userType;
+  ChatScreen({this.userId, this.doctorId, this.userType = 'user'});
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -54,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ? SizedBox.shrink()
             : CircleAvatar(
                 //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
-                backgroundColor: theme.background,
+                backgroundColor: theme.primary,
                 foregroundColor: Colors.white,
                 // radius: 10.0,
                 child: imageUrl != null
@@ -73,9 +75,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           return '${a[0]} ${b[0]}';
                         }),
                         style: Theme.of(context).textTheme.bodyText2.copyWith(
-                            color: theme.primary,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700),
+                            color: textDark_Yellow,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500),
                       ),
               ),
         Container(
@@ -105,12 +107,13 @@ class _ChatScreenState extends State<ChatScreen> {
             text: message.text,
             textAlign: TextAlign.left,
             size: 15.0,
+            textOverflow: TextOverflow.visible,
           ),
         ),
         isMe
             ? CircleAvatar(
                 //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
-                backgroundColor: theme.background,
+                backgroundColor: theme.secondary,
                 foregroundColor: Colors.white,
                 // radius: 10.0,
                 child: myImg != null
@@ -120,8 +123,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: AssetImage(myImg),
-                                fit: BoxFit.cover)),
+                                image: AssetImage(myImg), fit: BoxFit.cover)),
                         //child: Image.file(_user.myImg)
                       )
                     : Text(
@@ -129,9 +131,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           return '${a[0]} ${b[0]}';
                         }),
                         style: Theme.of(context).textTheme.bodyText2.copyWith(
-                            color: theme.primary,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700),
+                            color: textDark_Yellow,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500),
                       ),
               )
             : SizedBox.shrink(),
@@ -142,6 +144,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
+    var userDataStore;
+    if (widget.userType == 'user')
+      userDataStore = Provider.of<UserDataStore>(context);
+    else
+      userDataStore = Provider.of<DoctorDataStore>(context);
+    Map messages =
+        userDataStore.getSpecificMessages(widget.userId, widget.doctorId);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.primaryVariant,
@@ -150,13 +160,13 @@ class _ChatScreenState extends State<ChatScreen> {
           child: AppBarW(
             elevation: 0.0,
             backButtonColor: textDark_Yellow,
-            title: widget.user.name,
+            title: userDataStore.user['name'],
             settings: true,
           ),
         ),
         body: GestureDetector(
-          onTap: ()=> FocusScope.of(context).unfocus(),
-                  child: Column(children: <Widget>[
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(children: <Widget>[
             Expanded(
                 child: Container(
               decoration: BoxDecoration(
@@ -173,14 +183,27 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: ListView.builder(
                       reverse: true,
                       padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                      itemCount: messages.length,
+                      itemCount: messages != null
+                          ? messages['conversations'].length
+                          : 1,
                       itemBuilder: (BuildContext context, int index) {
-                        final Message message = messages[index];
-                        final bool isMe = message.sender.id == currentUser.id;
-                        final myImg = currentUser.imageUrl;
-                        final imageUrl = widget.user.imageUrl;
-                        final name = widget.user.name;
-                        return _buildMessage(message, isMe, imageUrl, name, myImg);
+                        if (messages == null ||
+                            messages['conversations'].length == 0)
+                          return Text(
+                            'Start a conversation!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                                color: Colors.black54),
+                          );
+                        final Message message = messages['conversation'][index];
+                        final bool isMe = messages['userId'] == currentUser.id;
+                        final myImg = null; //currentUser.imageUrl;
+                        final imageUrl = null; //widget.user.imageUrl;
+                        final name = userDataStore.user['name'];
+                        return _buildMessage(
+                            message, isMe, imageUrl, name, myImg);
                       })),
             )),
             _buildMessageComposer()

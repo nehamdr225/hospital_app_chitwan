@@ -33,6 +33,14 @@ class DoctorDataStore extends ChangeNotifier {
   Map<String, dynamic> _userData;
   List hospitals;
   List<Map> _appointments;
+  List _messages;
+
+  List get messages => _messages;
+
+  set messages(messageList) {
+    _messages = messageList;
+    notifyListeners();
+  }
 
   get uid => _id;
 
@@ -59,6 +67,12 @@ class DoctorDataStore extends ChangeNotifier {
   set appointments(newUserData) {
     _appointments = newUserData;
     notifyListeners();
+  }
+
+  getSpecificMessages(String userId, String doctorId) {
+    if (messages == null) return null;
+    return messages.firstWhere((element) =>
+        element['userId'] == userId && element['doctorId'] == doctorId);
   }
 
   fetchUserData() {
