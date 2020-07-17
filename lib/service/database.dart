@@ -17,6 +17,8 @@ class DatabaseService {
   static final CollectionReference pOrderCollection = db.collection('porders');
   static final CollectionReference labOrderCollection =
       db.collection('labOrders');
+  static final CollectionReference messageCollection =
+      db.collection('messages');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
     return await userCollection.document(uid).setData(data);
@@ -216,5 +218,24 @@ class DatabaseService {
 
   static Stream<QuerySnapshot> getUserLabOrders(String uid) {
     return labOrderCollection.where('uid', isEqualTo: uid).snapshots();
+  }
+
+  static Stream<QuerySnapshot> getMessages(String uid, String docId) {
+    return messageCollection
+        .where('user', isEqualTo: uid)
+        .where('doctor', isEqualTo: docId)
+        .snapshots();
+  }
+
+  static Future<void> createMessageDocument(String userId, String docId) {
+    return messageCollection
+        .document()
+        .setData({'user': userId, 'doctor': docId, 'conversations': []});
+  }
+
+  static Future<void> updateMessages(String uid, Map data) {
+    return messageCollection.document(uid).updateData({
+      'conversations': FieldValue.arrayUnion([data])
+    });
   }
 }
