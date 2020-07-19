@@ -86,7 +86,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
         color: blueGrey.withOpacity(0.9));
 
     final userDataStore = Provider.of<UserDataStore>(context);
-    print(userDataStore.hospitals);
+    // print(userDataStore.hospitals);
     List _myHospital = [_valHospital];
     //  userDataStore.hospitals != null
     //     ? userDataStore.hospitals.map<String>((e) => e['name']).toList()

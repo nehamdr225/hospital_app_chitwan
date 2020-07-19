@@ -1,22 +1,21 @@
 import 'dart:io';
+import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/LabForm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class LabForm extends StatefulWidget {
-  final LabForms labForm;
+  final LabAppointment labForm;
   final doctor;
   final department;
-  LabForm(
-      {this.doctor, this.department, @required this.labForm, Key key})
+  LabForm({this.doctor, this.department, @required this.labForm, Key key})
       : super(key: key);
   @override
   _LabFormState createState() => _LabFormState();
@@ -264,7 +263,6 @@ class _LabFormState extends State<LabForm> {
                         .document(uid)
                         .collection("labs")
                         .add(widget.labForm.toJson());
-
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));

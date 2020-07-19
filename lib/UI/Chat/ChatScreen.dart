@@ -1,8 +1,7 @@
 import 'package:chitwan_hospital/UI/core/atoms/AppBarW.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/state/ChatModels/messageModel.dart';
-import 'package:chitwan_hospital/state/ChatModels/userModel.dart';
+import 'package:chitwan_hospital/models/Message.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

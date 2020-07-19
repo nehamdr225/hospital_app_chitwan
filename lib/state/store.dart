@@ -38,7 +38,7 @@ class UserDataStore extends ChangeNotifier {
   String _id;
   String _userType;
   Map<String, dynamic> _userData;
-  List _hospitals;
+  // List _hospitals;
   List _appointments;
   List _doctors;
   List _prescriptions;
@@ -72,12 +72,12 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get hospitals => _hospitals;
+  // List get hospitals => _hospitals;
 
-  set hospitals(newHospitalData) {
-    _hospitals = newHospitalData;
-    notifyListeners();
-  }
+  // set hospitals(newHospitalData) {
+  //   _hospitals = newHospitalData;
+  //   notifyListeners();
+  // }
 
   List get appointments => _appointments;
 
@@ -244,25 +244,25 @@ class UserDataStore extends ChangeNotifier {
     }
   }
 
-  void getAvailableHospitals() {
-    DatabaseService.getHospitals().listen((QuerySnapshot onData) {
-      print(['Got hospital data\n']);
-      final List allHospitals = onData.documents.map<Map>((element) {
-        final Map data = element.data;
-        data['id'] = element.documentID;
-        return data;
-      }).toList();
-      if (hospitals != null) {
-        allHospitals.removeWhere((element) =>
-            hospitals.any((hosp) => element['name'] == hosp['name']));
-        hospitals.addAll(allHospitals);
-      } else {
-        hospitals = allHospitals;
-      }
-    }, onError: (e) {
-      print('Got hospital error\n $e');
-    });
-  }
+  // void getAvailableHospitals() {
+  //   DatabaseService.getHospitals().listen((QuerySnapshot onData) {
+  //     print(['Got hospital data\n']);
+  //     final List allHospitals = onData.documents.map<Map>((element) {
+  //       final Map data = element.data;
+  //       data['id'] = element.documentID;
+  //       return data;
+  //     }).toList();
+  //     if (hospitals != null) {
+  //       allHospitals.removeWhere((element) =>
+  //           hospitals.any((hosp) => element['name'] == hosp['name']));
+  //       hospitals.addAll(allHospitals);
+  //     } else {
+  //       hospitals = allHospitals;
+  //     }
+  //   }, onError: (e) {
+  //     print('Got hospital error\n $e');
+  //   });
+  // }
 
   Future createAppointment(Map data) async {
     return DatabaseService.createAppointment(data);
