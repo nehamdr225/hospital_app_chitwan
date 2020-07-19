@@ -228,6 +228,13 @@ class DatabaseService {
     return messageCollection.where('docId', isEqualTo: uid).snapshots();
   }
 
+  static Stream<QuerySnapshot> getMessages(String uid, String docId) {
+    return messageCollection
+        .where('docId', isEqualTo: docId)
+        .where('uid', isEqualTo: uid)
+        .snapshots();
+  }
+
   static Future<void> createMessageDocument(
       String userId, String docId, String userName, String docName) {
     return messageCollection.document().setData({

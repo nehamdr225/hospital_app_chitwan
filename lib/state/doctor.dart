@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class DoctorDataStore extends ChangeNotifier {
@@ -80,6 +81,19 @@ class DoctorDataStore extends ChangeNotifier {
         'doctor': user['name'],
         'conversations': []
       });
+    });
+  }
+
+  listenToMessages(String docId) {
+    DatabaseService.getMessages(uid, docId).listen((event) {
+      if (event.documents.length > 0) {
+        final data = event.documents[0].data;
+        data['id'] = event.documents[0].documentID;
+        _messages.map((e) {
+          if (e['id'] == data['id']) return data;
+          return e;
+        });
+      }
     });
   }
 

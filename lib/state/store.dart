@@ -143,6 +143,20 @@ class UserDataStore extends ChangeNotifier {
     );
   }
 
+  listenToMessages(String docId) {
+    DatabaseService.getMessages(uid, docId).listen((event) {
+      if (event.documents.length > 0) {
+        final data = event.documents[0].data;
+        data['id'] = event.documents[0].documentID;
+        _messages.map((e) {
+          if (e['id'] == data['id']) return data;
+          return e;
+        });
+        notifyListeners();
+      }
+    });
+  }
+
   fetchMessages() {
     DatabaseService.getMessagesUser(uid).listen((event) {
       final data = event.documents.map((e) {
@@ -171,6 +185,20 @@ class UserDataStore extends ChangeNotifier {
       print(data);
       messages = data;
       return;
+    });
+  }
+
+  sendMessage(Map data, String docId) {
+    DatabaseService.updateMessages(docId, data).then((value) {
+      _messages.map((e) {
+        if (e['id'] == docId) {
+          final data = e;
+          data['conversations'].add(data);
+          return data;
+        }
+        return e;
+      });
+      notifyListeners();
     });
   }
 
