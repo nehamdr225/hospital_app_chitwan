@@ -113,7 +113,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
               child: Row(
                 children: <Widget>[
                   FForms(
-                    initialValue: userDataStore.user['name'].split(' ')[0],
+                    initialValue: userDataStore.user.name.split(' ')[0],
                     borderColor: theme.colorScheme.primary,
                     formColor: Colors.white,
                     text: "First Name",
@@ -133,7 +133,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   ),
                   SizedBox(width: 10.0),
                   FForms(
-                    initialValue: userDataStore.user['name'].split(' ')[1],
+                    initialValue: userDataStore.user.name.split(' ')[1],
                     borderColor: theme.colorScheme.primary,
                     formColor: Colors.white,
                     text: "Last Name",
@@ -153,7 +153,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
               //phone number
               padding: const EdgeInsets.all(10.0),
               child: FForms(
-                initialValue: userDataStore.user['phone'],
+                initialValue: userDataStore.user.name,
                 icon: Icon(
                   Icons.phone,
                   color: theme.iconTheme.color,
@@ -584,7 +584,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     widget.appointment.date = selectedDate;
                     widget.appointment.time = _valTime;
                     final updateData = widget.appointment.toJson();
-                    updateData['userId'] = userDataStore.uid;
+                    updateData['userId'] = userDataStore.user.name;
                     final doctor = userDataStore.doctors.firstWhere(
                         (element) => element['name'] == _valDoctor,
                         orElse: () => {name: ''});

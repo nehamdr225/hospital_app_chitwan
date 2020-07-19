@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/models/User.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -5,51 +6,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserDataStore extends ChangeNotifier {
-  handleInitialProfileLoad() {
+  handleInitialProfileLoad() async {
     try {
       if (user == null) {
-        print('Bootstrapping data store\n');
-        AuthService.getCurrentUID().then((value) {
-          print('value $value');
-          if (value != null) {
-            DatabaseService.getUserData(value).then((userData) {
-              if (userData.data != null) {
-                user = userData.data;
-                uid = value;
-                type = userData.data['role'];
-                // getAvailableHospitals();
-                getUserAppointments();
-                getAvailableDoctors(null);
-                getUserPrescriptions();
-                getUserLabs();
-                fetchMessages();
-                // notifyListeners();
-              }
-            }).catchError((err) {
-              print(err);
-            });
+        final String userId = await AuthService.getCurrentUID();
+        if (userId != null) {
+          final userData = await DatabaseService.getUserData(userId);
+          if (userData.data != null) {
+            final data = userData.data;
+            data['uid'] = userId;
+            user = User.fromJson(data);
+            getUserAppointments();
+            getAvailableDoctors(null);
+            getUserPrescriptions();
+            getUserLabs();
+            fetchMessages();
           }
-        });
+        }
       }
     } catch (e) {}
   }
 
-  String _id;
-  String _userType;
-  Map<String, dynamic> _userData;
+  User _userData;
   // List _hospitals;
   List _appointments;
   List _doctors;
   List _prescriptions;
   List _labs;
   List _messages;
-
-  get uid => _id;
-
-  set uid(userId) {
-    _id = userId;
-    notifyListeners();
-  }
 
   List get messages => _messages;
 
@@ -58,15 +42,9 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  get type => _userType;
+  User get user => _userData;
 
-  set type(userType) {
-    _userType = userType;
-  }
-
-  Map get user => _userData;
-
-  set user(newUserData) {
+  set user(User newUserData) {
     _userData = newUserData;
     notifyListeners();
   }
@@ -107,25 +85,25 @@ class UserDataStore extends ChangeNotifier {
   }
 
   createMessageCollection(String docId, String docName) {
-    DatabaseService.createMessageDocument(uid, docId, user['name'], docName)
+    DatabaseService.createMessageDocument(user.uid, docId, user.name, docName)
         .then((value) {
       if (_messages != null) {
-        final isThereAnEntry = _messages.any(
-            (element) => element['uid'] == uid && element['docId'] == docId);
+        final isThereAnEntry = _messages.any((element) =>
+            element['uid'] == user.uid && element['docId'] == docId);
         if (isThereAnEntry != null) return;
         _messages.add({
-          'uid': uid,
+          'uid': user.uid,
           'docId': docId,
-          'user': user['name'],
+          'user': user.name,
           'doctor': docName,
           'conversations': []
         });
       } else
         _messages = [
           {
-            'uid': uid,
+            'uid': user.uid,
             'docId': docId,
-            'user': user['name'],
+            'user': user.name,
             'doctor': docName,
             'conversations': []
           }
@@ -143,7 +121,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   listenToMessages(String docId) {
-    DatabaseService.getMessages(uid, docId).listen((event) {
+    DatabaseService.getMessages(user.uid, docId).listen((event) {
       if (event.documents.length > 0) {
         final data = event.documents[0].data;
         data['id'] = event.documents[0].documentID;
@@ -157,7 +135,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   fetchMessages() {
-    DatabaseService.getMessagesUser(uid).listen((event) {
+    DatabaseService.getMessagesUser(user.uid).listen((event) {
       final data = event.documents.map((e) {
         final Map messageData = e.data;
         messageData['id'] = e.documentID;
@@ -201,17 +179,17 @@ class UserDataStore extends ChangeNotifier {
     });
   }
 
-  fetchUserData() {
-    if (uid != null && type != null) {
-      if (type == 'user') {
-        DatabaseService.getUserData(uid).then((value) {
-          if (value.data != null) {
-            user = value.data;
-          }
-        }).catchError((err) {
-          print(err);
-        });
-      }
+  fetchUserData(uid) {
+    if (user == null) {
+      DatabaseService.getUserData(uid).then((value) {
+        if (value.data != null) {
+          final data = value.data;
+          data['uid'] = uid;
+          user = User.fromJson(data);
+        }
+      }).catchError((err) {
+        print(err);
+      });
     }
   }
 
@@ -268,7 +246,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   getUserAppointments() {
-    final result = DatabaseService.getAppointments(uid);
+    final result = DatabaseService.getAppointments(user.uid);
     result.listen((data) {
       final List addData = data.documents.map<Map>((e) {
         final Map thisdata = e.data;
@@ -289,7 +267,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   getUserPrescriptions() {
-    DatabaseService.getUserPharmacyOrders(uid).listen((data) {
+    DatabaseService.getUserPharmacyOrders(user.uid).listen((data) {
       final List addData = data.documents.map((e) {
         final Map thisData = e.data;
         thisData['id'] = e.documentID;
@@ -300,7 +278,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   getUserLabs() {
-    DatabaseService.getUserLabOrders(uid).listen((data) {
+    DatabaseService.getUserLabOrders(user.uid).listen((data) {
       final List addData = data.documents.map((e) {
         final Map thisData = e.data;
         thisData['id'] = e.documentID;
@@ -316,14 +294,12 @@ class UserDataStore extends ChangeNotifier {
 
   Future<bool> orderMedicine(String aid, String medicine, String title) async {
     final result =
-        await DatabaseService.createPharmacyOrder(uid, aid, medicine);
+        await DatabaseService.createPharmacyOrder(user.uid, aid, medicine);
     return result;
   }
 
   clearState() {
-    _id = null;
     _userData = null;
-    _userType = null;
     // _hospitals = null;
     _appointments = null;
     setLocalUserData('userType', null);

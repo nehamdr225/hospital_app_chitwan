@@ -70,7 +70,7 @@ class _AccountPageState extends State<AccountPage> {
                             //child: Image.file(_profileImg)
                           )
                         : Text(
-                            user['name'].split(' ').reduce((a, b) {
+                            user.name.split(' ').reduce((a, b) {
                               return '${a[0]} ${b[0]}';
                             }),
                             style: Theme.of(context)
@@ -104,21 +104,21 @@ class _AccountPageState extends State<AccountPage> {
           Container(
             padding: const EdgeInsets.all(10.0),
             child: InputField(
-              value: user['name'],
+              value: user.name,
               title: 'Name',
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: InputField(
-              value: user['email'],
+              value: user.name,
               title: 'Email',
             ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
-              value: user['phone'],
+              value: user.phone,
               title: 'Contact',
             ),
           ),

@@ -51,9 +51,7 @@ class _SignInState extends State<SignIn> {
               error = 'Could not sign in with those credentials';
             });
           } else {
-            userDataStore.uid = result.uid;
-            userDataStore.type = 'user';
-            userDataStore.fetchUserData();
+            userDataStore.fetchUserData(result.uid);
             setLocalUserData('userType', 'user');
             Navigator.pushAndRemoveUntil(
                 context,
