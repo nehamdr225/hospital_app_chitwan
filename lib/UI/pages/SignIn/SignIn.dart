@@ -9,7 +9,7 @@ import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/state/store.dart';
+import 'package:chitwan_hospital/state/user.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;

@@ -8,7 +8,7 @@ import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Appoi
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
 import 'package:chitwan_hospital/models/doctorAppointment.dart';
-import 'package:chitwan_hospital/state/store.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

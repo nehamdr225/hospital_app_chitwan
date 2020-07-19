@@ -12,7 +12,7 @@ import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
-import 'package:chitwan_hospital/state/store.dart';
+import 'package:chitwan_hospital/state/user.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

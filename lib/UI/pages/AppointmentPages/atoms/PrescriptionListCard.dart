@@ -1,7 +1,7 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
-import 'package:chitwan_hospital/state/store.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -253,7 +253,8 @@ class _ListCardState extends State<ListCard> {
                         decoration: BoxDecoration(
                             color: displayData['status'] != null &&
                                         displayData['status'] == "Accepted" ||
-                                    displayData['status'] == "Ready" || displayData['status'] == "accepted"
+                                    displayData['status'] == "Ready" ||
+                                    displayData['status'] == "accepted"
                                 ? Colors.green.shade400
                                 : theme.colorScheme.secondary,
                             borderRadius: BorderRadius.only(
