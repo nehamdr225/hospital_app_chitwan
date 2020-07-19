@@ -96,7 +96,8 @@ class _ChatHomeState extends State<ChatHome> {
                         profileImg: null,
                         messageText: conversations.length == 0
                             ? 'Start a conversation'
-                            : conversations[conversations.length - 1],
+                            : conversations[conversations.length - 1]
+                                ['message'],
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ChatScreen(

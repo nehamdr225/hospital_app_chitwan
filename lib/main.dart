@@ -13,7 +13,6 @@ import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:chitwan_hospital/state/store.dart';
-import 'package:chitwan_hospital/service/user.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class BootStrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => new STheme()),
-        ChangeNotifierProvider(create: (_) => AuthService()),
+        // ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => UserDataStore()),
         ChangeNotifierProvider(create: (_) => HospitalDataStore()),
         ChangeNotifierProvider(create: (_) => DoctorDataStore()),
@@ -179,8 +178,8 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: AuthService().user,
-        builder: (BuildContext context, AsyncSnapshot<User> user) {
+        stream: AuthService.user,
+        builder: (BuildContext context, AsyncSnapshot user) {
           switch (user.connectionState) {
             case ConnectionState.waiting:
               return BlankLoader();

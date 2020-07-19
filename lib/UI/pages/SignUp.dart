@@ -15,7 +15,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final AuthService _auth = AuthService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email = "", _password = "";
   String error = '';
@@ -181,7 +180,7 @@ class _SignUpState extends State<SignUp> {
                                       onPressed: () async {
                                         if (_formKey.currentState.validate()) {
                                           setState(() => loading = true);
-                                          dynamic result = await _auth
+                                          dynamic result = await AuthService
                                               .registerWithEmailAndPassword(
                                                   _email,
                                                   _password,

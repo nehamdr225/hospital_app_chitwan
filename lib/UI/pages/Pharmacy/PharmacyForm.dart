@@ -4,17 +4,16 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/pharmacyForm.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 
 enum PickupOptions { pickup, delivery }
 
 class PharmacyForm extends StatefulWidget {
-  final Pharmacy pharmacyForm;
+  final PharmacyAppointment pharmacyForm;
   final doctor;
   final department;
   PharmacyForm(
@@ -189,7 +188,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
                     onChanged: (PickupOptions value) {
                       setState(() {
                         _poptions = value;
-                      }); 
+                      });
                     },
                   ),
                   FancyText(
@@ -202,9 +201,13 @@ class _PharmacyFormState extends State<PharmacyForm> {
             ),
             _poptions == PickupOptions.delivery
                 ? Padding(
-                  padding: const EdgeInsets.only(left:10.0, bottom: 10.0),
-                  child: FancyText(text: 'Delivery charge Rs.100', color: blueGrey.withOpacity(0.6), textAlign: TextAlign.start,),
-                )
+                    padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                    child: FancyText(
+                      text: 'Delivery charge Rs.100',
+                      color: blueGrey.withOpacity(0.6),
+                      textAlign: TextAlign.start,
+                    ),
+                  )
                 : Text(' '),
             Padding(
               //date
@@ -311,8 +314,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
                     widget.pharmacyForm.image1 = _image;
                     widget.pharmacyForm.image2 = _image2;
 
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
+                    final uid = await AuthService.getCurrentUID();
                     await db
                         .collection("users")
                         .document(uid)

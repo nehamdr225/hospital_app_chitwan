@@ -26,7 +26,6 @@ class _DrawerAppState extends State<DrawerApp> {
     final userDataStore = Provider.of<UserDataStore>(context);
     final user = userDataStore.user;
 
-    final auth = AuthService();
     final theme = Theme.of(context);
 
     return Drawer(
@@ -269,7 +268,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          auth.signOut();
+                          AuthService.signOut();
                           userDataStore.clearState();
                           setState(() {
                             loggedIn = false;

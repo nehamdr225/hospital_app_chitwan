@@ -7,16 +7,16 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
+import 'package:chitwan_hospital/models/doctorAppointment.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
-import 'package:chitwan_hospital/service/appointment.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new Appointments(null, null, "Department", "Dr. ",
-        "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
+    final newAppointment = new DoctorAppointment(null, null, "Department",
+        "Dr. ", "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final theme = Theme.of(context);
     Provider.of<UserDataStore>(context).handleInitialProfileLoad();
     final List doctors = Provider.of<UserDataStore>(context).doctors;

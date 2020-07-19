@@ -9,7 +9,6 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class LabForm extends StatefulWidget {
   final LabAppointment labForm;
@@ -256,8 +255,7 @@ class _LabFormState extends State<LabForm> {
                     widget.labForm.image1 = _image;
                     widget.labForm.image2 = _image2;
 
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
+                    final uid = await AuthService.getCurrentUID();
                     await db
                         .collection("users")
                         .document(uid)

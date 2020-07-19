@@ -18,7 +18,6 @@ class LabDrawerApp extends StatefulWidget {
 }
 
 class _LabDrawerAppState extends State<LabDrawerApp> {
-  final AuthService _auth = AuthService();
   // final user = AuthService().user;
 
   @override
@@ -131,7 +130,6 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                     },
                   )
                 : Text(" "),
-            
             DrawerElements(
               //Home
               title: 'Orders',
@@ -174,7 +172,7 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          _auth.signOut();
+                          AuthService.signOut();
                           labDataStore.clearState();
                           setState(() {
                             loggedIn = false;

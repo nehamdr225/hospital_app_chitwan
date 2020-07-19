@@ -6,7 +6,6 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
-import 'package:provider/provider.dart';
 
 class PharmacyReady extends StatefulWidget {
   @override
@@ -167,8 +166,7 @@ class _PharmacyReadyState extends State<PharmacyReady> {
                     // widget.appointment.lastName = _lName;
                     // widget.appointment.phoneNum = _fPhone;
 
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
+                    final uid = await AuthService.getCurrentUID();
                     print(uid);
                     // await db
                     //     .collection("users")

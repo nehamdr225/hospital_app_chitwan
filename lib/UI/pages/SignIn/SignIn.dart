@@ -19,7 +19,6 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
   bool obscure = true;
@@ -43,7 +42,7 @@ class _SignInState extends State<SignIn> {
           });
           _formKey.currentState.save();
           dynamic result =
-              await _auth.signInWithEmailAndPassword(email, password);
+              await AuthService.signInWithEmailAndPassword(email, password);
           setState(() {
             loading = false;
           });

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 abstract class MessageModel {
   String sender;
   String time;
@@ -19,7 +21,10 @@ class Message implements MessageModel {
 
   Message.fromJson(json) {
     this.sender = json['sender'];
-    this.time = json['timestamp'];
+    this.time = convertFromTimeStamp(json['timestamp']);
     this.text = json['message'];
   }
 }
+
+String convertFromTimeStamp(Timestamp timestamp) =>
+    timestamp.toDate().toIso8601String();

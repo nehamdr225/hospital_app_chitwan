@@ -6,7 +6,7 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
-import 'package:chitwan_hospital/service/pharmacyForm.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:flutter/material.dart';
 
 class PharmacyDetails extends StatelessWidget {
@@ -28,7 +28,7 @@ class PharmacyDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final newPharmacy =
-        new Pharmacy(null, null, null, null, null, null, null, null);
+        new PharmacyAppointment(null, null, null, null, null, null, null, null);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(

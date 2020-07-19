@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DatabaseService {
+abstract class DatabaseService {
   static final Firestore db = Firestore.instance;
   static final CollectionReference userCollection = db.collection('users');
   static final CollectionReference doctorCollection = db.collection('doctors');

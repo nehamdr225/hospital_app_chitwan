@@ -2,9 +2,9 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DoctorDetails.dart';
+import 'package:chitwan_hospital/models/doctorAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:chitwan_hospital/service/appointment.dart';
 
 class HomeListCard extends StatefulWidget {
   final doctorName;
@@ -34,7 +34,7 @@ class HomeListCard extends StatefulWidget {
 class _HomeListCardState extends State<HomeListCard> {
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new Appointments(
+    final newAppointment = new DoctorAppointment(
         null,
         null,
         widget.department,
@@ -67,7 +67,6 @@ class _HomeListCardState extends State<HomeListCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-                
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),

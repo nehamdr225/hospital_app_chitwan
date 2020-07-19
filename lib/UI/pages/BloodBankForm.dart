@@ -3,10 +3,9 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/BloodRequest.dart';
+import 'package:chitwan_hospital/models/BloodRequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 
 class BloodBankForm extends StatefulWidget {
@@ -25,9 +24,7 @@ class _BloodBankFormState extends State<BloodBankForm> {
   String _fPhone;
   String _fAddress;
   String _bGroup;
-  List _group = [
-    "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"
-  ];
+  List _group = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
   @override
   Widget build(BuildContext context) {
@@ -234,8 +231,7 @@ class _BloodBankFormState extends State<BloodBankForm> {
                     widget.bloodRequestForm.phoneNum = _fPhone;
                     widget.bloodRequestForm.address = _fAddress;
 
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
+                    final uid = await AuthService.getCurrentUID();
                     await db
                         .collection("users")
                         .document(uid)

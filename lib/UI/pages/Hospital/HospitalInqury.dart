@@ -3,20 +3,19 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/hospitalInquiry.dart';
+import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 
-class HospitalInquiry extends StatefulWidget {
-  final HospitalInquiryForm hospitalInquiryForm;
-  HospitalInquiry({@required this.hospitalInquiryForm});
+class HospitalInquiryForm extends StatefulWidget {
+  final HospitalInquiry hospitalInquiryForm;
+  HospitalInquiryForm({@required this.hospitalInquiryForm});
   @override
-  _HospitalInquiryState createState() => _HospitalInquiryState();
+  _HospitalInquiryFormState createState() => _HospitalInquiryFormState();
 }
 
-class _HospitalInquiryState extends State<HospitalInquiry> {
+class _HospitalInquiryFormState extends State<HospitalInquiryForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
   String _phoneNum;
@@ -104,8 +103,7 @@ class _HospitalInquiryState extends State<HospitalInquiry> {
                     widget.hospitalInquiryForm.phoneNum = _phoneNum;
                     widget.hospitalInquiryForm.inquiry = _inquiry;
 
-                    final uid =
-                        await Provider.of<AuthService>(context).getCurrentUID();
+                    final uid = await AuthService.getCurrentUID();
                     await db
                         .collection("users")
                         .document(uid)

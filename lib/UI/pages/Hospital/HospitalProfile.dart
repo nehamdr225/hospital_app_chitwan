@@ -5,7 +5,7 @@ import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalInqury.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalNews.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromo.dart';
-import 'package:chitwan_hospital/service/hospitalInquiry.dart';
+import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:flutter/material.dart';
 
 class HospitalProfile extends StatelessWidget {
@@ -13,7 +13,7 @@ class HospitalProfile extends StatelessWidget {
   HospitalProfile({this.hospitalName});
   @override
   Widget build(BuildContext context) {
-    final HospitalInquiryForm newInquiry = HospitalInquiryForm(null, null);
+    final HospitalInquiry newInquiry = HospitalInquiry(null, null);
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -68,7 +68,7 @@ class HospitalProfile extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => HospitalInquiry(
+                                builder: (context) => HospitalInquiryForm(
                                   hospitalInquiryForm: newInquiry,
                                 ),
                               ),

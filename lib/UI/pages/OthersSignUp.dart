@@ -17,7 +17,6 @@ class OthersSignUp extends StatefulWidget {
 }
 
 class _OthersSignUpState extends State<OthersSignUp> {
-  final AuthService _auth = AuthService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email = "", _password = "";
   String error = '';
@@ -58,9 +57,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                           image: AssetImage("assets/images/img1.jpeg"))),
                   height: size.height,
                   width: size.width,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
+                  child: ListView(shrinkWrap: true, children: <Widget>[
                     IconButton(
                         alignment: Alignment.topLeft,
                         icon: Icon(
@@ -70,7 +67,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                         onPressed: () {
                           Navigator.pop(context);
                         }),
-                        SizedBox(height: 10.0),
+                    SizedBox(height: 10.0),
                     Form(
                         key: _formKey,
                         child: Column(
@@ -239,8 +236,8 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                           print(_othersList);
                                           dynamic result;
                                           if (_othersList == 'Hospital') {
-                                            result =
-                                                await _auth.registerHospital(
+                                            result = await AuthService
+                                                .registerHospital(
                                                     email: _email,
                                                     password: _password,
                                                     name: _name,
@@ -264,11 +261,12 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                               });
                                             }
                                           } else if (_othersList == 'Doctor') {
-                                            result = await _auth.registerDoctor(
-                                                email: _email,
-                                                password: _password,
-                                                name: _name,
-                                                phone: _phone);
+                                            result = await AuthService
+                                                .registerDoctor(
+                                                    email: _email,
+                                                    password: _password,
+                                                    name: _name,
+                                                    phone: _phone);
                                             if (result != null) {
                                               setLocalUserData(
                                                   'userType', 'doctor');
@@ -289,8 +287,8 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                             }
                                           } else if (_othersList ==
                                               'Pharmacy') {
-                                            result =
-                                                await _auth.registerPharmacy(
+                                            result = await AuthService
+                                                .registerPharmacy(
                                                     email: _email,
                                                     password: _password,
                                                     name: _name,
@@ -315,11 +313,12 @@ class _OthersSignUpState extends State<OthersSignUp> {
                                             }
                                           } else if (_othersList ==
                                               'Laboratory') {
-                                            result = await _auth.registerLab(
-                                                email: _email,
-                                                password: _password,
-                                                name: _name,
-                                                phone: _phone);
+                                            result =
+                                                await AuthService.registerLab(
+                                                    email: _email,
+                                                    password: _password,
+                                                    name: _name,
+                                                    phone: _phone);
                                             if (result != null) {
                                               setLocalUserData(
                                                   'userType', 'lab');

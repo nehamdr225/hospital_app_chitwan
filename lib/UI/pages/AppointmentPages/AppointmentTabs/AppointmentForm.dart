@@ -4,7 +4,7 @@ import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/service/appointment.dart';
+import 'package:chitwan_hospital/models/doctorAppointment.dart';
 import 'package:chitwan_hospital/state/store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ enum Gender { male, female }
 enum AppointmentT { opd, online }
 
 class AppointmentForm extends StatefulWidget {
-  final Appointments appointment;
+  final DoctorAppointment appointment;
   final doctor;
   final department;
   AppointmentForm(

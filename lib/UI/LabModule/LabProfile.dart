@@ -7,7 +7,6 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class LabProfile extends StatefulWidget {
   @override
@@ -51,7 +50,7 @@ class _LabProfileState extends State<LabProfile> {
             // },
           )),
       body: FutureBuilder(
-          future: Provider.of<AuthService>(context).getCurrentUser(),
+          future: AuthService.getCurrentUser(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return ListView(children: <Widget>[

@@ -5,7 +5,7 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
-import 'package:chitwan_hospital/service/appointment.dart';
+import 'package:chitwan_hospital/models/doctorAppointment.dart';
 import 'package:flutter/material.dart';
 
 class DoctorDetails extends StatelessWidget {
@@ -26,7 +26,7 @@ class DoctorDetails extends StatelessWidget {
       this.time});
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new Appointments(
+    final newAppointment = new DoctorAppointment(
         null, null, caption, name, null, null, null, null, null, null);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
@@ -52,7 +52,6 @@ class DoctorDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.0),
                   gradient: gradientColor,
                   boxShadow: [
-                    
                     BoxShadow(
                         color: Colors.white60,
                         offset: Offset(-4, -4),
@@ -198,16 +197,15 @@ class DoctorDetails extends StatelessWidget {
                                   department: caption,
                                 )));
                   }
-                :  () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AppointmentForm(
-                                                    appointment: newAppointment,
-                                                    doctor: name,
-                                                  )));
-                                    },
+                : () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AppointmentForm(
+                                  appointment: newAppointment,
+                                  doctor: name,
+                                )));
+                  },
           ),
         ),
         SizedBox(height: 10.0),

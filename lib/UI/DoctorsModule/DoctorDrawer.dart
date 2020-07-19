@@ -20,8 +20,6 @@ class DoctorDrawerApp extends StatefulWidget {
 }
 
 class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
-  final AuthService auth = AuthService();
-
   @override
   Widget build(BuildContext context) {
     final doctorDataStore = Provider.of<DoctorDataStore>(context);
@@ -212,7 +210,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          auth.signOut();
+                          AuthService.signOut();
                           doctorDataStore.clearState();
                           setState(() {
                             loggedIn = false;

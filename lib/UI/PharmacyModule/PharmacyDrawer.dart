@@ -10,7 +10,6 @@ import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PharmacyDrawerApp extends StatefulWidget {
   @override
@@ -18,8 +17,7 @@ class PharmacyDrawerApp extends StatefulWidget {
 }
 
 class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
-  final AuthService _auth = AuthService();
-  final user = AuthService().user;
+  final user = AuthService.user;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
           children: <Widget>[
             user != null
                 ? FutureBuilder(
-                    future: Provider.of<AuthService>(context).getCurrentUser(),
+                    future: AuthService.getCurrentUser(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return UserAccountsDrawerHeader(
@@ -200,7 +198,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          _auth.signOut();
+                          AuthService.signOut();
                           setState(() {
                             loggedIn = false;
                           });

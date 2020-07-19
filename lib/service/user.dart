@@ -1,4 +1,4 @@
-class User {
-  final uid;
-  User({this.uid});
-}
+// class User {
+//   final uid;
+//   User({this.uid});
+// }

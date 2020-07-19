@@ -5,7 +5,7 @@ import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalTab.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabTab.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
-import 'package:chitwan_hospital/service/BloodRequest.dart';
+import 'package:chitwan_hospital/models/BloodRequest.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalList extends StatefulWidget {

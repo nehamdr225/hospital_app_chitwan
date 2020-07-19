@@ -41,7 +41,6 @@ class _OthersLoginState extends State<OthersLogin> {
   // text field state
   String email = '';
   String password = '';
-  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +214,7 @@ class _OthersLoginState extends State<OthersLogin> {
                                                 //         content:
                                                 //             Text('Processing Data')));
                                                 _formKey.currentState.save();
-                                                dynamic result = await _auth
+                                                dynamic result = await AuthService
                                                     .signInWithEmailAndPassword(
                                                         email, password);
                                                 if (result == null) {

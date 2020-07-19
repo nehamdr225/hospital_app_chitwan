@@ -8,9 +8,8 @@ class LabDataStore extends ChangeNotifier {
   handleInitialProfileLoad() {
     try {
       if (user == null) {
-        final auth = AuthService();
         print('Bootstrapping data store\n');
-        auth.getCurrentUID().then((value) {
+        AuthService.getCurrentUID().then((value) {
           print('value $value');
           if (value != null) {
             DatabaseService.getLabData(value).then((userData) {

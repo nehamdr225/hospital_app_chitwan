@@ -18,8 +18,6 @@ class HospitalDrawerApp extends StatefulWidget {
 }
 
 class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
-  final AuthService _auth = AuthService();
-
   @override
   Widget build(BuildContext context) {
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
@@ -203,7 +201,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",
                         onPressed: () async {
-                          _auth.signOut();
+                          AuthService.signOut();
                           hospitalDataStore.clearState();
                           setState(() {
                             loggedIn = false;

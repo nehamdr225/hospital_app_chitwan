@@ -18,7 +18,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String sendPayload;
-
+  final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -34,7 +34,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
     // print(messages);
     _buildMessageComposer() {
-      TextEditingController controller = TextEditingController();
       return Container(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           height: 70.0,
@@ -54,6 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 decoration:
                     InputDecoration.collapsed(hintText: 'Send message...'),
                 onChanged: (value) {
+                  print(value);
                   setState(() {
                     sendPayload = value;
                   });
@@ -67,7 +67,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   userDataStore.sendMessage({
                     'message': sendPayload,
                     'timestamp': Timestamp.now(),
-                  });
+                    'sender': widget.userId,
+                  }, messages['id']);
                   controller.clear();
                 },
               )
@@ -168,6 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     }
 
+    userDataStore.listenToMessages(messages['id']);
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.primaryVariant,
@@ -203,7 +205,6 @@ class _ChatScreenState extends State<ChatScreen> {
                           ? messages['conversations'].length
                           : 1,
                       itemBuilder: (BuildContext context, int index) {
-                        userDataStore.listenToMessages();
                         if (messages == null ||
                             messages['conversations'].length == 0)
                           return Text(
@@ -214,8 +215,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                 fontSize: 16.0,
                                 color: Colors.black54),
                           );
+
                         final Message message =
-                            Message.fromJson(messages['conversation'][index]);
+                            Message.fromJson(messages['conversations'][index]);
                         final bool isMe = message.sender == widget.userId;
                         final myImg = null; //currentUser.imageUrl;
                         final imageUrl = null; //widget.user.imageUrl;

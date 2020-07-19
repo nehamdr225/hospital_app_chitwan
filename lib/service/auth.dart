@@ -1,19 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
 import 'database.dart';
-import 'user.dart';
 
-class AuthService with ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+abstract class AuthService {
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static Stream<FirebaseUser> get user {
+    return _auth.onAuthStateChanged;
   }
 
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
-  }
-
-  Future<String> getCurrentUID() async {
+  static Future<String> getCurrentUID() async {
     try {
       final currentUser = await _auth.currentUser();
       if (currentUser != null) {
@@ -26,12 +21,13 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future getCurrentUser() async {
+  static Future getCurrentUser() async {
     return await _auth.currentUser();
   }
 
   // Sign In with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
+  static Future signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -44,7 +40,7 @@ class AuthService with ChangeNotifier {
   }
 
   // signup with email and password
-  Future registerWithEmailAndPassword(
+  static Future registerWithEmailAndPassword(
       String email, String password, String name, String phone) async {
     try {
       final AuthResult result = await _auth.createUserWithEmailAndPassword(
@@ -66,7 +62,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future updateUserName(String name, FirebaseUser currentUser) async {
+  static Future updateUserName(String name, FirebaseUser currentUser) async {
     final userUpdateInfo = UserUpdateInfo();
     userUpdateInfo.displayName = name;
     await currentUser.updateProfile(userUpdateInfo);
@@ -74,7 +70,7 @@ class AuthService with ChangeNotifier {
   }
 
   // signup with email and password
-  Future registerDoctor(
+  static Future registerDoctor(
       {String email,
       String password,
       String name,
@@ -100,7 +96,7 @@ class AuthService with ChangeNotifier {
   }
 
 // signup with email and password
-  Future registerHospital({
+  static Future registerHospital({
     String email,
     String password,
     String name,
@@ -125,7 +121,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future registerPharmacy({
+  static Future registerPharmacy({
     String email,
     String password,
     String name,
@@ -150,7 +146,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future registerLab({
+  static Future registerLab({
     String email,
     String password,
     String name,
@@ -176,7 +172,7 @@ class AuthService with ChangeNotifier {
   }
 
   //sign out
-  Future signOut() async {
+  static Future signOut() async {
     try {
       return await _auth.signOut();
     } catch (e) {
