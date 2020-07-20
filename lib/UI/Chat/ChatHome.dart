@@ -90,14 +90,15 @@ class _ChatHomeState extends State<ChatHome> {
                     itemBuilder: (BuildContext context, int index) {
                       final List conversations =
                           messages[index]['conversations'];
+                      // print('Conversations $conversations');
                       return MsgList(
                         name: messages[index]['doctor'],
                         unRead: false,
                         profileImg: null,
-                        messageText: conversations.length == 0
-                            ? 'Start a conversation'
-                            : conversations[conversations.length - 1]
-                                ['message'],
+                        messageText: conversations != null &&
+                                conversations.length != 0
+                            ? conversations[conversations.length - 1]['message']
+                            : 'Start a conversation',
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ChatScreen(

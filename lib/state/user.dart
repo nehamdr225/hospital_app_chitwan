@@ -167,14 +167,15 @@ class UserDataStore extends ChangeNotifier {
 
   sendMessage(Map data, String docId) {
     DatabaseService.updateMessages(docId, data).then((value) {
-      _messages.map((e) {
+      final mapped = _messages.map((e) {
         if (e['id'] == docId) {
-          final data = e;
-          data['conversations'].add(data);
+          final newData = e;
+          newData['conversations'].add(data);
           return data;
         }
         return e;
-      });
+      }).toList();
+      _messages = mapped;
       notifyListeners();
     });
   }

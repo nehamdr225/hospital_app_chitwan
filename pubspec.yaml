@@ -27,16 +27,17 @@ dependencies:
   timeline_list: ^0.0.5
   cloud_firestore:
   firebase_auth: 
-  firebase_messaging: ^6.0.16
-  flutter_local_notifications: ^1.4.4+2
-  fluttertoast: ^6.0.0
+  # firebase_messaging: ^6.0.16
+  # flutter_local_notifications: ^1.4.4+2
+  # fluttertoast: ^6.0.0
   url_launcher: 
   flutter_secure_storage: ^3.3.3
   flutter_spinkit: "^4.0.0"
   image_picker:
-  pdf: ^1.8.1
+  # pdf: ^1.8.1
   photo_view:
   shared_preferences: ^0.5.7+3
+  flushbar: ^1.10.4
   # http: ^0.12.0
   # rxdart: 
   # flutter_bloc:

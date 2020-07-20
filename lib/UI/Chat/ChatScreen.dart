@@ -52,12 +52,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 textCapitalization: TextCapitalization.sentences,
                 decoration:
                     InputDecoration.collapsed(hintText: 'Send message...'),
-                onChanged: (value) {
-                  print(value);
-                  setState(() {
-                    sendPayload = value;
-                  });
-                },
+                onChanged: (value) =>
+                    // print(value);
+                    setState(() {
+                  sendPayload = value;
+                }),
               )),
               IconButton(
                 icon: Icon(Icons.send),
@@ -78,38 +77,42 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _buildMessage(Message message, bool isMe, imageUrl, String name, myImg) {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: <Widget>[
-          isMe
-              ? SizedBox.shrink()
-              : CircleAvatar(
-                  //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
-                  backgroundColor: theme.primary,
-                  foregroundColor: Colors.white,
-                  // radius: 10.0,
-                  child: imageUrl != null
-                      ? Container(
-                          height: 25.0,
-                          width: 25.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(imageUrl),
-                                  fit: BoxFit.cover)),
-                          //child: Image.file(_user.imageUrl)
-                        )
-                      : Text(
-                          name.split(' ').reduce((a, b) {
-                            return '${a[0]} ${b[0]}';
-                          }),
-                          style: Theme.of(context).textTheme.bodyText2.copyWith(
-                              color: textDark_Yellow,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500),
-                        ),
-                ),
+          // isMe
+          //     ? SizedBox.shrink()
+          //     : CircleAvatar(
+          //         //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
+          //         backgroundColor: theme.primary,
+          //         foregroundColor: Colors.white,
+          //         // radius: 10.0,
+          //         child: imageUrl != null
+          //             ? Container(
+          //                 height: 25.0,
+          //                 width: 25.0,
+          //                 decoration: BoxDecoration(
+          //                     shape: BoxShape.circle,
+          //                     image: DecorationImage(
+          //                         image: AssetImage(imageUrl),
+          //                         fit: BoxFit.cover)),
+          //                 //child: Image.file(_user.imageUrl)
+          //               )
+          //             : Text(
+          //                 name != null
+          //                     ? name.split(' ').reduce((a, b) {
+          //                         return '${a[0]} ${b[0]}';
+          //                       })
+          //                     : '',
+          //                 style: Theme.of(context).textTheme.bodyText2.copyWith(
+          //                     color: textDark_Yellow,
+          //                     fontSize: 16.0,
+          //                     fontWeight: FontWeight.w500),
+          //               ),
+          //       ),
           Container(
             width: MediaQuery.of(context).size.width * 0.65,
+            alignment: isMe ? Alignment.bottomRight : Alignment.centerLeft,
             decoration: BoxDecoration(
                 color: isMe ? theme.onBackground : blueGrey.withOpacity(0.4),
                 borderRadius: isMe
@@ -124,13 +127,15 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
             margin: isMe
                 ? EdgeInsets.only(
-                    top: 8.0,
-                    bottom: 8.0,
-                    left: MediaQuery.of(context).size.width * 0.20)
+                    top: 2.0,
+                    bottom: 2.0,
+                    right: 6.0,
+                  )
                 : EdgeInsets.only(
-                    top: 8.0,
-                    bottom: 8.0,
-                    right: MediaQuery.of(context).size.width * 0.20),
+                    top: 2.0,
+                    bottom: 2.0,
+                    left: 6.0,
+                  ),
             child: FancyText(
               text: message.text,
               textAlign: TextAlign.left,
@@ -138,33 +143,35 @@ class _ChatScreenState extends State<ChatScreen> {
               textOverflow: TextOverflow.visible,
             ),
           ),
-          isMe
-              ? CircleAvatar(
-                  //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
-                  backgroundColor: theme.secondary,
-                  foregroundColor: Colors.white,
-                  // radius: 10.0,
-                  child: myImg != null
-                      ? Container(
-                          height: 25.0,
-                          width: 25.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(myImg), fit: BoxFit.cover)),
-                          //child: Image.file(_user.myImg)
-                        )
-                      : Text(
-                          name.split(' ').reduce((a, b) {
-                            return '${a[0]} ${b[0]}';
-                          }),
-                          style: Theme.of(context).textTheme.bodyText2.copyWith(
-                              color: textDark_Yellow,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500),
-                        ),
-                )
-              : SizedBox.shrink(),
+          // isMe
+          //     ? CircleAvatar(
+          //         //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
+          //         backgroundColor: theme.secondary,
+          //         foregroundColor: Colors.white,
+          //         // radius: 10.0,
+          //         child: myImg != null
+          //             ? Container(
+          //                 height: 25.0,
+          //                 width: 25.0,
+          //                 decoration: BoxDecoration(
+          //                     shape: BoxShape.circle,
+          //                     image: DecorationImage(
+          //                         image: AssetImage(myImg), fit: BoxFit.cover)),
+          //                 //child: Image.file(_user.myImg)
+          //               )
+          //             : Text(
+          //                 name != null
+          //                     ? name.split(' ').reduce((a, b) {
+          //                         return '${a[0]} ${b[0]}';
+          //                       })
+          //                     : '',
+          //                 style: Theme.of(context).textTheme.bodyText2.copyWith(
+          //                     color: textDark_Yellow,
+          //                     fontSize: 16.0,
+          //                     fontWeight: FontWeight.w500),
+          //               ),
+          //       )
+          //     : SizedBox.shrink(),
         ],
       );
     }
@@ -178,7 +185,9 @@ class _ChatScreenState extends State<ChatScreen> {
           child: AppBarW(
             elevation: 0.0,
             backButtonColor: textDark_Yellow,
-            title: userDataStore.user['name'],
+            title: widget.userType == 'user'
+                ? widget.docName
+                : userDataStore.user.name,
             settings: true,
           ),
         ),
@@ -199,7 +208,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     topRight: Radius.circular(30.0),
                   ),
                   child: ListView.builder(
-                      reverse: true,
+                      // reverse: true,
                       padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                       itemCount: messages != null
                           ? messages['conversations'].length
@@ -221,7 +230,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         final bool isMe = message.sender == widget.userId;
                         final myImg = null; //currentUser.imageUrl;
                         final imageUrl = null; //widget.user.imageUrl;
-                        final name = userDataStore.user['name'];
+                        final name = userDataStore.user.name;
                         return _buildMessage(
                             message, isMe, imageUrl, name, myImg);
                       })),
