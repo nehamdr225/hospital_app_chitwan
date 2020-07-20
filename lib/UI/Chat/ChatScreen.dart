@@ -18,6 +18,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String sendPayload;
+  Map initialMessages;
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,10 @@ class _ChatScreenState extends State<ChatScreen> {
     else
       userDataStore = Provider.of<DoctorDataStore>(context);
     Map messages =
-        userDataStore.getSpecificMessages(widget.userId, widget.doctorId);
-    if (messages == null) {
-      userDataStore.createMessageCollection(widget.doctorId, widget.docName);
-    }
-    // print(messages);
+        userDataStore.getSpecificMessages(widget.userId, widget.doctorId) ??
+            initialMessages;
+
+    print(messages);
     _buildMessageComposer() {
       return Container(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -62,13 +62,28 @@ class _ChatScreenState extends State<ChatScreen> {
                 icon: Icon(Icons.send),
                 iconSize: 25.0,
                 color: theme.primary.withOpacity(0.5),
-                onPressed: () {
-                  userDataStore.sendMessage({
+                onPressed: () async {
+                  final Map msgPayload = {
                     'message': sendPayload,
                     'timestamp': Timestamp.now(),
                     'sender': widget.userId,
-                  }, messages['id']);
+                  };
                   controller.clear();
+                  if (messages != null) {
+                    userDataStore.pushMessageLocally(
+                        msgPayload, messages['id']);
+                    userDataStore.sendMessage(msgPayload, messages['id']);
+                  }
+                  if (messages == null) {
+                    final data = await userDataStore.createMessageCollection(
+                        widget.doctorId, widget.docName);
+                    final updated = data['conversations'].add(msgPayload);
+                    userDataStore.pushMessageLocally(msgPayload, data['id']);
+                    userDataStore.sendMessage(msgPayload, data['id']);
+                    setState(() {
+                      initialMessages = updated;
+                    });
+                  }
                 },
               )
             ],
@@ -176,7 +191,7 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     }
 
-    userDataStore.listenToMessages(messages['id']);
+    if (messages != null) userDataStore.listenToMessages(messages['id']);
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.primaryVariant,

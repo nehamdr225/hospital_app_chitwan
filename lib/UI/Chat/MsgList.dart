@@ -13,7 +13,7 @@ class MsgList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(profileImg);
+    // print(profileImg);
     final theme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
@@ -47,9 +47,11 @@ class MsgList extends StatelessWidget {
                         //child: Image.file(_profileImg)
                       )
                     : Text(
-                        name.split(' ').reduce((a, b) {
-                          return '${a[0]} ${b[0]}';
-                        }),
+                        name != null
+                            ? name.split(' ').reduce((a, b) {
+                                return '${a[0]} ${b[0]}';
+                              })
+                            : '',
                         style: Theme.of(context).textTheme.bodyText2.copyWith(
                             color: theme.primary,
                             fontSize: 24.0,

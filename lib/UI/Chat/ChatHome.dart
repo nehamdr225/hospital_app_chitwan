@@ -29,14 +29,17 @@ class _ChatHomeState extends State<ChatHome> {
 
     final messages = userDataStore.messages;
     final theme = Theme.of(context).colorScheme;
-    print(messages);
+    // print(messages);
     return Scaffold(
       backgroundColor: theme.background,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
-        child: AppBarW(
-          backButtonColor: textDark_Yellow,
-          title: "Messages",
+        child: Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: AppBarW(
+            backButtonColor: textDark_Yellow,
+            title: "Messages",
+          ),
         ),
       ),
       body: Column(children: <Widget>[

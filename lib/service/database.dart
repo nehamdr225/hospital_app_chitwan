@@ -235,15 +235,19 @@ abstract class DatabaseService {
         .snapshots();
   }
 
-  static Future<void> createMessageDocument(
-      String userId, String docId, String userName, String docName) {
-    return messageCollection.document().setData({
+  static Future<QuerySnapshot> createMessageDocument(
+      String userId, String docId, String userName, String docName) async {
+    await messageCollection.document().setData({
       'uid': userId,
       'docId': docId,
       'user': userName,
       'doctor': docName,
       'conversations': []
     });
+    return messageCollection
+        .where('docId', isEqualTo: docId)
+        .where('uid', isEqualTo: userId)
+        .getDocuments();
   }
 
   static Future<void> updateMessages(String uid, Map data) {
