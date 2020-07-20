@@ -1,36 +1,29 @@
+import 'package:chitwan_hospital/models/Doctor.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/cupertino.dart';
 
 class DoctorDataStore extends ChangeNotifier {
-  handleInitialProfileLoad() {
+  handleInitialProfileLoad() async {
     try {
       if (user == null) {
-        print('Bootstrapping data store\n');
-        AuthService.getCurrentUID().then((value) {
-          print('value $value');
-          if (value != null) {
-            DatabaseService.getDoctorData(value).then((userData) {
-              if (userData.data != null) {
-                user = userData.data;
-                uid = value;
-                type = userData.data['role'];
-                getAppointments();
-                fetchMessages();
-              }
-            }).catchError((err) {
-              print(err);
-            });
+        final userId = await AuthService.getCurrentUID();
+        if (userId != null) {
+          final userData = await DatabaseService.getDoctorData(userId);
+          if (userData.data != null) {
+            final data = userData.data;
+            data['uid'] = userData.documentID;
+            user = Doctor.fromJson(data);
+            getAppointments();
+            fetchMessages();
           }
-        });
+        }
       }
     } catch (e) {}
   }
 
-  String _id;
-  String _userType;
-  Map<String, dynamic> _userData;
+  Doctor _userData;
   List hospitals;
   List<Map> _appointments;
   List _messages;
@@ -42,22 +35,9 @@ class DoctorDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  get uid => _id;
+  Doctor get user => _userData;
 
-  set uid(userId) {
-    _id = userId;
-    notifyListeners();
-  }
-
-  get type => _userType;
-
-  set type(userType) {
-    _userType = userType;
-  }
-
-  get user => _userData;
-
-  set user(newUserData) {
+  set user(Doctor newUserData) {
     _userData = newUserData;
     notifyListeners();
   }
@@ -70,20 +50,20 @@ class DoctorDataStore extends ChangeNotifier {
   }
 
   createMessageCollection(String userId, String userName) {
-    DatabaseService.createMessageDocument(userId, uid, userName, user['name'])
+    DatabaseService.createMessageDocument(userId, user.uid, userName, user.name)
         .then((value) {
       _messages.add({
         'uid': userId,
-        'docId': uid,
+        'docId': user.uid,
         'user': userName,
-        'doctor': user['name'],
+        'doctor': user.name,
         'conversations': []
       });
     });
   }
 
   listenToMessages(String docId) {
-    DatabaseService.getMessages(uid, docId).listen((event) {
+    DatabaseService.getMessages(user.uid, docId).listen((event) {
       if (event.documents.length > 0) {
         final data = event.documents[0].data;
         data['id'] = event.documents[0].documentID;
@@ -102,7 +82,7 @@ class DoctorDataStore extends ChangeNotifier {
   }
 
   fetchMessages() {
-    DatabaseService.getMessagesDoctor(uid).listen((event) {
+    DatabaseService.getMessagesDoctor(user.uid).listen((event) {
       final data = event.documents.map((e) {
         final Map messageData = e.data;
         messageData['id'] = e.documentID;
@@ -118,24 +98,26 @@ class DoctorDataStore extends ChangeNotifier {
     });
   }
 
-  fetchUserData() {
-    if (uid != null && type != null) {
-      if (type == 'user') {
-        DatabaseService.getUserData(uid).then((value) {
-          if (value.data != null) {
-            user = value.data;
-          }
-        }).catchError((err) {
-          print(err);
-        });
-      }
+  fetchUserData(String uid) {
+    if (uid != null) {
+      DatabaseService.getDoctorData(uid).then((value) {
+        if (value.data != null) {
+          final data = value.data;
+          data['id'] = value.documentID;
+          user = Doctor.fromJson(data);
+        }
+      }).catchError((err) {
+        print(err);
+      });
     }
   }
 
   Future<bool> update(data) async {
     try {
-      await DatabaseService.updateDoctorData(uid, data);
-      _userData.addAll(data);
+      await DatabaseService.updateDoctorData(user.uid, data);
+      final Map newData = {...user.toJson(), ...data};
+      final Doctor newUser = Doctor.fromJson(newData);
+      user = newUser;
       notifyListeners();
       return true;
     } catch (e) {
@@ -154,7 +136,7 @@ class DoctorDataStore extends ChangeNotifier {
 
   getAppointments() {
     if (appointments == null) {
-      DatabaseService.getDoctorAppointments(uid).listen((onData) {
+      DatabaseService.getDoctorAppointments(user.uid).listen((onData) {
         List newData = onData.documents.map<Map>((e) {
           final data = e.data;
           data['id'] = e.documentID;
@@ -200,9 +182,7 @@ class DoctorDataStore extends ChangeNotifier {
   }
 
   clearState() {
-    _id = null;
     _userData = null;
-    _userType = null;
     setLocalUserData('userType', null);
     // _hospitals = null;
     notifyListeners();

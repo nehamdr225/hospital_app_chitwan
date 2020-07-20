@@ -36,13 +36,13 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
             user != null
                 ? UserAccountsDrawerHeader(
                     accountName: FancyText(
-                      text: user['name'],
+                      text: user.name,
                       size: 16.0,
                       fontWeight: FontWeight.w600,
                       color: textDark_Yellow,
                     ),
                     accountEmail: FancyText(
-                      text: user['email'] ?? user['phone'],
+                      text: user.email ?? user.phone,
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                       color: textDark_Yellow,

@@ -104,7 +104,7 @@ class DoctorsModule extends StatelessWidget {
                             top: 8.0, left: 28.0, bottom: 0.0),
                         child: FancyText(
                             text:
-                                "Hello ${doctor != null ? doctor['name'] : 'Doctor'}!",
+                                "Hello ${doctor != null ? doctor.name : 'Doctor'}!",
                             textAlign: TextAlign.left,
                             size: 22.0,
                             color: textDark_Yellow,
@@ -154,7 +154,7 @@ class DoctorsModule extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0, left: 26.0),
                     child: Row(children: [
-                      doctor != null && doctor['isVerified']
+                      doctor != null && doctor.isVerified
                           ? Icon(
                               Icons.verified_user,
                               color: Colors.green,
@@ -167,7 +167,7 @@ class DoctorsModule extends StatelessWidget {
                         height: 2,
                         width: 2,
                       ),
-                      doctor != null && doctor['isVerified']
+                      doctor != null && doctor.isVerified
                           ? Text(
                               'Verified',
                               style: TextStyle(
@@ -200,7 +200,7 @@ class DoctorsModule extends StatelessWidget {
             ),
           ),
         ),
-        doctor != null && doctor['department'] == null
+        doctor != null && doctor.department == null
             ? Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,

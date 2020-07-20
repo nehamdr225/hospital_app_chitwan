@@ -44,10 +44,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
     AppointmentT _appointment;
     final doctor = Provider.of<DoctorDataStore>(context).user;
 
-    if (doctor['consultationType'] != null) {
-      if (doctor['consultationType'] == 'online')
+    if (doctor != null) {
+      if (doctor.consultationType == 'online')
         _appointment = AppointmentT.online;
-      if (doctor['consultationType'] == 'on-site')
+      if (doctor.consultationType == 'on-site')
         _appointment = AppointmentT.opd;
       else
         _appointment = AppointmentT.both;
@@ -55,14 +55,14 @@ class _DoctorProfileState extends State<DoctorProfile> {
       _appointment = AppointmentT.both;
     }
     const departments = const ['OPD', 'SURGERY'];
-    String selectedDept = doctor != null ? doctor['department'] ?? null : null;
+    String selectedDept = doctor != null ? doctor.department ?? null : null;
     final doctorDataStore = Provider.of<DoctorDataStore>(context);
     List hospitals = doctorDataStore.hospitals;
     if (hospitals == null) {
       doctorDataStore.getHospitals();
     }
 
-    String selectedHospital = doctor['hospital'] ?? null;
+    String selectedHospital = doctor.hospital ?? null;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -110,7 +110,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 //child: Image.file(_profileImg)
                               )
                             : Text(
-                                doctor['name'].split(' ').reduce((a, b) {
+                                doctor.name.split(' ').reduce((a, b) {
                                   return '${a[0]} ${b[0]}';
                                 }),
                                 style: Theme.of(context)
@@ -122,7 +122,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                         fontWeight: FontWeight.w700),
                               ),
                       ),
-                      
                     ],
                   ),
                 ),
@@ -149,7 +148,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Name',
-              value: doctor["name"] ?? '',
+              value: doctor.name ?? '',
               onChanged: (value) {
                 setState(() {
                   updateData['name'] = value;
@@ -162,7 +161,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
                 title: 'Email',
-                value: doctor["email"] ?? '',
+                value: doctor.email ?? '',
                 onChanged: (value) {
                   setState(() {
                     updateData['email'] = value;
@@ -174,7 +173,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
                 title: 'Contact',
-                value: doctor['phone'] ?? '',
+                value: doctor.phone ?? '',
                 onChanged: (value) {
                   setState(() {
                     updateData['phone'] = value;
@@ -186,7 +185,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
                 title: 'Current Address',
-                value: doctor['address'] ?? "",
+                value: doctor.address ?? "",
                 onChanged: (value) {
                   setState(() {
                     updateData['address'] = value;
@@ -198,18 +197,18 @@ class _DoctorProfileState extends State<DoctorProfile> {
           //   padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
           //   child: InputField(
           //       title: 'Working Hospital/Clinic',
-          //       value: doctor['hospital'] ?? '',
+          //       value: doctor.hospital ?? '',
           //       onChanged: (value) {
           //         setState(() {
-          //           updateData['hospital'] = value;
+          //           updateData.hospital = value;
           //         });
           //       }),
           // ),
-          
+
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0),
             alignment: Alignment.centerLeft,
-            child: DropdownButton(    
+            child: DropdownButton(
               underline: SizedBox(),
               hint: Container(
                   height: 45.0,
@@ -227,12 +226,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 11.0),
                           child: FancyText(
-                            text: value['name'],
+                            text: value.name,
                             color: blueGrey,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        value: value['name'],
+                        value: value.name,
                       );
                     }).toList()
                   : selectedHospital != null
@@ -298,7 +297,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
                 title: 'NMC Registration Number',
-                value: doctor['registrationNo'] ?? 'xxx-xxxx',
+                value: doctor.registrationNo ?? 'xxx-xxxx',
                 onChanged: (value) {
                   setState(() {
                     updateData['registrationNo'] = value;
