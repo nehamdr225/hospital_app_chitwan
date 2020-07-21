@@ -107,10 +107,10 @@ class UserDataStore extends ChangeNotifier {
   }
 
   listenToMessages(String docId) {
-    DatabaseService.getMessages(user.uid, docId).listen((event) {
-      if (event.documents.length > 0) {
-        final data = event.documents[0].data;
-        data['id'] = event.documents[0].documentID;
+    DatabaseService.getMessages(docId).listen((event) {
+      if (event.data.length > 0) {
+        final data = event.data;
+        data['id'] = event.documentID;
         final changedData = _messages.map((e) {
           if (e['id'] == data['id']) return data;
           return e;

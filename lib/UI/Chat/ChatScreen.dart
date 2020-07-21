@@ -9,9 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  final userId, doctorId, userType, docName;
+  final userId, doctorId, userType, docName, userName;
   ChatScreen(
-      {this.userId, this.doctorId, this.userType = 'user', this.docName});
+      {this.userId,
+      this.doctorId,
+      this.userType = 'user',
+      this.docName,
+      this.userName});
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -76,7 +80,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                   if (messages == null) {
                     final data = await userDataStore.createMessageCollection(
-                        widget.doctorId, widget.docName);
+                        widget.userType == 'user'
+                            ? widget.doctorId
+                            : widget.userId,
+                        widget.userType == 'user'
+                            ? widget.docName
+                            : widget.userName);
                     final updated = data['conversations'].add(msgPayload);
                     userDataStore.pushMessageLocally(msgPayload, data['id']);
                     userDataStore.sendMessage(msgPayload, data['id']);

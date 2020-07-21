@@ -13,7 +13,7 @@ class DoctorDataStore extends ChangeNotifier {
           final userData = await DatabaseService.getDoctorData(userId);
           if (userData.data != null) {
             final data = userData.data;
-            data['uid'] = userData.documentID;
+            data['id'] = userData.documentID;
             user = Doctor.fromJson(data);
             getAppointments();
             fetchMessages();
@@ -49,36 +49,41 @@ class DoctorDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  createMessageCollection(String userId, String userName) {
-    DatabaseService.createMessageDocument(userId, user.uid, userName, user.name)
-        .then((value) {
-      _messages.add({
-        'uid': userId,
-        'docId': user.uid,
-        'user': userName,
-        'doctor': user.name,
-        'conversations': []
-      });
-    });
-  }
-
-  listenToMessages(String docId) {
-    DatabaseService.getMessages(user.uid, docId).listen((event) {
-      if (event.documents.length > 0) {
-        final data = event.documents[0].data;
-        data['id'] = event.documents[0].documentID;
-        _messages.map((e) {
-          if (e['id'] == data['id']) return data;
-          return e;
-        });
-      }
-    });
+  Future<Map> createMessageCollection(String userId, String userName) async {
+    final document = await DatabaseService.createMessageDocument(
+        userId, user.uid, userName, user.name);
+    final data = document.documents[0].data;
+    data['id'] = document.documents[0].documentID;
+    final isThereAnEntry = _messages.any(
+        (element) => element['uid'] == userId && element['docId'] == user.uid);
+    if (!isThereAnEntry) {
+      _messages.add(data);
+      notifyListeners();
+    }
+    return data;
   }
 
   getSpecificMessages(String userId, String doctorId) {
-    if (messages == null) return null;
+    if (messages == null || messages.length == 0) return null;
     return messages.firstWhere(
-        (element) => element['uid'] == userId && element['docId'] == doctorId);
+      (element) => element['uid'] == userId && element['docId'] == doctorId,
+      orElse: () => null,
+    );
+  }
+
+  listenToMessages(String documentId) {
+    DatabaseService.getMessages(documentId).listen((event) {
+      if (event.data.length > 0) {
+        final data = event.data;
+        data['id'] = event.documentID;
+        final changedData = _messages.map((e) {
+          if (e['id'] == data['id']) return data;
+          return e;
+        });
+        _messages = changedData;
+        notifyListeners();
+      }
+    });
   }
 
   fetchMessages() {
@@ -87,15 +92,43 @@ class DoctorDataStore extends ChangeNotifier {
         final Map messageData = e.data;
         messageData['id'] = e.documentID;
         return messageData;
-      });
+      }).toList();
       if (messages != null) {
-        _messages.add(data);
+        data.removeWhere((element) {
+          final match = _messages.firstWhere(
+            (check) {
+              return check['uid'] == element['uid'] &&
+                  check['docId'] == element['docId'];
+            },
+            orElse: () => null,
+          );
+
+          if (match != null) return true;
+          return false;
+        });
+        _messages.addAll(data);
         notifyListeners();
         return;
       }
       messages = data;
       return;
     });
+  }
+
+  sendMessage(Map data, String documentId) {
+    DatabaseService.updateMessages(documentId, data);
+  }
+
+  pushMessageLocally(Map data, String documentId) {
+    int i = 0;
+    for (final element in _messages) {
+      if (element['id'] == documentId) {
+        _messages[i]['conversations'].add(data);
+        notifyListeners();
+        break;
+      }
+      i++;
+    }
   }
 
   fetchUserData(String uid) {

@@ -108,6 +108,7 @@ class _ChatHomeState extends State<ChatHome> {
                               userId: messages[index]['uid'],
                               doctorId: messages[index]['docId'],
                               docName: messages[index]['doctor'],
+                              userName: messages[index]['user'],
                             ),
                           ),
                         ),

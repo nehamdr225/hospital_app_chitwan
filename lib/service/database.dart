@@ -228,11 +228,8 @@ abstract class DatabaseService {
     return messageCollection.where('docId', isEqualTo: uid).snapshots();
   }
 
-  static Stream<QuerySnapshot> getMessages(String uid, String docId) {
-    return messageCollection
-        .where('docId', isEqualTo: docId)
-        .where('uid', isEqualTo: uid)
-        .snapshots();
+  static Stream<DocumentSnapshot> getMessages(String documentId) {
+    return messageCollection.document(documentId).snapshots();
   }
 
   static Future<QuerySnapshot> createMessageDocument(

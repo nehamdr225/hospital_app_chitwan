@@ -141,8 +141,12 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
               title: 'Messages',
               icon: 'assets/images/drawerIcon/chat.png',
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatHome()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChatHome(
+                              userType: 'doctor',
+                            )));
               },
             ),
             DrawerElements(

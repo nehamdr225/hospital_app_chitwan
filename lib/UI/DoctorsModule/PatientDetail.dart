@@ -219,7 +219,20 @@ class _PatientDetailState extends State<PatientDetail> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ChatScreen()))),
+                                                    ChatScreen(
+                                                      docName: doctorDataStore
+                                                          .user.name,
+                                                      doctorId: doctorDataStore
+                                                          .user.uid,
+                                                      userId:
+                                                          appointment['userId'],
+                                                      userName: appointment[
+                                                              'firstName'] +
+                                                          ' ' +
+                                                          appointment[
+                                                              'lastName'],
+                                                      userType: 'doctor',
+                                                    )))),
                                     IconButton(
                                         icon: Icon(
                                           Icons.video_call,
