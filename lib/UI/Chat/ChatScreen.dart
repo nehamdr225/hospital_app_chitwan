@@ -211,9 +211,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: AppBarW(
             elevation: 0.0,
             backButtonColor: textDark_Yellow,
-            title: widget.userType == 'user'
-                ? widget.docName
-                : userDataStore.user.name,
+            title: widget.userType == 'user' ? widget.docName : widget.userName,
             settings: true,
           ),
         ),
