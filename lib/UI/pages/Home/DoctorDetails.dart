@@ -5,7 +5,7 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
-import 'package:chitwan_hospital/models/doctorAppointment.dart';
+import 'package:chitwan_hospital/models/DoctorAppointment.dart';
 import 'package:flutter/material.dart';
 
 class DoctorDetails extends StatelessWidget {

@@ -8,13 +8,17 @@ class AppBarW extends StatelessWidget {
   final bool settings;
   final String title;
   final Color backButtonColor;
+  final onPressed;
+  final settingOnPressed;
   AppBarW(
       {this.elevation: 0.0,
       this.logo,
       this.settings,
       this.title: "",
       this.color,
-      this.backButtonColor});
+      this.backButtonColor,
+      this.onPressed,
+      this.settingOnPressed});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -34,8 +38,8 @@ class AppBarW extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.w800),
               ))
           : IconButton(
-              icon: Icon(CupertinoIcons.back),
-              onPressed: () {},
+              icon: Icon(CupertinoIcons.back, color: backButtonColor,),
+              onPressed: onPressed,
             ),
       actions: <Widget>[
         settings == true
@@ -44,7 +48,7 @@ class AppBarW extends StatelessWidget {
                   Icons.settings,
                   color: backButtonColor,
                 ),
-                onPressed: () {},
+                onPressed: settingOnPressed,
               )
             : Text(''),
       ],

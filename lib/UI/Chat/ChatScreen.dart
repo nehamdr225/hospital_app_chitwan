@@ -139,34 +139,26 @@ class _ChatScreenState extends State<ChatScreen> {
           Container(
             width: MediaQuery.of(context).size.width * 0.65,
             alignment: isMe ? Alignment.bottomRight : Alignment.centerLeft,
-            decoration: BoxDecoration(
-                color: isMe ? theme.onBackground : blueGrey.withOpacity(0.4),
-                borderRadius: isMe
-                    ? BorderRadius.only(
-                        topRight: Radius.circular(15.0),
-                        topLeft: Radius.circular(15.0),
-                        bottomLeft: Radius.circular(15.0))
-                    : BorderRadius.only(
-                        topRight: Radius.circular(15.0),
-                        topLeft: Radius.circular(15.0),
-                        bottomRight: Radius.circular(15.0))),
-            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-            margin: isMe
-                ? EdgeInsets.only(
-                    top: 2.0,
-                    bottom: 2.0,
-                    right: 6.0,
-                  )
-                : EdgeInsets.only(
-                    top: 2.0,
-                    bottom: 2.0,
-                    left: 6.0,
-                  ),
-            child: FancyText(
-              text: message.text,
-              textAlign: TextAlign.left,
-              size: 15.0,
-              textOverflow: TextOverflow.visible,
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: isMe ? theme.onBackground : blueGrey.withOpacity(0.4),
+                  borderRadius: isMe
+                      ? BorderRadius.only(
+                          topRight: Radius.circular(15.0),
+                          topLeft: Radius.circular(15.0),
+                          bottomLeft: Radius.circular(15.0))
+                      : BorderRadius.only(
+                          topRight: Radius.circular(15.0),
+                          topLeft: Radius.circular(15.0),
+                          bottomRight: Radius.circular(15.0))),
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+              child: FancyText(
+                text: message.text,
+                textAlign: TextAlign.left,
+                size: 15.0,
+                textOverflow: TextOverflow.visible,
+              ),
             ),
           ),
           // isMe
@@ -213,6 +205,9 @@ class _ChatScreenState extends State<ChatScreen> {
             backButtonColor: textDark_Yellow,
             title: widget.userType == 'user' ? widget.docName : widget.userName,
             settings: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
         body: GestureDetector(
