@@ -83,7 +83,7 @@ class DoctorDataStore extends ChangeNotifier {
           final changedData = _messages.map((e) {
             if (e['id'] == data['id']) return data;
             return e;
-          });
+          }).toList();
           _messages = changedData;
           notifyListeners();
         }
