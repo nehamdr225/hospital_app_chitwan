@@ -1,6 +1,13 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+String createTimeFromTimeStamp(Timestamp time) {
+  final date = time.toDate();
+  if (date.hour > 12) return '${date.hour - 12}:${date.minute} PM';
+  return '${date.hour}:${date.minute} AM';
+}
 
 class MsgList extends StatelessWidget {
   final profileImg;
@@ -8,8 +15,14 @@ class MsgList extends StatelessWidget {
   final unRead;
   final messageText;
   final onTap;
+  final time;
   MsgList(
-      {this.profileImg, this.name, this.unRead, this.messageText, this.onTap});
+      {this.profileImg,
+      this.name,
+      this.unRead,
+      this.messageText,
+      this.onTap,
+      this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +99,7 @@ class MsgList extends StatelessWidget {
                   //crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     FancyText(
-                      text: "10:00 AM",
+                      text: createTimeFromTimeStamp(time),
                       fontWeight: FontWeight.w600,
                       size: 14.0,
                       textAlign: TextAlign.start,

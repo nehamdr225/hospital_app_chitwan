@@ -70,7 +70,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   final Map msgPayload = {
                     'message': sendPayload,
                     'timestamp': Timestamp.now(),
-                    'sender': widget.userId,
+                    'sender': widget.userType == 'user'
+                        ? widget.userId
+                        : widget.doctorId,
                   };
                   controller.clear();
                   if (messages != null) {
@@ -251,7 +253,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         final Message message =
                             Message.fromJson(messages['conversations'][index]);
-                        final bool isMe = message.sender == widget.userId;
+                        final bool isMe = widget.userType == 'user'
+                            ? message.sender == widget.userId
+                            : message.sender == widget.doctorId;
+                        print('$isMe ${widget.userId} ${message.sender}');
                         final myImg = null; //currentUser.imageUrl;
                         final imageUrl = null; //widget.user.imageUrl;
                         final name = userDataStore.user.name;

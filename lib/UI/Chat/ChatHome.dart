@@ -95,9 +95,13 @@ class _ChatHomeState extends State<ChatHome> {
                           messages[index]['conversations'];
                       // print('Conversations $conversations');
                       return MsgList(
-                        name: messages[index]['doctor'],
+                        name: widget.userType == 'user'
+                            ? messages[index]['doctor']
+                            : messages[index]['user'],
                         unRead: false,
                         profileImg: null,
+                        time: conversations[conversations.length - 1]
+                            ['timestamp'],
                         messageText: conversations != null &&
                                 conversations.length != 0
                             ? conversations[conversations.length - 1]['message']
@@ -109,6 +113,7 @@ class _ChatHomeState extends State<ChatHome> {
                               doctorId: messages[index]['docId'],
                               docName: messages[index]['doctor'],
                               userName: messages[index]['user'],
+                              userType: widget.userType,
                             ),
                           ),
                         ),

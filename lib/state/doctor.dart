@@ -71,17 +71,22 @@ class DoctorDataStore extends ChangeNotifier {
     );
   }
 
-  listenToMessages(String documentId) {
-    DatabaseService.getMessages(documentId).listen((event) {
+  listenToMessages(String docId) {
+    DatabaseService.getMessages(docId).listen((event) {
       if (event.data.length > 0) {
         final data = event.data;
         data['id'] = event.documentID;
-        final changedData = _messages.map((e) {
-          if (e['id'] == data['id']) return data;
-          return e;
-        });
-        _messages = changedData;
-        notifyListeners();
+        final local =
+            _messages.firstWhere((element) => element['id'] == data['id']);
+        if (local != null &&
+            local['conversations'].length < data['conversations'].length) {
+          final changedData = _messages.map((e) {
+            if (e['id'] == data['id']) return data;
+            return e;
+          });
+          _messages = changedData;
+          notifyListeners();
+        }
       }
     });
   }
