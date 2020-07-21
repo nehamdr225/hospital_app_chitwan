@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
@@ -94,16 +95,20 @@ class _AppointmentFormState extends State<AppointmentForm> {
     // print(_myHospital);
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40.0),
-          child: WhiteAppBar(
-              titleColor: theme.colorScheme.primary,
-              title: "Appointment Form")),
+        preferredSize: Size.fromHeight(41.0),
+        child: WhiteAppBar(
+          titleColor: theme.colorScheme.primary,
+          title: "Appointment Form",
+          bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1.0)),
+        ),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            BoolIndicator(isActive),
             SizedBox(
               height: 10.0,
             ),
@@ -153,7 +158,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
               //phone number
               padding: const EdgeInsets.all(10.0),
               child: FForms(
-                initialValue: userDataStore.user.name,
+                initialValue: userDataStore.user.phone,
                 icon: Icon(
                   Icons.phone,
                   color: theme.iconTheme.color,
@@ -564,50 +569,79 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     color: textDark_Yellow,
                     fontWeight: FontWeight.w600,
                   ),
-                  onPressed: () async {
-                    if (!_formKey.currentState.validate()) {
-                      return;
-                    }
-                    setState(() {
-                      isActive = true;
-                    });
-                    _formKey.currentState.save();
-                    widget.appointment.firstName = _fName;
-                    widget.appointment.lastName = _lName;
-                    widget.appointment.phoneNum = _fPhone;
-                    widget.appointment.gender = _gender.toString();
-                    widget.appointment.consultationType =
-                        _appointment.toString();
-                    widget.appointment.doctor = _valDoctor;
-                    widget.appointment.department = _valDepartment;
-                    widget.appointment.hospital = _valHospital;
-                    widget.appointment.date = selectedDate;
-                    widget.appointment.time = _valTime;
-                    final updateData = widget.appointment.toJson();
-                    updateData['userId'] = userDataStore.user.name;
-                    final doctor = userDataStore.doctors.firstWhere(
-                        (element) => element['name'] == _valDoctor,
-                        orElse: () => {name: ''});
-                    updateData['doctorId'] = doctor['id'];
-                    userDataStore.createAppointment(updateData).then((value) {
-                      print(value);
-                      setState(() {
-                        isActive = false;
-                      });
-                      if (value != 'error') {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
-                            (route) => false);
-                      }
-                    }).catchError((err) {
-                      setState(() {
-                        isActive = false;
-                      });
-                      print(err);
-                    });
-                  },
+                  onPressed: isActive
+                      ? null
+                      : () async {
+                          if (_valDepartment == null ||
+                              _valDoctor == null ||
+                              _valTime == null ||
+                              !_formKey.currentState.validate()) {
+                            buildAndShowFlushBar(
+                              context: context,
+                              text: 'Please provide all data!',
+                              backgroundColor: theme.colorScheme.error,
+                              icon: Icons.error_outline,
+                            );
+                            return;
+                          }
+                          setState(() {
+                            isActive = true;
+                          });
+                          _formKey.currentState.save();
+                          widget.appointment.firstName = _fName;
+                          widget.appointment.lastName = _lName;
+                          widget.appointment.phoneNum = _fPhone;
+                          widget.appointment.gender = _gender.toString();
+                          widget.appointment.consultationType =
+                              _appointment.toString();
+                          widget.appointment.doctor = _valDoctor;
+                          widget.appointment.department = _valDepartment;
+                          widget.appointment.hospital = _valHospital;
+                          widget.appointment.date = selectedDate;
+                          widget.appointment.time = _valTime;
+                          final updateData = widget.appointment.toJson();
+                          updateData['userId'] = userDataStore.user.uid;
+                          final doctor = userDataStore.doctors.firstWhere(
+                              (element) => element['name'] == _valDoctor,
+                              orElse: () => {name: ''});
+                          updateData['doctorId'] = doctor['id'];
+                          userDataStore
+                              .createAppointment(updateData)
+                              .then((value) async {
+                            setState(() {
+                              isActive = false;
+                            });
+                            if (value != 'error') {
+                              buildAndShowFlushBar(
+                                context: context,
+                                text: 'Appointment Created Successfully!',
+                                icon: Icons.check,
+                              );
+                              await Future.delayed(Duration(seconds: 2));
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()),
+                                  (route) => false);
+                            } else {
+                              buildAndShowFlushBar(
+                                context: context,
+                                text: 'Appointment Creation Failed!',
+                                icon: Icons.error,
+                              );
+                            }
+                          }).catchError((err) {
+                            setState(() {
+                              isActive = false;
+                            });
+                            buildAndShowFlushBar(
+                              context: context,
+                              text: 'Oops something went wrong!',
+                              icon: Icons.error,
+                            );
+                            print(err);
+                          });
+                        },
                 ),
               ),
             )

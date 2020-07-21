@@ -18,9 +18,17 @@ buildAndShowSnackBar(context, content) {
   Scaffold.of(context).showSnackBar(snack);
 }
 
-buildAndShowFlushBar(BuildContext context, Theme theme, String text) {
-  Flushbar(
-    backgroundColor: theme.data.primaryColor,
-    titleText: Text(text),
-  )..show(context);
+Future<dynamic> buildAndShowFlushBar(
+    {BuildContext context, Color backgroundColor, String text, IconData icon}) {
+  final flush = Flushbar(
+    duration: Duration(seconds: 3),
+    backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
+    message: text,
+    animationDuration: const Duration(milliseconds: 500),
+    icon: Icon(
+      icon,
+      color: Colors.white,
+    ),
+  );
+  return flush.show(context);
 }

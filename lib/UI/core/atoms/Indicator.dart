@@ -23,9 +23,13 @@ class BoolIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !checkValue ? SizedBox.shrink() : LinearProgressIndicator(
-      backgroundColor: blueGrey.withOpacity(0.3),
+    return !checkValue
+        ? SizedBox.fromSize(
+            size: Size.fromHeight(1),
+          )
+        : LinearProgressIndicator(
+            backgroundColor: blueGrey.withOpacity(0.3),
             valueColor: AlwaysStoppedAnimation<Color>(blueGrey),
-    );
+          );
   }
 }
