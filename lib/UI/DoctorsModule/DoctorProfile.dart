@@ -63,7 +63,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
       doctorDataStore.getHospitals();
     }
 
-    String selectedHospital = doctor.hospital ?? null;
+    String selectedHospital = doctor?.hospital ?? null;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -227,12 +227,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 11.0),
                           child: FancyText(
-                            text: value.name,
+                            text: value['name'],
                             color: blueGrey,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        value: value.name,
+                        value: value['name'],
                       );
                     }).toList()
                   : selectedHospital != null
@@ -468,8 +468,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
             height: 45.0,
             elevation: 0.0,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResetPassword()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResetPassword(
+                            email: doctor.email,
+                            signout: doctorDataStore.clearState,
+                          )));
             },
           ),
           FRaisedButton(
