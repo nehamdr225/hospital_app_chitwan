@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -5,52 +6,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class HospitalDataStore extends ChangeNotifier {
-  handleInitialProfileLoad() {
+  handleInitialProfileLoad() async {
     try {
       if (user == null) {
-        print('Bootstrapping data store\n');
-        AuthService.getCurrentUID().then((value) {
-          print('value $value');
-          if (value != null) {
-            DatabaseService.getHospitalData(value).then((userData) {
-              if (userData.data != null) {
-                _userData = userData.data;
-                // getAvailableDoctors(userData.data['name']);
-                _id = value;
-                _userType = userData.data['role'];
-                notifyListeners();
-              }
-            }).catchError((err) {
-              print(err);
-            });
+        final String value = await AuthService.getCurrentUID();
+        if (value != null) {
+          final DocumentSnapshot userData =
+              await DatabaseService.getHospitalData(value);
+          if (userData.data != null) {
+            final json = userData.data;
+            json['id'] = value;
+            user = Hospital.fromJson(json);
           }
-        });
+        }
         getAvailableDoctors();
       }
     } catch (e) {}
   }
 
-  String _id;
-  String _userType;
   List _doctors;
-  Map<String, dynamic> _userData;
+  Hospital _userData;
 
-  get uid => _id;
+  Hospital get user => _userData;
 
-  set uid(userId) {
-    _id = userId;
-    notifyListeners();
-  }
-
-  get type => _userType;
-
-  set type(userType) {
-    _userType = userType;
-  }
-
-  Map get user => _userData;
-
-  set user(newUserData) {
+  set user(Hospital newUserData) {
     _userData = newUserData;
     notifyListeners();
   }
@@ -62,19 +41,19 @@ class HospitalDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchUserData() {
-    if (uid != null && type != null) {
-      if (type == 'user') {
-        DatabaseService.getUserData(uid).then((value) {
-          if (value.data != null) {
-            user = value.data;
-          }
-        }).catchError((err) {
-          print(err);
-        });
-      }
-    }
-  }
+  // fetchUserData() {
+  //   if (user.uid != null && user.role != null) {
+  //     if (user.role == 'user') {
+  //       DatabaseService.getUserData(uid).then((value) {
+  //         if (value.data != null) {
+  //           user = value.data;
+  //         }
+  //       }).catchError((err) {
+  //         print(err);
+  //       });
+  //     }
+  //   }
+  // }
 
   void getAvailableDoctors() {
     DatabaseService.getDoctors().listen((QuerySnapshot onData) {
@@ -135,15 +114,12 @@ class HospitalDataStore extends ChangeNotifier {
   }
 
   updateDepartments(Map data) {
-    DatabaseService.updateHospitalData(uid, data);
+    DatabaseService.updateHospitalData(user.uid, data);
   }
 
   clearState() {
-    _id = null;
     _userData = null;
-    _userType = null;
     setLocalUserData('userType', null);
-    // _hospitals = null;
     notifyListeners();
   }
 }

@@ -32,13 +32,13 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
             user != null
                 ? UserAccountsDrawerHeader(
                     accountName: FancyText(
-                      text: user['name'],
+                      text: user != null ? user.name : '',
                       size: 16.0,
                       fontWeight: FontWeight.w600,
                       color: textDark_Yellow,
                     ),
                     accountEmail: FancyText(
-                      text: user['email'] ?? '',
+                      text: user != null ? user.email : '',
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                       color: textDark_Yellow,

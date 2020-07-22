@@ -87,9 +87,11 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                                 //child: Image.file(_profileImg)
                               )
                             : Text(
-                                hospital['name'].split(' ').reduce((a, b) {
-                                  return '${a[0]} ${b[0]}';
-                                }),
+                                hospital != null
+                                    ? hospital.name.split(' ').reduce((a, b) {
+                                        return '${a[0]} ${b[0]}';
+                                      })
+                                    : '',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2
@@ -125,7 +127,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Name',
-              value: hospital["name"] ?? '',
+              value: hospital != null ? hospital.name : '',
               onChanged: (value) {
                 setState(() {
                   updateData['name'] = value;
@@ -138,7 +140,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
                 title: 'Email',
-                value: hospital["email"] ?? '',
+                value: hospital != null ? hospital.email : '',
                 onChanged: (value) {
                   setState(() {
                     updateData['email'] = value;
@@ -150,7 +152,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
                 title: 'Contact',
-                value: hospital['phone'] ?? '',
+                value: hospital != null ? hospital.phone : '',
                 onChanged: (value) {
                   setState(() {
                     updateData['phone'] = value;
@@ -162,7 +164,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
                 title: 'Current Address',
-                value: hospital['address'] ?? "",
+                value: hospital != null ? hospital.address ?? "" : '',
                 onChanged: (value) {
                   setState(() {
                     updateData['address'] = value;
@@ -271,7 +273,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ResetPassword(
-                            email: hospital['email'],
+                            email: hospital != null ? hospital.email : null,
                             signout: hospitalDataStore.clearState,
                           )));
             },

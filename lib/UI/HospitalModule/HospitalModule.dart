@@ -76,8 +76,7 @@ class HospitalModule extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             top: 8.0, left: 28.0, bottom: 0.0),
                         child: FancyText(
-                            text:
-                                hospital != null ? hospital['name'] : "Hello!",
+                            text: hospital != null ? hospital.name : "Hello!",
                             textAlign: TextAlign.left,
                             size: 22.0,
                             color: textDark_Yellow,
@@ -141,7 +140,7 @@ class HospitalModule extends StatelessWidget {
             ),
           ),
         ),
-        hospital != null && hospital['departments'] == null
+        hospital != null && hospital.departments == null
             ? Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,
