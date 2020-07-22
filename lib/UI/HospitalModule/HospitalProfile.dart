@@ -170,11 +170,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-              left: 22.0,
-              right: 20.0
-            ),
+            padding: const EdgeInsets.only(top: 8.0, left: 22.0, right: 20.0),
             child: Column(
               //Current Address
               // padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
@@ -224,10 +220,13 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 Column(children: [
                   Chip(
                     backgroundColor: blueGrey,
-                    label: FancyText(text: 'Surgery', color: textDark_Yellow,),
+                    label: FancyText(
+                      text: 'Surgery',
+                      color: textDark_Yellow,
+                    ),
                     // deleteIcon: Icon(Icons.delete),
                     deleteIconColor: textDark_Yellow,
-                    onDeleted: (){},
+                    onDeleted: () {},
                   )
                 ])
               ],
@@ -268,8 +267,13 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
             height: 45.0,
             elevation: 0.0,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResetPassword()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResetPassword(
+                            email: hospital['email'],
+                            signout: hospitalDataStore.clearState,
+                          )));
             },
           ),
           FRaisedButton(
