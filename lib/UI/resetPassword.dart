@@ -4,17 +4,10 @@ import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/doctor.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
-import 'package:chitwan_hospital/state/lab.dart';
-import 'package:chitwan_hospital/state/pharmacy.dart';
-import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'Widget/Forms.dart';
 import 'core/atoms/AppBarW.dart';
-import 'core/atoms/FancyText.dart';
 
 class ResetPassword extends StatefulWidget {
   final email, signout;
