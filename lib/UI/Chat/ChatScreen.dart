@@ -36,7 +36,6 @@ class _ChatScreenState extends State<ChatScreen> {
         userDataStore.getSpecificMessages(widget.userId, widget.doctorId) ??
             initialMessages;
 
-    print(messages);
     _buildMessageComposer() {
       return Container(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -249,7 +248,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         final bool isMe = widget.userType == 'user'
                             ? message.sender == widget.userId
                             : message.sender == widget.doctorId;
-                        print('$isMe ${widget.userId} ${message.sender}');
                         final myImg = null; //currentUser.imageUrl;
                         final imageUrl = null; //widget.user.imageUrl;
                         final name = userDataStore.user.name;
