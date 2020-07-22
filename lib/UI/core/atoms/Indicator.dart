@@ -25,7 +25,7 @@ class BoolIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return !checkValue
         ? SizedBox.fromSize(
-            size: Size.fromHeight(1),
+            size: Size.fromHeight(0),
           )
         : LinearProgressIndicator(
             backgroundColor: blueGrey.withOpacity(0.3),
