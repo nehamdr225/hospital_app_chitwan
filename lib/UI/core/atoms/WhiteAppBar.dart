@@ -16,22 +16,25 @@ class WhiteAppBar extends StatelessWidget {
   final tabbar;
   final controller;
   final share;
+  final bottom;
   final List<Widget> tabs;
-  WhiteAppBar(
-      {this.elevation: 0.0,
-      this.logo,
-      this.fontSize: 18.0,
-      this.leading: true,
-      this.settings,
-      this.tabbar: false,
-      this.tabs,
-      this.share: false,
-      this.download: false,
-      this.titleColor,
-      this.controller,
-      this.title: "",
-      this.backgroundColor,
-      this.color });
+  WhiteAppBar({
+    this.elevation: 0.0,
+    this.logo,
+    this.fontSize: 18.0,
+    this.leading: true,
+    this.settings,
+    this.tabbar: false,
+    this.tabs,
+    this.share: false,
+    this.download: false,
+    this.titleColor,
+    this.controller,
+    this.title: "",
+    this.backgroundColor,
+    this.color,
+    this.bottom,
+  });
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -53,7 +56,7 @@ class WhiteAppBar extends StatelessWidget {
               tabs: tabs,
               controller: controller,
             )
-          : null,
+          : bottom,
       title: FancyText(
         text: title,
         fontWeight: FontWeight.w600,
@@ -98,7 +101,7 @@ class WhiteAppBar extends StatelessWidget {
                 ),
                 onPressed: () {})
             : Text(""),
-            download == true
+        download == true
             ? IconButton(
                 icon: Icon(
                   Icons.file_download,

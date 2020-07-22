@@ -146,10 +146,12 @@ class UserDataStore extends ChangeNotifier {
           if (match != null) return true;
           return false;
         });
+        // print('New msg data $data');
         _messages.addAll(data);
         notifyListeners();
         return;
       }
+      // print('New msg data $data');
       messages = data;
       return;
     });
@@ -204,8 +206,10 @@ class UserDataStore extends ChangeNotifier {
         } else {
           newDoctorData.removeWhere((element) =>
               _doctors.firstWhere((doc) => doc['id'] == element['id']));
-          _doctors.addAll(newDoctorData);
-          notifyListeners();
+          if (newDoctorData.length > 0) {
+            _doctors.addAll(newDoctorData);
+            notifyListeners();
+          }
         }
       }, onError: (e) {
         print('Got doctor error\n $e');

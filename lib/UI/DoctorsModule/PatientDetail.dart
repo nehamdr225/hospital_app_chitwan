@@ -65,6 +65,7 @@ class _PatientDetailState extends State<PatientDetail> {
                       diagnosis: doodle.diagnosis,
                       medicine: doodle.medicines,
                       title: doodle.title,
+                      id: widget.id,
                     )));
           },
           child: Container(

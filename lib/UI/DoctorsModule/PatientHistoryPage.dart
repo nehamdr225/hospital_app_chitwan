@@ -1,8 +1,9 @@
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -43,10 +44,13 @@ class _PatientHistoryPageState extends State<PatientHistoryPage> {
               leading: true,
               title: widget.date,
               fontSize: 15.0,
+              bottom: PreferredSize(
+                child: BoolIndicator(isActive),
+                preferredSize: Size.fromHeight(1),
+              ),
             ),
-            preferredSize: Size.fromHeight(50.0)),
+            preferredSize: Size.fromHeight(51.0)),
         body: ListView(children: [
-          BoolIndicator(isActive),
           Table(children: <TableRow>[
             TableRow(children: [
               Padding(
@@ -158,8 +162,29 @@ class _PatientHistoryPageState extends State<PatientHistoryPage> {
                                 isActive = false;
                               });
                               if (result) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                                buildAndShowFlushBar(
+                                  context: context,
+                                  icon: Icons.check,
+                                  text: 'Medicine ordered sucessfully!',
+                                );
+                                Future.delayed(Duration(seconds: 2)).then(
+                                  (_) => Navigator.of(context)
+                                      .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AppointmentDetail(
+                                                    id: widget.id,
+                                                  )),
+                                          (route) => false),
+                                );
+                              } else {
+                                buildAndShowFlushBar(
+                                  context: context,
+                                  icon: Icons.error_outline,
+                                  text: 'Error ocurred!',
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.error,
+                                );
                               }
                             });
                           },

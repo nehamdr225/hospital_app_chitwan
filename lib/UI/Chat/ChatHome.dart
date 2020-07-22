@@ -6,6 +6,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:chitwan_hospital/state/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -100,8 +101,10 @@ class _ChatHomeState extends State<ChatHome> {
                             : messages[index]['user'],
                         unRead: false,
                         profileImg: null,
-                        time: conversations[conversations.length - 1]
-                            ['timestamp'],
+                        time: conversations.length != 0
+                            ? conversations[conversations.length - 1]
+                                ['timestamp']
+                            : Timestamp.now(),
                         messageText: conversations != null &&
                                 conversations.length != 0
                             ? conversations[conversations.length - 1]['message']
