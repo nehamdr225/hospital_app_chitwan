@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/resetPassword.dart';
@@ -34,6 +36,9 @@ class _LabProfileState extends State<LabProfile> {
     });
   }
 
+  Map updateData = {};
+  bool isActive = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -56,6 +61,7 @@ class _LabProfileState extends State<LabProfile> {
           )),
       body: ListView(
         children: <Widget>[
+          BoolIndicator(isActive),
           Container(
             padding: EdgeInsets.only(top: 20.0),
             alignment: Alignment.topCenter,
@@ -116,6 +122,9 @@ class _LabProfileState extends State<LabProfile> {
             child: InputField(
               title: 'Name',
               value: lab != null ? lab.name : '',
+              onChanged: (value) => setState(() {
+                updateData['name'] = value;
+              }),
             ),
           ),
           Padding(
@@ -131,7 +140,10 @@ class _LabProfileState extends State<LabProfile> {
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
               title: 'Contact',
-              value: "9840056679",
+              value: lab != null ? lab.phone ?? '' : '',
+              onChanged: (value) => setState(() {
+                updateData['phone'] = value;
+              }),
             ),
           ),
           Container(
@@ -139,29 +151,30 @@ class _LabProfileState extends State<LabProfile> {
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
               title: 'Current Address',
-              value: "New Baneshwor, Kathmandu",
-            ),
-          ),
-          Container(
-            //Working Hospital
-            padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-            child: InputField(
-              title: 'Lab Name',
-              value: "KMC Lab",
+              value: lab != null ? lab.address ?? '' : '',
+              onChanged: (value) => setState(() {
+                updateData['address'] = value;
+              }),
             ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
               title: 'Lab Registration Number',
-              value: "xxx-xxx-xxxx",
+              value: lab != null ? lab.registrationNo ?? '' : '',
+              onChanged: (value) => setState(() {
+                updateData['registrationNo'] = value;
+              }),
             ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
               title: 'Open Hours',
-              value: "6:00 AM - 10:00 PM",
+              value: lab != null ? lab.openHours ?? '' : '',
+              onChanged: (value) => setState(() {
+                updateData['openHours'] = value;
+              }),
             ),
           ),
           Padding(
@@ -225,7 +238,24 @@ class _LabProfileState extends State<LabProfile> {
                 color: theme.colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
                 borderColor: theme.colorScheme.background,
-                onPressed: () {},
+                onPressed: () async {
+                  if (updateData.length > 0) {
+                    setState(() {
+                      isActive = true;
+                    });
+                    final result = await labDataStore.update(updateData);
+                    setState(() {
+                      isActive = false;
+                    });
+                    if (result) {
+                      buildAndShowFlushBar(
+                        context: context,
+                        icon: Icons.check,
+                        text: 'Profile has been updated!',
+                      );
+                    }
+                  }
+                },
               )),
           SizedBox(
             height: 10.0,

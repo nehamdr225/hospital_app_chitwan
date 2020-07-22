@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/resetPassword.dart';
@@ -37,6 +39,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   }
 
   Map<String, String> updateData = {};
+  bool isActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +83,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
           )),
       body: ListView(
         children: <Widget>[
+          BoolIndicator(isActive),
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: <Widget>[
@@ -446,12 +450,23 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 color: theme.colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
                 borderColor: theme.colorScheme.background,
-                onPressed: () {
-                  print(updateData);
-                  if (updateData.length > 0)
-                    doctorDataStore
-                        .update(updateData)
-                        .then((value) => print(value));
+                onPressed: () async {
+                  if (updateData.length > 0) {
+                    setState(() {
+                      isActive = true;
+                    });
+                    final result = await doctorDataStore.update(updateData);
+                    setState(() {
+                      isActive = false;
+                    });
+                    if (result) {
+                      buildAndShowFlushBar(
+                        context: context,
+                        icon: Icons.check,
+                        text: 'Profile has been updated!',
+                      );
+                    }
+                  }
                 },
               )),
           SizedBox(

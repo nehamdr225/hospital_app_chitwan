@@ -21,7 +21,7 @@ abstract class DatabaseService {
       db.collection('messages');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
-    return await userCollection.document(uid).setData(data);
+    return await userCollection.document(uid).setData(data, merge: true);
   }
 
   static Future<DocumentSnapshot> getUserData(String uid) async {
@@ -49,21 +49,21 @@ abstract class DatabaseService {
   }
 
   static Future updateDoctorData(String uid, data) async {
-    return await doctorCollection.document(uid).setData(data);
+    return await doctorCollection.document(uid).setData(data, merge: true);
   }
 
   static Future updateHospitalData(
       String uid, Map<String, dynamic> data) async {
-    return await hospitalCollection.document(uid).setData(data);
+    return await hospitalCollection.document(uid).setData(data, merge: true);
   }
 
   static Future updatePharmacyData(
       String uid, Map<String, dynamic> data) async {
-    return await pharmacyCollection.document(uid).setData(data);
+    return await pharmacyCollection.document(uid).setData(data, merge: true);
   }
 
   static Future updateLabData(String uid, Map<String, dynamic> data) async {
-    return await labCollection.document(uid).setData(data);
+    return await labCollection.document(uid).setData(data, merge: true);
   }
 
   static Future createAppointment(Map data) async {

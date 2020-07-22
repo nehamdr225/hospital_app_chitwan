@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/resetPassword.dart';
@@ -26,11 +28,15 @@ class _AccountPageState extends State<AccountPage> {
       });
   }
 
+  Map updateData = {};
+  bool isActive = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     var size = MediaQuery.of(context).size;
-    final user = Provider.of<UserDataStore>(context).user;
+    final userDataStore = Provider.of<UserDataStore>(context);
+    final user = userDataStore.user;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -43,6 +49,7 @@ class _AccountPageState extends State<AccountPage> {
           )),
       body: ListView(
         children: <Widget>[
+          BoolIndicator(isActive),
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: <Widget>[
@@ -105,22 +112,28 @@ class _AccountPageState extends State<AccountPage> {
           Container(
             padding: const EdgeInsets.all(10.0),
             child: InputField(
-              value: user.name,
+              value: user != null ? user.name ?? '' : '',
               title: 'Name',
+              onChanged: (value) => setState(() {
+                updateData['name'] = value;
+              }),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: InputField(
-              value: user.name,
+              value: user != null ? user.email ?? '' : '',
               title: 'Email',
             ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
-              value: user.phone,
+              value: user != null ? user.phone ?? '' : '',
               title: 'Contact',
+              onChanged: (value) => setState(() {
+                updateData['phone'] = value;
+              }),
             ),
           ),
           Container(
@@ -133,7 +146,24 @@ class _AccountPageState extends State<AccountPage> {
                 color: blueGrey,
                 fontWeight: FontWeight.w600,
                 borderColor: theme.background,
-                onPressed: () {},
+                onPressed: () async {
+                  if (updateData.length > 0) {
+                    setState(() {
+                      isActive = true;
+                    });
+                    final result = await userDataStore.update(updateData);
+                    setState(() {
+                      isActive = false;
+                    });
+                    if (result) {
+                      buildAndShowFlushBar(
+                        context: context,
+                        icon: Icons.check,
+                        text: 'Profile has been updated!',
+                      );
+                    }
+                  }
+                },
               )),
           SizedBox(
             height: 10.0,
@@ -154,8 +184,7 @@ class _AccountPageState extends State<AccountPage> {
                   MaterialPageRoute(
                       builder: (context) => ResetPassword(
                             email: user.email,
-                            signout:
-                                Provider.of<UserDataStore>(context).clearState,
+                            signout: userDataStore.clearState,
                           )));
             },
           ),

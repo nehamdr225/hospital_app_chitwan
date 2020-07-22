@@ -49,13 +49,6 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // List get hospitals => _hospitals;
-
-  // set hospitals(newHospitalData) {
-  //   _hospitals = newHospitalData;
-  //   notifyListeners();
-  // }
-
   List get appointments => _appointments;
 
   set appointments(newAppointmentData) {
@@ -184,6 +177,20 @@ class UserDataStore extends ChangeNotifier {
       }).catchError((err) {
         print(err);
       });
+    }
+  }
+
+  Future<bool> update(data) async {
+    try {
+      await DatabaseService.updateUserData(user.uid, data);
+      final Map newData = {...user.toJson(), ...data};
+      final User newUser = User.fromJson(newData);
+      user = newUser;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
 

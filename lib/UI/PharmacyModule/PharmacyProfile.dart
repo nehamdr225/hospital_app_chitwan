@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/resetPassword.dart';
@@ -33,6 +34,9 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
       _profileImg = File(pickedFile.path);
     });
   }
+
+  Map updateData = {};
+  bool isActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +131,10 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Name',
-              value: pharmacy != null ? pharmacy.name : '',
+              value: pharmacy != null ? pharmacy.name ?? '' : '',
+              onChanged: (value) => setState(() {
+                updateData['name'] = value;
+              }),
             ),
           ),
           Padding(
@@ -135,46 +142,46 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Email',
-              value: pharmacy != null ? pharmacy.email : '',
+              value: pharmacy != null ? pharmacy.email ?? '' : '',
             ),
           ),
           Container(
             //Contact
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'Contact',
-              value: "9840056679",
-            ),
+                title: 'Contact',
+                value: pharmacy != null ? pharmacy.phone ?? '' : '',
+                onChanged: (value) => setState(() {
+                      updateData['phone'] = value;
+                    })),
           ),
           Container(
             //Current Address
             padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'Current Address',
-              value: "New Baneshwor, Kathmandu",
-            ),
-          ),
-          Container(
-            //Working Hospital
-            padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-            child: InputField(
-              title: 'Pharmacy Name',
-              value: "KMC Pharmacy",
-            ),
+                title: 'Current Address',
+                value: pharmacy != null ? pharmacy.address ?? '' : '',
+                onChanged: (value) => setState(() {
+                      updateData['phone'] = value;
+                    })),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'Pharmacy Registration Number',
-              value: "xxx-xxx-xxxx",
-            ),
+                title: 'Pharmacy Registration Number',
+                value: pharmacy != null ? pharmacy.registrationNo ?? '' : '',
+                onChanged: (value) => setState(() {
+                      updateData['registrationNo'] = value;
+                    })),
           ),
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
             child: InputField(
-              title: 'Open Hours',
-              value: "6:00 AM - 10:00 PM",
-            ),
+                title: 'Open Hours',
+                value: pharmacy != null ? pharmacy.openHours ?? '' : '',
+                onChanged: (value) => setState(() {
+                      updateData['openHours'] = value;
+                    })),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18.0, bottom: 10.0),
@@ -237,7 +244,24 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                 color: theme.colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
                 borderColor: theme.colorScheme.background,
-                onPressed: () {},
+                onPressed: () async {
+                  if (updateData.length > 0) {
+                    setState(() {
+                      isActive = true;
+                    });
+                    final result = await pharmacyDataStore.update(updateData);
+                    setState(() {
+                      isActive = false;
+                    });
+                    if (result) {
+                      buildAndShowFlushBar(
+                        context: context,
+                        icon: Icons.check,
+                        text: 'Profile has been updated!',
+                      );
+                    }
+                  }
+                },
               )),
           SizedBox(
             height: 10.0,

@@ -113,6 +113,20 @@ class HospitalDataStore extends ChangeNotifier {
     doctors = newVal;
   }
 
+  Future<bool> update(data) async {
+    try {
+      await DatabaseService.updateHospitalData(user.uid, data);
+      final Map newData = {...user.toJson(), ...data};
+      final Hospital newUser = Hospital.fromJson(newData);
+      user = newUser;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   updateDepartments(Map data) {
     DatabaseService.updateHospitalData(user.uid, data);
   }

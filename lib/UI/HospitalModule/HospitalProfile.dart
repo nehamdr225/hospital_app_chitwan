@@ -3,6 +3,8 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FForms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/resetPassword.dart';
@@ -31,6 +33,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
   }
 
   Map<String, String> updateData = {};
+  bool isActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +59,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
           )),
       body: ListView(
         children: <Widget>[
+          BoolIndicator(isActive),
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: <Widget>[
@@ -247,12 +251,23 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 color: theme.colorScheme.onBackground,
                 fontWeight: FontWeight.w600,
                 borderColor: theme.colorScheme.background,
-                onPressed: () {
-                  print(updateData);
-                  // if (updateData.length > 0)
-                  // doctorDataStore
-                  // .update(updateData)
-                  // .then((value) => print(value));
+                onPressed: () async {
+                  if (updateData.length > 0) {
+                    setState(() {
+                      isActive = true;
+                    });
+                    final result = await hospitalDataStore.update(updateData);
+                    setState(() {
+                      isActive = false;
+                    });
+                    if (result) {
+                      buildAndShowFlushBar(
+                        context: context,
+                        icon: Icons.check,
+                        text: 'Profile has been updated!',
+                      );
+                    }
+                  }
                 },
               )),
           SizedBox(
