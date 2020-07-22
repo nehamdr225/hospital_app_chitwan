@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/models/Pharmacy.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -5,52 +6,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class PharmacyDataStore extends ChangeNotifier {
-  handleInitialProfileLoad() {
+  handleInitialProfileLoad() async {
     try {
       if (user == null) {
-        print('Bootstrapping data store\n');
-        AuthService.getCurrentUID().then((value) {
-          print('value $value');
-          if (value != null) {
-            DatabaseService.getPharmacyData(value).then((userData) {
-              print(userData.data);
-              if (userData.data != null) {
-                user = userData.data;
-                uid = value;
-                type = userData.data['role'];
-                getOrders();
-              }
-            }).catchError((err) {
-              print(err);
-            });
+        final String value = await AuthService.getCurrentUID();
+        if (value != null) {
+          final DocumentSnapshot userData =
+              await DatabaseService.getPharmacyData(value);
+          if (userData.data != null) {
+            final json = userData.data;
+            json['id'] = value;
+            user = Pharmacy.fromJson(json);
+            getOrders();
           }
-        });
+        }
       }
     } catch (e) {}
   }
 
-  String _id;
-  String _userType;
-  Map<String, dynamic> _userData;
+  Pharmacy _userData;
   List hospitals;
   List<Map> _orders;
 
-  get uid => _id;
+  Pharmacy get user => _userData;
 
-  set uid(userId) {
-    _id = userId;
-    notifyListeners();
-  }
-
-  get type => _userType;
-
-  set type(userType) {
-    _userType = userType;
-  }
-
-  get user => _userData;
-
-  set user(newUserData) {
+  set user(Pharmacy newUserData) {
     _userData = newUserData;
     notifyListeners();
   }
@@ -64,19 +44,18 @@ class PharmacyDataStore extends ChangeNotifier {
 
   Future<bool> update(data) async {
     try {
-      await DatabaseService.updatePharmacyData(uid, data);
-      _userData.addAll(data);
-      notifyListeners();
+      await DatabaseService.updatePharmacyData(user.uid, data);
+      final newData = {...user.toJson(), ...data};
+      user = Pharmacy.fromJson(newData);
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
 
   getOrders() {
     if (orders == null) {
-      DatabaseService.getPharmacyOrders(uid).then((onData) {
+      DatabaseService.getPharmacyOrders(user.uid).then((onData) {
         List newData = onData.documents.map<Map>((e) {
           final data = e.data;
           data['id'] = e.documentID;
@@ -133,9 +112,7 @@ class PharmacyDataStore extends ChangeNotifier {
   }
 
   clearState() {
-    _id = null;
     _userData = null;
-    _userType = null;
     setLocalUserData('userType', null);
     // _hospitals = null;
     notifyListeners();

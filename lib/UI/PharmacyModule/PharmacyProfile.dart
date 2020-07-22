@@ -87,9 +87,11 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                                 //child: Image.file(_profileImg)
                               )
                             : Text(
-                                pharmacy['name'].split(' ').reduce((a, b) {
-                                  return '${a[0]} ${b[0]}';
-                                }),
+                                pharmacy != null
+                                    ? pharmacy.name.split(' ').reduce((a, b) {
+                                        return '${a[0]} ${b[0]}';
+                                      })
+                                    : '',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2
@@ -125,7 +127,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Name',
-              value: pharmacy['name'],
+              value: pharmacy != null ? pharmacy.name : '',
             ),
           ),
           Padding(
@@ -133,7 +135,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Email',
-              value: pharmacy['email'],
+              value: pharmacy != null ? pharmacy.email : '',
             ),
           ),
           Container(
@@ -255,7 +257,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ResetPassword(
-                            email: pharmacy['email'],
+                            email: pharmacy != null ? pharmacy.email : null,
                             signout: pharmacyDataStore.clearState,
                           )));
             },
