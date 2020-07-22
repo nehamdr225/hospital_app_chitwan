@@ -204,8 +204,13 @@ class UserDataStore extends ChangeNotifier {
         if (doctors == null) {
           doctors = newDoctorData;
         } else {
-          newDoctorData.removeWhere((element) =>
-              _doctors.firstWhere((doc) => doc['id'] == element['id']));
+          newDoctorData.removeWhere((element) => _doctors.firstWhere(
+                    (doc) => doc['id'] == element['id'],
+                    orElse: () => null,
+                  ) !=
+                  null
+              ? true
+              : false);
           if (newDoctorData.length > 0) {
             _doctors.addAll(newDoctorData);
             notifyListeners();

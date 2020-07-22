@@ -300,51 +300,53 @@ class _OthersLoginState extends State<OthersLogin> {
                         ),
                         SizedBox(height: 5.0),
                         Container(
-                    width: size.width *0.90,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ResetPassword()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Colors.black38,
-                            width: size.width *0.40,
-                            child: FancyText(
-                              text: "Forgot Password?",
-                              color: textDark_Yellow,
-                              fontWeight: FontWeight.w800,
-                              size: 14.0,
-                            ),
+                          width: size.width * 0.90,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ResetPassword()));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  color: Colors.black38,
+                                  width: size.width * 0.40,
+                                  child: FancyText(
+                                    text: "Forgot Password?",
+                                    color: textDark_Yellow,
+                                    fontWeight: FontWeight.w800,
+                                    size: 14.0,
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              OthersSignUp()));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  color: Colors.black38,
+                                  width: size.width * 0.25,
+                                  child: FancyText(
+                                    text: "Register",
+                                    color: textLight_Red2,
+                                    fontWeight: FontWeight.w700,
+                                    size: 14.0,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OthersSignUp()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Colors.black38,
-                            width: size.width *0.25,
-                            child: FancyText(
-                              text: "Register",
-                              color: textLight_Red2,
-                              fontWeight: FontWeight.w700,
-                              size: 14.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                         error == ''
                             ? Container(child: Text(" "))
                             : Padding(

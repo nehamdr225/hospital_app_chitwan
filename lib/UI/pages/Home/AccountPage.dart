@@ -149,8 +149,14 @@ class _AccountPageState extends State<AccountPage> {
             height: 45.0,
             elevation: 0.0,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResetPassword()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResetPassword(
+                            email: user.email,
+                            signout:
+                                Provider.of<UserDataStore>(context).clearState,
+                          )));
             },
           ),
           FRaisedButton(

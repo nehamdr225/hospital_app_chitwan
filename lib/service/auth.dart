@@ -25,6 +25,10 @@ abstract class AuthService {
     return await _auth.currentUser();
   }
 
+  static Future resetPassword(String email) async {
+    return await _auth.sendPasswordResetEmail(email: email);
+  }
+
   // Sign In with email and password
   static Future signInWithEmailAndPassword(
       String email, String password) async {
