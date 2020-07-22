@@ -84,9 +84,11 @@ class _LabProfileState extends State<LabProfile> {
                             //child: Image.file(_profileImg)
                           )
                         : Text(
-                            lab['name'].split(' ').reduce((a, b) {
-                              return '${a[0]} ${b[0]}';
-                            }),
+                            lab != null
+                                ? lab.name.split(' ').reduce((a, b) {
+                                    return '${a[0]} ${b[0]}';
+                                  })
+                                : '',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2
@@ -113,7 +115,7 @@ class _LabProfileState extends State<LabProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Name',
-              value: lab['name'],
+              value: lab != null ? lab.name : '',
             ),
           ),
           Padding(
@@ -121,7 +123,7 @@ class _LabProfileState extends State<LabProfile> {
             padding: const EdgeInsets.all(10.0),
             child: InputField(
               title: 'Email',
-              value: lab['email'],
+              value: lab != null ? lab.email : '',
             ),
           ),
           Container(
@@ -243,7 +245,7 @@ class _LabProfileState extends State<LabProfile> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ResetPassword(
-                            email: lab['email'],
+                            email: lab != null ? lab.email : null,
                             signout: labDataStore.clearState,
                           )));
             },

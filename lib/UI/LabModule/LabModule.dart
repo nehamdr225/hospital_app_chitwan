@@ -145,7 +145,7 @@ class _LabModuleState extends State<LabModule> {
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0, left: 28.0),
                     child: FancyText(
-                        text: user != null ? user['name'] : 'Loading...',
+                        text: user != null ? user.name : 'Loading...',
                         size: 16.0,
                         color: textDark_Yellow,
                         fontWeight: FontWeight.w400),

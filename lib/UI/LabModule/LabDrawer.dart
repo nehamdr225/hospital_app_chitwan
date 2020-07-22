@@ -18,14 +18,10 @@ class LabDrawerApp extends StatefulWidget {
 }
 
 class _LabDrawerAppState extends State<LabDrawerApp> {
-  // final user = AuthService().user;
-
   @override
   Widget build(BuildContext context) {
     final labDataStore = Provider.of<LabDataStore>(context);
     final user = labDataStore.user;
-    //final name = Firestore.instance.collection("users").document(uid).snapshots().toString();
-    //final uid = Provider.of<AuthService>(context).getCurrentUid;
     final theme = Theme.of(context);
     return Drawer(
       child: Container(
@@ -36,13 +32,13 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
             user != null
                 ? UserAccountsDrawerHeader(
                     accountName: FancyText(
-                      text: user['name'],
+                      text: user != null ? user.name : 'Loading...',
                       size: 16.0,
                       fontWeight: FontWeight.w600,
                       color: textDark_Yellow,
                     ),
                     accountEmail: FancyText(
-                      text: user['email'],
+                      text: user != null ? user.email : 'Loading...',
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                       color: textDark_Yellow,
