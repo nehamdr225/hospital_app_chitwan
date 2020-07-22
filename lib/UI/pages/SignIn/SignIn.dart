@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
 import 'package:chitwan_hospital/UI/pages/SignUp.dart';
+import 'package:chitwan_hospital/UI/resetPassword.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
@@ -167,34 +168,53 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SignUp()));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      color: Colors.black38,
-                      width: 250.0,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            FancyText(
-                              text: "Don't have an account? ",
+                  Container(
+                    width: size.width *0.90,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResetPassword()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.black38,
+                            width: size.width *0.40,
+                            child: FancyText(
+                              text: "Forgot Password?",
                               color: textDark_Yellow,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w800,
                               size: 14.0,
                             ),
-                            FancyText(
-                              text: "Sign Up",
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUp()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.black38,
+                            width: size.width *0.25,
+                            child: FancyText(
+                              text: "Register",
                               color: textLight_Red2,
                               fontWeight: FontWeight.w700,
                               size: 14.0,
                             ),
-                          ]),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 20.0),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -205,20 +225,20 @@ class _SignInState extends State<SignIn> {
                     child: Container(
                       padding: EdgeInsets.all(8.0),
                       color: Colors.black38,
-                      width: 150.0,
+                      width: size.width *0.90,
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             FancyText(
                               text: "Login As ",
-                              color: textLight_Red2,
-                              fontWeight: FontWeight.w700,
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w800,
                               size: 14.0,
                             ),
                             FancyText(
                               text: "others",
                               color: textDark_Yellow,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               size: 14.0,
                             ),
                           ]),

@@ -4,6 +4,7 @@ import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/resetPassword.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -247,7 +248,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                 ),
                 SizedBox(height: 20.0),
                 FRaisedButton(
-                  text: 'Change Password',
+                  text: 'Reset Password',
                   color: theme.colorScheme.onPrimary,
                   bg: theme.colorScheme.background,
                   borderColor: theme.colorScheme.background,
@@ -256,8 +257,8 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                   height: 45.0,
                   elevation: 0.0,
                   onPressed: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => ResetPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ResetPassword()));
                   },
                 ),
                 FRaisedButton(

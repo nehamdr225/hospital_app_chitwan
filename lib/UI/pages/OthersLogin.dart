@@ -12,6 +12,8 @@ import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
 
+import '../resetPassword.dart';
+
 class OthersLogin extends StatefulWidget {
   final Function toggleView;
   OthersLogin({this.toggleView});
@@ -297,6 +299,30 @@ class _OthersLoginState extends State<OthersLogin> {
                           ),
                         ),
                         SizedBox(height: 5.0),
+                        Container(
+                    width: size.width *0.90,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResetPassword()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.black38,
+                            width: size.width *0.40,
+                            child: FancyText(
+                              text: "Forgot Password?",
+                              color: textDark_Yellow,
+                              fontWeight: FontWeight.w800,
+                              size: 14.0,
+                            ),
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -307,25 +333,18 @@ class _OthersLoginState extends State<OthersLogin> {
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             color: Colors.black38,
-                            width: 300.0,
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  FancyText(
-                                    text: "Don't have an account? ",
-                                    color: textDark_Yellow,
-                                    fontWeight: FontWeight.w600,
-                                    size: 14.0,
-                                  ),
-                                  FancyText(
-                                    text: "Sign Up",
-                                    color: textLight_Red2,
-                                    fontWeight: FontWeight.w700,
-                                    size: 14.0,
-                                  ),
-                                ]),
+                            width: size.width *0.25,
+                            child: FancyText(
+                              text: "Register",
+                              color: textLight_Red2,
+                              fontWeight: FontWeight.w700,
+                              size: 14.0,
+                            ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
                         error == ''
                             ? Container(child: Text(" "))
                             : Padding(

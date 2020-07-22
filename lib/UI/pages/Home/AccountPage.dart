@@ -4,6 +4,7 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/resetPassword.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -139,7 +140,7 @@ class _AccountPageState extends State<AccountPage> {
           ),
           SizedBox(height: 20.0),
           FRaisedButton(
-            text: 'Change Password',
+            text: 'Reset Password',
             color: theme.onPrimary,
             bg: theme.background,
             borderColor: theme.background,
@@ -148,8 +149,8 @@ class _AccountPageState extends State<AccountPage> {
             height: 45.0,
             elevation: 0.0,
             onPressed: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => ResetPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResetPassword()));
             },
           ),
           FRaisedButton(
