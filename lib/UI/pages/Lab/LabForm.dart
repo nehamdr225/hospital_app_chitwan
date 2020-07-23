@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
@@ -46,6 +48,7 @@ class _LabFormState extends State<LabForm> {
     });
   }
 
+  bool isActive = false;
   @override
   Widget build(BuildContext context) {
     TextEditingController _textController = new TextEditingController();
@@ -55,9 +58,15 @@ class _LabFormState extends State<LabForm> {
 
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40.0),
-          child: WhiteAppBar(
-              titleColor: theme.colorScheme.primary, title: "Order Form")),
+        preferredSize: Size.fromHeight(40.0),
+        child: WhiteAppBar(
+          titleColor: theme.colorScheme.primary,
+          title: "Order Form",
+          bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1.0)),
+        ),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
@@ -243,10 +252,25 @@ class _LabFormState extends State<LabForm> {
                     color: textDark_Yellow,
                     fontWeight: FontWeight.w600,
                   ),
-                  onPressed: () async {
-                    if (!_formKey.currentState.validate()) {
-                      return;
-                    }
+                  onPressed:isActive
+                      ? null
+                      : () async {
+                          if (_fName == null ||
+                              _lName == null ||
+                              _fPhone == null ||
+                              _image == null ||
+                              !_formKey.currentState.validate()) {
+                            buildAndShowFlushBar(
+                              context: context,
+                              text: 'Please provide all data!',
+                              backgroundColor: theme.colorScheme.error,
+                              icon: Icons.error_outline,
+                            );
+                            return;
+                          }
+                          setState(() {
+                            isActive = true;
+                          });
                     _formKey.currentState.save();
                     widget.labForm.firstName = _fName;
                     widget.labForm.lastName = _lName;
@@ -262,6 +286,9 @@ class _LabFormState extends State<LabForm> {
                         .collection("labs")
                         .add(widget.labForm.toJson());
 
+                        setState(() {
+                          isActive=false;
+                        });
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));
                   },

@@ -126,7 +126,8 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
             //         },
             //       )
             //     : SizedBox(height:0.0),
-            DrawerElements(
+            user != null
+                ?DrawerElements(
               //Home
               title: 'Promotions',
               icon: 'assets/images/drawerIcon/calendar.png',
@@ -134,8 +135,9 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => PromotionTab()));
               },
-            ),
-            DrawerElements(
+            ):SizedBox.shrink(),
+            user != null
+                ?DrawerElements(
               //Home
               title: 'Profile',
               icon: 'assets/images/drawerIcon/profile.png',
@@ -145,7 +147,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                     MaterialPageRoute(
                         builder: (context) => HospitalProfileSettings()));
               },
-            ),
+            ):SizedBox.shrink(),
 
             Divider(
               color: Colors.grey[500],
@@ -169,27 +171,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                 //     MaterialPageRoute(builder: (context) => AboutPage()));
               },
             ),
-            // user != null
-            //     ? Padding(
-            //         padding: const EdgeInsets.only(
-            //             top: 10.0, left: 18.0, right: 18.0),
-            //         child: FRaisedButton(
-            //             elevation: 0.0,
-            //             height: 40.0,
-            //             fontSize: 15.0,
-            //             fontWeight: FontWeight.w600,
-            //             text: "Login As User",
-            //             onPressed: () {
-            //               Navigator.push(
-            //                   context,
-            //                   MaterialPageRoute(
-            //                       builder: (context) => HomeScreen()));
-            //             },
-            //             color: blueGrey,
-            //             bg: Colors.white,
-            //             shape: false),
-            //       )
-            //     : SizedBox(height:0.0),
+            
             user != null
                 ? Padding(
                     padding: const EdgeInsets.only(
@@ -199,6 +181,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
+                        borderColor: theme.colorScheme.secondary,
                         text: "Sign Out",
                         onPressed: () async {
                           AuthService.signOut();

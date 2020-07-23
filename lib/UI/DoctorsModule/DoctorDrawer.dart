@@ -125,7 +125,8 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                     },
                   )
                 : SizedBox(height: 0),
-            DrawerElements(
+            user != null
+                ?DrawerElements(
               //Home
               title: 'Appointment',
               icon: 'assets/images/drawerIcon/calendar.png',
@@ -135,8 +136,9 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                     MaterialPageRoute(
                         builder: (context) => DoctorAppointmentPage()));
               },
-            ),
-            DrawerElements(
+            ):SizedBox.shrink(),
+            user != null
+                ?DrawerElements(
               //Appointments
               title: 'Messages',
               icon: 'assets/images/drawerIcon/chat.png',
@@ -148,8 +150,9 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                               userType: 'doctor',
                             )));
               },
-            ),
-            DrawerElements(
+            ):SizedBox.shrink(),
+            user != null
+                ?DrawerElements(
               //Share
               title: 'Working Schedule',
               icon: 'assets/images/drawerIcon/shareButton.png',
@@ -159,7 +162,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                   MaterialPageRoute(builder: (context) => WorkSchedule()),
                 );
               },
-            ),
+            ):SizedBox.shrink(),
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -210,6 +213,7 @@ class _DoctorDrawerAppState extends State<DoctorDrawerApp> {
                     child: FRaisedButton(
                         elevation: 0.0,
                         height: 40.0,
+                        borderColor: theme.colorScheme.secondary,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
                         text: "Sign Out",

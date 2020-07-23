@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
@@ -35,6 +37,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
   File _image;
   File _image2;
   final picker = ImagePicker();
+  bool isActive = false;
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -59,9 +62,15 @@ class _PharmacyFormState extends State<PharmacyForm> {
 
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40.0),
-          child: WhiteAppBar(
-              titleColor: theme.colorScheme.primary, title: "Order Form")),
+        preferredSize: Size.fromHeight(41.0),
+        child: WhiteAppBar(
+          titleColor: theme.colorScheme.primary,
+          title: "Order Form",
+          bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1.0)),
+        ),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Form(
         key: _formKey,
@@ -302,28 +311,81 @@ class _PharmacyFormState extends State<PharmacyForm> {
                     color: textDark_Yellow,
                     fontWeight: FontWeight.w600,
                   ),
-                  onPressed: () async {
-                    if (!_formKey.currentState.validate()) {
-                      return;
-                    }
-                    _formKey.currentState.save();
-                    widget.pharmacyForm.firstName = _fName;
-                    widget.pharmacyForm.lastName = _lName;
-                    widget.pharmacyForm.phoneNum = _fPhone;
-                    widget.pharmacyForm.address = _fAddress;
-                    widget.pharmacyForm.image1 = _image;
-                    widget.pharmacyForm.image2 = _image2;
+                  onPressed: isActive
+                      ? null
+                      : () async {
+                          if (_fName == null ||
+                              _lName == null ||
+                              _fPhone == null ||
+                              _image == null ||
+                              !_formKey.currentState.validate()) {
+                            buildAndShowFlushBar(
+                              context: context,
+                              text: 'Please provide all data!',
+                              backgroundColor: theme.colorScheme.error,
+                              icon: Icons.error_outline,
+                            );
+                            return;
+                          }
 
-                    final uid = await AuthService.getCurrentUID();
-                    await db
-                        .collection("users")
-                        .document(uid)
-                        .collection("labs")
-                        .add(widget.pharmacyForm.toJson());
+                          _formKey.currentState.save();
+                          widget.pharmacyForm.firstName = _fName;
+                          widget.pharmacyForm.lastName = _lName;
+                          widget.pharmacyForm.phoneNum = _fPhone;
+                          widget.pharmacyForm.address = _fAddress;
+                          widget.pharmacyForm.image1 = _image;
+                          widget.pharmacyForm.image2 = _image2;
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
+                          setState(() {
+                            isActive = true;
+                          });
+
+                          final uid = await AuthService.getCurrentUID();
+                          await db
+                              .collection("users")
+                              .document(uid)
+                              .collection("labs")
+                              .add(widget.pharmacyForm.toJson());
+
+                          setState(() {
+                            isActive = false;
+                          });
+                          // if (value != 'error') {
+                          //     buildAndShowFlushBar(
+                          //       context: context,
+                          //       text: 'Appointment Created Successfully!',
+                          //       icon: Icons.check,
+                          //     );
+                          //     await Future.delayed(Duration(seconds: 2));
+                          //     Navigator.pushAndRemoveUntil(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) => HomeScreen()),
+                          //         (route) => false);
+                          //   } else {
+                          //     buildAndShowFlushBar(
+                          //       context: context,
+                          //       text: 'Appointment Creation Failed!',
+                          //       icon: Icons.error,
+                          //     );
+                          //   }
+                          // }).catchError((err) {
+                          //   setState(() {
+                          //     isActive = false;
+                          //   });
+                          //   buildAndShowFlushBar(
+                          //     context: context,
+                          //     text: 'Oops something went wrong!',
+                          //     icon: Icons.error,
+                          //   );
+                          //   print(err);
+                          // });
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        },
                 ),
               ),
             )

@@ -53,15 +53,6 @@ class _HospitalDoctorDetailsState extends State<HospitalDoctorDetails> {
                   boxShadow: [
                     BoxShadow(
                         color: Colors.white60,
-                        //offset: Offset(-4, -4),
-                        blurRadius: 3.0,
-                        spreadRadius: -12.0),
-                    BoxShadow(
-                        color: Colors.white60,
-                        offset: Offset(-4, -4),
-                        blurRadius: 3.0),
-                    BoxShadow(
-                        color: Colors.white60,
                         offset: Offset(-4, -4),
                         blurRadius: 3.0),
                     BoxShadow(
@@ -101,6 +92,7 @@ class _HospitalDoctorDetailsState extends State<HospitalDoctorDetails> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 FancyText(
                                   text: doctor['name'],
@@ -111,7 +103,7 @@ class _HospitalDoctorDetailsState extends State<HospitalDoctorDetails> {
                                 ),
                                 SizedBox(
                                   height: 2,
-                                  width: 18,
+                                  width: 7,
                                 ),
                                 doctor['isVerified'] ?? false
                                     ? Icon(Icons.verified_user,

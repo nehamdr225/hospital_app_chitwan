@@ -135,7 +135,8 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                     },
                   )
                 : SizedBox.shrink(),
-            DrawerElements(
+            user != null
+                ?DrawerElements(
               //Home
               title: 'Order List',
               icon: 'assets/images/drawerIcon/calendar.png',
@@ -143,7 +144,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => OrderList()));
               },
-            ),
+            ):SizedBox.shrink(),
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -196,6 +197,7 @@ class _PharmacyDrawerAppState extends State<PharmacyDrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
+                        borderColor: theme.colorScheme.secondary,
                         text: "Sign Out",
                         onPressed: () async {
                           AuthService.signOut();

@@ -131,7 +131,7 @@ class _DrawerAppState extends State<DrawerApp> {
                     },
                   )
                 : SizedBox(height: 0.0),
-            DrawerElements(
+            user != null? DrawerElements(
               //Appointments
               title: 'Appointments',
               icon: 'assets/images/drawerIcon/calendar.png',
@@ -139,7 +139,7 @@ class _DrawerAppState extends State<DrawerApp> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AppointmentPage()));
               },
-            ),
+            ):SizedBox.shrink(),
             DrawerElements(
               //Specialities
               title: 'Specialities',
@@ -149,7 +149,7 @@ class _DrawerAppState extends State<DrawerApp> {
                     MaterialPageRoute(builder: (context) => DoctorsTab()));
               },
             ),
-            DrawerElements(
+            user != null?DrawerElements(
               //Appointments
               title: 'Messages',
               icon: 'assets/images/drawerIcon/chat.png',
@@ -157,16 +157,16 @@ class _DrawerAppState extends State<DrawerApp> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ChatHome()));
               },
-            ),
-            DrawerElements(
-              //Settings
-              title: 'Settings',
-              icon: 'assets/images/drawerIcon/setting.png',
-              onTap: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => CartPage()));
-              },
-            ),
+            ):SizedBox.shrink(),
+            // DrawerElements(
+            //   //Settings
+            //   title: 'Settings',
+            //   icon: 'assets/images/drawerIcon/setting.png',
+            //   onTap: () {
+            //     // Navigator.push(context,
+            //     //     MaterialPageRoute(builder: (context) => CartPage()));
+            //   },
+            // ),
             user != null
                 ? DrawerElements(
                     //Settings
@@ -266,6 +266,7 @@ class _DrawerAppState extends State<DrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
+                        borderColor: theme.colorScheme.secondary,
                         text: "Sign Out",
                         onPressed: () async {
                           AuthService.signOut();

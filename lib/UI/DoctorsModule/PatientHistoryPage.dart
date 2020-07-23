@@ -188,7 +188,7 @@ class _PatientHistoryPageState extends State<PatientHistoryPage> {
                               }
                             });
                           },
-                    bgcolor: Theme.of(context).primaryColorDark,
+                    bgcolor: Theme.of(context).colorScheme.primary,
                     color: textDark_Yellow,
                   )
                 : Text(''),

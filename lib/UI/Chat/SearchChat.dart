@@ -1,9 +1,7 @@
 import 'package:chitwan_hospital/UI/Chat/ChatScreen.dart';
-import 'package:chitwan_hospital/UI/Chat/MsgList.dart';
-import 'package:chitwan_hospital/UI/Chat/SearchChat.dart';
+import 'package:chitwan_hospital/UI/Chat/SearchList.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/AppBarW.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:chitwan_hospital/state/user.dart';
@@ -11,14 +9,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChatHome extends StatefulWidget {
+class SearchChat extends StatefulWidget {
   final userType;
-  ChatHome({this.userType = 'user'});
+  SearchChat({this.userType = 'user'});
   @override
-  _ChatHomeState createState() => _ChatHomeState();
+  _SearchChatState createState() => _SearchChatState();
 }
 
-class _ChatHomeState extends State<ChatHome> {
+class _SearchChatState extends State<SearchChat> {
   String loading;
 
   @override
@@ -40,23 +38,14 @@ class _ChatHomeState extends State<ChatHome> {
           padding: EdgeInsets.only(top: 20.0),
           child: AppBarW(
             backButtonColor: textDark_Yellow,
-            title: "Messages",
+            title: "Search",
             onPressed: () {
               Navigator.pop(context);
             },
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SearchChat()));
-        },
-        backgroundColor: theme.primary,
-        child: Icon(Icons.message, color: textDark_Yellow,),
-      ),
+      
       body: Column(children: <Widget>[
         Stack(
           children: <Widget>[
@@ -88,17 +77,8 @@ class _ChatHomeState extends State<ChatHome> {
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 18.0, bottom: 8.0),
-          child: FancyText(
-            text: 'Recent',
-            color: blueGrey.withOpacity(0.7),
-            fontWeight: FontWeight.w400,
-            textAlign: TextAlign.start,
-          ),
-        ),
-        Expanded(
+        
+        Expanded(   //  SUGGEST/SHOW ALL DOCTORS AVAILABLE 
           child: Container(
             height: MediaQuery.of(context).size.height,
             child: messages != null && messages.length > 0
@@ -109,7 +89,7 @@ class _ChatHomeState extends State<ChatHome> {
                       final List conversations =
                           messages[index]['conversations'];
                       // print('Conversations $conversations');
-                      return MsgList(
+                      return SearchList(
                         name: widget.userType == 'user'
                             ? messages[index]['doctor']
                             : messages[index]['user'],
@@ -137,7 +117,7 @@ class _ChatHomeState extends State<ChatHome> {
                       );
                     }, //
                   )
-                : Text('You have no conversations!'),
+                : Text('No user found!'),
           ),
         )
       ]),

@@ -48,7 +48,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     "5:00 PM",
     "7:00 PM",
   ];
-  bool isActive = false;
+  bool isActive = false; 
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -104,7 +104,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
               preferredSize: Size.fromHeight(1.0)),
         ),
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: theme.colorScheme.background,
       body: Form(
         key: _formKey,
         child: ListView(

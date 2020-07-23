@@ -126,7 +126,8 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                     },
                   )
                 : Text(" "),
-            DrawerElements(
+            user != null
+                ?DrawerElements(
               //Home
               title: 'Orders',
               icon: 'assets/images/drawerIcon/calendar.png',
@@ -134,7 +135,7 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LabOrderTab()));
               },
-            ),
+            ):SizedBox.shrink(),
             Divider(
               color: Colors.grey[500],
               height: 5.0,
@@ -166,6 +167,7 @@ class _LabDrawerAppState extends State<LabDrawerApp> {
                         height: 40.0,
                         fontSize: 15.0,
                         fontWeight: FontWeight.w600,
+                        borderColor: theme.colorScheme.secondary,
                         text: "Sign Out",
                         onPressed: () async {
                           AuthService.signOut();
