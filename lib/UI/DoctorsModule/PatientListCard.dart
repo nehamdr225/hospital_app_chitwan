@@ -23,9 +23,10 @@ class _PatientListCardState extends State<PatientListCard> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final doctorDataStore = Provider.of<DoctorDataStore>(context);
-    final appointment = doctorDataStore.appointments
-        .firstWhere((element) => element['id'] == widget.id);
-    // Timestamp date = appointment['date'];
+    final appointment = doctorDataStore.appointments.firstWhere(
+      (element) => element['id'] == widget.id,
+      orElse: () => null,
+    );
     String status = appointment['status'] ?? null;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -41,7 +42,6 @@ class _PatientListCardState extends State<PatientListCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-                
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),
@@ -166,10 +166,6 @@ class _PatientListCardState extends State<PatientListCard> {
                                       color: textDark_Yellow,
                                       bg: theme.colorScheme.secondary,
                                       onPressed: () {
-                                        // doctorDataStore.setAppointmentStatus(appointment['id'], 'rejected');
-                                        // setState(() {
-                                        //   status = "rejected";
-                                        // });
                                         showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
@@ -193,10 +189,6 @@ class _PatientListCardState extends State<PatientListCard> {
                                                             .secondary,
                                                       ),
                                                       onPressed: () {
-                                                        // doctorDataStore.setAppointmentStatus(appointment['id'], null);
-                                                        // setState(() {
-                                                        //   status = null;
-                                                        // });
                                                         Navigator.pop(context);
                                                       }),
                                                   IconButton(
@@ -211,9 +203,7 @@ class _PatientListCardState extends State<PatientListCard> {
                                                                 appointment[
                                                                     'id'],
                                                                 'rejected');
-                                                        // setState(() {
-                                                        //   status = "rejected";
-                                                        // });
+
                                                         Navigator.pop(context);
                                                       }),
                                                 ],
@@ -233,9 +223,6 @@ class _PatientListCardState extends State<PatientListCard> {
                                       onPressed: () {
                                         doctorDataStore.setAppointmentStatus(
                                             appointment['id'], 'accepted');
-                                        // setState(() {
-                                        //   status = "accepted";
-                                        // });
                                       },
                                     )
                                   ],
@@ -253,9 +240,6 @@ class _PatientListCardState extends State<PatientListCard> {
                                         onTap: () {
                                           doctorDataStore.setAppointmentStatus(
                                               appointment['id'], null);
-                                          // setState(() {
-                                          //   status = null;
-                                          // });
                                         },
                                         child: FancyText(
                                           text: "Undo",

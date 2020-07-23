@@ -22,9 +22,7 @@ class DoctorsModule extends StatelessWidget {
     appointments = appointments != null
         ? appointments.where((element) => element['status'] == null).toList()
         : [];
-    // print(appointments);
     buildAppointmentRequests() {
-      print(appointments);
       List<Widget> widgets = appointments != null && appointments.length > 0
           ? appointments.map<Widget>((each) {
               return PatientListCard(id: each['id']);
