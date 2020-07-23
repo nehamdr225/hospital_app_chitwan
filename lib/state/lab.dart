@@ -46,7 +46,7 @@ class LabDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> update(data) async {
+  Future<bool> update(Map<String, String> data) async {
     try {
       await DatabaseService.updateLabData(user.uid, data);
       final Map newUserData = {...user.toJson(), ...data};

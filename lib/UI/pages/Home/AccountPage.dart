@@ -28,7 +28,7 @@ class _AccountPageState extends State<AccountPage> {
       });
   }
 
-  Map updateData = {};
+  Map<String, String> updateData = {};
   bool isActive = false;
 
   @override
@@ -115,7 +115,7 @@ class _AccountPageState extends State<AccountPage> {
               value: user != null ? user.name ?? '' : '',
               title: 'Name',
               onChanged: (value) => setState(() {
-                updateData['name'] = value;
+                updateData = {...updateData, 'name': value};
               }),
             ),
           ),
@@ -132,7 +132,7 @@ class _AccountPageState extends State<AccountPage> {
               value: user != null ? user.phone ?? '' : '',
               title: 'Contact',
               onChanged: (value) => setState(() {
-                updateData['phone'] = value;
+                updateData = {...updateData, 'phone': value};
               }),
             ),
           ),

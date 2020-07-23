@@ -42,7 +42,7 @@ class PharmacyDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> update(data) async {
+  Future<bool> update(Map<String, String> data) async {
     try {
       await DatabaseService.updatePharmacyData(user.uid, data);
       final newData = {...user.toJson(), ...data};

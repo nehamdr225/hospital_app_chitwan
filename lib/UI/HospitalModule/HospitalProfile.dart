@@ -134,7 +134,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
               value: hospital != null ? hospital.name : '',
               onChanged: (value) {
                 setState(() {
-                  updateData['name'] = value;
+                  updateData = {...updateData, 'name': value};
                 });
               },
             ),
@@ -147,7 +147,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 value: hospital != null ? hospital.email : '',
                 onChanged: (value) {
                   setState(() {
-                    updateData['email'] = value;
+                    updateData = {...updateData, 'email': value};
                   });
                 }),
           ),
@@ -159,7 +159,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 value: hospital != null ? hospital.phone : '',
                 onChanged: (value) {
                   setState(() {
-                    updateData['phone'] = value;
+                    updateData = {...updateData, 'phone': value};
                   });
                 }),
           ),
@@ -171,7 +171,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                 value: hospital != null ? hospital.address ?? "" : '',
                 onChanged: (value) {
                   setState(() {
-                    updateData['address'] = value;
+                    updateData = {...updateData, 'address': value};
                   });
                 }),
           ),

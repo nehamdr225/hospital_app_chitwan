@@ -36,7 +36,7 @@ class _LabProfileState extends State<LabProfile> {
     });
   }
 
-  Map updateData = {};
+  Map<String, String> updateData = {};
   bool isActive = false;
 
   @override
@@ -123,7 +123,7 @@ class _LabProfileState extends State<LabProfile> {
               title: 'Name',
               value: lab != null ? lab.name : '',
               onChanged: (value) => setState(() {
-                updateData['name'] = value;
+                updateData = {...updateData, 'name': value};
               }),
             ),
           ),
@@ -142,7 +142,7 @@ class _LabProfileState extends State<LabProfile> {
               title: 'Contact',
               value: lab != null ? lab.phone ?? '' : '',
               onChanged: (value) => setState(() {
-                updateData['phone'] = value;
+                updateData = {...updateData, 'phone': value};
               }),
             ),
           ),
@@ -153,7 +153,7 @@ class _LabProfileState extends State<LabProfile> {
               title: 'Current Address',
               value: lab != null ? lab.address ?? '' : '',
               onChanged: (value) => setState(() {
-                updateData['address'] = value;
+                updateData = {...updateData, 'address': value};
               }),
             ),
           ),
@@ -163,7 +163,7 @@ class _LabProfileState extends State<LabProfile> {
               title: 'Lab Registration Number',
               value: lab != null ? lab.registrationNo ?? '' : '',
               onChanged: (value) => setState(() {
-                updateData['registrationNo'] = value;
+                updateData = {...updateData, 'registrationNo': value};
               }),
             ),
           ),
@@ -173,7 +173,7 @@ class _LabProfileState extends State<LabProfile> {
               title: 'Open Hours',
               value: lab != null ? lab.openHours ?? '' : '',
               onChanged: (value) => setState(() {
-                updateData['openHours'] = value;
+                updateData = {...updateData, 'openHours': value};
               }),
             ),
           ),

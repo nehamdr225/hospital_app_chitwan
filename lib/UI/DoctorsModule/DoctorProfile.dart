@@ -156,7 +156,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
               value: doctor.name ?? '',
               onChanged: (value) {
                 setState(() {
-                  updateData['name'] = value;
+                  updateData = {...updateData, 'name': value};
                 });
               },
             ),
@@ -181,7 +181,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 value: doctor.phone ?? '',
                 onChanged: (value) {
                   setState(() {
-                    updateData['phone'] = value;
+                    updateData = {...updateData, 'phone': value};
                   });
                 }),
           ),
@@ -193,7 +193,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 value: doctor.address ?? "",
                 onChanged: (value) {
                   setState(() {
-                    updateData['address'] = value;
+                    updateData = {...updateData, 'address': value};
                   });
                 }),
           ),
@@ -256,7 +256,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       : [],
               onChanged: (value) {
                 setState(() {
-                  updateData['hospital'] = value;
+                  updateData = {...updateData, 'hospital': value};
                   selectedHospital = value;
                 });
               },
@@ -292,7 +292,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
               }).toList(),
               onChanged: (value) {
                 setState(() {
-                  updateData['department'] = value;
+                  updateData = {...updateData, 'department': value};
                   selectedDept = value;
                 });
               },
@@ -305,7 +305,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 value: doctor.registrationNo ?? 'xxx-xxxx',
                 onChanged: (value) {
                   setState(() {
-                    updateData['registrationNo'] = value;
+                    updateData = {...updateData, 'registrationNo': value};
                   });
                 }),
           ),
@@ -338,7 +338,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             onChanged: (AppointmentT value) {
                               setState(() {
                                 _appointment = value;
-                                updateData['consultationType'] = 'on-site';
+                                updateData = {
+                                  ...updateData,
+                                  'consultationType': 'on-site'
+                                };
                               });
                             },
                           ),
@@ -356,7 +359,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             onChanged: (AppointmentT value) {
                               setState(() {
                                 _appointment = value;
-                                updateData['consultationType'] = 'online';
+                                updateData = {
+                                  ...updateData,
+                                  'consultationType': 'online'
+                                };
                               });
                             },
                           ),
@@ -374,7 +380,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             onChanged: (AppointmentT value) {
                               setState(() {
                                 _appointment = value;
-                                updateData['consultationType'] = 'both';
+                                updateData = {
+                                  ...updateData,
+                                  'consultationType': 'both'
+                                };
                               });
                             },
                           ),

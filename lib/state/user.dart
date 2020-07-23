@@ -180,7 +180,7 @@ class UserDataStore extends ChangeNotifier {
     }
   }
 
-  Future<bool> update(data) async {
+  Future<bool> update(Map<String, String> data) async {
     try {
       await DatabaseService.updateUserData(user.uid, data);
       final Map newData = {...user.toJson(), ...data};

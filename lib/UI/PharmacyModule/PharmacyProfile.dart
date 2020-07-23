@@ -35,7 +35,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
     });
   }
 
-  Map updateData = {};
+  Map<String, String> updateData = {};
   bool isActive = false;
 
   @override
@@ -133,7 +133,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
               title: 'Name',
               value: pharmacy != null ? pharmacy.name ?? '' : '',
               onChanged: (value) => setState(() {
-                updateData['name'] = value;
+                updateData = {...updateData, 'name': value};
               }),
             ),
           ),
@@ -152,7 +152,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                 title: 'Contact',
                 value: pharmacy != null ? pharmacy.phone ?? '' : '',
                 onChanged: (value) => setState(() {
-                      updateData['phone'] = value;
+                      updateData = {...updateData, 'phone': value};
                     })),
           ),
           Container(
@@ -162,7 +162,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                 title: 'Current Address',
                 value: pharmacy != null ? pharmacy.address ?? '' : '',
                 onChanged: (value) => setState(() {
-                      updateData['phone'] = value;
+                      updateData = {...updateData, 'address': value};
                     })),
           ),
           Container(
@@ -171,7 +171,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                 title: 'Pharmacy Registration Number',
                 value: pharmacy != null ? pharmacy.registrationNo ?? '' : '',
                 onChanged: (value) => setState(() {
-                      updateData['registrationNo'] = value;
+                      updateData = {...updateData, 'registrationNo': value};
                     })),
           ),
           Container(
@@ -180,7 +180,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                 title: 'Open Hours',
                 value: pharmacy != null ? pharmacy.openHours ?? '' : '',
                 onChanged: (value) => setState(() {
-                      updateData['openHours'] = value;
+                      updateData = {...updateData, 'openHours': value};
                     })),
           ),
           Padding(

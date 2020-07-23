@@ -113,7 +113,7 @@ class HospitalDataStore extends ChangeNotifier {
     doctors = newVal;
   }
 
-  Future<bool> update(data) async {
+  Future<bool> update(Map<String, String> data) async {
     try {
       await DatabaseService.updateHospitalData(user.uid, data);
       final Map newData = {...user.toJson(), ...data};
