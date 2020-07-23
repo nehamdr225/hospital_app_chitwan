@@ -1,6 +1,5 @@
 import 'package:chitwan_hospital/UI/Chat/ChatScreen.dart';
 import 'package:chitwan_hospital/UI/Chat/MsgList.dart';
-import 'package:chitwan_hospital/UI/Chat/SearchChat.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/AppBarW.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -47,16 +46,16 @@ class _ChatHomeState extends State<ChatHome> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SearchChat()));
-        },
-        backgroundColor: theme.primary,
-        child: Icon(Icons.message, color: textDark_Yellow,),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //             builder: (context) => SearchChat()));
+      //   },
+      //   backgroundColor: theme.primary,
+      //   child: Icon(Icons.message, color: textDark_Yellow,),
+      // ),
       body: Column(children: <Widget>[
         Stack(
           children: <Widget>[
