@@ -100,41 +100,11 @@ class _ChatScreenState extends State<ChatScreen> {
           ));
     }
 
-    _buildMessage(Message message, bool isMe, imageUrl, String name, myImg) {
+    _buildMessage(Message message, bool isMe) {
       return Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: <Widget>[
-          // isMe
-          //     ? SizedBox.shrink()
-          //     : CircleAvatar(
-          //         //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
-          //         backgroundColor: theme.primary,
-          //         foregroundColor: Colors.white,
-          //         // radius: 10.0,
-          //         child: imageUrl != null
-          //             ? Container(
-          //                 height: 25.0,
-          //                 width: 25.0,
-          //                 decoration: BoxDecoration(
-          //                     shape: BoxShape.circle,
-          //                     image: DecorationImage(
-          //                         image: AssetImage(imageUrl),
-          //                         fit: BoxFit.cover)),
-          //                 //child: Image.file(_user.imageUrl)
-          //               )
-          //             : Text(
-          //                 name != null
-          //                     ? name.split(' ').reduce((a, b) {
-          //                         return '${a[0]} ${b[0]}';
-          //                       })
-          //                     : '',
-          //                 style: Theme.of(context).textTheme.bodyText2.copyWith(
-          //                     color: textDark_Yellow,
-          //                     fontSize: 16.0,
-          //                     fontWeight: FontWeight.w500),
-          //               ),
-          //       ),
           Container(
             width: MediaQuery.of(context).size.width * 0.65,
             alignment: isMe ? Alignment.bottomRight : Alignment.centerLeft,
@@ -160,35 +130,6 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          // isMe
-          //     ? CircleAvatar(
-          //         //backgroundImage: FileImage(_user.imageUrl),//Image.file(_user.imageUrl),
-          //         backgroundColor: theme.secondary,
-          //         foregroundColor: Colors.white,
-          //         // radius: 10.0,
-          //         child: myImg != null
-          //             ? Container(
-          //                 height: 25.0,
-          //                 width: 25.0,
-          //                 decoration: BoxDecoration(
-          //                     shape: BoxShape.circle,
-          //                     image: DecorationImage(
-          //                         image: AssetImage(myImg), fit: BoxFit.cover)),
-          //                 //child: Image.file(_user.myImg)
-          //               )
-          //             : Text(
-          //                 name != null
-          //                     ? name.split(' ').reduce((a, b) {
-          //                         return '${a[0]} ${b[0]}';
-          //                       })
-          //                     : '',
-          //                 style: Theme.of(context).textTheme.bodyText2.copyWith(
-          //                     color: textDark_Yellow,
-          //                     fontSize: 16.0,
-          //                     fontWeight: FontWeight.w500),
-          //               ),
-          //       )
-          //     : SizedBox.shrink(),
         ],
       );
     }
@@ -248,11 +189,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         final bool isMe = widget.userType == 'user'
                             ? message.sender == widget.userId
                             : message.sender == widget.doctorId;
-                        final myImg = null; //currentUser.imageUrl;
-                        final imageUrl = null; //widget.user.imageUrl;
-                        final name = userDataStore.user.name;
-                        return _buildMessage(
-                            message, isMe, imageUrl, name, myImg);
+
+                        return _buildMessage(message, isMe);
                       })),
             )),
             _buildMessageComposer()
