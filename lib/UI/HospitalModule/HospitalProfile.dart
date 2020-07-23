@@ -42,7 +42,6 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
 
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
     final hospital = hospitalDataStore.user;
-    // final departments =  hospitalDataStore.departments;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -52,10 +51,10 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
             elevation: 0.0,
             backgroundColor: theme.colorScheme.primary,
             color: Colors.white,
-            // onPressed: () {
-            //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => HomePageApp()));
-            // },
+            bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1),
+            ),
           )),
       body: ListView(
         children: <Widget>[
@@ -259,7 +258,9 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                     final result = await hospitalDataStore.update(updateData);
                     setState(() {
                       isActive = false;
+                      updateData = {};
                     });
+
                     if (result) {
                       buildAndShowFlushBar(
                         context: context,

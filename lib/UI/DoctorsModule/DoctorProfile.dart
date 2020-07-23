@@ -76,14 +76,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
             elevation: 0.0,
             backgroundColor: theme.colorScheme.primary,
             color: Colors.white,
-            // onPressed: () {
-            //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => HomePageApp()));
-            // },
+            bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1),
+            ),
           )),
       body: ListView(
         children: <Widget>[
-          BoolIndicator(isActive),
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: <Widget>[
@@ -197,19 +196,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   });
                 }),
           ),
-          // Container(
-          //   //Working Hospital
-          //   padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-          //   child: InputField(
-          //       title: 'Working Hospital/Clinic',
-          //       value: doctor.hospital ?? '',
-          //       onChanged: (value) {
-          //         setState(() {
-          //           updateData.hospital = value;
-          //         });
-          //       }),
-          // ),
-
           Container(
             padding: const EdgeInsets.only(top: 10.0, left: 10.0),
             alignment: Alignment.centerLeft,
@@ -467,6 +453,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     final result = await doctorDataStore.update(updateData);
                     setState(() {
                       isActive = false;
+                      updateData = {};
                     });
                     if (result) {
                       buildAndShowFlushBar(

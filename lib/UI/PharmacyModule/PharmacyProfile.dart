@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/InputForm.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -53,10 +54,10 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
             elevation: 0.0,
             backgroundColor: theme.colorScheme.primary,
             color: Colors.white,
-            // onPressed: () {
-            //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => HomePageApp()));
-            // },
+            bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1),
+            ),
           )),
       body: ListView(
         children: <Widget>[
@@ -252,6 +253,7 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
                     final result = await pharmacyDataStore.update(updateData);
                     setState(() {
                       isActive = false;
+                      updateData = {};
                     });
                     if (result) {
                       buildAndShowFlushBar(

@@ -54,14 +54,13 @@ class _LabProfileState extends State<LabProfile> {
             elevation: 0.0,
             backgroundColor: theme.colorScheme.primary,
             color: Colors.white,
-            // onPressed: () {
-            //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => HomePageApp()));
-            // },
+            bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1),
+            ),
           )),
       body: ListView(
         children: <Widget>[
-          BoolIndicator(isActive),
           Container(
             padding: EdgeInsets.only(top: 20.0),
             alignment: Alignment.topCenter,
@@ -246,6 +245,7 @@ class _LabProfileState extends State<LabProfile> {
                     final result = await labDataStore.update(updateData);
                     setState(() {
                       isActive = false;
+                      updateData = {};
                     });
                     if (result) {
                       buildAndShowFlushBar(

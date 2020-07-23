@@ -46,10 +46,13 @@ class _AccountPageState extends State<AccountPage> {
             elevation: 0.0,
             backgroundColor: theme.primary,
             color: Colors.white,
+            bottom: PreferredSize(
+              child: BoolIndicator(isActive),
+              preferredSize: Size.fromHeight(1),
+            ),
           )),
       body: ListView(
         children: <Widget>[
-          BoolIndicator(isActive),
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: <Widget>[
@@ -154,6 +157,7 @@ class _AccountPageState extends State<AccountPage> {
                     final result = await userDataStore.update(updateData);
                     setState(() {
                       isActive = false;
+                      updateData = {};
                     });
                     if (result) {
                       buildAndShowFlushBar(
