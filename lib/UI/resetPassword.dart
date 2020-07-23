@@ -52,7 +52,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               BoolIndicator(isActive),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                    const EdgeInsets.symmetric(vertical: 18.0, horizontal: 8.0),
                 child: FForms(
                   initialValue: localEmail ?? '',
                   textInputAction: TextInputAction.next,
@@ -74,7 +74,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                 child: FRaisedButton(
                   text: 'Reset Password',
-                  bgcolor: theme.primaryVariant,
+                  bgcolor: theme.primary,
                   color: textDark_Yellow,
                   onPressed: localEmail != null &&
                           localEmail.length > 8 &&

@@ -76,14 +76,17 @@ class _SignInState extends State<SignIn> {
             body: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      alignment: Alignment.center,
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/images/img1.jpeg"))),
+                color: theme.background,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Container(
+                    height: 70.0,
+                    width: 70.0,
+                    child: Image.asset("assets/images/caduceus.png"),
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.0),
@@ -96,15 +99,16 @@ class _SignInState extends State<SignIn> {
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
-                          // SizedBox(height: 10.0),
+                          SizedBox(height: 10.0),
                           FForms(
                             textInputAction: TextInputAction.next,
                             currentFocus: _emailFocus,
                             nextFocus: _passwordFocus,
-                            borderColor: theme.background,
+                            underline: true,
+                            // borderColor: theme.primary,
                             formColor: Colors.white,
                             text: "Email",
-                            textColor: blueGrey.withOpacity(0.7),
+                            textColor: Colors.black38,
                             width: size.width * 0.90,
                             validator: (val) =>
                                 val.isEmpty ? 'Enter an email' : null,
@@ -112,10 +116,12 @@ class _SignInState extends State<SignIn> {
                               setState(() => email = val);
                             },
                           ),
+                          SizedBox(height: 5.0),
                           FForms(
                             textInputAction: TextInputAction.done,
                             currentFocus: _passwordFocus,
-                            borderColor: theme.background,
+                            // borderColor: theme.background,
+                            underline: true,
                             formColor: Colors.white,
                             text: "Password",
                             obscure: obscure,
@@ -140,7 +146,7 @@ class _SignInState extends State<SignIn> {
                                         obscure = true;
                                       });
                                     }),
-                            textColor: blueGrey.withOpacity(0.7),
+                            textColor: Colors.black38,
                             width: size.width * 0.90,
                             validator: (val) => val.length < 6
                                 ? 'Enter a password 6+ chars long'
@@ -148,6 +154,25 @@ class _SignInState extends State<SignIn> {
                             onChanged: (val) {
                               setState(() => password = val);
                             },
+                          ),
+                          SizedBox(height: 5.0),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.symmetric(vertical: 18.0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ResetPassword()));
+                              },
+                              child: FancyText(
+                                text: "Forgot Password?",
+                                color: Colors.black38,
+                                fontWeight: FontWeight.w800,
+                                size: 14.0,
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 45.0,
@@ -167,54 +192,33 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.0),
-                  Container(
-                    width: size.width *0.90,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical:18.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ResetPassword()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          FancyText(
+                            text: "New User?  ",
                             color: Colors.black38,
-                            width: size.width *0.40,
-                            child: FancyText(
-                              text: "Forgot Password?",
-                              color: textDark_Yellow,
-                              fontWeight: FontWeight.w800,
-                              size: 14.0,
-                            ),
+                            fontWeight: FontWeight.w800,
+                            size: 14.0,
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUp()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Colors.black38,
-                            width: size.width *0.25,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUp()));
+                            },
                             child: FancyText(
                               text: "Register",
-                              color: textLight_Red2,
+                              color: blueGrey,
                               fontWeight: FontWeight.w700,
                               size: 14.0,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ]),
                   ),
-                  SizedBox(height: 20.0),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -222,27 +226,22 @@ class _SignInState extends State<SignIn> {
                           MaterialPageRoute(
                               builder: (context) => OthersLogin()));
                     },
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      color: Colors.black38,
-                      width: size.width *0.90,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            FancyText(
-                              text: "Login As ",
-                              color: textDark_Yellow,
-                              fontWeight: FontWeight.w800,
-                              size: 14.0,
-                            ),
-                            FancyText(
-                              text: "others",
-                              color: textDark_Yellow,
-                              fontWeight: FontWeight.w500,
-                              size: 14.0,
-                            ),
-                          ]),
-                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          FancyText(
+                            text: "Login As ",
+                            color: textLight_Red2,
+                            fontWeight: FontWeight.w800,
+                            size: 14.0,
+                          ),
+                          FancyText(
+                            text: "others",
+                            color: Colors.black38,
+                            fontWeight: FontWeight.w500,
+                            size: 14.0,
+                          ),
+                        ]),
                   ),
                   error == ''
                       ? Container(child: Text(" "))
