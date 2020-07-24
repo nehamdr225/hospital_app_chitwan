@@ -199,7 +199,7 @@ abstract class DatabaseService {
   }
 
   static Future<QuerySnapshot> getPharmacyOrders(String uid) {
-    return pOrderCollection.getDocuments();
+    return pOrderCollection.where('pharmacyId', isEqualTo: uid).getDocuments();
   }
 
   static Future<bool> createLabOrder(Map data) async {
