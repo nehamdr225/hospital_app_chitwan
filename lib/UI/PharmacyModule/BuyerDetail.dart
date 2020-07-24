@@ -23,7 +23,6 @@ class BuyerDetail extends StatefulWidget {
 }
 
 class _BuyerDetailState extends State<BuyerDetail> {
-  List diagnosis;
   bool isActive = false;
 
   @override
@@ -86,7 +85,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
                 )
               : null,
       body: ListView(children: <Widget>[
-        Indicator(diagnosis),
         BoolIndicator(isActive),
         Padding(
           padding: const EdgeInsets.only(top: 6.0, bottom: 8.0),

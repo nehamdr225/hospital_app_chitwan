@@ -18,7 +18,6 @@ class PListCard extends StatefulWidget {
 }
 
 class _PListCardState extends State<PListCard> {
-  Map userInfo;
   String boolStatus;
   @override
   Widget build(BuildContext context) {
@@ -26,14 +25,7 @@ class _PListCardState extends State<PListCard> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final order = pharmacyDataStore.getOneOrder(widget.id);
-    if (userInfo == null)
-      pharmacyDataStore.getUserInfo(order['userId']).then(
-            (value) => setState(
-              () {
-                userInfo = value.data;
-              },
-            ),
-          );
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -41,9 +33,9 @@ class _PListCardState extends State<PListCard> {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => BuyerDetail(
                     id: widget.id,
-                    buyerName: userInfo != null ? userInfo['name'] : '',
-                    buyerPhone: userInfo != null ? userInfo['phone'] : '',
-                    status: order != null ? order['status'] : '',
+                    buyerName: order.name,
+                    buyerPhone: order.phone,
+                    status: order.status,
                   )));
         },
         child: Container(
@@ -107,18 +99,16 @@ class _PListCardState extends State<PListCard> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: FancyText(
-                              text: userInfo == null
-                                  ? 'Loading...'
-                                  : userInfo['name'],
+                              text: order.name,
                               fontWeight: FontWeight.w700,
                               size: 15.5,
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          order['status'] == "rejected"
+                          order.status == "rejected"
                               ? RowInput(
                                   title: "Reason:  ",
-                                  caption: order['remark'],
+                                  caption: order.remark ?? 'Not Available!',
                                   defaultStyle: true,
                                 )
                               : SizedBox(
@@ -134,9 +124,7 @@ class _PListCardState extends State<PListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: userInfo == null
-                                      ? 'Loading...'
-                                      : userInfo['phone'],
+                                  text: order.phone,
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -146,8 +134,8 @@ class _PListCardState extends State<PListCard> {
                           widget.status == "ongoing"
                               ? boolStatus == null
                                   ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
                                         children: <Widget>[
                                           FRaisedButton(
                                             elevation: 0.0,
@@ -191,14 +179,16 @@ class _PListCardState extends State<PListCard> {
                                                             onPressed: () {
                                                               // doctorDataStore.setAppointmentStatus(appointment['id'], null);
                                                               setState(() {
-                                                                boolStatus = null;
+                                                                boolStatus =
+                                                                    null;
                                                               });
                                                               Navigator.pop(
                                                                   context);
                                                             }),
                                                         IconButton(
                                                             icon: Icon(
-                                                              Icons.check_circle,
+                                                              Icons
+                                                                  .check_circle,
                                                               color: Colors
                                                                   .green[600],
                                                             ),
@@ -225,7 +215,7 @@ class _PListCardState extends State<PListCard> {
                                           )
                                         ],
                                       ),
-                                  )
+                                    )
                                   : widget.status == "rejected"
                                       ? Row(children: [
                                           FancyText(

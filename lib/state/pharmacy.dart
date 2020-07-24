@@ -68,7 +68,7 @@ class PharmacyDataStore extends ChangeNotifier {
     }
   }
 
-  getOneOrder(String id) {
+  PharmacyAppointment getOneOrder(String id) {
     return orders.firstWhere((element) => element.id == id);
   }
 
