@@ -1,43 +1,61 @@
-import 'dart:io';
-
 abstract class PharmacyAppointmentModel {
-  String firstName;
-  String lastName;
-  String phoneNum;
-  DateTime date;
-  String time;
+  String name;
+  String phone;
+  DateTime timestamp;
   String address;
-  File image1;
-  File image2;
+  String image;
+  String medicine;
+  String pickUp;
+  String userId;
+  String pharmacyId;
+  String pharmacyName;
 }
 
-class PharmacyAppointment extends PharmacyAppointmentModel {
-  String firstName;
-  String lastName;
-  String phoneNum;
-  DateTime date;
-  String time;
+class PharmacyAppointment implements PharmacyAppointmentModel {
+  String name;
+  String phone;
+  DateTime timestamp;
   String address;
-  File image1;
-  File image2;
+  String image;
+  String medicine;
+  String pickUp;
+  String userId;
+  String pharmacyId;
+  String pharmacyName;
 
-  PharmacyAppointment(this.date, this.time, this.address, this.firstName,
-      this.lastName, this.phoneNum, this.image1, this.image2);
+  PharmacyAppointment(
+      {this.timestamp,
+      this.address,
+      this.name,
+      this.phone,
+      this.image,
+      this.medicine,
+      this.pickUp,
+      this.userId,
+      this.pharmacyId,
+      this.pharmacyName});
 
   Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'phoneNum': phoneNum,
-        'date': date,
-        'lastName': lastName,
+        'name': name,
+        'phone': phone,
+        'timestamp': timestamp.toIso8601String(),
         'address': address,
-        'image1': image1,
-        'image2': image2
+        'pickUp': pickUp,
+        'userId': userId,
+        'pharmacyId': pharmacyId,
+        'pharmacyName': pharmacyName,
+        if (image != null) 'image': image,
+        if (medicine != null) 'medicine': medicine,
       };
 
   PharmacyAppointment.fromJson(json)
-      : firstName = json['firstName'],
-        lastName = json['lastName'],
-        date = json['date'].toDate(),
+      : name = json['name'],
+        timestamp = json['timestamp'],
         address = json['address'],
-        phoneNum = json['phoneNum'];
+        phone = json['phone'],
+        medicine = json['medicine'],
+        pickUp = json['pickUp'],
+        userId = json['userId'],
+        pharmacyId = json['pharmacyId'],
+        pharmacyName = json['pharmacyName'];
 }

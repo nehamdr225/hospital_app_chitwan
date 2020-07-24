@@ -6,7 +6,6 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
-import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +15,6 @@ class PharmacyDetails extends StatelessWidget {
   PharmacyDetails({this.id});
   @override
   Widget build(BuildContext context) {
-    final newPharmacy =
-        new PharmacyAppointment(null, null, null, null, null, null, null, null);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final pharmacy = Provider.of<UserDataStore>(context)
@@ -197,9 +194,9 @@ class PharmacyDetails extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => PharmacyForm(
-                            pharmacyForm: newPharmacy,
                             doctor: pharmacy['name'],
                             department: pharmacy['address'],
+                            id: id,
                           )));
             },
           ),

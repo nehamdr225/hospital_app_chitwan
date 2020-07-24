@@ -1,13 +1,10 @@
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
-import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentDetail.dart';
-import 'package:chitwan_hospital/state/user.dart';
+import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:provider/provider.dart';
 
 class PatientHistoryPage extends StatefulWidget {
   final String date;
@@ -35,7 +32,6 @@ class _PatientHistoryPageState extends State<PatientHistoryPage> {
   bool isActive = false;
   @override
   Widget build(BuildContext context) {
-    final userDataStore = Provider.of<UserDataStore>(context);
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: PreferredSize(
@@ -151,42 +147,13 @@ class _PatientHistoryPageState extends State<PatientHistoryPage> {
                     onPressed: isActive
                         ? null
                         : () {
-                            setState(() {
-                              isActive = true;
-                            });
-                            userDataStore
-                                .orderMedicine(
-                                    widget.id, widget.medicine, widget.title)
-                                .then((bool result) {
-                              setState(() {
-                                isActive = false;
-                              });
-                              if (result) {
-                                buildAndShowFlushBar(
-                                  context: context,
-                                  icon: Icons.check,
-                                  text: 'Medicine ordered sucessfully!',
-                                );
-                                Future.delayed(Duration(seconds: 2)).then(
-                                  (_) => Navigator.of(context)
-                                      .pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AppointmentDetail(
-                                                    id: widget.id,
-                                                  )),
-                                          (route) => false),
-                                );
-                              } else {
-                                buildAndShowFlushBar(
-                                  context: context,
-                                  icon: Icons.error_outline,
-                                  text: 'Error ocurred!',
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.error,
-                                );
-                              }
-                            });
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PharmacyTab(
+                                  isOrder: widget.medicine,
+                                ),
+                              ),
+                            );
                           },
                     bgcolor: Theme.of(context).colorScheme.primary,
                     color: textDark_Yellow,

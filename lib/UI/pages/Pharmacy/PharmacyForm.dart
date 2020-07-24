@@ -7,58 +7,120 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:chitwan_hospital/service/auth.dart';
+import 'package:provider/provider.dart';
 
 enum PickupOptions { pickup, delivery }
 
 class PharmacyForm extends StatefulWidget {
-  final PharmacyAppointment pharmacyForm;
+  // final PharmacyAppointment pharmacyForm;
   final doctor;
   final department;
+  final order;
+  final id;
   PharmacyForm(
-      {this.doctor, this.department, @required this.pharmacyForm, Key key})
+      {this.doctor,
+      this.department,
+      // @required this.pharmacyForm,
+      this.order,
+      this.id,
+      Key key})
       : super(key: key);
   @override
   _PharmacyFormState createState() => _PharmacyFormState();
 }
 
 class _PharmacyFormState extends State<PharmacyForm> {
+  PharmacyAppointment pharmacyFormData = PharmacyAppointment();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
-  PickupOptions _poptions;
+  PickupOptions _poptions = PickupOptions.pickup;
   List name = [];
-  String _fName;
-  String _lName;
-  String _fPhone;
-  String _fAddress;
+  // String _fName;
+  // String _lName;
+  // String _fPhone;
+  // String _fAddress;
   File _image;
-  File _image2;
+  // File _image2;
   final picker = ImagePicker();
   bool isActive = false;
+  double imageStatus = 0.0;
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(pickedFile.path);
-    });
-  }
-
-  Future getImage2() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image2 = File(pickedFile.path);
-    });
+    if (pickedFile.path != null)
+      setState(() {
+        _image = File(pickedFile.path);
+      });
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textController = new TextEditingController();
-    _textController.text = widget.pharmacyForm.firstName;
+    final userDataStore = Provider.of<UserDataStore>(context);
     final theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
+    if (pharmacyFormData.name == null || pharmacyFormData.phone == null) {
+      setState(() {
+        pharmacyFormData =
+            PharmacyAppointment.fromJson(userDataStore.user.toJson()
+              ..addAll({
+                'pickUp': 'pickup',
+                'medicine': widget.order,
+                'userId': userDataStore.user.uid,
+                'pharmacyId': widget.id,
+                'pharmacyName': widget.doctor,
+              }));
+      });
+    }
+    Dialog dialog = Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(padding: EdgeInsets.all(10)),
+          Text(
+            'Uploading Image',
+            style: TextStyle(color: textDark_Yellow),
+          ),
+          Padding(padding: EdgeInsets.all(10)),
+          LinearProgressIndicator(
+            value: imageStatus,
+          ),
+          Padding(padding: EdgeInsets.all(10)),
+        ],
+      ),
+    );
+    handleSubmit(String uri) {
+      userDataStore.orderMedicine({
+        ...pharmacyFormData.toJson(),
+        if (uri != null) 'image': uri
+      }).then((bool result) {
+        setState(() {
+          isActive = false;
+        });
+        if (result) {
+          buildAndShowFlushBar(
+            context: context,
+            icon: Icons.check,
+            text: 'Medicine ordered sucessfully!',
+          );
+          Future.delayed(Duration(seconds: 2)).then(
+            (_) => Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (route) => false),
+          );
+        } else {
+          buildAndShowFlushBar(
+            context: context,
+            icon: Icons.error_outline,
+            text: 'Error ocurred!',
+            backgroundColor: Theme.of(context).colorScheme.error,
+          );
+        }
+      });
+    }
 
     return Scaffold(
       appBar: PreferredSize(
@@ -72,6 +134,66 @@ class _PharmacyFormState extends State<PharmacyForm> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
+      persistentFooterButtons: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: SizedBox(
+            height: 45.0,
+            width: width,
+            child: RaisedButton(
+              color: theme.colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0)),
+              child: FancyText(
+                text: "SUBMIT",
+                size: 16.0,
+                color: textDark_Yellow,
+                fontWeight: FontWeight.w600,
+              ),
+              onPressed: isActive
+                  ? null
+                  : () async {
+                      if (pharmacyFormData.name == null ||
+                          pharmacyFormData.phone == null ||
+                          pharmacyFormData.address == null) {
+                        buildAndShowFlushBar(
+                          context: context,
+                          text: 'Please provide all data!',
+                          backgroundColor: theme.colorScheme.error,
+                          icon: Icons.error_outline,
+                        );
+                        return;
+                      }
+                      _formKey.currentState.save();
+                      pharmacyFormData.timestamp = DateTime.now();
+                      setState(() {
+                        isActive = true;
+                      });
+                      if (_image != null) {
+                        showDialog(
+                            context: context, builder: (context) => dialog);
+                        final uploadTask = userDataStore.uploadFile(
+                            _image, userDataStore.user.uid);
+                        uploadTask.events.listen((event) async {
+                          setState(() {
+                            imageStatus = (event.snapshot.bytesTransferred /
+                                    event.snapshot.totalByteCount)
+                                .toDouble();
+                          });
+                          if (uploadTask.isComplete) {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            final uri =
+                                await event.snapshot.ref.getDownloadURL();
+                            handleSubmit(uri);
+                          }
+                          print(event.snapshot.bytesTransferred);
+                        });
+                      }
+                    },
+            ),
+          ),
+        )
+      ],
       body: Form(
         key: _formKey,
         child: ListView(
@@ -79,50 +201,33 @@ class _PharmacyFormState extends State<PharmacyForm> {
             SizedBox(
               height: 10.0,
             ),
-            Container(
-              // first and last name
+            Padding(
+              //phone number
               padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: <Widget>[
-                  FForms(
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    text: "First Name",
-                    textColor: blueGrey.withOpacity(0.7),
-                    width: width * 0.40,
-                    // validator: (val) =>
-                    //     val.isEmpty ? 'First Name is required' : null,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'First Name is Reqired';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _fName = value;
-                    },
-                  ),
-                  SizedBox(width: 10.0),
-                  FForms(
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    text: "Last Name",
-                    type: TextInputType.text,
-                    textColor: blueGrey.withOpacity(0.7),
-                    width: width * 0.515,
-                    validator: (val) =>
-                        val.isEmpty ? 'Last Name is required' : null,
-                    onSaved: (value) {
-                      _lName = value;
-                    },
-                  )
-                ],
+              child: FForms(
+                initialValue: userDataStore.user.name,
+                icon: Icon(
+                  Icons.person,
+                  color: theme.iconTheme.color,
+                ),
+                text: "Name",
+                type: TextInputType.phone,
+                //width: width * 0.80,
+                borderColor: theme.colorScheme.primary,
+                formColor: Colors.white,
+                textColor: blueGrey.withOpacity(0.7),
+                validator: (val) =>
+                    val.isEmpty || val.length < 8 ? 'Name is required' : null,
+                onChanged: (value) {
+                  pharmacyFormData.name = value;
+                },
               ),
             ),
             Padding(
               //phone number
               padding: const EdgeInsets.all(10.0),
               child: FForms(
+                initialValue: userDataStore.user.phone,
                 icon: Icon(
                   Icons.phone,
                   color: theme.iconTheme.color,
@@ -136,8 +241,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                 validator: (val) => val.isEmpty || val.length < 8
                     ? 'Phone Number is required'
                     : null,
-                onSaved: (value) {
-                  _fPhone = value;
+                onChanged: (value) {
+                  pharmacyFormData.phone = value;
                 },
               ),
             ),
@@ -145,6 +250,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
               //phone number
               padding: const EdgeInsets.all(10.0),
               child: FForms(
+                initialValue: userDataStore.user.address,
                 icon: Icon(
                   Icons.map,
                   color: theme.iconTheme.color,
@@ -158,11 +264,32 @@ class _PharmacyFormState extends State<PharmacyForm> {
                 validator: (val) => val.isEmpty || val.length < 10
                     ? 'Your Address is required'
                     : null,
-                onSaved: (value) {
-                  _fAddress = value;
+                onChanged: (value) {
+                  pharmacyFormData.address = value;
                 },
               ),
             ),
+            if (widget.order != null)
+              Padding(
+                //phone number
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  icon: Icon(
+                    Icons.map,
+                    color: theme.iconTheme.color,
+                  ),
+                  initialValue: widget.order,
+                  text: "Medicine and Quantity",
+                  type: TextInputType.text,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  onChanged: (value) {
+                    pharmacyFormData.medicine = value;
+                  },
+                ),
+              ),
             Padding(
               //gender
               padding: const EdgeInsets.only(
@@ -181,7 +308,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                     groupValue: _poptions,
                     onChanged: (PickupOptions value) {
                       setState(() {
-                        _poptions = value;
+                        _poptions = PickupOptions.pickup;
+                        pharmacyFormData.pickUp = 'pickup';
                       });
                     },
                   ),
@@ -196,7 +324,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                     groupValue: _poptions,
                     onChanged: (PickupOptions value) {
                       setState(() {
-                        _poptions = value;
+                        _poptions = PickupOptions.delivery;
+                        pharmacyFormData.pickUp = 'delivery';
                       });
                     },
                   ),
@@ -244,151 +373,24 @@ class _PharmacyFormState extends State<PharmacyForm> {
                           ),
                           onPressed: getImage,
                         )
-                      : Row(children: <Widget>[
-                          InkWell(
-                            onTap: getImage,
-                            child: Stack(children: <Widget>[
-                              Container(
-                                  height: 100.0,
-                                  width: 100.0,
-                                  decoration:
-                                      BoxDecoration(border: Border.all()),
-                                  child: Image.file(_image)),
-                              Container(
+                      : InkWell(
+                          onTap: getImage,
+                          child: Stack(children: <Widget>[
+                            Container(
                                 height: 100.0,
                                 width: 100.0,
-                                color: Colors.black26,
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            width: 8.0,
-                          ),
-                          _image2 == null
-                              ? IconButton(
-                                  icon: Icon(
-                                    Icons.add_a_photo,
-                                    size: 26.0,
-                                    color: theme.colorScheme.primary,
-                                  ),
-                                  onPressed: getImage2,
-                                )
-                              : Row(
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: getImage2,
-                                      child: Stack(children: <Widget>[
-                                        Container(
-                                            height: 100.0,
-                                            width: 100.0,
-                                            decoration: BoxDecoration(
-                                                border: Border.all()),
-                                            child: Image.file(_image2)),
-                                        Container(
-                                          height: 100.0,
-                                          width: 100.0,
-                                          color: Colors.black26,
-                                        ),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
-                        ]),
+                                decoration: BoxDecoration(border: Border.all()),
+                                child: Image.file(_image)),
+                            Container(
+                              height: 100.0,
+                              width: 100.0,
+                              color: Colors.black26,
+                            ),
+                          ]),
+                        ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                height: 45.0,
-                child: RaisedButton(
-                  color: theme.colorScheme.primary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0)),
-                  child: FancyText(
-                    text: "SUBMIT",
-                    size: 16.0,
-                    color: textDark_Yellow,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  onPressed: isActive
-                      ? null
-                      : () async {
-                          if (_fName == null ||
-                              _lName == null ||
-                              _fPhone == null ||
-                              _image == null ||
-                              !_formKey.currentState.validate()) {
-                            buildAndShowFlushBar(
-                              context: context,
-                              text: 'Please provide all data!',
-                              backgroundColor: theme.colorScheme.error,
-                              icon: Icons.error_outline,
-                            );
-                            return;
-                          }
-
-                          _formKey.currentState.save();
-                          widget.pharmacyForm.firstName = _fName;
-                          widget.pharmacyForm.lastName = _lName;
-                          widget.pharmacyForm.phoneNum = _fPhone;
-                          widget.pharmacyForm.address = _fAddress;
-                          widget.pharmacyForm.image1 = _image;
-                          widget.pharmacyForm.image2 = _image2;
-
-                          setState(() {
-                            isActive = true;
-                          });
-
-                          final uid = await AuthService.getCurrentUID();
-                          await db
-                              .collection("users")
-                              .document(uid)
-                              .collection("labs")
-                              .add(widget.pharmacyForm.toJson());
-
-                          setState(() {
-                            isActive = false;
-                          });
-                          // if (value != 'error') {
-                          //     buildAndShowFlushBar(
-                          //       context: context,
-                          //       text: 'Appointment Created Successfully!',
-                          //       icon: Icons.check,
-                          //     );
-                          //     await Future.delayed(Duration(seconds: 2));
-                          //     Navigator.pushAndRemoveUntil(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => HomeScreen()),
-                          //         (route) => false);
-                          //   } else {
-                          //     buildAndShowFlushBar(
-                          //       context: context,
-                          //       text: 'Appointment Creation Failed!',
-                          //       icon: Icons.error,
-                          //     );
-                          //   }
-                          // }).catchError((err) {
-                          //   setState(() {
-                          //     isActive = false;
-                          //   });
-                          //   buildAndShowFlushBar(
-                          //     context: context,
-                          //     text: 'Oops something went wrong!',
-                          //     icon: Icons.error,
-                          //   );
-                          //   print(err);
-                          // });
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
-                        },
-                ),
-              ),
-            )
           ],
         ),
       ),

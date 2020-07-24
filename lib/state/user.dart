@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:chitwan_hospital/models/User.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserDataStore extends ChangeNotifier {
@@ -321,10 +324,13 @@ class UserDataStore extends ChangeNotifier {
     return _appointments.firstWhere((element) => element['id'] == id);
   }
 
-  Future<bool> orderMedicine(String aid, String medicine, String title) async {
-    final result =
-        await DatabaseService.createPharmacyOrder(user.uid, aid, medicine);
+  Future<bool> orderMedicine(Map<String, String> data) async {
+    final result = await DatabaseService.createPharmacyOrder(data);
     return result;
+  }
+
+  StorageUploadTask uploadFile(File file, String uid) {
+    return DatabaseService.uploadFile(file, uid);
   }
 
   clearState() {

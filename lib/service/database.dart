@@ -176,14 +176,9 @@ abstract class DatabaseService {
     }
   }
 
-  static Future<bool> createPharmacyOrder(
-      String uid, String aid, String medicine) async {
+  static Future<bool> createPharmacyOrder(Map<String, String> data) async {
     try {
-      await pOrderCollection.document().setData({
-        'appointmentId': aid,
-        'userId': uid,
-        'medicine': medicine,
-      });
+      await pOrderCollection.document().setData(data);
       return true;
     } catch (e) {
       return false;

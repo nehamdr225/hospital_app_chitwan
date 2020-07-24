@@ -1,7 +1,6 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyDetails.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
-import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,7 +11,7 @@ class PharmacyListCard extends StatefulWidget {
   final phone;
   final openHours;
   final id;
-  final bool isOrder;
+  final isOrder;
   PharmacyListCard({
     this.image = "assets/images/bakery.jpg",
     this.phone,
@@ -61,12 +60,12 @@ class _PharmacyListCardState extends State<PharmacyListCard>
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => widget.isOrder
+              builder: (context) => widget.isOrder != null
                   ? PharmacyForm(
-                      pharmacyForm: new PharmacyAppointment(
-                          null, null, null, null, null, null, null, null),
                       doctor: widget.pharmacyName,
                       department: widget.pharmacyLocation,
+                      order: widget.isOrder,
+                      id: widget.id,
                     )
                   : PharmacyDetails(id: widget.id)));
         },

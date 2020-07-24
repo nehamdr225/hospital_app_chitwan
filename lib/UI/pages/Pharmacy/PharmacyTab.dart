@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class PharmacyTab extends StatelessWidget {
-  final bool isOrder;
-  PharmacyTab({this.isOrder = false});
+  final isOrder;
+  PharmacyTab({this.isOrder});
 
   @override
   Widget build(BuildContext context) {
