@@ -27,6 +27,7 @@ dependencies:
   timeline_list: ^0.0.5
   cloud_firestore:
   firebase_auth: 
+  firebase_storage: ^3.1.6
   # firebase_messaging: ^6.0.16
   # flutter_local_notifications: ^1.4.4+2
   # fluttertoast: ^6.0.0

@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:chitwan_hospital/service/extensions.dart';
 
 abstract class DatabaseService {
+  static const StoragePath = 'gs://chitwan-hospital.appspot.com';
   static final Firestore db = Firestore.instance;
+  static final StorageReference storageReference =
+      FirebaseStorage().ref().child(StoragePath);
   static final CollectionReference userCollection = db.collection('users');
   static final CollectionReference doctorCollection = db.collection('doctors');
   static final CollectionReference labCollection = db.collection('labs');
@@ -251,5 +258,11 @@ abstract class DatabaseService {
     return messageCollection.document(uid).updateData({
       'conversations': FieldValue.arrayUnion([data])
     });
+  }
+
+  static StorageUploadTask uploadFile(File file, String uid) {
+    final fileRef = storageReference.child(uid).child(file.basename);
+    final StorageUploadTask uploadTask = fileRef.putFile(file);
+    return uploadTask;
   }
 }
