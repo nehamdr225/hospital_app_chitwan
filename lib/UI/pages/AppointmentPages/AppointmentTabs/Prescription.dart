@@ -13,9 +13,7 @@ class Prescription extends StatelessWidget {
         itemCount: prescriptions.length,
         itemBuilder: (BuildContext context, int index) {
           return PrescriptionCard(
-            id: prescriptions[index]['id'],
-            medicine: prescriptions[index]['medicine'],
-            status: prescriptions[index]['status'] ?? null,
+            id: prescriptions[index].id,
           );
         });
   }

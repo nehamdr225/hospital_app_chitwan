@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,21 +16,21 @@ class PharmacyCard extends StatefulWidget {
 }
 
 class _PharmacyCardState extends State<PharmacyCard> {
-  Map userInfo;
+  // Map userInfo;
   @override
   Widget build(BuildContext context) {
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    final order = pharmacyDataStore.getOneOrder(widget.id);
-    if (userInfo == null)
-      pharmacyDataStore.getUserInfo(order['userId']).then(
-            (value) => setState(
-              () {
-                userInfo = value.data;
-              },
-            ),
-          );
+    final PharmacyAppointment order = pharmacyDataStore.getOneOrder(widget.id);
+    // if (userInfo == null)
+    //   pharmacyDataStore.getUserInfo(order.userId).then(
+    //         (value) => setState(
+    //           () {
+    //             userInfo = value.data;
+    //           },
+    //         ),
+    // );
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -37,9 +38,7 @@ class _PharmacyCardState extends State<PharmacyCard> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => BuyerDetail(
-                  buyerName: userInfo['name'],
-                  buyerPhone: userInfo['phone'],
-                  id: order['id']
+                  buyerName: order.name, buyerPhone: order.phone, id: order.id
                   // date: order['date'],
                   )));
         },
@@ -101,9 +100,7 @@ class _PharmacyCardState extends State<PharmacyCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: userInfo != null
-                                ? userInfo['name']
-                                : 'Loading ...',
+                            text: order.name,
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -122,7 +119,7 @@ class _PharmacyCardState extends State<PharmacyCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: order['medicine'],
+                                    text: order.medicine,
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -139,9 +136,7 @@ class _PharmacyCardState extends State<PharmacyCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: userInfo != null
-                                      ? userInfo['phone']
-                                      : 'Loading...',
+                                  text: order.phone,
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),

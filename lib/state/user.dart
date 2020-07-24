@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/models/User.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
@@ -34,7 +35,7 @@ class UserDataStore extends ChangeNotifier {
   // List _hospitals;
   List _appointments;
   List _doctors;
-  List _prescriptions;
+  List<PharmacyAppointment> _prescriptions;
   List _labs;
   List _messages;
   List _pharmacies;
@@ -67,9 +68,9 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get prescriptions => _prescriptions;
+  List<PharmacyAppointment> get prescriptions => _prescriptions;
 
-  set prescriptions(newData) {
+  set prescriptions(List<PharmacyAppointment> newData) {
     _prescriptions = newData;
     notifyListeners();
   }
@@ -300,10 +301,11 @@ class UserDataStore extends ChangeNotifier {
 
   getUserPrescriptions() {
     DatabaseService.getUserPharmacyOrders(user.uid).listen((data) {
-      final List addData = data.documents.map((e) {
+      final List<PharmacyAppointment> addData =
+          data.documents.map<PharmacyAppointment>((e) {
         final Map thisData = e.data;
         thisData['id'] = e.documentID;
-        return thisData;
+        return PharmacyAppointment.fromJson(thisData);
       }).toList();
       prescriptions = addData;
     });

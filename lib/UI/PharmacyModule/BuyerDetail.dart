@@ -1,17 +1,13 @@
-import 'package:chitwan_hospital/UI/DoctorsModule/PatientHistoryPage.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:timeline_list/timeline.dart';
-import 'package:timeline_list/timeline_model.dart';
 
 class BuyerDetail extends StatefulWidget {
   final buyerName;
@@ -35,146 +31,60 @@ class _BuyerDetailState extends State<BuyerDetail> {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
-    final order = pharmacyDataStore.getOneOrder(widget.id);
-    if (diagnosis == null)
-      pharmacyDataStore
-          .getAppointment(order['appointmentId'])
-          .then((value) => setState(() {
-                diagnosis = value.data['diagnosis'];
-              }));
-
-    // print(appointment);
-    TimelineModel centerTimelineBuilder(BuildContext context, int i) {
-      final textTheme = Theme.of(context).textTheme;
-      Timestamp date = diagnosis[i]['date'];
-      String time =
-          ' ${date.toDate().year}-${date.toDate().month}-${date.toDate().day},  ';
-      if (date.toDate().hour > 12) {
-        time +=
-            '${date.toDate().hour - 12}:${date.toDate().minute}:${date.toDate().second} PM';
-      } else {
-        time +=
-            '${date.toDate().hour}:${date.toDate().minute}:${date.toDate().second} AM';
-      }
-      final doodle = Doodle(
-          title: diagnosis[i]['title'],
-          time: time,
-          diagnosis: diagnosis[i]['diagnosis'],
-          iconBackground: Color(0xff173A7B),
-          medicines: diagnosis[i]['medicines'],
-          image: [
-            "assets/images/img3.jpeg",
-            "assets/images/img4.jpeg",
-          ]);
-      return TimelineModel(
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PatientHistoryPage(
-                      date: doodle.time,
-                      diagnosis: doodle.diagnosis,
-                      medicine: doodle.medicines,
-                      title: doodle.title,
-                    )));
-          },
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.80,
-            child: Card(
-              margin: EdgeInsets.symmetric(vertical: 16.0),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-              clipBehavior: Clip.antiAlias,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          "Tap to view...",
-                          style: TextStyle(
-                              fontSize: 12.0, color: blueGrey.withOpacity(0.7)),
-                        )),
-                    Text(doodle.time, style: textTheme.caption),
-                    const SizedBox(
-                      height: 2.0,
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(
-                      doodle.medicines,
-                      style: textTheme.headline6.copyWith(fontSize: 16.0),
-                      textAlign: TextAlign.start,
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        position: TimelineItemPosition.left,
-        iconBackground: doodle.iconBackground,
-      );
-    }
+    final PharmacyAppointment order = pharmacyDataStore.getOneOrder(widget.id);
 
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
             titleColor: theme.primary,
-            title: "Buyer History",
+            title: "Buyer Details",
           ),
           preferredSize: Size.fromHeight(60.0)),
       backgroundColor: theme.background,
-      floatingActionButton: order['status'] == "accepted" ||
-              order['status'] == "ready"
-          ? FloatingActionButton.extended(
-              onPressed: isActive
-                  ? null
-                  : () {
-                      if (order['status'] != 'ready') {
-                        setState(() {
-                          isActive = true;
-                        });
-                        pharmacyDataStore
-                            .setOrderStatus(order['id'], 'ready')
-                            .then((value) => setState(() {
-                                  isActive = false;
-                                }));
-                      } else {
-                        setState(() {
-                          isActive = true;
-                        });
-                        pharmacyDataStore
-                            .setOrderStatus(order['id'], 'accepted')
-                            .then((value) => setState(() {
-                                  isActive = false;
-                                }));
-                      }
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => PharmacyReady(
-                      //             // appointment: newAppointment,
-                      //             )));
-                    },
-              icon: Icon(
-                Icons.calendar_today,
-                color: textDark_Yellow,
-              ),
-              label: FancyText(
-                text: order['status'] == "ready" ? 'Undo Ready' : "Mark Ready",
-                color: textDark_Yellow,
-                fontWeight: FontWeight.w600,
-              ),
-              backgroundColor: theme.primary,
-            )
-          : null,
+      floatingActionButton:
+          order.status == "accepted" || order.status == "ready"
+              ? FloatingActionButton.extended(
+                  onPressed: isActive
+                      ? null
+                      : () {
+                          if (order.status != 'ready') {
+                            setState(() {
+                              isActive = true;
+                            });
+                            pharmacyDataStore
+                                .setOrderStatus(order.id, 'ready')
+                                .then((value) => setState(() {
+                                      isActive = false;
+                                    }));
+                          } else {
+                            setState(() {
+                              isActive = true;
+                            });
+                            pharmacyDataStore
+                                .setOrderStatus(order.id, 'accepted')
+                                .then((value) => setState(() {
+                                      isActive = false;
+                                    }));
+                          }
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => PharmacyReady(
+                          //             // appointment: newAppointment,
+                          //             )));
+                        },
+                  icon: Icon(
+                    Icons.calendar_today,
+                    color: textDark_Yellow,
+                  ),
+                  label: FancyText(
+                    text: order.status == "ready" ? 'Undo Ready' : "Mark Ready",
+                    color: textDark_Yellow,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  backgroundColor: theme.primary,
+                )
+              : null,
       body: ListView(children: <Widget>[
         Indicator(diagnosis),
         BoolIndicator(isActive),
@@ -260,7 +170,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                       textAlign: TextAlign.left,
                                       color: textDark_Yellow,
                                     ),
-                                    order['status'] == null
+                                    order.status == null
                                         ? Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -273,14 +183,14 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                 backgroundColor:
                                                     Colors.green.shade400,
                                                 onPressed: isActive
-                                                    ? (){}
+                                                    ? () {}
                                                     : () {
                                                         setState(() {
                                                           isActive = true;
                                                         });
                                                         pharmacyDataStore
                                                             .setOrderStatus(
-                                                                order['id'],
+                                                                order.id,
                                                                 'accepted')
                                                             .then((value) =>
                                                                 setState(() {
@@ -351,8 +261,8 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                   });
                                                                   pharmacyDataStore
                                                                       .setOrderStatus(
-                                                                          order[
-                                                                              'id'],
+                                                                          order
+                                                                              .id,
                                                                           'rejected')
                                                                       .then(
                                                                           (value) {
@@ -367,7 +277,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                       MaterialPageRoute(
                                                                         builder:
                                                                             (context) =>
-                                                                                RejectRemarkForm(id: order['id']),
+                                                                                RejectRemarkForm(id: order.id),
                                                                       ),
                                                                     );
                                                                   });
@@ -380,7 +290,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                               SizedBox(width: 10.0),
                                             ],
                                           )
-                                        : order['status'] == "rejected"
+                                        : order.status == "rejected"
                                             ? Row(children: [
                                                 FancyText(
                                                   text: "Rejected",
@@ -398,7 +308,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                           });
                                                           pharmacyDataStore
                                                               .setOrderStatus(
-                                                                  order['id'],
+                                                                  order.id,
                                                                   null)
                                                               .then((value) =>
                                                                   setState(() {
@@ -420,16 +330,16 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                             : Row(
                                                 children: <Widget>[
                                                   FancyText(
-                                                    text: order['status'] ==
-                                                            'ready'
-                                                        ? 'Ready'
-                                                        : "Accepted",
+                                                    text:
+                                                        order.status == 'ready'
+                                                            ? 'Ready'
+                                                            : "Accepted",
                                                     color: Colors.green,
                                                     fontWeight: FontWeight.w700,
                                                     size: 15.5,
                                                   ),
                                                   SizedBox(width: 10.0),
-                                                  order['status'] == 'ready'
+                                                  order.status == 'ready'
                                                       ? SizedBox.shrink()
                                                       : InkWell(
                                                           onTap: isActive
@@ -441,8 +351,8 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                                                   });
                                                                   pharmacyDataStore
                                                                       .setOrderStatus(
-                                                                          order[
-                                                                              'id'],
+                                                                          order
+                                                                              .id,
                                                                           null)
                                                                       .then((value) =>
                                                                           setState(
@@ -469,10 +379,10 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                   ],
                                 ),
                               ),
-                              order['status'] == 'rejected'
+                              order.status == 'rejected'
                                   ? RowInput(
                                       title: "Remark:  ",
-                                      caption: order['remark'] ?? '',
+                                      caption: order.remark ?? '',
                                       titleColor: textDark_Yellow,
                                       capColor: textDark_Yellow,
                                       defaultStyle: false,
@@ -489,14 +399,6 @@ class _BuyerDetailState extends State<BuyerDetail> {
                 ),
           ),
         ),
-        Container(
-          height: size.height * 0.60,
-          child: Timeline.builder(
-              physics: ClampingScrollPhysics(),
-              position: TimelinePosition.Left,
-              itemCount: diagnosis != null ? diagnosis.length : 0,
-              itemBuilder: centerTimelineBuilder),
-        )
       ]),
     );
   }

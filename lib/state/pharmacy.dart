@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/models/Pharmacy.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -26,7 +27,7 @@ class PharmacyDataStore extends ChangeNotifier {
 
   Pharmacy _userData;
   List hospitals;
-  List<Map> _orders;
+  List<PharmacyAppointment> _orders;
 
   Pharmacy get user => _userData;
 
@@ -35,9 +36,9 @@ class PharmacyDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get orders => _orders;
+  List<PharmacyAppointment> get orders => _orders;
 
-  set orders(orderData) {
+  set orders(List<PharmacyAppointment> orderData) {
     _orders = orderData;
     notifyListeners();
   }
@@ -56,10 +57,11 @@ class PharmacyDataStore extends ChangeNotifier {
   getOrders() {
     if (orders == null) {
       DatabaseService.getPharmacyOrders(user.uid).then((onData) {
-        List newData = onData.documents.map<Map>((e) {
+        List<PharmacyAppointment> newData =
+            onData.documents.map<PharmacyAppointment>((e) {
           final data = e.data;
           data['id'] = e.documentID;
-          return data;
+          return PharmacyAppointment.fromJson(data);
         }).toList();
         orders = newData;
       });
@@ -67,7 +69,7 @@ class PharmacyDataStore extends ChangeNotifier {
   }
 
   getOneOrder(String id) {
-    return orders.firstWhere((element) => element['id'] == id);
+    return orders.firstWhere((element) => element.id == id);
   }
 
   Future<DocumentSnapshot> getUserInfo(String id) async {
@@ -77,10 +79,10 @@ class PharmacyDataStore extends ChangeNotifier {
   Future setOrderStatus(String uid, dynamic status) {
     return DatabaseService.updateOrderStatus(uid, status).then((value) {
       if (value) {
-        final newOrders = _orders.map<Map>((each) {
-          if (each['id'] == uid) {
+        final newOrders = _orders.map<PharmacyAppointment>((each) {
+          if (each.id == uid) {
             final data = each;
-            data['status'] = status;
+            data.status = status;
             return data;
           }
           return each;
@@ -94,10 +96,10 @@ class PharmacyDataStore extends ChangeNotifier {
   setOrderRemark(String uid, String remark) {
     DatabaseService.updateOrderRemark(uid, remark).then((value) {
       if (value) {
-        final newOrders = _orders.map<Map>((each) {
-          if (each['id'] == uid) {
+        final newOrders = _orders.map<PharmacyAppointment>((each) {
+          if (each.id == uid) {
             final data = each;
-            data['remark'] = remark;
+            data.remark = remark;
             return data;
           }
           return each;

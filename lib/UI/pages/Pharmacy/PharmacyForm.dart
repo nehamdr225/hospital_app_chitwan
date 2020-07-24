@@ -165,7 +165,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                         return;
                       }
                       _formKey.currentState.save();
-                      pharmacyFormData.timestamp = DateTime.now();
+                      pharmacyFormData.timestamp =
+                          DateTime.now().toIso8601String();
                       setState(() {
                         isActive = true;
                       });

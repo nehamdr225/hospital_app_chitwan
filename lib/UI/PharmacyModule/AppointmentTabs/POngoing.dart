@@ -9,16 +9,13 @@ class POngoing extends StatelessWidget {
     // final theme = Theme.of(context);
     final orders = Provider.of<PharmacyDataStore>(context)
         .orders
-        .where((element) =>
-            element['status'] == null || element['status'] == 'accepted')
+        .where(
+            (element) => element.status == null || element.status == 'accepted')
         .toList();
     return ListView.builder(
         itemCount: orders.length,
         itemBuilder: (BuildContext context, int index) {
-          return PListCard( 
-            id: orders[index]['id'],
-            status: "ongoing"
-          );
+          return PListCard(id: orders[index].id, status: "ongoing");
         });
   }
 }

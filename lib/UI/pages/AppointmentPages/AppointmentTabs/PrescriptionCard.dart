@@ -1,14 +1,14 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class PrescriptionCard extends StatefulWidget {
   final id;
-  final medicine;
-  final status;
-  PrescriptionCard({this.id, this.medicine, this.status});
+  PrescriptionCard({this.id});
 
   @override
   _PrescriptionCardState createState() => _PrescriptionCardState();
@@ -19,7 +19,11 @@ class _PrescriptionCardState extends State<PrescriptionCard> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-
+    final prescription = Provider.of<UserDataStore>(context)
+        .prescriptions
+        .firstWhere((element) => element.id == widget.id);
+    final DateTime date = DateTime.parse(prescription.timestamp);
+    print(date);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -46,7 +50,7 @@ class _PrescriptionCardState extends State<PrescriptionCard> {
             ],
           ),
           width: size.width * 0.90,
-          height: 100.0,
+          height: 150.0,
           child: Padding(
             padding: const EdgeInsets.only(left: 18.0),
             child: Flex(
@@ -61,45 +65,46 @@ class _PrescriptionCardState extends State<PrescriptionCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        Padding(
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: 16.0,
+                                  color: theme.iconTheme.color,
+                                ),
+                                FancyText(
+                                    defaultStyle: true,
+                                    text:
+                                        ' ${date.year}-${date.month}-${date.day}' ??
+                                            ''),
+                              ],
+                            )),
                         FancyText(
-                          text: widget.medicine,
+                          text: prescription.pharmacyName,
                           fontWeight: FontWeight.w700,
                           size: 15.5,
                           textAlign: TextAlign.left,
                         ),
-                        widget.status != null && widget.status == "ready"
+                        prescription.status == "ready"
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
-                                child: RowInput(
-                                    title: "Pick-Up from: ",
-                                    caption: "CMC Pharmacy",
-                                    defaultStyle: true))
-                            // ? Padding(
-                            //     padding: const EdgeInsets.only(top: 3.0),
-                            //     child: RowInput(
-                            //         title: "Delivery on: ",
-                            //         caption: "07-08-2020",//(MM-DD-YYYY)
-                            //         defaultStyle: true),
-                            //   )
-                            : widget.status != null &&
-                                    widget.status == "rejected"
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 3.0),
-                                    child: RowInput(
-                                      title: "Reason: ",
-                                      caption: "Rejection Reason",
-                                      defaultStyle: true
-                                    )
-                                  )
-                                : Padding(
-                                    //processing
-                                    padding: const EdgeInsets.only(top: 3.0),
-                                    child: FancyText(
-                                      text: "Your order is processing!",
-                                      textAlign: TextAlign.left,
-                                      color: theme.colorScheme.secondaryVariant,
-                                    ),
-                                  ),
+                                child: FancyText(
+                                  text: "Your prescription is ready!",
+                                  textAlign: TextAlign.left,
+                                  defaultStyle: true,
+                                ),
+                              )
+                            : Padding(
+                                //processing
+                                padding: const EdgeInsets.only(top: 3.0),
+                                child: FancyText(
+                                  text: "Your order is processing!",
+                                  textAlign: TextAlign.left,
+                                  color: theme.colorScheme.secondaryVariant,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -110,21 +115,16 @@ class _PrescriptionCardState extends State<PrescriptionCard> {
                       width: 80.0,
                       height: 30.0,
                       decoration: BoxDecoration(
-                          color: widget.status != null &&
-                                      widget.status == "Accepted" ||
-                                  widget.status == "Ready" ||
-                                  widget.status == "ready"
+                          color: prescription.status != null &&
+                                  prescription.status == "ready"
                               ? Colors.green.shade400
-                              : widget.status == "Rejected" ||
-                                      widget.status == "rejected"
-                                  ? theme.colorScheme.secondary
-                                  : blueGrey,
+                              : theme.colorScheme.secondary,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(3.0),
                               bottomLeft: Radius.circular(3.0))),
                       child: Center(
                         child: FancyText(
-                          text: widget.status ?? 'Pending',
+                          text: prescription.status ?? 'Pending',
                           opacity: 0.5,
                           color: textDark_Yellow,
                         ),

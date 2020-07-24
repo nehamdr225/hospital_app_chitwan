@@ -4,6 +4,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyDrawer.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +17,9 @@ class PharmacyModule extends StatelessWidget {
     Provider.of<PharmacyDataStore>(context).handleInitialProfileLoad();
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final user = pharmacyDataStore.user;
-    final List orders = pharmacyDataStore.orders != null
+    final List<PharmacyAppointment> orders = pharmacyDataStore.orders != null
         ? pharmacyDataStore.orders
-            .where((element) => element['status'] == null)
+            .where((element) => element.status == null)
             .toList()
         : [];
 
@@ -26,14 +27,14 @@ class PharmacyModule extends StatelessWidget {
       return orders != null
           ? orders
               .map<Widget>(
-                (each) => PharmacyCard(id: each['id']),
+                (each) => PharmacyCard(id: each.id),
               )
               .toList()
           : [SizedBox.shrink()];
     }
 
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: MainAppBar(

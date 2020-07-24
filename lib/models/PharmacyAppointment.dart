@@ -1,7 +1,8 @@
 abstract class PharmacyAppointmentModel {
+  String id;
   String name;
   String phone;
-  DateTime timestamp;
+  String timestamp;
   String address;
   String image;
   String medicine;
@@ -9,12 +10,15 @@ abstract class PharmacyAppointmentModel {
   String userId;
   String pharmacyId;
   String pharmacyName;
+  String status;
+  String remark;
 }
 
 class PharmacyAppointment implements PharmacyAppointmentModel {
+  String id;
   String name;
   String phone;
-  DateTime timestamp;
+  String timestamp;
   String address;
   String image;
   String medicine;
@@ -22,9 +26,12 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
   String userId;
   String pharmacyId;
   String pharmacyName;
+  String status;
+  String remark;
 
   PharmacyAppointment(
-      {this.timestamp,
+      {this.id,
+      this.timestamp,
       this.address,
       this.name,
       this.phone,
@@ -33,12 +40,14 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
       this.pickUp,
       this.userId,
       this.pharmacyId,
-      this.pharmacyName});
+      this.pharmacyName,
+      this.status,
+      this.remark});
 
   Map<String, dynamic> toJson() => {
         'name': name,
         'phone': phone,
-        'timestamp': timestamp.toIso8601String(),
+        'timestamp': timestamp,
         'address': address,
         'pickUp': pickUp,
         'userId': userId,
@@ -46,6 +55,9 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
         'pharmacyName': pharmacyName,
         if (image != null) 'image': image,
         if (medicine != null) 'medicine': medicine,
+        if (id != null) 'id': id,
+        if (status != null) 'status': status,
+        if (remark != null) 'remark': remark,
       };
 
   PharmacyAppointment.fromJson(json)
@@ -57,5 +69,8 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
         pickUp = json['pickUp'],
         userId = json['userId'],
         pharmacyId = json['pharmacyId'],
-        pharmacyName = json['pharmacyName'];
+        pharmacyName = json['pharmacyName'],
+        id = json['id'],
+        status = json['status'],
+        remark = json['remark'];
 }

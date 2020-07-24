@@ -9,15 +9,12 @@ class PRejected extends StatelessWidget {
     // final theme = Theme.of(context);
     final orders = Provider.of<PharmacyDataStore>(context)
         .orders
-        .where((element) => element['status'] == 'rejected')
+        .where((element) => element.status == 'rejected')
         .toList();
     return ListView.builder(
         itemCount: orders.length,
         itemBuilder: (BuildContext context, int index) {
-          return PListCard(
-            id: orders[index]['id'],
-            status: "rejected"
-          );
+          return PListCard(id: orders[index].id, status: "rejected");
         });
   }
 }
