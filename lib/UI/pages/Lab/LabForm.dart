@@ -68,234 +68,237 @@ class _LabFormState extends State<LabForm> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              // first and last name
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: <Widget>[
-                  FForms(
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    text: "First Name",
-                    textColor: blueGrey.withOpacity(0.7),
-                    width: width * 0.40,
-                    // validator: (val) =>
-                    //     val.isEmpty ? 'First Name is required' : null,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'First Name is Reqired';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _fName = value;
-                    },
-                  ),
-                  SizedBox(width: 10.0),
-                  FForms(
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    text: "Last Name",
-                    type: TextInputType.text,
-                    textColor: blueGrey.withOpacity(0.7),
-                    width: width * 0.515,
-                    validator: (val) =>
-                        val.isEmpty ? 'Last Name is required' : null,
-                    onSaved: (value) {
-                      _lName = value;
-                    },
-                  )
-                ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+              child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              SizedBox(
+                height: 10.0,
               ),
-            ),
-            Padding(
-              //phone number
-              padding: const EdgeInsets.all(10.0),
-              child: FForms(
-                icon: Icon(
-                  Icons.phone,
-                  color: theme.iconTheme.color,
+              Container(
+                // first and last name
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: <Widget>[
+                    FForms(
+                      borderColor: theme.colorScheme.primary,
+                      formColor: Colors.white,
+                      text: "First Name",
+                      textColor: blueGrey.withOpacity(0.7),
+                      width: width * 0.40,
+                      // validator: (val) =>
+                      //     val.isEmpty ? 'First Name is required' : null,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'First Name is Reqired';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _fName = value;
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    FForms(
+                      borderColor: theme.colorScheme.primary,
+                      formColor: Colors.white,
+                      text: "Last Name",
+                      type: TextInputType.text,
+                      textColor: blueGrey.withOpacity(0.7),
+                      width: width * 0.515,
+                      validator: (val) =>
+                          val.isEmpty ? 'Last Name is required' : null,
+                      onSaved: (value) {
+                        _lName = value;
+                      },
+                    )
+                  ],
                 ),
-                text: "Phone Number",
-                type: TextInputType.phone,
-                //width: width * 0.80,
-                borderColor: theme.colorScheme.primary,
-                formColor: Colors.white,
-                textColor: blueGrey.withOpacity(0.7),
-                validator: (val) => val.isEmpty || val.length < 8
-                    ? 'Phone Number is required'
-                    : null,
-                onSaved: (value) {
-                  _fPhone = value;
-                },
               ),
-            ),
-            Padding(
-              //phone number
-              padding: const EdgeInsets.all(10.0),
-              child: FForms(
-                icon: Icon(
-                  Icons.map,
-                  color: theme.iconTheme.color,
-                ),
-                text: "Address",
-                type: TextInputType.text,
-                //width: width * 0.80,
-                borderColor: theme.colorScheme.primary,
-                formColor: Colors.white,
-                textColor: blueGrey.withOpacity(0.7),
-                validator: (val) => val.isEmpty || val.length < 10
-                    ? 'Your Address is required'
-                    : null,
-                onSaved: (value) {
-                  _fAddress = value;
-                },
-              ),
-            ),
-            Padding(
-              //date
-              padding:
-                  const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  FancyText(
-                    text: "Upload Prescribed lab works: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                    textAlign: TextAlign.left,
+              Padding(
+                //phone number
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  icon: Icon(
+                    Icons.phone,
+                    color: theme.iconTheme.color,
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  _image == null
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 26.0,
-                            color: theme.colorScheme.primary,
-                          ),
-                          onPressed: getImage,
-                        )
-                      : Row(children: <Widget>[
-                          InkWell(
-                            onTap: getImage,
-                            child: Stack(children: <Widget>[
-                              Container(
-                                  height: 100.0,
-                                  width: 100.0,
-                                  decoration:
-                                      BoxDecoration(border: Border.all()),
-                                  child: Image.file(_image)),
-                              Container(
-                                height: 100.0,
-                                width: 100.0,
-                                color: Colors.black26,
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            width: 8.0,
-                          ),
-                          _image2 == null
-                              ? IconButton(
-                                  icon: Icon(
-                                    Icons.add_a_photo,
-                                    size: 26.0,
-                                    color: theme.colorScheme.primary,
-                                  ),
-                                  onPressed: getImage2,
-                                )
-                              : Row(
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: getImage2,
-                                      child: Stack(children: <Widget>[
-                                        Container(
-                                            height: 100.0,
-                                            width: 100.0,
-                                            decoration: BoxDecoration(
-                                                border: Border.all()),
-                                            child: Image.file(_image2)),
-                                        Container(
-                                          height: 100.0,
-                                          width: 100.0,
-                                          color: Colors.black26,
-                                        ),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
-                        ]),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                height: 45.0,
-                child: RaisedButton(
-                  color: theme.colorScheme.primary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0)),
-                  child: FancyText(
-                    text: "SUBMIT",
-                    size: 16.0,
-                    color: textDark_Yellow,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  onPressed:isActive
-                      ? null
-                      : () async {
-                          if (_fName == null ||
-                              _lName == null ||
-                              _fPhone == null ||
-                              _image == null ||
-                              !_formKey.currentState.validate()) {
-                            buildAndShowFlushBar(
-                              context: context,
-                              text: 'Please provide all data!',
-                              backgroundColor: theme.colorScheme.error,
-                              icon: Icons.error_outline,
-                            );
-                            return;
-                          }
-                          setState(() {
-                            isActive = true;
-                          });
-                    _formKey.currentState.save();
-                    widget.labForm.firstName = _fName;
-                    widget.labForm.lastName = _lName;
-                    widget.labForm.phoneNum = _fPhone;
-                    widget.labForm.address = _fAddress;
-                    widget.labForm.image1 = _image;
-                    widget.labForm.image2 = _image2;
-
-                    final uid = await AuthService.getCurrentUID();
-                    await db
-                        .collection("users")
-                        .document(uid)
-                        .collection("labs")
-                        .add(widget.labForm.toJson());
-
-                        setState(() {
-                          isActive=false;
-                        });
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                  text: "Phone Number",
+                  type: TextInputType.phone,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Phone Number is required'
+                      : null,
+                  onSaved: (value) {
+                    _fPhone = value;
                   },
                 ),
               ),
-            )
-          ],
+              Padding(
+                //phone number
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  icon: Icon(
+                    Icons.map,
+                    color: theme.iconTheme.color,
+                  ),
+                  text: "Address",
+                  type: TextInputType.text,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 10
+                      ? 'Your Address is required'
+                      : null,
+                  onSaved: (value) {
+                    _fAddress = value;
+                  },
+                ),
+              ),
+              Padding(
+                //date
+                padding:
+                    const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    FancyText(
+                      text: "Upload Prescribed lab works: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    _image == null
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.add_a_photo,
+                              size: 26.0,
+                              color: theme.colorScheme.primary,
+                            ),
+                            onPressed: getImage,
+                          )
+                        : Row(children: <Widget>[
+                            InkWell(
+                              onTap: getImage,
+                              child: Stack(children: <Widget>[
+                                Container(
+                                    height: 100.0,
+                                    width: 100.0,
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Image.file(_image)),
+                                Container(
+                                  height: 100.0,
+                                  width: 100.0,
+                                  color: Colors.black26,
+                                ),
+                              ]),
+                            ),
+                            SizedBox(
+                              width: 8.0,
+                            ),
+                            _image2 == null
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.add_a_photo,
+                                      size: 26.0,
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                    onPressed: getImage2,
+                                  )
+                                : Row(
+                                    children: <Widget>[
+                                      InkWell(
+                                        onTap: getImage2,
+                                        child: Stack(children: <Widget>[
+                                          Container(
+                                              height: 100.0,
+                                              width: 100.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all()),
+                                              child: Image.file(_image2)),
+                                          Container(
+                                            height: 100.0,
+                                            width: 100.0,
+                                            color: Colors.black26,
+                                          ),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                          ]),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  height: 45.0,
+                  child: RaisedButton(
+                    color: theme.colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0)),
+                    child: FancyText(
+                      text: "SUBMIT",
+                      size: 16.0,
+                      color: textDark_Yellow,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    onPressed:isActive
+                        ? null
+                        : () async {
+                            if (_fName == null ||
+                                _lName == null ||
+                                _fPhone == null ||
+                                _image == null ||
+                                !_formKey.currentState.validate()) {
+                              buildAndShowFlushBar(
+                                context: context,
+                                text: 'Please provide all data!',
+                                backgroundColor: theme.colorScheme.error,
+                                icon: Icons.error_outline,
+                              );
+                              return;
+                            }
+                            setState(() {
+                              isActive = true;
+                            });
+                      _formKey.currentState.save();
+                      widget.labForm.firstName = _fName;
+                      widget.labForm.lastName = _lName;
+                      widget.labForm.phoneNum = _fPhone;
+                      widget.labForm.address = _fAddress;
+                      widget.labForm.image1 = _image;
+                      widget.labForm.image2 = _image2;
+
+                      final uid = await AuthService.getCurrentUID();
+                      await db
+                          .collection("users")
+                          .document(uid)
+                          .collection("labs")
+                          .add(widget.labForm.toJson());
+
+                          setState(() {
+                            isActive=false;
+                          });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()));
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

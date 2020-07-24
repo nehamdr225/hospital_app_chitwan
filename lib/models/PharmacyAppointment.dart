@@ -34,7 +34,7 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
       this.timestamp,
       this.address,
       this.name,
-      this.phone,
+      this.phone, 
       this.image,
       this.medicine,
       this.pickUp,

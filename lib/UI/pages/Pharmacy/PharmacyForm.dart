@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
@@ -21,13 +22,7 @@ class PharmacyForm extends StatefulWidget {
   final department;
   final order;
   final id;
-  PharmacyForm(
-      {this.doctor,
-      this.department,
-      // @required this.pharmacyForm,
-      this.order,
-      this.id,
-      Key key})
+  PharmacyForm({this.doctor, this.department, this.order, this.id, Key key})
       : super(key: key);
   @override
   _PharmacyFormState createState() => _PharmacyFormState();
@@ -39,15 +34,11 @@ class _PharmacyFormState extends State<PharmacyForm> {
   final db = Firestore.instance;
   PickupOptions _poptions = PickupOptions.pickup;
   List name = [];
-  // String _fName;
-  // String _lName;
-  // String _fPhone;
-  // String _fAddress;
   File _image;
-  // File _image2;
   final picker = ImagePicker();
   bool isActive = false;
   double imageStatus = 0.0;
+  String medicineValue;
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -195,204 +186,296 @@ class _PharmacyFormState extends State<PharmacyForm> {
           ),
         )
       ],
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 10.0,
-            ),
-            Padding(
-              //phone number
-              padding: const EdgeInsets.all(10.0),
-              child: FForms(
-                initialValue: userDataStore.user.name,
-                icon: Icon(
-                  Icons.person,
-                  color: theme.iconTheme.color,
-                ),
-                text: "Name",
-                type: TextInputType.phone,
-                //width: width * 0.80,
-                borderColor: theme.colorScheme.primary,
-                formColor: Colors.white,
-                textColor: blueGrey.withOpacity(0.7),
-                validator: (val) =>
-                    val.isEmpty || val.length < 8 ? 'Name is required' : null,
-                onChanged: (value) {
-                  pharmacyFormData.name = value;
-                },
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+              child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              SizedBox(
+                height: 10.0,
               ),
-            ),
-            Padding(
-              //phone number
-              padding: const EdgeInsets.all(10.0),
-              child: FForms(
-                initialValue: userDataStore.user.phone,
-                icon: Icon(
-                  Icons.phone,
-                  color: theme.iconTheme.color,
+              Padding(
+                //name
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user.name,
+                  icon: Icon(
+                    Icons.person,
+                    color: theme.iconTheme.color,
+                  ),
+                  text: "Name",
+                  type: TextInputType.phone,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) =>
+                      val.isEmpty || val.length < 8 ? 'Name is required' : null,
+                  onChanged: (value) {
+                    pharmacyFormData.name = value;
+                  },
                 ),
-                text: "Phone Number",
-                type: TextInputType.phone,
-                //width: width * 0.80,
-                borderColor: theme.colorScheme.primary,
-                formColor: Colors.white,
-                textColor: blueGrey.withOpacity(0.7),
-                validator: (val) => val.isEmpty || val.length < 8
-                    ? 'Phone Number is required'
-                    : null,
-                onChanged: (value) {
-                  pharmacyFormData.phone = value;
-                },
               ),
-            ),
-            Padding(
-              //phone number
-              padding: const EdgeInsets.all(10.0),
-              child: FForms(
-                initialValue: userDataStore.user.address,
-                icon: Icon(
-                  Icons.map,
-                  color: theme.iconTheme.color,
-                ),
-                text: "Address",
-                type: TextInputType.text,
-                //width: width * 0.80,
-                borderColor: theme.colorScheme.primary,
-                formColor: Colors.white,
-                textColor: blueGrey.withOpacity(0.7),
-                validator: (val) => val.isEmpty || val.length < 10
-                    ? 'Your Address is required'
-                    : null,
-                onChanged: (value) {
-                  pharmacyFormData.address = value;
-                },
-              ),
-            ),
-            if (widget.order != null)
               Padding(
                 //phone number
                 padding: const EdgeInsets.all(10.0),
                 child: FForms(
+                  initialValue: userDataStore.user.phone,
+                  icon: Icon(
+                    Icons.phone,
+                    color: theme.iconTheme.color,
+                  ),
+                  text: "Phone Number",
+                  type: TextInputType.phone,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Phone Number is required'
+                      : null,
+                  onChanged: (value) {
+                    pharmacyFormData.phone = value;
+                  },
+                ),
+              ),
+              Padding(
+                //Address
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user.address,
                   icon: Icon(
                     Icons.map,
                     color: theme.iconTheme.color,
                   ),
-                  initialValue: widget.order,
-                  text: "Medicine and Quantity",
+                  text: "Address",
                   type: TextInputType.text,
                   //width: width * 0.80,
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 10
+                      ? 'Your Address is required'
+                      : null,
                   onChanged: (value) {
-                    pharmacyFormData.medicine = value;
+                    pharmacyFormData.address = value;
                   },
                 ),
               ),
-            Padding(
-              //gender
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 0.0),
-              child: Row(
-                children: <Widget>[
-                  FancyText(
-                    text: "Pickup Options: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  SizedBox(width: 10.0),
-                  Radio(
-                    value: PickupOptions.pickup,
-                    activeColor: theme.iconTheme.color,
-                    groupValue: _poptions,
-                    onChanged: (PickupOptions value) {
-                      setState(() {
-                        _poptions = PickupOptions.pickup;
-                        pharmacyFormData.pickUp = 'pickup';
-                      });
-                    },
-                  ),
-                  FancyText(
-                    text: "Pick-Up",
-                    size: 15.0,
-                    color: blueGrey.withOpacity(0.9),
-                  ),
-                  Radio(
-                    value: PickupOptions.delivery,
-                    activeColor: theme.iconTheme.color,
-                    groupValue: _poptions,
-                    onChanged: (PickupOptions value) {
-                      setState(() {
-                        _poptions = PickupOptions.delivery;
-                        pharmacyFormData.pickUp = 'delivery';
-                      });
-                    },
-                  ),
-                  FancyText(
-                    text: "Delivery",
-                    size: 15.0,
-                    color: blueGrey.withOpacity(0.9),
-                  ),
-                ],
-              ),
-            ),
-            _poptions == PickupOptions.delivery
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
-                    child: FancyText(
-                      text: 'Delivery charge Rs.100',
-                      color: blueGrey.withOpacity(0.6),
-                      textAlign: TextAlign.start,
+              // if (widget.order != null)
+              //   Padding(
+              //     //Medicine and Quatity
+              //     padding: const EdgeInsets.all(10.0),
+              //     child: FForms(
+              //       icon: Icon(
+              //         Icons.map,
+              //         color: theme.iconTheme.color,
+              //       ),
+              //       initialValue: widget.order,
+              //       text: "Medicine and Quantity",
+              //       type: TextInputType.text,
+              //       //width: width * 0.80,
+              //       borderColor: theme.colorScheme.primary,
+              //       formColor: Colors.white,
+              //       textColor: blueGrey.withOpacity(0.7),
+              //       onChanged: (value) {
+              //         pharmacyFormData.medicine = value;
+              //       },
+              //     ),
+              //   ),
+              Padding(
+                //gender
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 0.0),
+                child: Row(
+                  children: <Widget>[
+                    FancyText(
+                      text: "Pickup Options: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )
-                : Text(' '),
-            Padding(
-              //date
-              padding:
-                  const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  FancyText(
-                    text: "Upload Prescription: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  _image == null
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 26.0,
-                            color: theme.colorScheme.primary,
+                    SizedBox(width: 10.0),
+                    Radio(
+                      value: PickupOptions.pickup,
+                      activeColor: theme.iconTheme.color,
+                      groupValue: _poptions,
+                      onChanged: (PickupOptions value) {
+                        setState(() {
+                          _poptions = PickupOptions.pickup;
+                          pharmacyFormData.pickUp = 'pickup';
+                        });
+                      },
+                    ),
+                    FancyText(
+                      text: "Pick-Up",
+                      size: 15.0,
+                      color: blueGrey.withOpacity(0.9),
+                    ),
+                    Radio(
+                      value: PickupOptions.delivery,
+                      activeColor: theme.iconTheme.color,
+                      groupValue: _poptions,
+                      onChanged: (PickupOptions value) {
+                        setState(() {
+                          _poptions = PickupOptions.delivery;
+                          pharmacyFormData.pickUp = 'delivery';
+                        });
+                      },
+                    ),
+                    FancyText(
+                      text: "Delivery",
+                      size: 15.0,
+                      color: blueGrey.withOpacity(0.9),
+                    ),
+                  ],
+                ),
+              ),
+              _poptions == PickupOptions.delivery
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                      child: FancyText(
+                        text: 'Delivery charge Rs.100',
+                        color: blueGrey.withOpacity(0.6),
+                        textAlign: TextAlign.start,
+                      ),
+                    )
+                  : Text(' '),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, bottom: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        FancyText(
+                          text: "Medicines and Quantity",
+                          size: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SimpleDialog(
+                                    children: <Widget>[
+                                      SimpleDialogOption(
+                                        child: FForms(
+                                          underline: false,
+                                          borderColor: theme.colorScheme.primary,
+                                          text: "Medicine name",
+                                          onChanged: (value) {
+                                            pharmacyFormData.medicine = value;
+                                          },
+                                        ),
+                                      ),
+                                      SimpleDialogOption(
+                                          child: Container(
+                                              child: FRaisedButton(
+                                        text: 'Add',
+                                        onPressed: () {
+                                          setState(() {
+                                            medicineValue =
+                                                pharmacyFormData.medicine;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        bg: theme.colorScheme.primary,
+                                        color: textDark_Yellow,
+                                      )))
+                                    ],
+                                  );
+                                });
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              FancyText(text: 'Add '),
+                              Icon(
+                                Icons.add,
+                                color: blueGrey,
+                              ),
+                            ],
                           ),
-                          onPressed: getImage,
                         )
-                      : InkWell(
-                          onTap: getImage,
-                          child: Stack(children: <Widget>[
-                            Container(
+                      ],
+                    ),
+                    medicineValue == null
+                        ? SizedBox.shrink()
+                        : Chip(
+                            backgroundColor: blueGrey,
+                            label: FancyText(
+                              text: medicineValue,
+                              color: textDark_Yellow,
+                            ),
+                            // deleteIcon: Icon(Icons.delete),
+                            deleteIconColor: textDark_Yellow,
+                            onDeleted: (){
+                              setState(() {
+                                medicineValue = null;
+                              });
+                            },
+                          )
+                  ],
+                ),
+              ),
+              Padding(
+                //upload prescription
+                padding:
+                    const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    FancyText(
+                      text: "Or",
+                      size: 16.0,
+                      color: blueGrey,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(height:10.0),
+                    FancyText(
+                      text: "Upload Prescription: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    _image == null
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.add_a_photo,
+                              size: 26.0,
+                              color: theme.colorScheme.primary,
+                            ),
+                            onPressed: getImage,
+                          )
+                        : InkWell(
+                            onTap: getImage,
+                            child: Stack(children: <Widget>[
+                              Container(
+                                  height: 100.0,
+                                  width: 100.0,
+                                  decoration: BoxDecoration(border: Border.all()),
+                                  child: Image.file(_image)),
+                              Container(
                                 height: 100.0,
                                 width: 100.0,
-                                decoration: BoxDecoration(border: Border.all()),
-                                child: Image.file(_image)),
-                            Container(
-                              height: 100.0,
-                              width: 100.0,
-                              color: Colors.black26,
-                            ),
-                          ]),
-                        ),
-                ],
+                                color: Colors.black26,
+                              ),
+                            ]),
+                          ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -73,187 +73,190 @@ class _SignInState extends State<SignIn> {
         : Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: theme.background,
-            body: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: theme.background,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 70.0,
-                    width: 70.0,
-                    child: Image.asset("assets/images/caduceus.png"),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: theme.background,
+            body: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+                          child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: theme.background,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 70.0,
+                      width: 70.0,
+                      child: Image.asset("assets/images/caduceus.png"),
                     ),
-                    padding: EdgeInsets.only(top: 5.0),
-                    width: size.width * 0.90,
-                    //height: 165.0,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(height: 10.0),
-                          FForms(
-                            textInputAction: TextInputAction.next,
-                            currentFocus: _emailFocus,
-                            nextFocus: _passwordFocus,
-                            underline: true,
-                            // borderColor: theme.primary,
-                            formColor: Colors.white,
-                            text: "Email",
-                            textColor: Colors.black38,
-                            width: size.width * 0.90,
-                            validator: (val) =>
-                                val.isEmpty ? 'Enter an email' : null,
-                            onChanged: (val) {
-                              setState(() => email = val);
-                            },
-                          ),
-                          SizedBox(height: 5.0),
-                          FForms(
-                            textInputAction: TextInputAction.done,
-                            currentFocus: _passwordFocus,
-                            // borderColor: theme.background,
-                            underline: true,
-                            formColor: Colors.white,
-                            text: "Password",
-                            obscure: obscure,
-                            trailingIcon: obscure == true
-                                ? IconButton(
-                                    icon: Icon(
-                                      Icons.visibility,
-                                      color: theme.primary,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        obscure = false;
-                                      });
-                                    })
-                                : IconButton(
-                                    icon: Icon(
-                                      Icons.visibility_off,
-                                      color: theme.primary,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        obscure = true;
-                                      });
-                                    }),
-                            textColor: Colors.black38,
-                            width: size.width * 0.90,
-                            validator: (val) => val.length < 6
-                                ? 'Enter a password 6+ chars long'
-                                : null,
-                            onChanged: (val) {
-                              setState(() => password = val);
-                            },
-                          ),
-                          SizedBox(height: 5.0),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.symmetric(vertical: 18.0),
-                            child: InkWell(
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: theme.background,
+                      ),
+                      padding: EdgeInsets.only(top: 5.0),
+                      width: size.width * 0.90,
+                      //height: 165.0,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: 10.0),
+                            FForms(
+                              textInputAction: TextInputAction.next,
+                              currentFocus: _emailFocus,
+                              nextFocus: _passwordFocus,
+                              underline: true,
+                              // borderColor: theme.primary,
+                              formColor: Colors.white,
+                              text: "Email",
+                              textColor: Colors.black38,
+                              width: size.width * 0.90,
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter an email' : null,
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              },
+                            ),
+                            SizedBox(height: 5.0),
+                            FForms(
+                              textInputAction: TextInputAction.done,
+                              currentFocus: _passwordFocus,
+                              // borderColor: theme.background,
+                              underline: true,
+                              formColor: Colors.white,
+                              text: "Password",
+                              obscure: obscure,
+                              trailingIcon: obscure == true
+                                  ? IconButton(
+                                      icon: Icon(
+                                        Icons.visibility,
+                                        color: theme.primary,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          obscure = false;
+                                        });
+                                      })
+                                  : IconButton(
+                                      icon: Icon(
+                                        Icons.visibility_off,
+                                        color: theme.primary,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          obscure = true;
+                                        });
+                                      }),
+                              textColor: Colors.black38,
+                              width: size.width * 0.90,
+                              validator: (val) => val.length < 6
+                                  ? 'Enter a password 6+ chars long'
+                                  : null,
+                              onChanged: (val) {
+                                setState(() => password = val);
+                              },
+                            ),
+                            SizedBox(height: 5.0),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.symmetric(vertical: 18.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ResetPassword()));
+                                },
+                                child: FancyText(
+                                  text: "Forgot Password?",
+                                  color: Colors.black38,
+                                  fontWeight: FontWeight.w800,
+                                  size: 14.0,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 45.0,
+                              width: size.width * 0.90,
+                              child: RaisedButton(
+                                color: theme.primary,
+                                child: FancyText(
+                                  text: "SUBMIT",
+                                  size: 16.0,
+                                  color: textDark_Yellow,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                onPressed: handleSignIn,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:18.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FancyText(
+                              text: "New User?  ",
+                              color: Colors.black38,
+                              fontWeight: FontWeight.w800,
+                              size: 14.0,
+                            ),
+                            InkWell(
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ResetPassword()));
+                                        builder: (context) => SignUp()));
                               },
                               child: FancyText(
-                                text: "Forgot Password?",
-                                color: Colors.black38,
-                                fontWeight: FontWeight.w800,
+                                text: "Register",
+                                color: blueGrey,
+                                fontWeight: FontWeight.w700,
                                 size: 14.0,
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 45.0,
-                            width: size.width * 0.90,
-                            child: RaisedButton(
-                              color: theme.primary,
-                              child: FancyText(
-                                text: "SUBMIT",
-                                size: 16.0,
-                                color: textDark_Yellow,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              onPressed: handleSignIn,
-                            ),
-                          ),
-                        ],
-                      ),
+                          ]),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:18.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          FancyText(
-                            text: "New User?  ",
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w800,
-                            size: 14.0,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUp()));
-                            },
-                            child: FancyText(
-                              text: "Register",
-                              color: blueGrey,
-                              fontWeight: FontWeight.w700,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OthersLogin()));
+                      },
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FancyText(
+                              text: "Login As ",
+                              color: textLight_Red2,
+                              fontWeight: FontWeight.w800,
                               size: 14.0,
                             ),
-                          ),
-                        ]),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OthersLogin()));
-                    },
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          FancyText(
-                            text: "Login As ",
-                            color: textLight_Red2,
-                            fontWeight: FontWeight.w800,
-                            size: 14.0,
-                          ),
-                          FancyText(
-                            text: "others",
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w500,
-                            size: 14.0,
-                          ),
-                        ]),
-                  ),
-                  error == ''
-                      ? Container(child: Text(" "))
-                      : Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              color: theme.secondary,
-                              child:
-                                  FancyText(text: error, color: Colors.white)),
-                        )
-                ],
+                            FancyText(
+                              text: "others",
+                              color: Colors.black38,
+                              fontWeight: FontWeight.w500,
+                              size: 14.0,
+                            ),
+                          ]),
+                    ),
+                    error == ''
+                        ? Container(child: Text(" "))
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                padding: EdgeInsets.all(8.0),
+                                color: theme.secondary,
+                                child:
+                                    FancyText(text: error, color: Colors.white)),
+                          )
+                  ],
+                ),
               ),
             ),
           );
