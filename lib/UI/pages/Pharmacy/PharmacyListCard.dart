@@ -1,5 +1,7 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyDetails.dart';
+import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,11 +10,18 @@ class PharmacyListCard extends StatefulWidget {
   final pharmacyLocation;
   final image;
   final phone;
-  PharmacyListCard(
-      {this.image,
-      this.phone,
-      this.pharmacyLocation,
-      this.pharmacyName});
+  final openHours;
+  final id;
+  final bool isOrder;
+  PharmacyListCard({
+    this.image = "assets/images/bakery.jpg",
+    this.phone,
+    this.pharmacyLocation,
+    this.pharmacyName,
+    this.openHours,
+    this.id,
+    this.isOrder,
+  });
 
   @override
   _PharmacyListCardState createState() => _PharmacyListCardState();
@@ -52,12 +61,14 @@ class _PharmacyListCardState extends State<PharmacyListCard>
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PharmacyDetails(
-                pharmacyLocation: widget.pharmacyLocation,
-                pharmacyName: widget.pharmacyName,
-                phone: widget.phone,
-                image: widget.image,
-              )));
+              builder: (context) => widget.isOrder
+                  ? PharmacyForm(
+                      pharmacyForm: new PharmacyAppointment(
+                          null, null, null, null, null, null, null, null),
+                      doctor: widget.pharmacyName,
+                      department: widget.pharmacyLocation,
+                    )
+                  : PharmacyDetails(id: widget.id)));
         },
         child: Container(
             decoration: BoxDecoration(
@@ -142,9 +153,9 @@ class _PharmacyListCardState extends State<PharmacyListCard>
                               ),
                             ],
                           ),
-                          
                           Padding(
-                            padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
+                            padding:
+                                const EdgeInsets.only(top: 5.0, bottom: 8.0),
                             child: Row(
                               children: <Widget>[
                                 Icon(
@@ -174,7 +185,7 @@ class _PharmacyListCardState extends State<PharmacyListCard>
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
                                 child: FancyText(
-                                    text: "6:00 AM to 10:00 PM",
+                                    text: widget.openHours,
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),

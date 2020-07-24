@@ -7,30 +7,23 @@ import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PharmacyDetails extends StatelessWidget {
-  final pharmacyName;
-  final image;
-  final pharmacyLocation;
-  final phone;
-  final status;
-  final date;
-  final time;
-  PharmacyDetails(
-      {this.image,
-      this.pharmacyName,
-      this.pharmacyLocation,
-      this.phone,
-      this.date,
-      this.status,
-      this.time});
+  final id;
+  PharmacyDetails({this.id});
   @override
   Widget build(BuildContext context) {
     final newPharmacy =
         new PharmacyAppointment(null, null, null, null, null, null, null, null);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final pharmacy = Provider.of<UserDataStore>(context)
+        .pharmacies
+        .firstWhere((element) => element['id'] == id);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -103,7 +96,7 @@ class PharmacyDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             FancyText(
-                              text: pharmacyName,
+                              text: pharmacy['name'],
                               fontWeight: FontWeight.w700,
                               size: 18.0,
                               textAlign: TextAlign.left,
@@ -115,7 +108,7 @@ class PharmacyDetails extends StatelessWidget {
                               defaultStyle: false,
                               titleColor: textDark_Yellow,
                               titleSize: 15.0,
-                              caption: pharmacyLocation,
+                              caption: pharmacy['address'] ?? 'Not available',
                               capColor: textDark_Yellow,
                               capSize: 15.0,
                             ),
@@ -124,7 +117,7 @@ class PharmacyDetails extends StatelessWidget {
                               defaultStyle: false,
                               titleColor: textDark_Yellow,
                               titleSize: 15.0,
-                              caption: phone,
+                              caption: pharmacy['phone'],
                               capColor: textDark_Yellow,
                               capSize: 15.0,
                             ),
@@ -205,8 +198,8 @@ class PharmacyDetails extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => PharmacyForm(
                             pharmacyForm: newPharmacy,
-                            doctor: pharmacyName,
-                            department: pharmacyLocation,
+                            doctor: pharmacy['name'],
+                            department: pharmacy['address'],
                           )));
             },
           ),
@@ -262,7 +255,7 @@ class PharmacyDetails extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                       FancyText(
-                        text: "$phone ",
+                        text: pharmacy['phone'],
                         textAlign: TextAlign.left,
                         size: 16.0,
                         color: theme.colorScheme.secondaryVariant,

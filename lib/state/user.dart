@@ -34,6 +34,7 @@ class UserDataStore extends ChangeNotifier {
   List _prescriptions;
   List _labs;
   List _messages;
+  List _pharmacies;
 
   List get messages => _messages;
 
@@ -74,6 +75,13 @@ class UserDataStore extends ChangeNotifier {
 
   set labs(newData) {
     _labs = newData;
+    notifyListeners();
+  }
+
+  List get pharmacies => _pharmacies;
+
+  set pharmacies(newData) {
+    _pharmacies = newData;
     notifyListeners();
   }
 
@@ -225,6 +233,19 @@ class UserDataStore extends ChangeNotifier {
         }
       }, onError: (e) {
         print('Got doctor error\n $e');
+      });
+    }
+  }
+
+  getPharmacies() {
+    if (pharmacies == null || pharmacies.length == 0) {
+      DatabaseService.getPharmacies().listen((event) {
+        if (event.documents.length > 0) {
+          final pharmacyData = event.documents
+              .map((e) => {...e.data, 'id': e.documentID})
+              .toList();
+          pharmacies = pharmacyData;
+        }
       });
     }
   }
