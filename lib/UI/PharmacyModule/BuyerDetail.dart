@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 class BuyerDetail extends StatefulWidget {
@@ -397,6 +398,31 @@ class _BuyerDetailState extends State<BuyerDetail> {
                 ),
           ),
         ),
+        order.image == null && order.medicine != null
+            ? Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0, vertical: 18.0),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      FancyText(
+                          text: "Medicine:  ",
+                          fontWeight: FontWeight.bold,
+                          size: 16.0),
+                      FancyText(
+                        text: order.medicine,
+                        size: 16.0,
+                      )
+                    ]),
+              )
+            : order.image != null
+                ? Container(
+                    height: 200.0,
+                    width: size.width * 0.95,
+                    decoration:
+                        BoxDecoration(border: Border.all(), color: Colors.red),
+                    child: PhotoView(imageProvider: NetworkImage(order.image)))
+                : SizedBox.shrink(),
       ]),
     );
   }
