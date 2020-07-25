@@ -5,7 +5,11 @@ abstract class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static Stream<FirebaseUser> get user {
-    return _auth.onAuthStateChanged;
+    try {
+      return _auth.onAuthStateChanged;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<String> getCurrentUID() async {
@@ -21,7 +25,7 @@ abstract class AuthService {
     }
   }
 
-  static Future getCurrentUser() async {
+  static Future<FirebaseUser> getCurrentUser() async {
     return await _auth.currentUser();
   }
 

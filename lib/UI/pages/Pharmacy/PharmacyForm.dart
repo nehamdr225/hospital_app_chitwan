@@ -187,7 +187,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
       ],
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-              child: Form(
+        child: Form(
           key: _formKey,
           child: ListView(
             children: <Widget>[
@@ -284,7 +284,6 @@ class _PharmacyFormState extends State<PharmacyForm> {
                   ),
                 ),
               Padding(
-                //gender
                 padding: const EdgeInsets.only(
                     top: 10.0, left: 10.0, right: 10.0, bottom: 0.0),
                 child: Row(
@@ -340,11 +339,9 @@ class _PharmacyFormState extends State<PharmacyForm> {
                       ),
                     )
                   : Text(' '),
-              
               Padding(
                 //upload prescription
-                padding:
-                    const EdgeInsets.only(left: 10.0, right: 10.0),
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -356,7 +353,7 @@ class _PharmacyFormState extends State<PharmacyForm> {
                       fontWeight: FontWeight.w500,
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(height:10.0),
+                    SizedBox(height: 10.0),
                     FancyText(
                       text: "Upload Prescription: ",
                       size: 16.0,
@@ -381,7 +378,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                               Container(
                                   height: 100.0,
                                   width: 100.0,
-                                  decoration: BoxDecoration(border: Border.all()),
+                                  decoration:
+                                      BoxDecoration(border: Border.all()),
                                   child: Image.file(_image)),
                               Container(
                                 height: 100.0,
