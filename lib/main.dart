@@ -13,6 +13,7 @@ import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:chitwan_hospital/state/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,7 +55,7 @@ class HomeApp extends StatelessWidget {
       home: SafeArea(
         child: StreamBuilder(
           stream: AuthService.user,
-          builder: (BuildContext context, AsyncSnapshot user) {
+          builder: (BuildContext context, AsyncSnapshot<FirebaseUser> user) {
             switch (user.connectionState) {
               case ConnectionState.waiting:
                 return BlankLoader();

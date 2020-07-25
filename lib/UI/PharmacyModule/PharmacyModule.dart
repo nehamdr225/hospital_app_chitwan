@@ -4,7 +4,9 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyDrawer.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +24,14 @@ class PharmacyModule extends StatelessWidget {
             .where((element) => element.status == null)
             .toList()
         : [];
-
+    Future.delayed(Duration(seconds: 10)).then((value) {
+      if (user == null) {
+        AuthService.signOut();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => SignIn()),
+            (route) => false);
+      }
+    });
     buildOrderWidgets() {
       return orders != null
           ? orders

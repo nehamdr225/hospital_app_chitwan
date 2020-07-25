@@ -7,7 +7,9 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/models/DoctorAppointment.dart';
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +20,17 @@ class HomeScreen extends StatelessWidget {
     final newAppointment = new DoctorAppointment(null, null, "Department",
         "Dr. ", "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final theme = Theme.of(context);
-    Provider.of<UserDataStore>(context).handleInitialProfileLoad();
-    final List doctors = Provider.of<UserDataStore>(context).doctors;
+    final userDataStore = Provider.of<UserDataStore>(context);
+    userDataStore.handleInitialProfileLoad();
+    final List doctors = userDataStore.doctors;
+    Future.delayed(Duration(seconds: 10)).then((value) {
+      if (userDataStore.user == null) {
+        AuthService.signOut();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => SignIn()),
+            (route) => false);
+      }
+    });
 
     return Scaffold(
       appBar: PreferredSize(

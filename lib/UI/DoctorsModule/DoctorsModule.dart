@@ -7,6 +7,8 @@ import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
 import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,15 @@ class DoctorsModule extends StatelessWidget {
     appointments = appointments != null
         ? appointments.where((element) => element['status'] == null).toList()
         : [];
+
+    Future.delayed(Duration(seconds: 10)).then((value) {
+      if (doctor == null) {
+        AuthService.signOut();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => SignIn()),
+            (route) => false);
+      }
+    });
     buildAppointmentRequests() {
       List<Widget> widgets = appointments != null && appointments.length > 0
           ? appointments.map<Widget>((each) {
@@ -53,7 +64,7 @@ class DoctorsModule extends StatelessWidget {
     }
 
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: MainAppBar(
