@@ -38,7 +38,6 @@ class _PharmacyFormState extends State<PharmacyForm> {
   final picker = ImagePicker();
   bool isActive = false;
   double imageStatus = 0.0;
-  String medicineValue;
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -113,6 +112,34 @@ class _PharmacyFormState extends State<PharmacyForm> {
       });
     }
 
+    List<Widget> buildMedicineChips() {
+      List<String> split = pharmacyFormData.medicine.split(';');
+      split.removeWhere((element) => element.length == 0);
+      return split
+          .map<Widget>(
+            (e) => Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Chip(
+                backgroundColor: blueGrey,
+                label: FancyText(
+                  text: e,
+                  color: textDark_Yellow,
+                ),
+                // deleteIcon: Icon(Icons.delete),
+                deleteIconColor: textDark_Yellow,
+                onDeleted: () {
+                  final List cleaned = pharmacyFormData.medicine.split(';')
+                    ..removeWhere((element) => element == e);
+                  setState(() {
+                    pharmacyFormData.medicine = cleaned.join(';');
+                  });
+                },
+              ),
+            ),
+          )
+          .toList();
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(41.0),
@@ -178,9 +205,9 @@ class _PharmacyFormState extends State<PharmacyForm> {
                                 await event.snapshot.ref.getDownloadURL();
                             handleSubmit(uri);
                           }
-                          print(event.snapshot.bytesTransferred);
                         });
-                      }
+                      } else
+                        handleSubmit(null);
                     },
             ),
           ),
@@ -263,27 +290,6 @@ class _PharmacyFormState extends State<PharmacyForm> {
                   },
                 ),
               ),
-              if (widget.order != null)
-                Padding(
-                  //Medicine and Quatity
-                  padding: const EdgeInsets.all(10.0),
-                  child: FForms(
-                    icon: Icon(
-                      Icons.map,
-                      color: theme.iconTheme.color,
-                    ),
-                    initialValue: widget.order,
-                    text: "Medicine and Quantity",
-                    type: TextInputType.text,
-                    //width: width * 0.80,
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    textColor: blueGrey.withOpacity(0.7),
-                    onChanged: (value) {
-                      pharmacyFormData.medicine = value;
-                    },
-                  ),
-                ),
               Padding(
                 //gender
                 padding: const EdgeInsets.only(
@@ -342,8 +348,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
                     )
                   : Text(' '),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 10.0, bottom: 10.0, right: 10.0),
+                padding: const EdgeInsets.only(
+                    left: 10.0, bottom: 10.0, right: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -361,15 +367,17 @@ class _PharmacyFormState extends State<PharmacyForm> {
                             await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
+                                  String medicineVal;
                                   return SimpleDialog(
                                     children: <Widget>[
                                       SimpleDialogOption(
                                         child: FForms(
                                           underline: false,
-                                          borderColor: theme.colorScheme.primary,
+                                          borderColor:
+                                              theme.colorScheme.primary,
                                           text: "Medicine name",
                                           onChanged: (value) {
-                                            pharmacyFormData.medicine = value;
+                                            medicineVal = value;
                                           },
                                         ),
                                       ),
@@ -379,8 +387,17 @@ class _PharmacyFormState extends State<PharmacyForm> {
                                         text: 'Add',
                                         onPressed: () {
                                           setState(() {
-                                            medicineValue =
-                                                pharmacyFormData.medicine;
+                                            if (pharmacyFormData.medicine !=
+                                                    null &&
+                                                pharmacyFormData
+                                                        .medicine.length >
+                                                    0)
+                                              pharmacyFormData.medicine =
+                                                  pharmacyFormData.medicine +
+                                                      ';$medicineVal';
+                                            else
+                                              pharmacyFormData.medicine =
+                                                  medicineVal;
                                           });
                                           Navigator.pop(context);
                                         },
@@ -403,22 +420,15 @@ class _PharmacyFormState extends State<PharmacyForm> {
                         )
                       ],
                     ),
-                    medicineValue == null
+                    pharmacyFormData.medicine == null
                         ? SizedBox.shrink()
-                        : Chip(
-                            backgroundColor: blueGrey,
-                            label: FancyText(
-                              text: medicineValue,
-                              color: textDark_Yellow,
+                        : Container(
+                            height: 40.0,
+                            child: ListView(
+                              children: buildMedicineChips(),
+                              scrollDirection: Axis.horizontal,
                             ),
-                            // deleteIcon: Icon(Icons.delete),
-                            deleteIconColor: textDark_Yellow,
-                            onDeleted: (){
-                              setState(() {
-                                medicineValue = null;
-                              });
-                            },
-                          )
+                          ),
                   ],
                 ),
               ),
