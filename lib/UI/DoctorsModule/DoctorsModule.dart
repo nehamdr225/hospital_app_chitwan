@@ -18,15 +18,15 @@ class DoctorsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    Provider.of<DoctorDataStore>(context).handleInitialProfileLoad();
-    final doctor = Provider.of<DoctorDataStore>(context).user;
-    List appointments = Provider.of<DoctorDataStore>(context).appointments;
+    final doctorDataStore = Provider.of<DoctorDataStore>(context);
+    doctorDataStore.handleInitialProfileLoad();
+    List appointments = doctorDataStore.appointments;
     appointments = appointments != null
         ? appointments.where((element) => element['status'] == null).toList()
         : [];
-    if (doctor == null)
+    if (doctorDataStore.user == null)
       Future.delayed(Duration(seconds: 10)).then((value) {
-        if (doctor == null) {
+        if (doctorDataStore.user == null) {
           AuthService.signOut();
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => SignIn()),
@@ -74,7 +74,7 @@ class DoctorsModule extends StatelessWidget {
         drawer: DoctorDrawerApp(),
         backgroundColor: theme.background,
         body: ListView(children: <Widget>[
-          Indicator(doctor),
+          Indicator(doctorDataStore.user),
           Padding(
             padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
             child: Center(
@@ -114,7 +114,7 @@ class DoctorsModule extends StatelessWidget {
                               top: 8.0, left: 28.0, bottom: 0.0),
                           child: FancyText(
                               text:
-                                  "Hello ${doctor != null ? doctor.name : 'Doctor'}!",
+                                  "Hello ${doctorDataStore.user != null ? doctorDataStore.user.name : 'Doctor'}!",
                               textAlign: TextAlign.left,
                               size: 22.0,
                               color: textDark_Yellow,
@@ -164,7 +164,8 @@ class DoctorsModule extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 0.0, left: 26.0),
                       child: Row(children: [
-                        doctor != null && doctor.isVerified
+                        doctorDataStore.user != null &&
+                                doctorDataStore.user.isVerified
                             ? Icon(
                                 Icons.verified_user,
                                 color: Colors.green,
@@ -177,7 +178,8 @@ class DoctorsModule extends StatelessWidget {
                           height: 2,
                           width: 2,
                         ),
-                        doctor != null && doctor.isVerified
+                        doctorDataStore.user != null &&
+                                doctorDataStore.user.isVerified
                             ? Text(
                                 'Verified',
                                 style: TextStyle(
@@ -210,7 +212,8 @@ class DoctorsModule extends StatelessWidget {
               ),
             ),
           ),
-          doctor != null && doctor.department == null
+          doctorDataStore.user != null &&
+                  doctorDataStore.user.department == null
               ? Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: 10.0,

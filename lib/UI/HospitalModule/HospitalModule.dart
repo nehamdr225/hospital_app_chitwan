@@ -18,12 +18,12 @@ class HospitalModule extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    Provider.of<HospitalDataStore>(context).handleInitialProfileLoad();
-    final hospital = Provider.of<HospitalDataStore>(context).user;
-    final List doctors = Provider.of<HospitalDataStore>(context).doctors;
-    if (hospital == null)
+    final hospitalDataStore = Provider.of<HospitalDataStore>(context);
+    hospitalDataStore.handleInitialProfileLoad();
+    final List doctors = hospitalDataStore.doctors;
+    if (hospitalDataStore.user == null)
       Future.delayed(Duration(seconds: 10)).then((value) {
-        if (hospital == null) {
+        if (hospitalDataStore.user == null) {
           AuthService.signOut();
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => SignIn()),
@@ -88,7 +88,9 @@ class HospitalModule extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               top: 8.0, left: 28.0, bottom: 0.0),
                           child: FancyText(
-                              text: hospital != null ? hospital.name : "Hello!",
+                              text: hospitalDataStore.user != null
+                                  ? hospitalDataStore.user.name
+                                  : "Hello!",
                               textAlign: TextAlign.left,
                               size: 22.0,
                               color: textDark_Yellow,
@@ -152,7 +154,8 @@ class HospitalModule extends StatelessWidget {
               ),
             ),
           ),
-          hospital != null && hospital.departments == null
+          hospitalDataStore.user != null &&
+                  hospitalDataStore.user.departments == null
               ? Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: 10.0,

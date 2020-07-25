@@ -29,12 +29,11 @@ class _LabModuleState extends State<LabModule> {
     final size = MediaQuery.of(context).size;
     final labDataStore = Provider.of<LabDataStore>(context);
     labDataStore.handleInitialProfileLoad();
-    final user = labDataStore.user;
     final orders = labDataStore.orders;
 
-    if (user == null)
+    if (labDataStore.user == null)
       Future.delayed(Duration(seconds: 10)).then((value) {
-        if (user == null) {
+        if (labDataStore.user == null) {
           AuthService.signOut();
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => SignIn()),
@@ -69,7 +68,7 @@ class _LabModuleState extends State<LabModule> {
           backgroundColor: theme.primary,
         ),
         body: ListView(children: <Widget>[
-          Indicator(user),
+          Indicator(labDataStore.user),
           Padding(
             padding: const EdgeInsets.only(top: 18.0, bottom: 8.0),
             child: Center(
@@ -158,7 +157,9 @@ class _LabModuleState extends State<LabModule> {
                     Padding(
                       padding: const EdgeInsets.only(top: 0.0, left: 28.0),
                       child: FancyText(
-                          text: user != null ? user.name : 'Loading...',
+                          text: labDataStore.user != null
+                              ? labDataStore.user.name
+                              : 'Loading...',
                           size: 16.0,
                           color: textDark_Yellow,
                           fontWeight: FontWeight.w400),
