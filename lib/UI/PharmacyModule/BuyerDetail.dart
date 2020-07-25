@@ -33,6 +33,22 @@ class _BuyerDetailState extends State<BuyerDetail> {
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final PharmacyAppointment order = pharmacyDataStore.getOneOrder(widget.id);
 
+    List<Widget> buildMedicineList() {
+      final elements = order.medicine.split(';');
+      elements.removeWhere((element) => element.length == 0);
+      return elements
+          .map<Widget>(
+            (e) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 4.0),
+              child: FancyText(
+                text: e,
+                size: 16.0,
+              ),
+            ),
+          )
+          .toList();
+    }
+
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
@@ -398,31 +414,63 @@ class _BuyerDetailState extends State<BuyerDetail> {
                 ),
           ),
         ),
-        order.image == null && order.medicine != null
+        order.medicine != null
             ? Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 18.0, vertical: 18.0),
-                child: Row(
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       FancyText(
-                          text: "Medicine:  ",
+                          text: "Medicine  ",
                           fontWeight: FontWeight.bold,
                           size: 16.0),
-                      FancyText(
-                        text: order.medicine,
-                        size: 16.0,
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0, top: 6.0),
+                        child: Column(
+                          children: buildMedicineList(),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
                       )
                     ]),
               )
-            : order.image != null
-                ? Container(
-                    height: 200.0,
-                    width: size.width * 0.95,
-                    decoration:
-                        BoxDecoration(border: Border.all(), color: Colors.red),
-                    child: PhotoView(imageProvider: NetworkImage(order.image)))
-                : SizedBox.shrink(),
+            : SizedBox.shrink(),
+        order.image != null
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0, bottom: 12),
+                    child: FancyText(
+                        text: 'Medicine Receipt',
+                        fontWeight: FontWeight.bold,
+                        size: 16.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      height: 200.0,
+                      width: size.width * 0.95,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12.0),
+                        ),
+                      ),
+                      child: PhotoView(
+                        imageProvider: NetworkImage(order.image),
+                        backgroundDecoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : SizedBox.shrink(),
       ]),
     );
   }

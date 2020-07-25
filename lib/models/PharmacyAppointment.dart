@@ -34,7 +34,7 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
       this.timestamp,
       this.address,
       this.name,
-      this.phone, 
+      this.phone,
       this.image,
       this.medicine,
       this.pickUp,
@@ -72,5 +72,6 @@ class PharmacyAppointment implements PharmacyAppointmentModel {
         pharmacyName = json['pharmacyName'],
         id = json['id'],
         status = json['status'],
-        remark = json['remark'];
+        remark = json['remark'],
+        image = json['image'];
 }
