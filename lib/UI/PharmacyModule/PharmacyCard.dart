@@ -120,7 +120,8 @@ class _PharmacyCardState extends State<PharmacyCard> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 2.0),
                                   child: FancyText(
-                                      text: order.medicine,
+                                      text:
+                                          order.medicine.replaceAll(';', ', '),
                                       textAlign: TextAlign.left,
                                       fontWeight: FontWeight.w500),
                                 ),
