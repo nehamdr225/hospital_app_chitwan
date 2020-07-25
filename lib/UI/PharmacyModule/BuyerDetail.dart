@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/PharmacyModule/PhotoFullScreen.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
@@ -457,8 +458,14 @@ class _BuyerDetailState extends State<BuyerDetail> {
                           Radius.circular(12.0),
                         ),
                       ),
-                      child: PhotoView(
-                        imageProvider: NetworkImage(order.image),
+                      child: PhotoView.customChild(
+                        child: InkWell(
+                          child: Image.network(order.image),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PhotoFullScreen(image: order.image,)));
+                          },
+                        ),
                         backgroundDecoration: BoxDecoration(
                           color: Colors.grey[300],
                           borderRadius: BorderRadius.all(

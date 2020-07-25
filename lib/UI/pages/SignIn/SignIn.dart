@@ -162,7 +162,7 @@ class _SignInState extends State<SignIn> {
                             Container(
                               alignment: Alignment.centerRight,
                               padding:
-                                  const EdgeInsets.symmetric(vertical: 18.0),
+                                  const EdgeInsets.symmetric(vertical: 18.0, horizontal: 18.0),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(

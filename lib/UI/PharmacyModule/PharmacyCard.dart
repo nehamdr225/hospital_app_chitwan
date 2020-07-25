@@ -47,15 +47,7 @@ class _PharmacyCardState extends State<PharmacyCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-                BoxShadow(
-                    color: Colors.white60,
-                    //offset: Offset(-4, -4),
-                    blurRadius: 3.0,
-                    spreadRadius: -12.0),
-                BoxShadow(
-                    color: Colors.white60,
-                    offset: Offset(-4, -4),
-                    blurRadius: 3.0),
+                
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),
@@ -116,15 +108,37 @@ class _PharmacyCardState extends State<PharmacyCard> {
                                   defaultStyle: true,
                                 ),
                               ),
-                              if (order.medicine != null)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 2.0),
+                              if (order.medicine != null && order.image ==null)
+                                Container(
+                                  width: size.width*0.40,
+                                  padding: const EdgeInsets.only(top: 2.0, right: 6.0),
                                   child: FancyText(
+                                    textOverflow: TextOverflow.ellipsis,
                                       text:
                                           order.medicine.replaceAll(';', ', '),
                                       textAlign: TextAlign.left,
                                       fontWeight: FontWeight.w500),
                                 ),
+                                if(order.image != null && order.medicine != null) Container(
+                                  width: size.width*0.40,
+                                  padding: const EdgeInsets.only(top: 2.0, right: 6.0),
+                                  child: FancyText(
+                                    textOverflow: TextOverflow.ellipsis,
+                                      text: "Prescription & List",
+                                      textAlign: TextAlign.left,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                if(order.image != null && order.medicine == null) Container(
+                                  width: size.width*0.40,
+                                  padding: const EdgeInsets.only(top: 2.0, right: 6.0),
+                                  child: FancyText(
+                                    textOverflow: TextOverflow.ellipsis,
+                                      text: "Prescription available",
+                                      textAlign: TextAlign.left,
+                                      fontWeight: FontWeight.w500),
+                                ),
+
+                                
                             ],
                           ),
                           Padding(

@@ -5,6 +5,8 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentPage extends StatefulWidget {
+  final getIndex;
+  AppointmentPage({this.getIndex: 1});
   @override
   _AppointmentPageState createState() => _AppointmentPageState();
 }
@@ -15,7 +17,7 @@ class _AppointmentPageState extends State<AppointmentPage>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController = new TabController(length: 3, vsync: this, initialIndex: widget.getIndex);
     super.initState();
   }
 

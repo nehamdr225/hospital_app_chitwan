@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/Chat/ChatHome.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
+import 'package:chitwan_hospital/UI/core/atoms/DrawerEPanel.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -131,15 +132,61 @@ class _DrawerAppState extends State<DrawerApp> {
                     },
                   )
                 : SizedBox(height: 0.0),
-            user != null? DrawerElements(
-              //Appointments
-              title: 'Appointments',
-              icon: 'assets/images/drawerIcon/calendar.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AppointmentPage()));
-              },
-            ):SizedBox.shrink(),
+            DrawerEPanel([
+              ListItem(
+                  title: Image.asset(
+                    'assets/images/drawerIcon/calendar.png',
+                    height: 25.0,
+                    width: 25.0,
+                  ),
+                  subtitle: "Appointment & Orders",
+                  bodyBuilder: (context) => Column(children: <Widget>[
+                    user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Appointments',
+                    icon: 'assets/images/drawerIcon/calendar.png',iconSize: 0.0,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage()));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Prescription',
+                    icon: 'assets/images/drawerIcon/calendar.png',iconSize: 0.0,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage(
+                                    getIndex: 0,
+                                  )));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Lab Reports',
+                    icon: 'assets/images/drawerIcon/calendar.png', iconSize: 0.0,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage(
+                                    getIndex: 2,
+                                  )));
+                    },
+                  )
+                : SizedBox.shrink(),
+                  ]))
+            ]),
+            
             DrawerElements(
               //Specialities
               title: 'Specialities',
@@ -149,15 +196,17 @@ class _DrawerAppState extends State<DrawerApp> {
                     MaterialPageRoute(builder: (context) => DoctorsTab()));
               },
             ),
-            user != null?DrawerElements(
-              //Appointments
-              title: 'Messages',
-              icon: 'assets/images/drawerIcon/chat.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatHome()));
-              },
-            ):SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Messages',
+                    icon: 'assets/images/drawerIcon/chat.png',
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ChatHome()));
+                    },
+                  )
+                : SizedBox.shrink(),
             // DrawerElements(
             //   //Settings
             //   title: 'Settings',

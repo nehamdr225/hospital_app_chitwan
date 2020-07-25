@@ -126,7 +126,7 @@ class _OthersLoginState extends State<OthersLogin> {
                                 text: "Email",
                                 currentFocus: _emailFocus,
                                 nextFocus: _passwordFocus,
-                                textColor: blueGrey.withOpacity(0.7),
+                                textColor: Colors.black38,
                                 width: size.width * 0.90,
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter an email' : null,
@@ -164,7 +164,7 @@ class _OthersLoginState extends State<OthersLogin> {
                                             obscure = true;
                                           });
                                         }),
-                                textColor: blueGrey.withOpacity(0.7),
+                                textColor: Colors.black38,
                                 width: size.width * 0.90,
                                 validator: (val) => val.length < 6
                                     ? 'Enter a password 6+ chars long'
@@ -176,7 +176,7 @@ class _OthersLoginState extends State<OthersLogin> {
                               Container(
                                 alignment: Alignment.centerRight,
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 18.0),
+                                    const EdgeInsets.symmetric(vertical: 18.0, horizontal: 18.0),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(
