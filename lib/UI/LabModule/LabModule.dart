@@ -32,14 +32,15 @@ class _LabModuleState extends State<LabModule> {
     final user = labDataStore.user;
     final orders = labDataStore.orders;
 
-    Future.delayed(Duration(seconds: 10)).then((value) {
-      if (user == null) {
-        AuthService.signOut();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => SignIn()),
-            (route) => false);
-      }
-    });
+    if (user == null)
+      Future.delayed(Duration(seconds: 10)).then((value) {
+        if (user == null) {
+          AuthService.signOut();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false);
+        }
+      });
 
     return SafeArea(
       child: Scaffold(

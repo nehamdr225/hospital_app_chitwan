@@ -24,14 +24,15 @@ class PharmacyModule extends StatelessWidget {
             .where((element) => element.status == null)
             .toList()
         : [];
-    Future.delayed(Duration(seconds: 10)).then((value) {
-      if (user == null) {
-        AuthService.signOut();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => SignIn()),
-            (route) => false);
-      }
-    });
+    if (user == null)
+      Future.delayed(Duration(seconds: 10)).then((value) {
+        if (user == null) {
+          AuthService.signOut();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false);
+        }
+      });
     buildOrderWidgets() {
       return orders != null
           ? orders

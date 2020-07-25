@@ -23,14 +23,15 @@ class HomeScreen extends StatelessWidget {
     final userDataStore = Provider.of<UserDataStore>(context);
     userDataStore.handleInitialProfileLoad();
     final List doctors = userDataStore.doctors;
-    Future.delayed(Duration(seconds: 10)).then((value) {
-      if (userDataStore.user == null) {
-        AuthService.signOut();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => SignIn()),
-            (route) => false);
-      }
-    });
+    if (userDataStore.user == null)
+      Future.delayed(Duration(seconds: 10)).then((value) {
+        if (userDataStore.user == null) {
+          AuthService.signOut();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false);
+        }
+      });
 
     return Scaffold(
       appBar: PreferredSize(

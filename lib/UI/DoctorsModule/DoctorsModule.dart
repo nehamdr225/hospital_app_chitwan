@@ -24,15 +24,15 @@ class DoctorsModule extends StatelessWidget {
     appointments = appointments != null
         ? appointments.where((element) => element['status'] == null).toList()
         : [];
-
-    Future.delayed(Duration(seconds: 10)).then((value) {
-      if (doctor == null) {
-        AuthService.signOut();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => SignIn()),
-            (route) => false);
-      }
-    });
+    if (doctor == null)
+      Future.delayed(Duration(seconds: 10)).then((value) {
+        if (doctor == null) {
+          AuthService.signOut();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false);
+        }
+      });
     buildAppointmentRequests() {
       List<Widget> widgets = appointments != null && appointments.length > 0
           ? appointments.map<Widget>((each) {

@@ -21,15 +21,15 @@ class HospitalModule extends StatelessWidget {
     Provider.of<HospitalDataStore>(context).handleInitialProfileLoad();
     final hospital = Provider.of<HospitalDataStore>(context).user;
     final List doctors = Provider.of<HospitalDataStore>(context).doctors;
-
-    Future.delayed(Duration(seconds: 10)).then((value) {
-      if (hospital == null) {
-        AuthService.signOut();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => SignIn()),
-            (route) => false);
-      }
-    });
+    if (hospital == null)
+      Future.delayed(Duration(seconds: 10)).then((value) {
+        if (hospital == null) {
+          AuthService.signOut();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false);
+        }
+      });
     // print(doctors);
     buildHospitalDoctors() {
       return doctors != null
