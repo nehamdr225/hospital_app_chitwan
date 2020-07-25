@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/Widget/loading.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
@@ -73,6 +74,8 @@ class _SignInState extends State<SignIn> {
         : Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: theme.background,
+            appBar: PreferredSize(
+                  child: WhiteAppBar(color: theme.background,), preferredSize: Size.fromHeight(50.0)),
             body: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Container(
