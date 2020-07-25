@@ -75,14 +75,12 @@ class _SignInState extends State<SignIn> {
             backgroundColor: theme.background,
             body: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
-                          child: Container(
+              child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: theme.background,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: ListView(
                   children: <Widget>[
                     Container(
                       height: 70.0,
@@ -160,13 +158,15 @@ class _SignInState extends State<SignIn> {
                             SizedBox(height: 5.0),
                             Container(
                               alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.symmetric(vertical: 18.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 18.0),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ResetPassword()));
+                                          builder: (context) =>
+                                              ResetPassword()));
                                 },
                                 child: FancyText(
                                   text: "Forgot Password?",
@@ -195,7 +195,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical:18.0),
+                      padding: const EdgeInsets.symmetric(vertical: 18.0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -252,8 +252,8 @@ class _SignInState extends State<SignIn> {
                             child: Container(
                                 padding: EdgeInsets.all(8.0),
                                 color: theme.secondary,
-                                child:
-                                    FancyText(text: error, color: Colors.white)),
+                                child: FancyText(
+                                    text: error, color: Colors.white)),
                           )
                   ],
                 ),

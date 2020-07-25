@@ -60,9 +60,8 @@ class _OthersLoginState extends State<OthersLogin> {
                 onTap: () => FocusScope.of(context).unfocus(),
                               child: Container(
                   alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: ListView(
+                    
                     children: <Widget>[
                       Container(
                         height: 70.0,

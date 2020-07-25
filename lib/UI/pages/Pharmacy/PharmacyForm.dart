@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
@@ -340,7 +341,87 @@ class _PharmacyFormState extends State<PharmacyForm> {
                       ),
                     )
                   : Text(' '),
-              
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, bottom: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        FancyText(
+                          text: "Medicines and Quantity",
+                          size: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SimpleDialog(
+                                    children: <Widget>[
+                                      SimpleDialogOption(
+                                        child: FForms(
+                                          underline: false,
+                                          borderColor: theme.colorScheme.primary,
+                                          text: "Medicine name",
+                                          onChanged: (value) {
+                                            pharmacyFormData.medicine = value;
+                                          },
+                                        ),
+                                      ),
+                                      SimpleDialogOption(
+                                          child: Container(
+                                              child: FRaisedButton(
+                                        text: 'Add',
+                                        onPressed: () {
+                                          setState(() {
+                                            medicineValue =
+                                                pharmacyFormData.medicine;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        bg: theme.colorScheme.primary,
+                                        color: textDark_Yellow,
+                                      )))
+                                    ],
+                                  );
+                                });
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              FancyText(text: 'Add '),
+                              Icon(
+                                Icons.add,
+                                color: blueGrey,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    medicineValue == null
+                        ? SizedBox.shrink()
+                        : Chip(
+                            backgroundColor: blueGrey,
+                            label: FancyText(
+                              text: medicineValue,
+                              color: textDark_Yellow,
+                            ),
+                            // deleteIcon: Icon(Icons.delete),
+                            deleteIconColor: textDark_Yellow,
+                            onDeleted: (){
+                              setState(() {
+                                medicineValue = null;
+                              });
+                            },
+                          )
+                  ],
+                ),
+              ),
               Padding(
                 //upload prescription
                 padding:
