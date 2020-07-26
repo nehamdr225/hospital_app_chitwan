@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/state/lab.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,8 +56,6 @@ class _LabOrderState extends State<LabOrder> {
                 ),
                 onPressed: orderData != null && !isActive
                     ? () {
-                        print('updating');
-                        print(orderData);
                         setState(() {
                           isActive = true;
                         });
@@ -64,9 +63,9 @@ class _LabOrderState extends State<LabOrder> {
                           setState(() {
                             isActive = false;
                           });
-                          print(value);
                           if (value) {
-                            labDataStore.addOrder(orderData);
+                            labDataStore
+                                .addOrder(LabAppointment.fromJson(orderData));
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -74,12 +73,6 @@ class _LabOrderState extends State<LabOrder> {
                                 (Route<dynamic> route) => false);
                           }
                         });
-                        // pharmacyDataStore.setOrderRemark(widget.id, _remark);
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => PharmacyModule()),
-                        //     (Route<dynamic> route) => false);
                       }
                     : null,
               ),

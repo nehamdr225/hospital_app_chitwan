@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/models/Lab.dart';
+import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -25,7 +26,7 @@ class LabDataStore extends ChangeNotifier {
   }
 
   Laboratory _userData;
-  List<Map> _orders;
+  List<LabAppointment> _orders;
 
   Laboratory get user => _userData;
 
@@ -34,14 +35,14 @@ class LabDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get orders => _orders;
+  List<LabAppointment> get orders => _orders;
 
-  set orders(orderData) {
+  set orders(List<LabAppointment> orderData) {
     _orders = orderData;
     notifyListeners();
   }
 
-  addOrder(Map orderData) {
+  addOrder(LabAppointment orderData) {
     _orders.add(orderData);
     notifyListeners();
   }
@@ -64,18 +65,18 @@ class LabDataStore extends ChangeNotifier {
   getOrders() {
     if (orders == null) {
       DatabaseService.getLabOrders().then((onData) {
-        List newData = onData.documents.map<Map>((e) {
+        List newData = onData.documents.map<LabAppointment>((e) {
           final data = e.data;
           data['id'] = e.documentID;
-          return data;
+          return LabAppointment.fromJson(data);
         }).toList();
         orders = newData;
       });
     }
   }
 
-  getOneOrder(String id) {
-    return orders.firstWhere((element) => element['id'] == id);
+  LabAppointment getOneOrder(String id) {
+    return orders.firstWhere((element) => element.id == id);
   }
 
   Stream<QuerySnapshot> getUserInfo(String name) {
@@ -85,10 +86,10 @@ class LabDataStore extends ChangeNotifier {
   Future setOrderStatus(String uid, dynamic status) {
     return DatabaseService.updateLabOrderStatus(uid, status).then((value) {
       if (value) {
-        final newOrders = _orders.map<Map>((each) {
-          if (each['id'] == uid) {
+        final newOrders = _orders.map<LabAppointment>((each) {
+          if (each.id == uid) {
             final data = each;
-            data['status'] = status;
+            data.status = status;
             return data;
           }
           return each;
@@ -102,10 +103,10 @@ class LabDataStore extends ChangeNotifier {
   setOrderRemark(String uid, String remark) {
     DatabaseService.updateLabOrderRemark(uid, remark).then((value) {
       if (value) {
-        final newOrders = _orders.map<Map>((each) {
-          if (each['id'] == uid) {
+        final newOrders = _orders.map<LabAppointment>((each) {
+          if (each.id == uid) {
             final data = each;
-            data['remark'] = remark;
+            data.remark = remark;
             return data;
           }
           return each;

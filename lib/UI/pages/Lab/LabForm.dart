@@ -51,8 +51,6 @@ class _LabFormState extends State<LabForm> {
   bool isActive = false;
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textController = new TextEditingController();
-    _textController.text = widget.labForm.firstName;
     final theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
 
@@ -70,7 +68,7 @@ class _LabFormState extends State<LabForm> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-              child: Form(
+        child: Form(
           key: _formKey,
           child: ListView(
             children: <Widget>[
@@ -254,7 +252,7 @@ class _LabFormState extends State<LabForm> {
                       color: textDark_Yellow,
                       fontWeight: FontWeight.w600,
                     ),
-                    onPressed:isActive
+                    onPressed: isActive
                         ? null
                         : () async {
                             if (_fName == null ||
@@ -273,27 +271,27 @@ class _LabFormState extends State<LabForm> {
                             setState(() {
                               isActive = true;
                             });
-                      _formKey.currentState.save();
-                      widget.labForm.firstName = _fName;
-                      widget.labForm.lastName = _lName;
-                      widget.labForm.phoneNum = _fPhone;
-                      widget.labForm.address = _fAddress;
-                      widget.labForm.image1 = _image;
-                      widget.labForm.image2 = _image2;
+                            _formKey.currentState.save();
+                            widget.labForm.name = _fName + ' ' + _lName;
+                            widget.labForm.phone = _fPhone;
+                            widget.labForm.address = _fAddress;
+                            widget.labForm.image = _image;
 
-                      final uid = await AuthService.getCurrentUID();
-                      await db
-                          .collection("users")
-                          .document(uid)
-                          .collection("labs")
-                          .add(widget.labForm.toJson());
+                            final uid = await AuthService.getCurrentUID();
+                            await db
+                                .collection("users")
+                                .document(uid)
+                                .collection("labs")
+                                .add(widget.labForm.toJson());
 
-                          setState(() {
-                            isActive=false;
-                          });
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()));
-                    },
+                            setState(() {
+                              isActive = false;
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          },
                   ),
                 ),
               )

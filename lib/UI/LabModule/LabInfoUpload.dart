@@ -18,7 +18,6 @@ class LabInfoUpload extends StatefulWidget {
 
 class _LabInfoUploadState extends State<LabInfoUpload> {
   File _image;
-  File _image2;
 
   final picker = ImagePicker();
 
@@ -26,13 +25,6 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedFile.path);
-    });
-  }
-
-  Future getImage2() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image2 = File(pickedFile.path);
     });
   }
 
@@ -53,9 +45,8 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
           ),
           preferredSize: Size.fromHeight(40.0)),
       backgroundColor: theme.background,
-      floatingActionButton: order['status'] != null &&
-                  order['status'] == 'ready' ||
-              order['status'] == 'complete'
+      floatingActionButton: order.status != null && order.status == 'ready' ||
+              order.status == 'complete'
           ? FloatingActionButton.extended(
               onPressed: isActive
                   ? null
@@ -64,8 +55,8 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                         isActive = true;
                       });
                       labDataStore
-                          .setOrderStatus(order['id'],
-                              order['status'] == 'ready' ? 'complete' : 'ready')
+                          .setOrderStatus(order.id,
+                              order.status == 'ready' ? 'complete' : 'ready')
                           .then((value) => setState(() {
                                 isActive = false;
                               }));
@@ -75,9 +66,9 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                 color: textDark_Yellow,
               ),
               label: FancyText(
-                text: order['status'] == 'ready'
+                text: order.status == 'ready'
                     ? "Mark Delivered"
-                    : order['status'] == 'complete' ? "Undo Delivered" : '',
+                    : order.status == 'complete' ? "Undo Delivered" : '',
                 color: textDark_Yellow,
                 fontWeight: FontWeight.w600,
               ),
@@ -137,26 +128,77 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              FancyText(
-                                text: order['name'],
-                                fontWeight: FontWeight.w700,
-                                size: 15.5,
-                                textAlign: TextAlign.left,
-                                color: textDark_Yellow,
+                              order.title != null
+                                  ? Padding(
+                                      padding: EdgeInsets.only(bottom: 10.0),
+                                      child: FancyText(
+                                        text: order.title
+                                                .substring(0, 1)
+                                                .toUpperCase() +
+                                            order.title.substring(1),
+                                        fontWeight: FontWeight.w800,
+                                        size: 15.5,
+                                        textAlign: TextAlign.left,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 2.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.person_outline,
+                                      size: 16.0,
+                                      color: Colors.white,
+                                    ),
+                                    FancyText(
+                                      text: '  ' + order.name,
+                                      fontWeight: FontWeight.w500,
+                                      size: 15.5,
+                                      textAlign: TextAlign.left,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              // RowInput(
-                              //   title: "Date:  ",
-                              //   caption: '',
-                              //   titleColor: textDark_Yellow,
-                              //   capColor: textDark_Yellow,
-                              //   defaultStyle: false,
-                              // ),
-                              RowInput(
-                                title: "",
-                                caption: order['phone'],
-                                titleColor: textDark_Yellow,
-                                capColor: textDark_Yellow,
-                                defaultStyle: false,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.mail_outline,
+                                      size: 16.0,
+                                      color: Colors.white,
+                                    ),
+                                    FancyText(
+                                      text: '  ' + order.email,
+                                      textAlign: TextAlign.left,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.phone,
+                                      size: 16.0,
+                                      color: Colors.white,
+                                    ),
+                                    FancyText(
+                                      text: '  ' + order.phone,
+                                      textAlign: TextAlign.left,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
@@ -168,7 +210,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                       textAlign: TextAlign.left,
                                       color: textDark_Yellow,
                                     ),
-                                    order['status'] == null
+                                    order.status == null
                                         ? Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -189,7 +231,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                                         });
                                                         labDataStore
                                                             .setOrderStatus(
-                                                                order['id'],
+                                                                order.id,
                                                                 'ready')
                                                             .then((value) =>
                                                                 setState(() {
@@ -260,8 +302,8 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                                                   });
                                                                   labDataStore
                                                                       .setOrderStatus(
-                                                                          order[
-                                                                              'id'],
+                                                                          order
+                                                                              .id,
                                                                           'rejected')
                                                                       .then(
                                                                           (value) {
@@ -282,7 +324,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                               SizedBox(width: 10.0),
                                             ],
                                           )
-                                        : order['status'] == "rejected"
+                                        : order.status == "rejected"
                                             ? Row(children: [
                                                 FancyText(
                                                   text: "Rejected",
@@ -300,7 +342,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                                           });
                                                           labDataStore
                                                               .setOrderStatus(
-                                                                  order['id'],
+                                                                  order.id,
                                                                   null)
                                                               .then((value) =>
                                                                   setState(() {
@@ -319,7 +361,7 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                                   ),
                                                 )
                                               ])
-                                            : order['status'] == 'complete'
+                                            : order.status == 'complete'
                                                 ? FancyText(
                                                     text:
                                                         'Completed & Delivered',
@@ -347,8 +389,8 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                                                                 });
                                                                 labDataStore
                                                                     .setOrderStatus(
-                                                                        order[
-                                                                            'id'],
+                                                                        order
+                                                                            .id,
                                                                         null)
                                                                     .then((value) =>
                                                                         setState(
@@ -384,50 +426,6 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                 )
                 // Text(),
                 ),
-          ),
-        ),
-        // Padding(
-        //   padding: const EdgeInsets.all(20.0),
-        //   child: FancyText(
-        //     text: "Report Availability",
-        //     textAlign: TextAlign.center,
-        //     size: 16.0,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        // ),
-        // Container(
-        //   height: 50.0,
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: <Widget>[
-        //       FRaisedButton(
-        //         width: size.width * 0.45,
-        //         text: "Processing",
-        //         fontWeight: FontWeight.w500,
-        //         color: textDark_Yellow,
-        //         bg: theme.secondary,
-        //         borderColor: theme.secondary,
-        //         onPressed: () {},
-        //       ),
-        //       FRaisedButton(
-        //         width: size.width * 0.45,
-        //         text: "Ready",
-        //         fontWeight: FontWeight.w500,
-        //         color: textDark_Yellow,
-        //         bg: Colors.green,
-        //         borderColor: Colors.green,
-        //         onPressed: () {},
-        //       )
-        //     ],
-        //   ),
-        // ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: FancyText(
-            text: "Upload Report",
-            textAlign: TextAlign.center,
-            size: 16.0,
-            fontWeight: FontWeight.bold,
           ),
         ),
         Padding(
@@ -471,38 +469,6 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
                           ),
                         ]),
                       ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      _image2 == null
-                          ? IconButton(
-                              icon: Icon(
-                                Icons.add_a_photo,
-                                size: 26.0,
-                                color: theme.primary,
-                              ),
-                              onPressed: getImage2,
-                            )
-                          : Row(
-                              children: <Widget>[
-                                InkWell(
-                                  onTap: getImage2,
-                                  child: Stack(children: <Widget>[
-                                    Container(
-                                        height: 100.0,
-                                        width: 100.0,
-                                        decoration:
-                                            BoxDecoration(border: Border.all()),
-                                        child: Image.file(_image2)),
-                                    Container(
-                                      height: 100.0,
-                                      width: 100.0,
-                                      color: Colors.black26,
-                                    ),
-                                  ]),
-                                ),
-                              ],
-                            ),
                     ]),
             ],
           ),

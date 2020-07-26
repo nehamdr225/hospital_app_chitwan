@@ -1,43 +1,64 @@
 import 'dart:io';
 
 abstract class LabAppointmentModel {
-  String firstName;
-  String lastName;
-  String phoneNum;
-  DateTime date;
-  String time;
+  String id;
+  String name;
+  String phone;
+  String timestamp;
   String address;
-  File image1;
-  File image2;
+  String status;
+  String remark;
+  String email;
+  String title;
+  File image;
 }
 
 class LabAppointment implements LabAppointmentModel {
-  String firstName;
-  String lastName;
-  String phoneNum;
-  DateTime date;
-  String time;
+  String id;
+  String name;
+  String phone;
+  String email;
+  String timestamp;
   String address;
-  File image1;
-  File image2;
+  String status;
+  String remark;
+  String title;
+  File image;
 
-  LabAppointment(this.date, this.time, this.address, this.firstName,
-      this.lastName, this.phoneNum, this.image1, this.image2);
+  LabAppointment({
+    this.id,
+    this.timestamp,
+    this.address,
+    this.name,
+    this.phone,
+    this.image,
+    this.status,
+    this.remark,
+    this.email,
+    this.title,
+  });
 
   Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'phoneNum': phoneNum,
-        'date': date,
-        'lastName': lastName,
+        'name': name,
+        'phone': phone,
         'address': address,
-        'image1': image1,
-        'image2': image2
+        'timestamp': timestamp,
+        'email': email,
+        'title': title,
+        if (image != null) 'image': image,
+        if (id != null) 'id': id,
+        if (status != null) 'status': status,
+        if (remark != null) 'remark': remark,
       };
 
   LabAppointment.fromJson(json)
-      : firstName = json['firstName'],
-        lastName = json['lastName'],
-        date = json['date'].toDate(),
+      : name = json['name'],
+        timestamp = json['timestamp'],
         address = json['address'],
-        phoneNum = json['phoneNum'];
+        phone = json['phone'],
+        image = json['image'],
+        id = json['id'],
+        status = json['status'],
+        email = json['email'],
+        title = json['title'];
 }

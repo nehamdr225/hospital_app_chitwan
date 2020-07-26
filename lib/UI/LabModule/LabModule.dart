@@ -191,15 +191,15 @@ class _LabModuleState extends State<LabModule> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LabInfoUpload(
-                                          id: e['id'],
+                                          id: e.id,
                                         )),
                               );
                             },
                             child: LabCard(
-                              name: e['name'],
-                              email: e['email'],
-                              phone: e['phone'],
-                              title: e['title'],
+                              name: e.name,
+                              email: e.email,
+                              phone: e.phone,
+                              title: e.title,
                             ),
                           ))
                       .toList(),

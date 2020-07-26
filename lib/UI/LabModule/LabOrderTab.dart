@@ -62,8 +62,7 @@ class LabOngoing extends StatelessWidget {
     // final theme = Theme.of(context);
     final orders = Provider.of<LabDataStore>(context)
         .orders
-        .where((element) =>
-            element['status'] == null || element['status'] == 'ready')
+        .where((element) => element.status == null || element.status == 'ready')
         .toList();
     return ListView.builder(
         itemCount: orders.length,
@@ -74,15 +73,15 @@ class LabOngoing extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => LabInfoUpload(
-                          id: orders[index]['id'],
+                          id: orders[index].id,
                         )),
               );
             },
             child: LabCard(
-              email: orders[index]['email'],
-              name: orders[index]['name'],
-              phone: orders[index]['phone'],
-              title: orders[index]['title'],
+              email: orders[index].email,
+              name: orders[index].name,
+              phone: orders[index].phone,
+              title: orders[index].title,
             ),
           );
         });
@@ -95,8 +94,8 @@ class LabCompleted extends StatelessWidget {
     // final theme = Theme.of(context);
     final orders = Provider.of<LabDataStore>(context)
         .orders
-        .where((element) =>
-            element['status'] != null && element['status'] == 'complete')
+        .where(
+            (element) => element.status != null && element.status == 'complete')
         .toList();
     return ListView.builder(
         itemCount: orders.length,
@@ -106,16 +105,14 @@ class LabCompleted extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => LabInfoUpload(
-                          id: orders[index]['id'],
-                        )),
+                    builder: (context) => LabInfoUpload(id: orders[index].id)),
               );
             },
             child: LabCard(
-              email: orders[index]['email'],
-              name: orders[index]['name'],
-              phone: orders[index]['phone'],
-              title: orders[index]['title'],
+              email: orders[index].email,
+              name: orders[index].name,
+              phone: orders[index].phone,
+              title: orders[index].title,
             ),
           );
         });
@@ -128,8 +125,8 @@ class LabRejected extends StatelessWidget {
     // final theme = Theme.of(context);
     final orders = Provider.of<LabDataStore>(context)
         .orders
-        .where((element) =>
-            element['status'] != null && element['status'] == 'rejected')
+        .where(
+            (element) => element.status != null && element.status == 'rejected')
         .toList();
     return ListView.builder(
         itemCount: orders.length,
@@ -139,16 +136,14 @@ class LabRejected extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => LabInfoUpload(
-                          id: orders[index]['id'],
-                        )),
+                    builder: (context) => LabInfoUpload(id: orders[index].id)),
               );
             },
             child: LabCard(
-              email: orders[index]['email'],
-              name: orders[index]['name'],
-              phone: orders[index]['phone'],
-              title: orders[index]['title'],
+              email: orders[index].email,
+              name: orders[index].name,
+              phone: orders[index].phone,
+              title: orders[index].title,
             ),
           );
         });
