@@ -49,11 +49,11 @@ class PromotionDetail extends StatelessWidget {
                   ),
                   Container(
                     width: size.width,
-                    height: 240.0,
+                    height: size.height * 0.6,
                     color: theme.primary,
                     child: Image.network(
                       promotion.image,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ],
@@ -63,9 +63,10 @@ class PromotionDetail extends StatelessWidget {
             child: Padding(
           padding: const EdgeInsets.only(left: 44.0, top: 0.0),
           child: FancyText(
-            text: promotion.fromDate + ' to ' + promotion.toDate,
+            text:
+                'From   ' + promotion.fromDate + '   To   ' + promotion.toDate,
             fontWeight: FontWeight.w500,
-            size: 21.0,
+            size: 16.0,
             textAlign: TextAlign.start,
           ),
         )),
@@ -77,13 +78,13 @@ class PromotionDetail extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Icon(
-                    Icons.person,
+                    Icons.details,
                     color: Colors.grey[500],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: FancyText(
-                      text: "About",
+                      text: "Details",
                       fontWeight: FontWeight.w500,
                       size: 19.0,
                       color: theme.primary.withOpacity(0.8),
@@ -96,14 +97,13 @@ class PromotionDetail extends StatelessWidget {
                 padding:
                     const EdgeInsets.only(left: 33.0, right: 20.0, top: 6.0),
                 child: FancyText(
-                  letterSpacing: 1.0,
-                  wordSpacing: 2.0,
-                  textAlign: TextAlign.left,
-                  color: Colors.black87,
-                  size: 15.0,
-                  text:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                ),
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    textAlign: TextAlign.left,
+                    textOverflow: TextOverflow.visible,
+                    color: Colors.black87,
+                    size: 15.0,
+                    text: promotion.description),
               ),
             ],
           ),
