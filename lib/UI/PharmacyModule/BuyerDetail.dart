@@ -33,6 +33,7 @@ class _BuyerDetailState extends State<BuyerDetail> {
     final size = MediaQuery.of(context).size;
     final pharmacyDataStore = Provider.of<PharmacyDataStore>(context);
     final PharmacyAppointment order = pharmacyDataStore.getOneOrder(widget.id);
+    final DateTime date = DateTime.parse(order.timestamp);
 
     List<Widget> buildMedicineList() {
       final elements = order.medicine.split(';');
@@ -155,6 +156,23 @@ class _BuyerDetailState extends State<BuyerDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.calendar_today,
+                                      size: 16.0,
+                                      color: Colors.white,
+                                    ),
+                                    FancyText(
+                                      color: Colors.white,
+                                      text:
+                                          ' ${date.year}-${date.month}-${date.day}',
+                                    ),
+                                  ],
+                                ),
+                              ),
                               FancyText(
                                 text: widget.buyerName,
                                 fontWeight: FontWeight.w700,
@@ -162,19 +180,27 @@ class _BuyerDetailState extends State<BuyerDetail> {
                                 textAlign: TextAlign.left,
                                 color: textDark_Yellow,
                               ),
-                              // RowInput(
-                              //   title: "Date:  ",
-                              //   caption: '',
-                              //   titleColor: textDark_Yellow,
-                              //   capColor: textDark_Yellow,
-                              //   defaultStyle: false,
-                              // ),
-                              RowInput(
-                                title: "Phone Number:  ",
-                                caption: widget.buyerPhone,
-                                titleColor: textDark_Yellow,
-                                capColor: textDark_Yellow,
-                                defaultStyle: false,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 3.0,
+                                  bottom: 3.0,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 4.0),
+                                      child: Icon(
+                                        Icons.phone,
+                                        size: 14.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    FancyText(
+                                      text: widget.buyerPhone,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
@@ -463,7 +489,9 @@ class _BuyerDetailState extends State<BuyerDetail> {
                           child: Image.network(order.image),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PhotoFullScreen(image: order.image,)));
+                                builder: (context) => PhotoFullScreen(
+                                      image: order.image,
+                                    )));
                           },
                         ),
                         backgroundDecoration: BoxDecoration(

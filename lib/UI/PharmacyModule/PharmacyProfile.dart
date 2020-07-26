@@ -24,16 +24,18 @@ class _PharmacyProfileState extends State<PharmacyProfile> {
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(pickedFile.path);
-    });
+    if (pickedFile.path != null)
+      setState(() {
+        _image = File(pickedFile.path);
+      });
   }
 
   Future getProfileImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _profileImg = File(pickedFile.path);
-    });
+    if (pickedFile.path != null)
+      setState(() {
+        _profileImg = File(pickedFile.path);
+      });
   }
 
   Map<String, String> updateData = {};

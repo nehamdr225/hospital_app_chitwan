@@ -23,6 +23,7 @@ class _PharmacyCardState extends State<PharmacyCard> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final PharmacyAppointment order = pharmacyDataStore.getOneOrder(widget.id);
+    final DateTime date = DateTime.parse(order.timestamp);
     // if (userInfo == null)
     //   pharmacyDataStore.getUserInfo(order.userId).then(
     //         (value) => setState(
@@ -47,7 +48,6 @@ class _PharmacyCardState extends State<PharmacyCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-                
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),
@@ -91,6 +91,23 @@ class _PharmacyCardState extends State<PharmacyCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: 16.0,
+                                  color: theme.iconTheme.color,
+                                ),
+                                FancyText(
+                                  defaultStyle: true,
+                                  text:
+                                      ' ${date.year}-${date.month}-${date.day}',
+                                ),
+                              ],
+                            ),
+                          ),
                           FancyText(
                             text: order.name,
                             fontWeight: FontWeight.w700,
@@ -100,45 +117,76 @@ class _PharmacyCardState extends State<PharmacyCard> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(top: 2.0),
-                                child: FancyText(
-                                  text: "Prescription: ",
-                                  textAlign: TextAlign.left,
-                                  defaultStyle: true,
-                                ),
-                              ),
-                              if (order.medicine != null && order.image ==null)
-                                Container(
-                                  width: size.width*0.40,
-                                  padding: const EdgeInsets.only(top: 2.0, right: 6.0),
+                              if (order.status != 'rejected')
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 2.0),
                                   child: FancyText(
-                                    textOverflow: TextOverflow.ellipsis,
+                                    text: "Prescription: ",
+                                    textAlign: TextAlign.left,
+                                    defaultStyle: true,
+                                  ),
+                                ),
+                              if (order.medicine != null &&
+                                  order.image == null &&
+                                  order.status != 'rejected')
+                                Container(
+                                  width: size.width * 0.40,
+                                  padding: const EdgeInsets.only(
+                                      top: 2.0, right: 6.0),
+                                  child: FancyText(
+                                      textOverflow: TextOverflow.ellipsis,
                                       text:
                                           order.medicine.replaceAll(';', ', '),
                                       textAlign: TextAlign.left,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                if(order.image != null && order.medicine != null) Container(
-                                  width: size.width*0.40,
-                                  padding: const EdgeInsets.only(top: 2.0, right: 6.0),
+                              if (order.status == 'rejected')
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 2.0),
+                                  child: FancyText(
+                                    text: "Rejection Remark: ",
+                                    textAlign: TextAlign.left,
+                                    // defaultStyle: true,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              if (order.status == 'rejected')
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 2.0),
                                   child: FancyText(
                                     textOverflow: TextOverflow.ellipsis,
+                                    color: Colors.red,
+                                    text: order.remark,
+                                    textAlign: TextAlign.left,
+                                    // defaultStyle: true,
+                                  ),
+                                ),
+                              if (order.image != null &&
+                                  order.medicine != null &&
+                                  order.status != 'rejected')
+                                Container(
+                                  width: size.width * 0.40,
+                                  padding: const EdgeInsets.only(
+                                      top: 2.0, right: 6.0),
+                                  child: FancyText(
+                                      textOverflow: TextOverflow.ellipsis,
                                       text: "Prescription & List",
                                       textAlign: TextAlign.left,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                if(order.image != null && order.medicine == null) Container(
-                                  width: size.width*0.40,
-                                  padding: const EdgeInsets.only(top: 2.0, right: 6.0),
+                              if (order.image != null &&
+                                  order.medicine == null &&
+                                  order.status != 'rejected')
+                                Container(
+                                  width: size.width * 0.40,
+                                  padding: const EdgeInsets.only(
+                                      top: 2.0, right: 6.0),
                                   child: FancyText(
-                                    textOverflow: TextOverflow.ellipsis,
+                                      textOverflow: TextOverflow.ellipsis,
                                       text: "Prescription available",
                                       textAlign: TextAlign.left,
                                       fontWeight: FontWeight.w500),
                                 ),
-
-                                
                             ],
                           ),
                           Padding(
@@ -146,10 +194,13 @@ class _PharmacyCardState extends State<PharmacyCard> {
                                 const EdgeInsets.only(top: 5.0, bottom: 8.0),
                             child: Row(
                               children: <Widget>[
-                                Icon(
-                                  Icons.phone,
-                                  size: 16.0,
-                                  color: theme.colorScheme.primary,
+                                Padding(
+                                  padding: EdgeInsets.only(right: 5.0),
+                                  child: Icon(
+                                    Icons.phone,
+                                    size: 16.0,
+                                    color: theme.colorScheme.primary,
+                                  ),
                                 ),
                                 FancyText(
                                   text: order.phone,
