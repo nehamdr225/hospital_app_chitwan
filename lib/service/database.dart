@@ -206,15 +206,9 @@ abstract class DatabaseService {
     return pOrderCollection.where('pharmacyId', isEqualTo: uid).getDocuments();
   }
 
-  static Future<bool> createLabOrder(Map data) async {
+  static Future<bool> createLabOrder(Map<String, String> data) async {
     try {
-      await labOrderCollection.document().setData({
-        'name': data['name'],
-        'email': data['email'],
-        'phone': data['phone'],
-        'uid': data['uid'],
-        'title': data['title'],
-      });
+      await labOrderCollection.document().setData(data);
       return true;
     } catch (e) {
       print(e);

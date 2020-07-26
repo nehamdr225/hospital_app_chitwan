@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chitwan_hospital/models/Lab.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/models/User.dart';
@@ -40,7 +41,7 @@ class UserDataStore extends ChangeNotifier {
   List<LabAppointment> _labs;
   List _messages;
   List _pharmacies;
-  List _laboratories;
+  List<Laboratory> _laboratories;
 
   List get messages => _messages;
 
@@ -84,9 +85,9 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get laboratories => _laboratories;
+  List<Laboratory> get laboratories => _laboratories;
 
-  set laboratories(newData) {
+  set laboratories(List<Laboratory> newData) {
     _laboratories = newData;
     notifyListeners();
   }
@@ -268,7 +269,8 @@ class UserDataStore extends ChangeNotifier {
       DatabaseService.getLabs().listen((event) {
         if (event.documents.length > 0) {
           final labData = event.documents
-              .map((e) => {...e.data, 'id': e.documentID})
+              .map<Laboratory>(
+                  (e) => Laboratory.fromJson({...e.data, 'id': e.documentID}))
               .toList();
           laboratories = labData;
         }
@@ -355,6 +357,10 @@ class UserDataStore extends ChangeNotifier {
 
   StorageUploadTask uploadFile(File file, String uid) {
     return DatabaseService.uploadFile(file, uid);
+  }
+
+  Future<bool> createLabOrder(Map<String, String> data) {
+    return DatabaseService.createLabOrder(data);
   }
 
   clearState() {

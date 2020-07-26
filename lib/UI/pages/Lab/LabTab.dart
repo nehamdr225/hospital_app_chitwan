@@ -25,9 +25,7 @@ class LabTab extends StatelessWidget {
             itemCount: laboratories != null ? laboratories.length : 0,
             itemBuilder: (BuildContext context, int index) {
               return LabratoryListCard(
-                labName: laboratories[index]['name'],
-                labLocation: laboratories[index]['address'] ?? "Not available",
-                phone: laboratories[index]['phone'],
+                id: laboratories[index].uid,
               );
             }));
   }

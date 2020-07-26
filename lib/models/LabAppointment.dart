@@ -1,7 +1,5 @@
-import 'dart:io';
-
 abstract class LabAppointmentModel {
-  String id;
+  String id, uid, labId;
   String name;
   String phone;
   String timestamp;
@@ -10,11 +8,11 @@ abstract class LabAppointmentModel {
   String remark;
   String email;
   String title;
-  File image;
+  String image;
 }
 
 class LabAppointment implements LabAppointmentModel {
-  String id;
+  String id, uid, labId;
   String name;
   String phone;
   String email;
@@ -23,10 +21,12 @@ class LabAppointment implements LabAppointmentModel {
   String status;
   String remark;
   String title;
-  File image;
+  String image;
 
   LabAppointment({
     this.id,
+    this.uid,
+    this.labId,
     this.timestamp,
     this.address,
     this.name,
@@ -38,13 +38,15 @@ class LabAppointment implements LabAppointmentModel {
     this.title,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, String> toJson() => {
         'name': name,
         'phone': phone,
-        'address': address,
         'timestamp': timestamp,
         'email': email,
         'title': title,
+        'uid': uid,
+        'labId': labId,
+        if (address != null) 'address': address,
         if (image != null) 'image': image,
         if (id != null) 'id': id,
         if (status != null) 'status': status,
@@ -58,6 +60,8 @@ class LabAppointment implements LabAppointmentModel {
         phone = json['phone'],
         image = json['image'],
         id = json['id'],
+        uid = json['uid'],
+        labId = json['labId'],
         status = json['status'],
         email = json['email'],
         title = json['title'];

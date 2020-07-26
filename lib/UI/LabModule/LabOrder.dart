@@ -20,7 +20,7 @@ class LabOrder extends StatefulWidget {
 class _LabOrderState extends State<LabOrder> {
   String name, title;
   List search;
-  Map orderData;
+  LabAppointment orderData = LabAppointment();
   bool isActive = false;
   final FocusNode _patientNameFocus = FocusNode();
 
@@ -28,8 +28,6 @@ class _LabOrderState extends State<LabOrder> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final labDataStore = Provider.of<LabDataStore>(context);
-    print(search);
-    print(orderData);
     return Scaffold(
         appBar: PreferredSize(
             child: WhiteAppBar(
@@ -59,13 +57,14 @@ class _LabOrderState extends State<LabOrder> {
                         setState(() {
                           isActive = true;
                         });
-                        labDataStore.createOrder(orderData).then((value) {
+                        labDataStore
+                            .createOrder(orderData.toJson())
+                            .then((value) {
                           setState(() {
                             isActive = false;
                           });
                           if (value) {
-                            labDataStore
-                                .addOrder(LabAppointment.fromJson(orderData));
+                            labDataStore.addOrder(orderData);
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -186,13 +185,18 @@ class _LabOrderState extends State<LabOrder> {
                           (e) => InkWell(
                               onTap: () {
                                 setState(() {
-                                  orderData = {
+                                  orderData = LabAppointment.fromJson({
                                     'name': e['name'],
                                     'email': e['email'],
                                     'phone': e['phone'],
                                     'uid': e['id'],
-                                    'title': title
-                                  };
+                                    'title': title,
+                                    'labId': labDataStore.user.uid,
+                                    'timestamp':
+                                        DateTime.now().toIso8601String(),
+                                    if (labDataStore.user.address != null)
+                                      'address': labDataStore.user.address
+                                  });
                                 });
                               },
                               // canRequestFocus: true,
@@ -207,9 +211,9 @@ class _LabOrderState extends State<LabOrder> {
                   )
                 : orderData != null
                     ? LabCard(
-                        name: orderData['name'],
-                        email: orderData['email'],
-                        phone: orderData['phone'],
+                        name: orderData.name,
+                        email: orderData.email,
+                        phone: orderData.phone,
                       )
                     : SizedBox.shrink()
           ],

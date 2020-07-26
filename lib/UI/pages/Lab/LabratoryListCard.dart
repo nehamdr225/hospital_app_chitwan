@@ -3,26 +3,15 @@ import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
 import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabDetails.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class LabratoryListCard extends StatefulWidget {
-  final labName;
-  final clientName;
-  final labLocation;
-  final image;
-  final phone;
-  final pharmacyStatus;
   final id;
 
-  LabratoryListCard(
-      {this.image = "assets/images/bakery.jpg",
-      this.phone,
-      this.clientName,
-      this.labLocation,
-      this.pharmacyStatus,
-      this.labName,
-      this.id});
+  LabratoryListCard({this.id});
 
   @override
   _LabratoryListCardState createState() => _LabratoryListCardState();
@@ -33,37 +22,21 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final laboratory =
+        Provider.of<UserDataStore>(context).laboratories.firstWhere(
+              (element) => element.uid == widget.id,
+              orElse: () => null,
+            );
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          if (widget.clientName == null) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => LabDetails(
-                      labLocation: widget.labLocation,
-                      labName: widget.labName,
-                      phone: widget.phone,
-                      image: widget.image,
-                      status: widget.pharmacyStatus,
-                    )));
-          } else if (widget.id == 'Lab') {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => LabInfoUpload()));
-          } else if (widget.id == "Pharmacy") {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BuyerDetail(
-                      buyerName: widget.clientName,
-                      buyerPhone: widget.phone,
-                      status: 'undecided',
-                      // buyerPrescriptionimage: widget.image,
-                    )));
-          } else if (widget.id == "Hospital") {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HospitalDetails(
-                      name: widget.clientName,
-                      phone: widget.phone,
-                    )));
-          }
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => LabDetails(id: laboratory.uid),
+            ),
+          );
         },
         child: Container(
             decoration: BoxDecoration(
@@ -123,7 +96,7 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: widget.labName,
+                            text: laboratory.name,
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -142,7 +115,7 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: widget.labLocation,
+                                    text: laboratory.address ?? 'Not available',
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -159,35 +132,34 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: "  ${widget.phone}",
+                                  text: laboratory.phone,
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ],
                             ),
                           ),
-                          widget.clientName == null
-                              ? Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 3.0),
-                                      child: FancyText(
-                                        text: "Open Hours: ",
-                                        textAlign: TextAlign.left,
-                                        defaultStyle: true,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 3.0),
-                                      child: FancyText(
-                                          text: "6:00 AM to 10:00 PM",
-                                          textAlign: TextAlign.left,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                )
-                              : Text(''),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(top: 3.0),
+                                child: FancyText(
+                                  text: "Open Hours: ",
+                                  textAlign: TextAlign.left,
+                                  defaultStyle: true,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 3.0),
+                                child: FancyText(
+                                    text:
+                                        laboratory.openHours ?? 'Not available',
+                                    textAlign: TextAlign.left,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),

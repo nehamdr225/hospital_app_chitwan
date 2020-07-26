@@ -1,3 +1,4 @@
+import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/DetailPageOptions.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -5,29 +6,24 @@ import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Lab/LabForm.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LabDetails extends StatelessWidget {
-  final labName;
-  final image;
-  final labLocation;
-  final phone;
-  final status;
-  final date;
-  final time;
-  LabDetails(
-      {this.image,
-      this.labName,
-      this.labLocation,
-      this.phone,
-      this.date,
-      this.status,
-      this.time});
+  final id;
+  LabDetails({this.id});
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final laboratory =
+        Provider.of<UserDataStore>(context).laboratories.firstWhere(
+              (element) => element.uid == id,
+              orElse: () => null,
+            );
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -100,7 +96,7 @@ class LabDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             FancyText(
-                              text: labName,
+                              text: laboratory.name,
                               fontWeight: FontWeight.w700,
                               size: 18.0,
                               textAlign: TextAlign.left,
@@ -112,7 +108,7 @@ class LabDetails extends StatelessWidget {
                               defaultStyle: false,
                               titleColor: textDark_Yellow,
                               titleSize: 15.0,
-                              caption: labLocation,
+                              caption: laboratory.address ?? 'Not Available',
                               capColor: textDark_Yellow,
                               capSize: 15.0,
                             ),
@@ -121,7 +117,7 @@ class LabDetails extends StatelessWidget {
                               defaultStyle: false,
                               titleColor: textDark_Yellow,
                               titleSize: 15.0,
-                              caption: phone,
+                              caption: laboratory.phone,
                               capColor: textDark_Yellow,
                               capSize: 15.0,
                             ),
@@ -200,9 +196,8 @@ class LabDetails extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PharmacyForm(
-                            doctor: labName,
-                            department: labLocation,
+                      builder: (context) => LabForm(
+                            labId: laboratory.uid,
                           )));
             },
           ),
@@ -258,7 +253,7 @@ class LabDetails extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                       FancyText(
-                        text: "$phone ",
+                        text: laboratory.phone,
                         textAlign: TextAlign.left,
                         size: 16.0,
                         color: theme.colorScheme.secondaryVariant,
