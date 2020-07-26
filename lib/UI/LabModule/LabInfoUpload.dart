@@ -33,7 +33,6 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
   }
 
   bool isActive = false;
-  double imageStatus = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +42,6 @@ class _LabInfoUploadState extends State<LabInfoUpload> {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
 
-    Dialog dialog = Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Padding(padding: EdgeInsets.all(10)),
-          FancyText(
-            text: 'Uploading Image',
-            color: blueGrey,
-          ),
-          Padding(padding: EdgeInsets.all(10)),
-          LinearProgressIndicator(
-            value: imageStatus,
-          ),
-          Padding(padding: EdgeInsets.all(10)),
-        ],
-      ),
-    );
     return Scaffold(
       appBar: PreferredSize(
           child: WhiteAppBar(
