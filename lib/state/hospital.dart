@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 class HospitalDataStore extends ChangeNotifier {
@@ -129,6 +132,14 @@ class HospitalDataStore extends ChangeNotifier {
 
   updateDepartments(Map data) {
     DatabaseService.updateHospitalData(user.uid, data);
+  }
+
+  createPromotion(Map<String, dynamic> data) {
+    return DatabaseService.createPromotion(data);
+  }
+
+  StorageUploadTask uploadFile(File file) {
+    return DatabaseService.uploadFile(file, user.uid);
   }
 
   clearState() {

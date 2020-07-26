@@ -22,6 +22,7 @@ class FForms extends StatelessWidget {
   final FocusNode currentFocus;
   final FocusNode nextFocus;
   final TextInputAction textInputAction;
+  final maxLines, minLines;
   final style = TextStyle(
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.bold,
@@ -48,13 +49,17 @@ class FForms extends StatelessWidget {
       this.controller,
       this.currentFocus,
       this.nextFocus,
-      this.key});
+      this.key,
+      this.maxLines,
+      this.minLines});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       child: TextFormField(
+        maxLines: maxLines ?? 1,
+        minLines: minLines ?? 1,
         initialValue: initialValue,
         onFieldSubmitted: (term) {
           textInputAction != TextInputAction.done

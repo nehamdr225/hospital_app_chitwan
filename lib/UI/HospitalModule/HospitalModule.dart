@@ -30,7 +30,7 @@ class HospitalModule extends StatelessWidget {
               (route) => false);
         }
       });
-    // print(doctors);
+
     buildHospitalDoctors() {
       return doctors != null
           ? doctors

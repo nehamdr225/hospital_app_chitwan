@@ -13,6 +13,7 @@ abstract class DatabaseService {
   static final CollectionReference doctorCollection = db.collection('doctors');
   static final CollectionReference labCollection = db.collection('labs');
   static final CollectionReference bloodCollection = db.collection('bloods');
+  static final CollectionReference promoCollection = db.collection('promos');
   static final CollectionReference appointmentCollection =
       db.collection('appointments');
   static final CollectionReference hospitalCollection =
@@ -270,5 +271,9 @@ abstract class DatabaseService {
     final fileRef = storageReference.child(uid).child(file.basename);
     final StorageUploadTask uploadTask = fileRef.putFile(file);
     return uploadTask;
+  }
+
+  static Future<void> createPromotion(Map<String, dynamic> data) {
+    return promoCollection.document().setData(data);
   }
 }
