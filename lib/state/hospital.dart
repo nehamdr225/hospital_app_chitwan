@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chitwan_hospital/models/Hospital.dart';
+import 'package:chitwan_hospital/models/HospitalPromotion.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -23,12 +24,14 @@ class HospitalDataStore extends ChangeNotifier {
           }
         }
         getAvailableDoctors();
+        getPromotions();
       }
     } catch (e) {}
   }
 
   List _doctors;
   Hospital _userData;
+  List<HospitalPromotion> _promotions;
 
   Hospital get user => _userData;
 
@@ -44,19 +47,12 @@ class HospitalDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // fetchUserData() {
-  //   if (user.uid != null && user.role != null) {
-  //     if (user.role == 'user') {
-  //       DatabaseService.getUserData(uid).then((value) {
-  //         if (value.data != null) {
-  //           user = value.data;
-  //         }
-  //       }).catchError((err) {
-  //         print(err);
-  //       });
-  //     }
-  //   }
-  // }
+  List<HospitalPromotion> get promotions => _promotions;
+
+  set promotions(List<HospitalPromotion> newPromotions) {
+    _promotions = newPromotions;
+    notifyListeners();
+  }
 
   void getAvailableDoctors() {
     DatabaseService.getDoctors().listen((QuerySnapshot onData) {
@@ -80,6 +76,19 @@ class HospitalDataStore extends ChangeNotifier {
       }
     }, onError: (e) {
       print('Got doctor error\n $e');
+    });
+  }
+
+  void getPromotions() {
+    DatabaseService.getPromotions(user.uid).listen((event) {
+      if (event.documents.length > 0) {
+        final promoData = event.documents.map<HospitalPromotion>((e) {
+          final data = e.data;
+          data['id'] = e.documentID;
+          return HospitalPromotion.fromJson(data);
+        }).toList();
+        promotions = promoData;
+      }
     });
   }
 

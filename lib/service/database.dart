@@ -276,4 +276,10 @@ abstract class DatabaseService {
   static Future<void> createPromotion(Map<String, dynamic> data) {
     return promoCollection.document().setData(data);
   }
+
+  static Stream<QuerySnapshot> getPromotions(String hospitalId) {
+    return promoCollection
+        .where('hospitalId', isEqualTo: hospitalId)
+        .snapshots();
+  }
 }

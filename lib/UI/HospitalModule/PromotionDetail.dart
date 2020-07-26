@@ -1,14 +1,19 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PromotionDetail extends StatelessWidget {
-  final image;
-  final date;
-  PromotionDetail({this.image, this.date});
+  final id;
+  PromotionDetail({this.id});
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final promotion = Provider.of<HospitalDataStore>(context)
+        .promotions
+        .firstWhere((element) => element.id == id);
+
     return Scaffold(
       backgroundColor: theme.background,
       body: CustomScrollView(slivers: <Widget>[
@@ -30,7 +35,7 @@ class PromotionDetail extends StatelessWidget {
               centerTitle: true,
               title: Padding(
                 padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                child: Text("Promotion Name",
+                child: Text(promotion.title,
                     style: TextStyle(
                       color: theme.background,
                       fontSize: 15.0,
@@ -46,8 +51,8 @@ class PromotionDetail extends StatelessWidget {
                     width: size.width,
                     height: 240.0,
                     color: theme.primary,
-                    child: Image.asset(
-                      image,
+                    child: Image.network(
+                      promotion.image,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -58,7 +63,7 @@ class PromotionDetail extends StatelessWidget {
             child: Padding(
           padding: const EdgeInsets.only(left: 44.0, top: 0.0),
           child: FancyText(
-            text: date,
+            text: promotion.fromDate + ' to ' + promotion.toDate,
             fontWeight: FontWeight.w500,
             size: 21.0,
             textAlign: TextAlign.start,
