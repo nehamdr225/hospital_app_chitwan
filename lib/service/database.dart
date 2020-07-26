@@ -98,6 +98,10 @@ abstract class DatabaseService {
     return pharmacyCollection.snapshots();
   }
 
+  static Stream<QuerySnapshot> getLabs() {
+    return labCollection.snapshots();
+  }
+
   static Stream<QuerySnapshot> getDoctorAppointments(String uid) {
     final result = appointmentCollection.where('doctorId', isEqualTo: uid);
     return result.snapshots();

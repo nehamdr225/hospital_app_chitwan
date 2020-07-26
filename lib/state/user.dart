@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/models/User.dart';
 import 'package:chitwan_hospital/service/auth.dart';
@@ -36,9 +37,10 @@ class UserDataStore extends ChangeNotifier {
   List _appointments;
   List _doctors;
   List<PharmacyAppointment> _prescriptions;
-  List _labs;
+  List<LabAppointment> _labs;
   List _messages;
   List _pharmacies;
+  List _laboratories;
 
   List get messages => _messages;
 
@@ -75,10 +77,17 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get labs => _labs;
+  List<LabAppointment> get labs => _labs;
 
-  set labs(newData) {
+  set labs(List<LabAppointment> newData) {
     _labs = newData;
+    notifyListeners();
+  }
+
+  List get laboratories => _laboratories;
+
+  set laboratories(newData) {
+    _laboratories = newData;
     notifyListeners();
   }
 
@@ -254,6 +263,19 @@ class UserDataStore extends ChangeNotifier {
     }
   }
 
+  getLabs() {
+    if (pharmacies == null || pharmacies.length == 0) {
+      DatabaseService.getLabs().listen((event) {
+        if (event.documents.length > 0) {
+          final labData = event.documents
+              .map((e) => {...e.data, 'id': e.documentID})
+              .toList();
+          laboratories = labData;
+        }
+      });
+    }
+  }
+
   // void getAvailableHospitals() {
   //   DatabaseService.getHospitals().listen((QuerySnapshot onData) {
   //     print(['Got hospital data\n']);
@@ -313,10 +335,10 @@ class UserDataStore extends ChangeNotifier {
 
   getUserLabs() {
     DatabaseService.getUserLabOrders(user.uid).listen((data) {
-      final List addData = data.documents.map((e) {
+      final List addData = data.documents.map<LabAppointment>((e) {
         final Map thisData = e.data;
         thisData['id'] = e.documentID;
-        return thisData;
+        return LabAppointment.fromJson(thisData);
       }).toList();
       labs = addData;
     });

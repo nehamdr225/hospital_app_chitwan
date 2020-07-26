@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
-import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/lab.dart';

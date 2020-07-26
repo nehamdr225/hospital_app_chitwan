@@ -6,7 +6,6 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';

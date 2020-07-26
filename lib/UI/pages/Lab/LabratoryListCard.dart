@@ -16,7 +16,7 @@ class LabratoryListCard extends StatefulWidget {
   final id;
 
   LabratoryListCard(
-      {this.image,
+      {this.image = "assets/images/bakery.jpg",
       this.phone,
       this.clientName,
       this.labLocation,
@@ -60,9 +60,9 @@ class _LabratoryListCardState extends State<LabratoryListCard> {
           } else if (widget.id == "Hospital") {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => HospitalDetails(
-                  name:widget.clientName,
-                  phone: widget.phone,
-                )));
+                      name: widget.clientName,
+                      phone: widget.phone,
+                    )));
           }
         },
         child: Container(

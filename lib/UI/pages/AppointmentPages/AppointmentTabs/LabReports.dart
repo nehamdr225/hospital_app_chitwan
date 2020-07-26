@@ -12,11 +12,11 @@ class LabReports extends StatelessWidget {
         itemCount: labs != null ? labs.length : 0,
         itemBuilder: (BuildContext context, int index) {
           return LabCard(
-            email: labs[index]['email'],
-            name: labs[index]['name'],
-            phone: labs[index]['phone'],
-            title: labs[index]['title'],
-            status: labs[index]['status'] ?? null,
+            email: labs[index].email,
+            name: labs[index].name,
+            phone: labs[index].phone,
+            title: labs[index].timestamp,
+            status: labs[index].status,
           );
         });
   }
