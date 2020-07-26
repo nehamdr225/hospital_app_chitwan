@@ -2,9 +2,11 @@ import 'package:chitwan_hospital/UI/LabModule/LabCard.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabDrawer.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
 import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
+import 'package:chitwan_hospital/UI/LabModule/LabOrderTab.dart';
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/service/auth.dart';
@@ -29,7 +31,11 @@ class _LabModuleState extends State<LabModule> {
     final size = MediaQuery.of(context).size;
     final labDataStore = Provider.of<LabDataStore>(context);
     labDataStore.handleInitialProfileLoad();
-    final orders = labDataStore.orders;
+    final orders = labDataStore.orders != null
+        ? labDataStore.orders
+            .where((element) => element.status == null)
+            .toList()
+        : [];
 
     if (labDataStore.user == null)
       Future.delayed(Duration(seconds: 10)).then((value) {
@@ -182,7 +188,7 @@ class _LabModuleState extends State<LabModule> {
               ),
             ),
           ),
-          orders != null
+          orders != null && orders.length > 0
               ? Column(
                   children: orders
                       .map<Widget>((e) => InkWell(
@@ -200,11 +206,37 @@ class _LabModuleState extends State<LabModule> {
                               email: e.email,
                               phone: e.phone,
                               title: e.title,
+                              timestamp: e.timestamp,
                             ),
                           ))
                       .toList(),
                 )
-              : SizedBox.shrink(),
+              : Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: FancyText(
+                        text: 'You have no new orders!',
+                        color: Colors.black87,
+                      ),
+                    ),
+                    FRaisedButton(
+                      width: size.width * 0.90,
+                      text: 'View all orders',
+                      bgcolor: theme.primary,
+                      color: textDark_Yellow,
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => LabOrderTab(),
+                          ),
+                        );
+                      },
+                      radius: 10.0,
+                      shape: true,
+                    )
+                  ],
+                )
         ]),
       ),
     );

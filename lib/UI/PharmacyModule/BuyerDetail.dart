@@ -462,50 +462,49 @@ class _BuyerDetailState extends State<BuyerDetail> {
                     ]),
               )
             : SizedBox.shrink(),
-        order.image != null
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0, bottom: 12),
-                    child: FancyText(
-                        text: 'Medicine Receipt',
-                        fontWeight: FontWeight.bold,
-                        size: 16.0),
+        if (order.image != null)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, bottom: 12),
+                child: FancyText(
+                    text: 'Medicine Receipt',
+                    fontWeight: FontWeight.bold,
+                    size: 16.0),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Container(
+                  height: 200.0,
+                  width: size.width * 0.95,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.0),
+                    ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      height: 200.0,
-                      width: size.width * 0.95,
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12.0),
-                        ),
-                      ),
-                      child: PhotoView.customChild(
-                        child: InkWell(
-                          child: Image.network(order.image),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PhotoFullScreen(
-                                      image: order.image,
-                                    )));
-                          },
-                        ),
-                        backgroundDecoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12.0),
-                          ),
-                        ),
+                  child: PhotoView.customChild(
+                    child: InkWell(
+                      child: Image.network(order.image),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PhotoFullScreen(
+                                  image: order.image,
+                                )));
+                      },
+                    ),
+                    backgroundDecoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12.0),
                       ),
                     ),
-                  )
-                ],
+                  ),
+                ),
               )
-            : SizedBox.shrink(),
+            ],
+          )
       ]),
     );
   }

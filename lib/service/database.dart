@@ -147,6 +147,15 @@ abstract class DatabaseService {
     }
   }
 
+  static Future<bool> updateLabOrderFile(String id, String file) async {
+    try {
+      await labOrderCollection.document(id).updateData({'image': file});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Future<bool> updateLabOrderRemark(String id, String remark) async {
     try {
       await labOrderCollection.document(id).updateData({'remark': remark});

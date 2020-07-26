@@ -71,7 +71,8 @@ class _PharmacyFormState extends State<PharmacyForm> {
         children: <Widget>[
           Padding(padding: EdgeInsets.all(10)),
           FancyText(
-            text:'Uploading Image', color: blueGrey,
+            text: 'Uploading Image',
+            color: blueGrey,
           ),
           Padding(padding: EdgeInsets.all(10)),
           LinearProgressIndicator(

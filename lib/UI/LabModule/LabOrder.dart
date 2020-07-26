@@ -64,7 +64,7 @@ class _LabOrderState extends State<LabOrder> {
                             isActive = false;
                           });
                           if (value) {
-                            labDataStore.addOrder(orderData);
+                            // labDataStore.addOrder(orderData);
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

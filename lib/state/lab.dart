@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:chitwan_hospital/models/Lab.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 class LabDataStore extends ChangeNotifier {
@@ -83,21 +86,12 @@ class LabDataStore extends ChangeNotifier {
     return DatabaseService.getUserByName(name);
   }
 
-  Future setOrderStatus(String uid, dynamic status) {
-    return DatabaseService.updateLabOrderStatus(uid, status).then((value) {
-      if (value) {
-        final newOrders = _orders.map<LabAppointment>((each) {
-          if (each.id == uid) {
-            final data = each;
-            data.status = status;
-            return data;
-          }
-          return each;
-        }).toList();
-        orders = newOrders;
-      }
-      return null;
-    });
+  Future<bool> setOrderStatus(String uid, dynamic status) {
+    return DatabaseService.updateLabOrderStatus(uid, status);
+  }
+
+  Future<bool> setOrderFile(String uid, String url) {
+    return DatabaseService.updateLabOrderFile(uid, url);
   }
 
   setOrderRemark(String uid, String remark) {
@@ -114,6 +108,10 @@ class LabDataStore extends ChangeNotifier {
         orders = newOrders;
       }
     });
+  }
+
+  StorageUploadTask uploadFile(File file, String uid) {
+    return DatabaseService.uploadFile(file, uid);
   }
 
   clearState() {

@@ -82,6 +82,7 @@ class LabOngoing extends StatelessWidget {
               name: orders[index].name,
               phone: orders[index].phone,
               title: orders[index].title,
+              timestamp: orders[index].timestamp,
             ),
           );
         });
@@ -113,6 +114,7 @@ class LabCompleted extends StatelessWidget {
               name: orders[index].name,
               phone: orders[index].phone,
               title: orders[index].title,
+              timestamp: orders[index].timestamp,
             ),
           );
         });
@@ -144,6 +146,7 @@ class LabRejected extends StatelessWidget {
               name: orders[index].name,
               phone: orders[index].phone,
               title: orders[index].title,
+              timestamp: orders[index].timestamp,
             ),
           );
         });
