@@ -2,15 +2,22 @@ import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:flutter/material.dart';
 
 class LabCard extends StatelessWidget {
-  final String name, email, phone, title, status;
+  final String name, email, phone, title, status, timestamp;
 
   const LabCard(
-      {Key key, this.name, this.email, this.phone, this.title, this.status})
+      {Key key,
+      this.name,
+      this.email,
+      this.phone,
+      this.title,
+      this.status,
+      this.timestamp})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final DateTime date = DateTime.parse(timestamp);
     return Container(
         margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 9.0),
         decoration: BoxDecoration(
@@ -57,19 +64,33 @@ class LabCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      title != null
-                          ? Padding(
-                              padding: EdgeInsets.only(bottom: 10.0),
-                              child: FancyText(
-                                text: title.substring(0, 1).toUpperCase() +
-                                    title.substring(1),
-                                fontWeight: FontWeight.w800,
-                                size: 15.5,
-                                textAlign: TextAlign.left,
-                                color: theme.colorScheme.primary,
-                              ),
-                            )
-                          : SizedBox.shrink(),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: FancyText(
+                          text: title.substring(0, 1).toUpperCase() +
+                              title.substring(1),
+                          fontWeight: FontWeight.w800,
+                          size: 15.5,
+                          textAlign: TextAlign.left,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.calendar_today,
+                              size: 16.0,
+                            ),
+                            FancyText(
+                              text: '  ${date.year}-${date.month}-${date.day}',
+                              textAlign: TextAlign.left,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2.0),
                         child: Row(

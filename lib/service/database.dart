@@ -216,8 +216,8 @@ abstract class DatabaseService {
     }
   }
 
-  static Future<QuerySnapshot> getLabOrders() {
-    return labOrderCollection.getDocuments();
+  static Stream<QuerySnapshot> getLabOrders(String uid) {
+    return labOrderCollection.where('labId', isEqualTo: uid).snapshots();
   }
 
   static Stream<QuerySnapshot> getUserLabOrders(String uid) {

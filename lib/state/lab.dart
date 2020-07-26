@@ -58,14 +58,14 @@ class LabDataStore extends ChangeNotifier {
     }
   }
 
-  Future<bool> createOrder(Map data) {
+  Future<bool> createOrder(Map<String, String> data) {
     return DatabaseService.createLabOrder(data);
   }
 
   getOrders() {
     if (orders == null) {
-      DatabaseService.getLabOrders().then((onData) {
-        List newData = onData.documents.map<LabAppointment>((e) {
+      DatabaseService.getLabOrders(user.uid).listen((event) {
+        List newData = event.documents.map<LabAppointment>((e) {
           final data = e.data;
           data['id'] = e.documentID;
           return LabAppointment.fromJson(data);

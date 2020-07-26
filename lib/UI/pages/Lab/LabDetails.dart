@@ -1,4 +1,3 @@
-import 'package:chitwan_hospital/UI/LabModule/LabOrder.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/DetailPageOptions.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -7,7 +6,6 @@ import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabForm.dart';
-import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

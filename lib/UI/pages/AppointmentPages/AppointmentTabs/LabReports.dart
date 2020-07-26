@@ -15,8 +15,9 @@ class LabReports extends StatelessWidget {
             email: labs[index].email,
             name: labs[index].name,
             phone: labs[index].phone,
-            title: labs[index].timestamp,
+            title: labs[index].title,
             status: labs[index].status,
+            timestamp: labs[index].timestamp,
           );
         });
   }

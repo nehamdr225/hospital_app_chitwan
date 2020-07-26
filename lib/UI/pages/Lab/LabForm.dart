@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
 import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
@@ -10,7 +8,6 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class LabForm extends StatefulWidget {
@@ -23,16 +20,16 @@ class LabForm extends StatefulWidget {
 class _LabFormState extends State<LabForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   LabAppointment labAppointment = LabAppointment();
-  File _image;
-  final picker = ImagePicker();
+  // File _image;
+  // final picker = ImagePicker();
 
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    if (pickedFile.path != null)
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-  }
+  // Future getImage() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //   if (pickedFile.path != null)
+  //     setState(() {
+  //       _image = File(pickedFile.path);
+  //     });
+  // }
 
   bool isActive = false;
   @override
