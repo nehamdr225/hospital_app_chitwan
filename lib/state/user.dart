@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/models/Lab.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
@@ -24,6 +25,7 @@ class UserDataStore extends ChangeNotifier {
             user = User.fromJson(data);
             getUserAppointments();
             getAvailableDoctors(null);
+            getHospitals();
             getUserPrescriptions();
             getUserLabs();
             fetchMessages();
@@ -34,7 +36,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   User _userData;
-  // List _hospitals;
+  List<Hospital> _hospitals;
   List _appointments;
   List _doctors;
   List<PharmacyAppointment> _prescriptions;
@@ -96,6 +98,13 @@ class UserDataStore extends ChangeNotifier {
 
   set pharmacies(newData) {
     _pharmacies = newData;
+    notifyListeners();
+  }
+
+  List<Hospital> get hospitals => _hospitals;
+
+  set hospitals(List<Hospital> newData) {
+    _hospitals = newData;
     notifyListeners();
   }
 
@@ -264,7 +273,7 @@ class UserDataStore extends ChangeNotifier {
     }
   }
 
-  getLabs() {
+  void getLabs() {
     if (pharmacies == null || pharmacies.length == 0) {
       DatabaseService.getLabs().listen((event) {
         if (event.documents.length > 0) {
@@ -278,25 +287,19 @@ class UserDataStore extends ChangeNotifier {
     }
   }
 
-  // void getAvailableHospitals() {
-  //   DatabaseService.getHospitals().listen((QuerySnapshot onData) {
-  //     print(['Got hospital data\n']);
-  //     final List allHospitals = onData.documents.map<Map>((element) {
-  //       final Map data = element.data;
-  //       data['id'] = element.documentID;
-  //       return data;
-  //     }).toList();
-  //     if (hospitals != null) {
-  //       allHospitals.removeWhere((element) =>
-  //           hospitals.any((hosp) => element['name'] == hosp['name']));
-  //       hospitals.addAll(allHospitals);
-  //     } else {
-  //       hospitals = allHospitals;
-  //     }
-  //   }, onError: (e) {
-  //     print('Got hospital error\n $e');
-  //   });
-  // }
+  getHospitals() {
+    if (hospitals == null || hospitals.length == 0) {
+      DatabaseService.getHospitals().listen((event) {
+        if (event.documents.length > 0) {
+          final hospitalData = event.documents
+              .map<Hospital>(
+                  (e) => Hospital.fromJson({...e.data, 'id': e.documentID}))
+              .toList();
+          hospitals = hospitalData;
+        }
+      });
+    }
+  }
 
   Future createAppointment(Map data) async {
     return DatabaseService.createAppointment(data);
@@ -361,6 +364,10 @@ class UserDataStore extends ChangeNotifier {
 
   Future<bool> createLabOrder(Map<String, String> data) {
     return DatabaseService.createLabOrder(data);
+  }
+
+  createInquiry(Map<String, String> data) {
+    return DatabaseService.createInquiry(data);
   }
 
   clearState() {

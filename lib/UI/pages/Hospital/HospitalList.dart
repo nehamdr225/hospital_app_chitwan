@@ -1,19 +1,25 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalProfile.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HospitalList extends StatelessWidget {
-  final hospitalName;
-  HospitalList({this.hospitalName});
+  final id;
+  HospitalList({this.id});
   @override
   Widget build(BuildContext context) {
+    final hospital = Provider.of<UserDataStore>(context)
+        .hospitals
+        .firstWhere((element) => element.uid == id);
+
     final size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HospitalProfile(
-              hospitalName: hospitalName,
-            )));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => HospitalProfile(
+                  id: hospital.uid,
+                )));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -63,7 +69,7 @@ class HospitalList extends StatelessWidget {
                 ),
               ),
               FancyText(
-                text: hospitalName,
+                text: hospital.name,
                 fontWeight: FontWeight.w700,
                 textAlign: TextAlign.left,
               ),

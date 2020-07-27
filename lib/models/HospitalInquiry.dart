@@ -1,20 +1,33 @@
 abstract class HospitalInquiryModel {
+  String userId;
+  String hospitalId;
   String inquiry;
-  String phoneNum;
+  String phone;
 }
 
 class HospitalInquiry implements HospitalInquiryModel {
+  String userId;
+  String hospitalId;
   String inquiry;
-  String phoneNum;
+  String phone;
 
-  HospitalInquiry(this.phoneNum, this.inquiry);
+  HospitalInquiry({
+    this.phone,
+    this.inquiry,
+    this.hospitalId,
+    this.userId,
+  });
 
   Map<String, dynamic> toJson() => {
         'inquiry': inquiry,
-        'phoneNum': phoneNum,
+        'phone': phone,
+        'hospitalId': hospitalId,
+        if (userId != null) 'userId': userId,
       };
 
   HospitalInquiry.fromJson(json)
       : inquiry = json['inquiry'],
-        phoneNum = json['phoneNum'];
+        phone = json['phone'],
+        hospitalId = json['hospitalId'],
+        userId = json['userId'];
 }

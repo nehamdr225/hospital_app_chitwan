@@ -27,6 +27,8 @@ abstract class DatabaseService {
       db.collection('labOrders');
   static final CollectionReference messageCollection =
       db.collection('messages');
+  static final CollectionReference inquiryCollection =
+      db.collection('inquiries');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
     return await userCollection.document(uid).setData(data, merge: true);
@@ -281,5 +283,9 @@ abstract class DatabaseService {
     return promoCollection
         .where('hospitalId', isEqualTo: hospitalId)
         .snapshots();
+  }
+
+  static Future<void> createInquiry(Map<String, String> data) {
+    return inquiryCollection.document().setData(data);
   }
 }

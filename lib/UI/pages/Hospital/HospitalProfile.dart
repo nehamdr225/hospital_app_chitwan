@@ -6,16 +6,22 @@ import 'package:chitwan_hospital/UI/pages/Hospital/HospitalInqury.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalNews.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromo.dart';
 import 'package:chitwan_hospital/models/HospitalInquiry.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HospitalProfile extends StatelessWidget {
-  final hospitalName;
-  HospitalProfile({this.hospitalName});
+  final id;
+  HospitalProfile({this.id});
   @override
   Widget build(BuildContext context) {
-    final HospitalInquiry newInquiry = HospitalInquiry(null, null);
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+
+    final hospital = Provider.of<UserDataStore>(context)
+        .hospitals
+        .firstWhere((element) => element.uid == id);
+
     return Scaffold(
       backgroundColor: theme.background,
       body: CustomScrollView(slivers: <Widget>[
@@ -37,7 +43,7 @@ class HospitalProfile extends StatelessWidget {
               centerTitle: true,
               title: Padding(
                 padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                child: Text(hospitalName,
+                child: Text(hospital.name,
                     style: TextStyle(
                       color: theme.background,
                       fontSize: 15.0,
@@ -69,7 +75,7 @@ class HospitalProfile extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => HospitalInquiryForm(
-                                  hospitalInquiryForm: newInquiry,
+                                  id: id,
                                 ),
                               ),
                             );
@@ -83,7 +89,7 @@ class HospitalProfile extends StatelessWidget {
             child: Padding(
           padding: const EdgeInsets.only(left: 44.0, top: 0.0),
           child: FancyText(
-            text: hospitalName,
+            text: hospital.name,
             fontWeight: FontWeight.w500,
             size: 21.0,
             textAlign: TextAlign.start,
