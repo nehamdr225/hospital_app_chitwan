@@ -285,7 +285,15 @@ abstract class DatabaseService {
         .snapshots();
   }
 
+  static Stream<QuerySnapshot> getPromotionsForUser() {
+    return promoCollection.snapshots();
+  }
+
   static Future<void> createInquiry(Map<String, String> data) {
     return inquiryCollection.document().setData(data);
+  }
+
+  static Stream<QuerySnapshot> getInquiries(String userId) {
+    return inquiryCollection.where('userId', isEqualTo: userId).snapshots();
   }
 }

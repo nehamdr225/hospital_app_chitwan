@@ -5,7 +5,6 @@ import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalInqury.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalNews.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromo.dart';
-import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

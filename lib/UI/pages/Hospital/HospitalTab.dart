@@ -1,5 +1,4 @@
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalList.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
