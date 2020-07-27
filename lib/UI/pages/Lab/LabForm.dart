@@ -73,7 +73,9 @@ class _LabFormState extends State<LabForm> {
                 color: textDark_Yellow,
                 fontWeight: FontWeight.w600,
               ),
-              onPressed: isActive || !_formKey.currentState.validate()
+              onPressed: isActive ||
+                      (_formKey.currentState != null &&
+                          !_formKey.currentState.validate())
                   ? null
                   : () async {
                       if (!_formKey.currentState.validate()) {
