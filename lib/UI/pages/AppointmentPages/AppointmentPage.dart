@@ -1,4 +1,5 @@
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Apointment.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Inquiry.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/LabReports.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Prescription.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
@@ -17,7 +18,7 @@ class _AppointmentPageState extends State<AppointmentPage>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 3, vsync: this, initialIndex: widget.getIndex);
+    _tabController = new TabController(length: 4, vsync: this, initialIndex: widget.getIndex, );
     super.initState();
   }
 
@@ -44,6 +45,9 @@ class _AppointmentPageState extends State<AppointmentPage>
               Tab(
                 text: "Lab Reports",
               ),
+              Tab(
+                text: "Inquiry",
+              ),
             ],
           ),
         ),
@@ -53,6 +57,7 @@ class _AppointmentPageState extends State<AppointmentPage>
             Prescription(),
             Appointment(),
             LabReports(),
+            Inquiry(),
           ],
         ));
   }
