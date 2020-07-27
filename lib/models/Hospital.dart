@@ -9,7 +9,8 @@ abstract class HospitalModel extends UserModel {
   String address;
 
   bool isVerified;
-  List departments;
+  String departments;
+  String about;
 }
 
 class Hospital implements HospitalModel {
@@ -21,7 +22,8 @@ class Hospital implements HospitalModel {
   String address;
 
   bool isVerified;
-  List departments;
+  String departments;
+  String about;
 
   Hospital.fromJson(json)
       : this.uid = json['id'],
@@ -29,9 +31,10 @@ class Hospital implements HospitalModel {
         this.email = json['email'],
         this.phone = json['phone'],
         this.role = json['role'],
-        this.address = json['address'] ?? null,
-        this.isVerified = json['isVerified'] ?? null,
-        this.departments = json['departments'] ?? null;
+        this.address = json['address'],
+        this.isVerified = json['isVerified'],
+        this.departments = json['departments'],
+        this.about = json['about'];
 
   Map toJson() => {
         'name': name,
@@ -41,5 +44,6 @@ class Hospital implements HospitalModel {
         if (address != null) 'address': address,
         if (isVerified != null) 'isVerified': isVerified,
         if (departments != null) 'departments': departments,
+        if (about != null) 'about': about,
       };
 }

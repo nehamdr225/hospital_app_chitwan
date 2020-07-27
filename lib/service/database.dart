@@ -296,4 +296,10 @@ abstract class DatabaseService {
   static Stream<QuerySnapshot> getInquiries(String userId) {
     return inquiryCollection.where('userId', isEqualTo: userId).snapshots();
   }
+
+  static Stream<QuerySnapshot> getInquiriesForHospital(String hospitalId) {
+    return inquiryCollection
+        .where('hospitalId', isEqualTo: hospitalId)
+        .snapshots();
+  }
 }

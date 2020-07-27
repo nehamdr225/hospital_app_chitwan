@@ -17,7 +17,6 @@ class HospitalDoctorListCard extends StatefulWidget {
 class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
   @override
   Widget build(BuildContext context) {
-    print(widget.id);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final doctor =
@@ -36,7 +35,6 @@ class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
               boxShadow: [
-               
                 BoxShadow(
                     color: Colors.white60,
                     offset: Offset(-4, -4),
@@ -100,7 +98,7 @@ class _HospitalDoctorListCardState extends State<HospitalDoctorListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: doctor['department']??'Not set',
+                                    text: doctor['department'] ?? 'Not set',
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),

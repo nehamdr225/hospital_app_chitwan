@@ -27,9 +27,10 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
 
   Future getProfileImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _profileImg = File(pickedFile.path);
-    });
+    if (pickedFile?.path != null)
+      setState(() {
+        _profileImg = File(pickedFile.path);
+      });
   }
 
   Map<String, String> updateData = {};
@@ -42,6 +43,42 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
 
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
     final hospital = hospitalDataStore.user;
+
+    List<Widget> buildDepartmentChips(String departments) {
+      if (departments == null || departments.length == 0) return [];
+      final newDepartments = departments.split(';');
+      newDepartments.removeWhere((element) => element.length == 0);
+      return newDepartments.map<Widget>((e) {
+        return Chip(
+          backgroundColor: blueGrey,
+          label: FancyText(
+            text: e,
+            color: textDark_Yellow,
+          ),
+          // deleteIcon: Icon(Icons.delete),
+          deleteIconColor: textDark_Yellow,
+          onDeleted: () {
+            if (updateData['departments'] == null) {
+              final newData = hospital.departments.split(';');
+              newData.removeWhere(
+                  (element) => element.length == 0 || element == e);
+              final String deps = newData.length > 0 ? newData.join(';') : '';
+              setState(() {
+                updateData['departments'] = deps;
+              });
+            } else {
+              final newData = updateData['departments'].split(';');
+              newData.removeWhere(
+                  (element) => element.length == 0 || element == e);
+              final String deps = newData.length > 0 ? newData.join(';') : null;
+              setState(() {
+                updateData['departments'] = deps;
+              });
+            }
+          },
+        );
+      }).toList();
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -58,7 +95,7 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
           )),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-              child: ListView(
+        child: ListView(
           children: <Widget>[
             BoolIndicator(isActive),
             Stack(
@@ -176,6 +213,19 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                     });
                   }),
             ),
+            Container(
+              //Current Address
+              padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+              child: InputField(
+                  maxLines: 10,
+                  title: 'About',
+                  value: hospital != null ? hospital.about ?? "" : '',
+                  onChanged: (value) {
+                    setState(() {
+                      updateData = {...updateData, 'about': value};
+                    });
+                  }),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 22.0, right: 20.0),
               child: Column(
@@ -200,30 +250,58 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                           await showDialog(
                               context: context,
                               builder: (BuildContext context) {
+                                String localData;
                                 return SimpleDialog(
                                   children: <Widget>[
-                                   SimpleDialogOption(
-                                        child: FForms(
-                                          underline: false,
-                                          borderColor: theme.colorScheme.primary,
-                                          text: "Department",
-                                          onChanged: (value) {
-                                          },
-                                        ),
-                                      ),
-                                      SimpleDialogOption(
-                                          child: Container(
-                                              child: FRaisedButton(
-                                        text: 'Add',
-                                        onPressed: () {
+                                    SimpleDialogOption(
+                                      child: FForms(
+                                        underline: false,
+                                        borderColor: theme.colorScheme.primary,
+                                        text: "Department",
+                                        onChanged: (value) {
                                           setState(() {
-                                            
+                                            localData = value;
                                           });
-                                          Navigator.pop(context);
                                         },
-                                        bg: theme.colorScheme.primary,
-                                        color: textDark_Yellow,
-                                      )))
+                                      ),
+                                    ),
+                                    SimpleDialogOption(
+                                        child: Container(
+                                            child: FRaisedButton(
+                                      text: 'Add',
+                                      onPressed: () {
+                                        setState(() {
+                                          if (localData != null &&
+                                              localData.length >
+                                                  2) if (updateData[
+                                                      'departments'] !=
+                                                  null &&
+                                              updateData['departments'].length >
+                                                  0) {
+                                            updateData = {
+                                              ...updateData,
+                                              'departments':
+                                                  updateData['departments'] +
+                                                      ';' +
+                                                      localData
+                                            };
+                                          } else {
+                                            updateData = {
+                                              ...updateData,
+                                              'departments':
+                                                  hospital.departments != null
+                                                      ? hospital.departments +
+                                                          ';' +
+                                                          localData
+                                                      : localData
+                                            };
+                                          }
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                      bg: theme.colorScheme.primary,
+                                      color: textDark_Yellow,
+                                    )))
                                   ],
                                 );
                               });
@@ -240,18 +318,10 @@ class _HospitalProfileSettingsState extends State<HospitalProfileSettings> {
                       )
                     ],
                   ),
-                  Column(children: [
-                    Chip(
-                      backgroundColor: blueGrey,
-                      label: FancyText(
-                        text: 'Surgery',
-                        color: textDark_Yellow,
-                      ),
-                      // deleteIcon: Icon(Icons.delete),
-                      deleteIconColor: textDark_Yellow,
-                      onDeleted: () {},
-                    )
-                  ])
+                  Column(
+                    children: buildDepartmentChips(
+                        updateData['departments'] ?? hospital.departments),
+                  )
                 ],
               ),
             ),

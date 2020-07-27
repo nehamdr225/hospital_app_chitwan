@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chitwan_hospital/models/Hospital.dart';
+import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:chitwan_hospital/models/HospitalPromotion.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
@@ -32,6 +33,7 @@ class HospitalDataStore extends ChangeNotifier {
   List _doctors;
   Hospital _userData;
   List<HospitalPromotion> _promotions;
+  List<HospitalInquiry> _inquiries;
 
   Hospital get user => _userData;
 
@@ -51,6 +53,13 @@ class HospitalDataStore extends ChangeNotifier {
 
   set promotions(List<HospitalPromotion> newPromotions) {
     _promotions = newPromotions;
+    notifyListeners();
+  }
+
+  List<HospitalInquiry> get inquiries => _inquiries;
+
+  set inquiries(List<HospitalInquiry> newinquiries) {
+    _inquiries = newinquiries;
     notifyListeners();
   }
 
@@ -149,6 +158,20 @@ class HospitalDataStore extends ChangeNotifier {
 
   StorageUploadTask uploadFile(File file) {
     return DatabaseService.uploadFile(file, user.uid);
+  }
+
+  getInquiries() {
+    if (inquiries == null || inquiries.length == 0) {
+      DatabaseService.getInquiriesForHospital(user.uid).listen((event) {
+        if (event.documents.length > 0) {
+          final inquiryData = event.documents
+              .map<HospitalInquiry>((e) =>
+                  HospitalInquiry.fromJson({...e.data, 'id': e.documentID}))
+              .toList();
+          inquiries = inquiryData;
+        }
+      });
+    }
   }
 
   clearState() {
