@@ -1,5 +1,7 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
@@ -18,6 +20,7 @@ class HospitalInquiryForm extends StatefulWidget {
 class _HospitalInquiryFormState extends State<HospitalInquiryForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   HospitalInquiry inquiry = HospitalInquiry();
+  bool isActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +62,24 @@ class _HospitalInquiryFormState extends State<HospitalInquiryForm> {
                         return;
                       }
                       _formKey.currentState.save();
-                      print(inquiry.toJson());
-                      return;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      setState(() {
+                        isActive = true;
+                      });
+                      await userDataStore.createInquiry(inquiry.toJson());
+                      setState(() {
+                        isActive = false;
+                      });
+                      buildAndShowFlushBar(
+                        text: 'Inquiry has been submitted!',
+                        context: context,
+                        icon: Icons.check,
+                      );
+                      await Future.delayed(Duration(seconds: 2));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        (route) => false,
+                      );
                     }
                   : null,
             ),
@@ -75,6 +90,7 @@ class _HospitalInquiryFormState extends State<HospitalInquiryForm> {
         key: _formKey,
         child: ListView(
           children: <Widget>[
+            BoolIndicator(isActive),
             SizedBox(
               height: 10.0,
             ),

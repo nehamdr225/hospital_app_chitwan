@@ -18,7 +18,7 @@ class HospitalInquiry implements HospitalInquiryModel {
     this.userId,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, String> toJson() => {
         'inquiry': inquiry,
         'phone': phone,
         'hospitalId': hospitalId,
