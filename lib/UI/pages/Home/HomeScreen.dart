@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final userDataStore = Provider.of<UserDataStore>(context);
     userDataStore.handleInitialProfileLoad();
-    final List doctors = userDataStore.doctors;
+    final doctors = userDataStore.doctors;
     if (userDataStore.user == null)
       Future.delayed(Duration(seconds: 10)).then((value) {
         if (userDataStore.user == null) {
@@ -87,15 +87,7 @@ class HomeScreen extends StatelessWidget {
         Column(
             children: doctors != null
                 ? doctors
-                    .map<Widget>((each) => HomeListCard(
-                          doctorName: each['name'] ?? '',
-                          department: each['department'] ?? '',
-                          image: each['src'] ?? '',
-                          phone: each['phone'] ?? '',
-                          status: each['status'] ?? '',
-                          date: each['date'] ?? '',
-                          time: each['time'] ?? '',
-                        ))
+                    .map<Widget>((each) => HomeListCard(id: each.uid))
                     .toList()
                 : [Text('')]),
       ]),

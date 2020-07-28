@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chitwan_hospital/models/Doctor.dart';
 import 'package:chitwan_hospital/models/Favourites.dart';
 import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/models/HospitalInquiry.dart';
@@ -34,6 +35,7 @@ class UserDataStore extends ChangeNotifier {
             fetchMessages();
             getInquiries();
             getPromotions();
+            getFavourites();
           }
         }
       }
@@ -43,7 +45,7 @@ class UserDataStore extends ChangeNotifier {
   User _userData;
   List<Hospital> _hospitals;
   List _appointments;
-  List _doctors;
+  List<Doctor> _doctors;
   List<PharmacyAppointment> _prescriptions;
   List<LabAppointment> _labs;
   List _messages;
@@ -74,9 +76,9 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  List get doctors => _doctors;
+  List<Doctor> get doctors => _doctors;
 
-  set doctors(newDoctorData) {
+  set doctors(List<Doctor> newDoctorData) {
     _doctors = newDoctorData;
     notifyListeners();
   }
@@ -255,38 +257,14 @@ class UserDataStore extends ChangeNotifier {
   }
 
   void getAvailableDoctors(String hospital) {
-    if (hospital != null) {
-      DatabaseService.getDoctors().listen((QuerySnapshot onData) {
-        print(['Got doctor data\n', onData]);
-      }, onError: (e) {
-        print('Got doctor error\n $e');
-      });
-    } else {
-      DatabaseService.getDoctors().listen((QuerySnapshot onData) {
-        final List newDoctorData = onData.documents.map<Map>((each) {
-          final Map data = each.data;
-          data['id'] = each.documentID;
-          return data;
-        }).toList();
-        if (doctors == null) {
-          doctors = newDoctorData;
-        } else {
-          newDoctorData.removeWhere((element) => _doctors.firstWhere(
-                    (doc) => doc['id'] == element['id'],
-                    orElse: () => null,
-                  ) !=
-                  null
-              ? true
-              : false);
-          if (newDoctorData.length > 0) {
-            _doctors.addAll(newDoctorData);
-            notifyListeners();
-          }
-        }
-      }, onError: (e) {
-        print('Got doctor error\n $e');
-      });
-    }
+    DatabaseService.getDoctors().listen((QuerySnapshot onData) {
+      final List newDoctorData = onData.documents.map<Doctor>((each) {
+        final Map data = each.data;
+        data['id'] = each.documentID;
+        return Doctor.fromJson(data);
+      }).toList();
+      doctors = newDoctorData;
+    });
   }
 
   getPharmacies() {
@@ -440,7 +418,13 @@ class UserDataStore extends ChangeNotifier {
   }
 
   Future<void> deleteFavourite(String documentId) {
+    _favourites.removeWhere((element) => element.id == documentId);
+    notifyListeners();
     return DatabaseService.deleteFavourite(documentId);
+  }
+
+  Future<void> favourite(Map<String, String> data) {
+    return DatabaseService.createFavourite(data);
   }
 
   clearState() {

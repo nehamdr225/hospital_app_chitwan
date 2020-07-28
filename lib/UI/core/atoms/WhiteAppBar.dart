@@ -18,6 +18,8 @@ class WhiteAppBar extends StatelessWidget {
   final share;
   final bottom;
   final List<Widget> tabs;
+  final onFavClick;
+  bool isFav;
   WhiteAppBar({
     this.elevation: 0.0,
     this.logo,
@@ -34,6 +36,8 @@ class WhiteAppBar extends StatelessWidget {
     this.backgroundColor,
     this.color,
     this.bottom,
+    this.isFav,
+    this.onFavClick,
   });
   @override
   Widget build(BuildContext context) {
@@ -93,7 +97,7 @@ class WhiteAppBar extends StatelessWidget {
                 ),
                 onPressed: () {},
               )
-            : Text(''),
+            : SizedBox.shrink(),
         share == true
             ? IconButton(
                 icon: Icon(
@@ -101,7 +105,15 @@ class WhiteAppBar extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {})
-            : Text(""),
+            : SizedBox.shrink(),
+        onFavClick != null
+            ? IconButton(
+                icon: Icon(
+                  isFav ? Icons.favorite : Icons.favorite_border,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onPressed: onFavClick)
+            : SizedBox.shrink(),
         download == true
             ? IconButton(
                 icon: Icon(
@@ -110,7 +122,7 @@ class WhiteAppBar extends StatelessWidget {
                 ),
                 onPressed: () {},
               )
-            : Text(''),
+            : SizedBox.shrink(),
       ],
     );
   }

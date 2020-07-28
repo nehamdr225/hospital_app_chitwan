@@ -1,15 +1,17 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
-    final items = NearYou;
-    return items.length > 0
+    final favourites = Provider.of<UserDataStore>(context).favourites;
+
+    return favourites != null && favourites.length > 0
         ? Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(50.0),
@@ -22,16 +24,10 @@ class FavoritePage extends StatelessWidget {
             backgroundColor: theme.background,
             body: ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: 3,
+              itemCount: favourites.length,
               itemBuilder: (BuildContext context, int index) {
                 return HomeListCard(
-                  doctorName: NearYou[index]['name'],
-                  department: NearYou[index]['cap'],
-                  image: NearYou[index]['src'],
-                  phone: NearYou[index]['phone'],
-                  status: NearYou[index]['status'],
-                  date: NearYou[index]['date'],
-                  time: NearYou[index]['time'],
+                  id: favourites[index].favId,
                 );
               },
             ))

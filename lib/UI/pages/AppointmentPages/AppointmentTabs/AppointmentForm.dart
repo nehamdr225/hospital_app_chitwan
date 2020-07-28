@@ -48,7 +48,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     "5:00 PM",
     "7:00 PM",
   ];
-  bool isActive = false; 
+  bool isActive = false;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -346,11 +346,11 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                     .map((value) {
                                     return DropdownMenuItem(
                                       child: FancyText(
-                                        text: value['name'],
+                                        text: value.name,
                                         color: blueGrey,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                      value: value['name'],
+                                      value: value.name,
                                     );
                                   }).toList()
                                 : [
@@ -602,9 +602,9 @@ class _AppointmentFormState extends State<AppointmentForm> {
                           final updateData = widget.appointment.toJson();
                           updateData['userId'] = userDataStore.user.uid;
                           final doctor = userDataStore.doctors.firstWhere(
-                              (element) => element['name'] == _valDoctor,
-                              orElse: () => {name: ''});
-                          updateData['doctorId'] = doctor['id'];
+                              (element) => element.name == _valDoctor,
+                              orElse: () => null);
+                          updateData['doctorId'] = doctor.uid;
                           userDataStore
                               .createAppointment(updateData)
                               .then((value) async {

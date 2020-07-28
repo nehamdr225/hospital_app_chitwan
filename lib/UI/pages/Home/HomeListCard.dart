@@ -3,29 +3,14 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DoctorDetails.dart';
 import 'package:chitwan_hospital/models/DoctorAppointment.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class HomeListCard extends StatefulWidget {
-  final doctorName;
-  final image;
-  final department;
-  final phone;
-  final status;
-  final date;
-  final time;
-  final take;
-  final data;
-  HomeListCard(
-      {this.image,
-      this.doctorName,
-      this.department,
-      this.phone,
-      this.date,
-      this.status,
-      this.time,
-      this.take,
-      this.data = false});
+  final id;
+  HomeListCard({this.id});
 
   @override
   _HomeListCardState createState() => _HomeListCardState();
@@ -34,17 +19,12 @@ class HomeListCard extends StatefulWidget {
 class _HomeListCardState extends State<HomeListCard> {
   @override
   Widget build(BuildContext context) {
-    final newAppointment = new DoctorAppointment(
-        null,
-        null,
-        widget.department,
-        widget.doctorName,
-        "Female",
-        "online",
-        "Neha",
-        "KMC",
-        "Mdr",
-        "9840056679");
+    final doctor = Provider.of<UserDataStore>(context)
+        .doctors
+        .firstWhere((element) => element.uid == widget.id);
+
+    final newAppointment = new DoctorAppointment(null, null, doctor.department,
+        doctor.name, "Female", "online", "Neha", "KMC", "Mdr", "9840056679");
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Padding(
@@ -53,13 +33,7 @@ class _HomeListCardState extends State<HomeListCard> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DoctorDetails(
-                    name: widget.doctorName,
-                    caption: widget.department,
-                    image: widget.image,
-                    phone: widget.phone,
-                    status: widget.status,
-                    date: widget.date,
-                    time: widget.time,
+                    id: doctor.uid,
                   )));
         },
         child: Container(
@@ -111,7 +85,7 @@ class _HomeListCardState extends State<HomeListCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           FancyText(
-                            text: widget.doctorName,
+                            text: doctor.name,
                             fontWeight: FontWeight.w700,
                             size: 15.5,
                             textAlign: TextAlign.left,
@@ -130,7 +104,7 @@ class _HomeListCardState extends State<HomeListCard> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
                                 child: FancyText(
-                                    text: widget.department,
+                                    text: doctor.department ?? 'Not available',
                                     textAlign: TextAlign.left,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -167,7 +141,7 @@ class _HomeListCardState extends State<HomeListCard> {
                                   color: theme.colorScheme.primary,
                                 ),
                                 FancyText(
-                                  text: "  ${widget.phone}",
+                                  text: "  ${doctor.phone}",
                                   textAlign: TextAlign.left,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -177,8 +151,7 @@ class _HomeListCardState extends State<HomeListCard> {
                           SizedBox(
                             height: 30.0,
                             child: RaisedButton(
-                              onPressed: widget.department != null &&
-                                      widget.department.length > 0
+                              onPressed: doctor.department != null
                                   ? () {
                                       Navigator.push(
                                           context,
@@ -186,9 +159,9 @@ class _HomeListCardState extends State<HomeListCard> {
                                               builder: (context) =>
                                                   AppointmentForm(
                                                     appointment: newAppointment,
-                                                    doctor: widget.doctorName,
+                                                    doctor: doctor.name,
                                                     department:
-                                                        widget.department,
+                                                        doctor.department,
                                                   )));
                                     }
                                   : () {
@@ -198,7 +171,7 @@ class _HomeListCardState extends State<HomeListCard> {
                                               builder: (context) =>
                                                   AppointmentForm(
                                                     appointment: newAppointment,
-                                                    doctor: widget.doctorName,
+                                                    doctor: doctor.name,
                                                   )));
                                     },
                               color: theme.colorScheme.secondary,
