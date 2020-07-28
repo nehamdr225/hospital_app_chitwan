@@ -107,6 +107,7 @@ class _OthersSignUpState extends State<OthersSignUp> {
                           ),
                           Column(children: <Widget>[
                             FForms(
+                              type: TextInputType.emailAddress,
                               validator: (val) =>
                                   val.length < 6 ? 'Enter your email' : null,
                               onChanged: (val) {

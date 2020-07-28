@@ -79,6 +79,7 @@ class _SignUpState extends State<SignUp> {
                                     formColor: Colors.white,
                                     text: "Email",
                                     textColor: Colors.black38,
+                                    type: TextInputType.emailAddress,
                                     width: size.width * 0.90,
                                   ),
                                   SizedBox(height: 5.0),

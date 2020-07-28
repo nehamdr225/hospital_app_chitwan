@@ -167,7 +167,7 @@ class HospitalProfile extends StatelessWidget {
                   const EdgeInsets.only(top: 14.0, right: 10.0, left: 10.0),
               child: Container(
                   alignment: Alignment.center,
-                  height: 120.0,
+                  height: 130.0,
                   child: HospitalPromo(
                     promotions: promotions,
                   )),
@@ -198,9 +198,10 @@ class HospitalProfile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
+                  Container(
+                    alignment: Alignment.centerLeft,
                     padding:
-                        const EdgeInsets.only(left: 0.0, right: 0.0, top: 6.0),
+                        const EdgeInsets.only(left: 10.0, right: 0.0, top: 14.0),
                     child: FancyText(
                         letterSpacing: 1.0,
                         wordSpacing: 2.0,

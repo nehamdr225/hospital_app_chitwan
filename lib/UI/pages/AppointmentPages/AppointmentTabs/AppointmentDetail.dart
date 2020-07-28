@@ -118,10 +118,34 @@ class AppointmentDetail extends StatelessWidget {
           ),
         ),
         backgroundColor: theme.colorScheme.background,
+        persistentFooterButtons: <Widget>[
+          appointment['status'] == 'accepted'
+              ? Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: FRaisedButton(
+                    height: 45.0,
+                    width: size.width * 0.95,
+                    bg: theme.colorScheme.primary,
+                    color: textDark_Yellow,
+                    text: "Chat with Doctor",
+                    shape: true,
+                    radius: 12.0,
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatScreen(
+                                  userId: appointment['userId'],
+                                  doctorId: appointment['doctorId'],
+                                  docName: appointment['doctor'],
+                                ))), //user: chats[index].sender))),
+                  ),
+                )
+              : SizedBox.shrink(),
+        ],
         body: ListView(children: <Widget>[
           // Indicator(isActive),
           Container(
-            height:size.height*0.40,
+            height: 300.0,
             child: Column(children: <Widget>[
               Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -282,9 +306,10 @@ class AppointmentDetail extends StatelessWidget {
                   ),
             ),
           ),
-          Padding(
+          Container(
+            height: 90.0,
             padding: const EdgeInsets.only(
-                top: 8.0, bottom: 8.0, left: 15.0, right: 8.0),
+                top: 8.0, bottom: 0.0, left: 15.0, right: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -326,39 +351,20 @@ class AppointmentDetail extends StatelessWidget {
               ],
             ),
           ),
-
-          appointment['status'] == 'accepted'
-              ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: FRaisedButton(
-                    width: size.width * 0.95,
-                    bg: theme.colorScheme.primary,
-                    color: textDark_Yellow,
-                    text: "Chat with Doctor",
-                    shape: true,
-                    radius: 12.0,
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChatScreen(
-                                  userId: appointment['userId'],
-                                  doctorId: appointment['doctorId'],
-                                  docName: appointment['doctor'],
-                                ))), //user: chats[index].sender))),
-                  ),
-                )
-              : SizedBox.shrink(),
+        
+          
             ],)
           ),
           
           Container(
-            height: size.height * 0.50,
+            height: size.height * 0.35,
             child: Timeline.builder(
                 physics: ClampingScrollPhysics(),
                 position: TimelinePosition.Left,
                 itemCount: diagnosis.length,
                 itemBuilder: centerTimelineBuilder),
-          )
+          ),
+          SizedBox(height:45.0)
         ]),
       ),
     );

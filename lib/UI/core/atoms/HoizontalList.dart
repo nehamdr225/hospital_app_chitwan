@@ -1,12 +1,11 @@
 import 'package:chitwan_hospital/UI/core/atoms/Category.dart';
 import 'package:chitwan_hospital/UI/pages/Ambulance/AmbulanceTab.dart';
-import 'package:chitwan_hospital/UI/pages/BloodBankForm.dart';
 import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalTab.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabTab.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
-import 'package:chitwan_hospital/models/BloodRequest.dart';
 import 'package:flutter/material.dart';
+import 'FancyText.dart';
 
 class HorizontalList extends StatefulWidget {
   final listViews;
@@ -26,8 +25,8 @@ class HorizontalList extends StatefulWidget {
 class _HorizontalListState extends State<HorizontalList> {
   @override
   Widget build(BuildContext context) {
-    final BloodRequest newRequest =
-        BloodRequest(null, null, null, null, null, null, null);
+    // final BloodRequest newRequest =
+    //     BloodRequest(null, null, null, null, null, null, null);
     return ListView.builder(
       scrollDirection: widget.scrollDirection,
       itemCount: widget.listViews.length,
@@ -75,13 +74,28 @@ class _HorizontalListState extends State<HorizontalList> {
                   ),
                 );
               } else if (widget.listViews[index]['id'] == 5) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => BloodBankForm(
-                      bloodRequestForm: newRequest,
-                    ),
-                  ),
-                );
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Container(
+                          alignment: Alignment.center,
+                          height: 50.0,
+                          child: FancyText(
+                              text: "Coming Soon!",
+                              size: 16.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    });
+
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => BloodBankForm(
+                //       bloodRequestForm: newRequest,
+                //     ),
+                //   ),
+                // );
               }
             },
           ),

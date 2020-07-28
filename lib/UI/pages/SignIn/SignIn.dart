@@ -106,6 +106,7 @@ class _SignInState extends State<SignIn> {
                             SizedBox(height: 10.0),
                             FForms(
                               textInputAction: TextInputAction.next,
+                              type: TextInputType.emailAddress,
                               currentFocus: _emailFocus,
                               nextFocus: _passwordFocus,
                               underline: true,

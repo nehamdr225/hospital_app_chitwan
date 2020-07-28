@@ -123,6 +123,7 @@ class _OthersLoginState extends State<OthersLogin> {
                                 // borderColor: theme.background,
                                 underline: true,
                                 formColor: Colors.white,
+                                type: TextInputType.emailAddress,
                                 text: "Email",
                                 currentFocus: _emailFocus,
                                 nextFocus: _passwordFocus,

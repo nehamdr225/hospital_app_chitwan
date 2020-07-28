@@ -1,6 +1,5 @@
 import 'package:chitwan_hospital/UI/Chat/ChatHome.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
-import 'package:chitwan_hospital/UI/core/atoms/DrawerEPanel.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
@@ -132,21 +131,12 @@ class _DrawerAppState extends State<DrawerApp> {
                     },
                   )
                 : SizedBox(height: 0.0),
-            DrawerEPanel([
-              ListItem(
-                  title: Image.asset(
-                    'assets/images/drawerIcon/calendar.png',
-                    height: 25.0,
-                    width: 25.0,
-                  ),
-                  subtitle: "Appointment & Orders",
-                  bodyBuilder: (context) => Column(children: <Widget>[
-                        user != null
+            user != null
                             ? DrawerElements(
                                 //Appointments
                                 title: 'Appointments',
                                 icon: 'assets/images/drawerIcon/calendar.png',
-                                iconSize: 0.0,
+                             
                                 onTap: () {
                                   Navigator.push(
                                       context,
@@ -160,8 +150,8 @@ class _DrawerAppState extends State<DrawerApp> {
                             ? DrawerElements(
                                 //Appointments
                                 title: 'Prescription',
-                                icon: 'assets/images/drawerIcon/calendar.png',
-                                iconSize: 0.0,
+                                icon: 'assets/images/drawerIcon/prescription.png',
+                                iconSize: 21.0,
                                 onTap: () {
                                   Navigator.push(
                                       context,
@@ -176,8 +166,8 @@ class _DrawerAppState extends State<DrawerApp> {
                             ? DrawerElements(
                                 //Appointments
                                 title: 'Lab Reports',
-                                icon: 'assets/images/drawerIcon/calendar.png',
-                                iconSize: 0.0,
+                                icon: 'assets/images/drawerIcon/lab.png',
+                                iconSize: 21.0,
                                 onTap: () {
                                   Navigator.push(
                                       context,
@@ -188,8 +178,22 @@ class _DrawerAppState extends State<DrawerApp> {
                                 },
                               )
                             : SizedBox.shrink(),
-                      ]))
-            ]),
+                         user != null
+                            ? DrawerElements(
+                                //Appointments
+                                title: 'Inquiry',
+                                icon: 'assets/images/drawerIcon/inquiry.png',
+                                iconSize: 21.0,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AppointmentPage(
+                                                getIndex: 3,
+                                              )));
+                                },
+                              )
+                            : SizedBox.shrink(),
 
             DrawerElements(
               //Specialities
