@@ -303,7 +303,7 @@ class UserDataStore extends ChangeNotifier {
   }
 
   void getLabs() {
-    if (pharmacies == null || pharmacies.length == 0) {
+    if (laboratories == null || laboratories.length == 0) {
       DatabaseService.getLabs().listen((event) {
         if (event.documents.length > 0) {
           final labData = event.documents
