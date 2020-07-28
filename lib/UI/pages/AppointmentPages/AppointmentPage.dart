@@ -18,7 +18,11 @@ class _AppointmentPageState extends State<AppointmentPage>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 4, vsync: this, initialIndex: widget.getIndex, );
+    _tabController = new TabController(
+      length: 4,
+      vsync: this,
+      initialIndex: widget.getIndex,
+    );
     super.initState();
   }
 

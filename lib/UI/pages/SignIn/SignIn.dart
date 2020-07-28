@@ -10,8 +10,6 @@ import 'package:chitwan_hospital/UI/resetPassword.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:chitwan_hospital/state/user.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -34,7 +32,6 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    final userDataStore = Provider.of<UserDataStore>(context);
 
     handleSignIn() async {
       try {
@@ -45,15 +42,16 @@ class _SignInState extends State<SignIn> {
           _formKey.currentState.save();
           dynamic result =
               await AuthService.signInWithEmailAndPassword(email, password);
-          setState(() {
-            loading = false;
-          });
+          // setState(() {
+          // loading = false;
+          // });
           if (result == null) {
             setState(() {
+              loading = false;
               error = 'Could not sign in with those credentials';
             });
           } else {
-            userDataStore.fetchUserData(result.uid);
+            // userDataStore.fetchUserData(result.uid);
             setLocalUserData('userType', 'user');
             Navigator.pushAndRemoveUntil(
                 context,
@@ -75,7 +73,10 @@ class _SignInState extends State<SignIn> {
             resizeToAvoidBottomInset: true,
             backgroundColor: theme.background,
             appBar: PreferredSize(
-                  child: WhiteAppBar(color: theme.background,), preferredSize: Size.fromHeight(50.0)),
+                child: WhiteAppBar(
+                  color: theme.background,
+                ),
+                preferredSize: Size.fromHeight(50.0)),
             body: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Container(
@@ -161,8 +162,8 @@ class _SignInState extends State<SignIn> {
                             SizedBox(height: 5.0),
                             Container(
                               alignment: Alignment.centerRight,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 18.0, horizontal: 18.0),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 18.0, horizontal: 18.0),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(

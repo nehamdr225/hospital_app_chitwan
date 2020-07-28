@@ -55,6 +55,7 @@ class WhiteAppBar extends StatelessWidget {
               labelColor: theme.colorScheme.onPrimary,
               tabs: tabs,
               controller: controller,
+              isScrollable: true,
             )
           : bottom,
       title: FancyText(

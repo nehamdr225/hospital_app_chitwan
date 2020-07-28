@@ -1,28 +1,34 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/InquiryDetail.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InquiryCard extends StatefulWidget {
+  final id;
+  InquiryCard({this.id});
   @override
   _InquiryCardState createState() => _InquiryCardState();
 }
 
 class _InquiryCardState extends State<InquiryCard> {
-  String status=""; 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    final inquiry = Provider.of<UserDataStore>(context)
+        .inquiries
+        .firstWhere((element) => element.id == widget.id);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-          onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => InquiryDetail()));
-          },
-              child: Container(
+        onTap: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => InquiryDetail()));
+        },
+        child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
               color: Theme.of(context).colorScheme.background,
@@ -61,33 +67,74 @@ class _InquiryCardState extends State<InquiryCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          FancyText(
-                            text: "Inquiry Title",
-                            textOverflow: TextOverflow.ellipsis,
-                            fontWeight: FontWeight.w700,
-                            size: 15.5,
-                            textAlign: TextAlign.left,
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            child: FancyText(
+                              text: inquiry.title,
+                              textOverflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.w700,
+                              size: 16,
+                              textAlign: TextAlign.left,
+                              color: theme.colorScheme.primaryVariant,
+                            ),
                           ),
-                          status == "ready"
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 3.0),
-                                  child: FancyText(
-                                    textOverflow: TextOverflow.ellipsis,
-                                    text: "Hospital's answer",
-                                    textAlign: TextAlign.left,
-                                    defaultStyle: true,
-                                  ),
-                                )
-                              : Padding(
-                                  //processing
-                                  padding: const EdgeInsets.only(top: 3.0),
-                                  child: FancyText(
-                                    textOverflow: TextOverflow.ellipsis,
-                                    text: "Your Inquiry detail",
-                                    textAlign: TextAlign.left,
-                                    color: Colors.black45,
-                                  ),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 3.0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.local_hospital,
+                                  size: 20.0,
                                 ),
+                                SizedBox(width: 10.0),
+                                FancyText(
+                                  text: inquiry.hospitalName,
+                                  textOverflow: TextOverflow.ellipsis,
+                                  size: 16,
+                                  textAlign: TextAlign.left,
+                                  color: theme.colorScheme.primaryVariant,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.chat_bubble_outline,
+                                size: 20.0,
+                              ),
+                              SizedBox(width: 10.0),
+                              FancyText(
+                                textOverflow: TextOverflow.visible,
+                                text: inquiry.inquiry,
+                                textAlign: TextAlign.left,
+                                color: Colors.black87,
+                              ),
+                            ],
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 3.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    inquiry.answer != null
+                                        ? Icons.check
+                                        : Icons.cancel,
+                                    size: 20.0,
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  FancyText(
+                                    textOverflow: TextOverflow.visible,
+                                    text: inquiry.answer ??
+                                        'Inquiry is yet to be answered!',
+                                    textAlign: TextAlign.left,
+                                    color: inquiry.answer != null
+                                        ? Colors.black87
+                                        : Colors.red,
+                                    // defaultStyle: true,
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
                     ),
@@ -98,8 +145,7 @@ class _InquiryCardState extends State<InquiryCard> {
                         width: 80.0,
                         height: 30.0,
                         decoration: BoxDecoration(
-                            color: status != null &&
-                                    status == "ready"
+                            color: inquiry.answer != null
                                 ? Colors.green.shade400
                                 : theme.colorScheme.secondary,
                             borderRadius: BorderRadius.only(
@@ -107,7 +153,8 @@ class _InquiryCardState extends State<InquiryCard> {
                                 bottomLeft: Radius.circular(3.0))),
                         child: Center(
                           child: FancyText(
-                            text: status ?? 'Pending',
+                            text:
+                                inquiry.answer != null ? 'Answered' : 'Pending',
                             opacity: 0.5,
                             color: textDark_Yellow,
                           ),

@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HospitalInquiryForm extends StatefulWidget {
-  final id;
-  HospitalInquiryForm({@required this.id});
+  final id, name;
+  HospitalInquiryForm({@required this.id, @required this.name});
   @override
   _HospitalInquiryFormState createState() => _HospitalInquiryFormState();
 }
@@ -31,6 +31,7 @@ class _HospitalInquiryFormState extends State<HospitalInquiryForm> {
         inquiry.hospitalId = widget.id;
         inquiry.userId = userDataStore.user?.uid;
         inquiry.phone = userDataStore.user?.phone;
+        inquiry.hospitalName = widget.name;
       });
     }
     return Scaffold(
@@ -93,6 +94,30 @@ class _HospitalInquiryFormState extends State<HospitalInquiryForm> {
             BoolIndicator(isActive),
             SizedBox(
               height: 10.0,
+            ),
+            Padding(
+              //phone number
+              padding: const EdgeInsets.all(10.0),
+              child: FForms(
+                icon: Icon(
+                  Icons.title,
+                  color: theme.iconTheme.color,
+                ),
+                text: "Inquiry Title",
+                type: TextInputType.text,
+                //width: width * 0.80,
+                borderColor: theme.colorScheme.primary,
+                formColor: Colors.white,
+                textColor: blueGrey.withOpacity(0.7),
+                validator: (val) => val.isEmpty || val.length < 8
+                    ? 'Inquiry title is required'
+                    : null,
+                onChanged: (value) {
+                  setState(() {
+                    inquiry.title = value;
+                  });
+                },
+              ),
             ),
             Padding(
               //phone number

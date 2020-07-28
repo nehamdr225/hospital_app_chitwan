@@ -75,6 +75,7 @@ class HospitalProfile extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => HospitalInquiryForm(
                                   id: id,
+                                  name: hospital.name,
                                 ),
                               ),
                             );
