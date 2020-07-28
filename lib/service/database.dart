@@ -293,6 +293,12 @@ abstract class DatabaseService {
     return inquiryCollection.document().setData(data);
   }
 
+  static Future<void> updateInquiryAnswer(String documentId, String answer) {
+    return inquiryCollection
+        .document(documentId)
+        .updateData({'answer': answer});
+  }
+
   static Stream<QuerySnapshot> getInquiries(String userId) {
     return inquiryCollection.where('userId', isEqualTo: userId).snapshots();
   }

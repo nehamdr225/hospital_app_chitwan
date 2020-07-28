@@ -175,6 +175,10 @@ class HospitalDataStore extends ChangeNotifier {
     }
   }
 
+  updateInquiryAnswer(String documentId, String answer) {
+    DatabaseService.updateInquiryAnswer(documentId, answer);
+  }
+
   clearState() {
     _userData = null;
     setLocalUserData('userType', null);

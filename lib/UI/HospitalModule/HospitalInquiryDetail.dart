@@ -2,6 +2,7 @@ import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
@@ -44,10 +45,22 @@ class _HospitalInquiryDetailState extends State<HospitalInquiryDetail> {
               color: textDark_Yellow,
               bg: Theme.of(context).colorScheme.primaryVariant,
               onPressed: inquiryAnswer != null && inquiryAnswer.length > 20
-                  ? () {
+                  ? () async {
                       setState(() {
                         isActive = true;
                       });
+                      await hospitalDataStore.updateInquiryAnswer(
+                          inquiry.id, inquiryAnswer);
+                      setState(() {
+                        isActive = false;
+                      });
+                      buildAndShowFlushBar(
+                        context: context,
+                        text: 'Inquiry has been answered!',
+                        icon: Icons.check,
+                      );
+                      await Future.delayed(Duration(seconds: 2));
+                      Navigator.of(context).pop();
                     }
                   : null),
         ),
