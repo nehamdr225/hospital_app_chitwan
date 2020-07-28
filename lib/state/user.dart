@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chitwan_hospital/models/Favourites.dart';
 import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:chitwan_hospital/models/HospitalPromotion.dart';
@@ -50,6 +51,7 @@ class UserDataStore extends ChangeNotifier {
   List<Laboratory> _laboratories;
   List<HospitalInquiry> _inquiries;
   List<HospitalPromotion> _promotions;
+  List<Favourite> _favourites;
 
   List get messages => _messages;
 
@@ -125,6 +127,13 @@ class UserDataStore extends ChangeNotifier {
 
   set promotions(List<HospitalPromotion> newPromotions) {
     _promotions = newPromotions;
+    notifyListeners();
+  }
+
+  List<Favourite> get favourites => _favourites;
+
+  set favourites(List<Favourite> newfavourites) {
+    _favourites = newfavourites;
     notifyListeners();
   }
 
@@ -415,6 +424,23 @@ class UserDataStore extends ChangeNotifier {
         promotions = promoData;
       }
     });
+  }
+
+  void getFavourites() {
+    DatabaseService.getFavourites(user.uid).listen((event) {
+      if (event.documents.length > 0) {
+        final favData = event.documents.map<Favourite>((e) {
+          final data = e.data;
+          data['id'] = e.documentID;
+          return Favourite.fromJson(data);
+        }).toList();
+        favourites = favData;
+      }
+    });
+  }
+
+  Future<void> deleteFavourite(String documentId) {
+    return DatabaseService.deleteFavourite(documentId);
   }
 
   clearState() {
