@@ -29,6 +29,8 @@ abstract class DatabaseService {
       db.collection('messages');
   static final CollectionReference inquiryCollection =
       db.collection('inquiries');
+  static final CollectionReference favouritesCollection =
+      db.collection('favourites');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
     return await userCollection.document(uid).setData(data, merge: true);
@@ -307,5 +309,17 @@ abstract class DatabaseService {
     return inquiryCollection
         .where('hospitalId', isEqualTo: hospitalId)
         .snapshots();
+  }
+
+  static Future<void> createFavourite(Map<String, String> data) {
+    return favouritesCollection.document().setData(data);
+  }
+
+  static Stream<QuerySnapshot> getFavourites(String userId) {
+    return favouritesCollection.where('userId', isEqualTo: userId).snapshots();
+  }
+
+  static Future<void> deleteFavourite(String documentId) {
+    return favouritesCollection.document(documentId).delete();
   }
 }
