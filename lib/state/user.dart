@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/models/HospitalInquiry.dart';
+import 'package:chitwan_hospital/models/HospitalPromotion.dart';
 import 'package:chitwan_hospital/models/Lab.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
@@ -31,6 +32,7 @@ class UserDataStore extends ChangeNotifier {
             getUserLabs();
             fetchMessages();
             getInquiries();
+            getPromotions();
           }
         }
       }
@@ -47,6 +49,7 @@ class UserDataStore extends ChangeNotifier {
   List _pharmacies;
   List<Laboratory> _laboratories;
   List<HospitalInquiry> _inquiries;
+  List<HospitalPromotion> _promotions;
 
   List get messages => _messages;
 
@@ -115,6 +118,13 @@ class UserDataStore extends ChangeNotifier {
 
   set inquiries(List<HospitalInquiry> newData) {
     _inquiries = newData;
+    notifyListeners();
+  }
+
+  List<HospitalPromotion> get promotions => _promotions;
+
+  set promotions(List<HospitalPromotion> newPromotions) {
+    _promotions = newPromotions;
     notifyListeners();
   }
 
@@ -392,6 +402,19 @@ class UserDataStore extends ChangeNotifier {
 
   createInquiry(Map<String, String> data) {
     return DatabaseService.createInquiry(data);
+  }
+
+  void getPromotions() {
+    DatabaseService.getPromotionsForUser().listen((event) {
+      if (event.documents.length > 0) {
+        final promoData = event.documents.map<HospitalPromotion>((e) {
+          final data = e.data;
+          data['id'] = e.documentID;
+          return HospitalPromotion.fromJson(data);
+        }).toList();
+        promotions = promoData;
+      }
+    });
   }
 
   clearState() {

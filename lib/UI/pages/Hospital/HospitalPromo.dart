@@ -1,16 +1,20 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/models/HospitalPromotion.dart';
 import 'package:flutter/material.dart';
 
 class HospitalPromo extends StatelessWidget {
+  final List<HospitalPromotion> promotions;
+  HospitalPromo({this.promotions});
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: 3,
+      itemCount: promotions.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.only(
@@ -47,9 +51,7 @@ class HospitalPromo extends StatelessWidget {
                     height: 170.0,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(
-                            "assets/images/img5.jpeg",
-                          ),
+                          image: NetworkImage(promotions[index].image),
                           fit: BoxFit.fill),
                       borderRadius: BorderRadius.circular(8.0),
                     )),
@@ -60,24 +62,24 @@ class HospitalPromo extends StatelessWidget {
                   ),
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                  
-                  FancyText(
-                      letterSpacing: 1.0,
-                      text: "Promotions",
-                      color: textDark_Yellow,
-                      size: 17.0,
-                      fontWeight: FontWeight.w600),
-                  RowInput(
-                    title: "Date:  ",
-                    titleColor: textDark_Yellow,
-                    defaultStyle: false,
-                    caption: "10-12-2020 to 10-24-2020",
-                    capColor: textDark_Yellow,
                     mainAxisAlignment: MainAxisAlignment.center,
-                  )
-                ]),
+                    children: <Widget>[
+                      FancyText(
+                          letterSpacing: 1.0,
+                          text: promotions[index].title,
+                          color: textDark_Yellow,
+                          size: 17.0,
+                          fontWeight: FontWeight.w600),
+                      RowInput(
+                        title: "Date:  ",
+                        titleColor: textDark_Yellow,
+                        defaultStyle: false,
+                        caption:
+                            "${promotions[index].fromDate} to ${promotions[index].fromDate}",
+                        capColor: textDark_Yellow,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      )
+                    ]),
               ],
             ),
           ),

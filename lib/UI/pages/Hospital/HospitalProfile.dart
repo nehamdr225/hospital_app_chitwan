@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalInqury.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalNews.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromo.dart';
+import 'package:chitwan_hospital/models/HospitalPromotion.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +17,14 @@ class HospitalProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-
-    final hospital = Provider.of<UserDataStore>(context)
-        .hospitals
-        .firstWhere((element) => element.uid == id);
+    final userDataStore = Provider.of<UserDataStore>(context);
+    final hospital =
+        userDataStore.hospitals.firstWhere((element) => element.uid == id);
+    final List<HospitalPromotion> promotions = userDataStore.promotions != null
+        ? userDataStore.promotions
+            .where((element) => element.hospitalId == id)
+            .toList()
+        : [];
 
     return Scaffold(
       backgroundColor: theme.background,
@@ -122,14 +127,13 @@ class HospitalProfile extends StatelessWidget {
                 padding:
                     const EdgeInsets.only(left: 33.0, right: 20.0, top: 6.0),
                 child: FancyText(
-                  letterSpacing: 1.0,
-                  wordSpacing: 2.0,
-                  textAlign: TextAlign.left,
-                  color: Colors.black87,
-                  size: 15.0,
-                  text:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                ),
+                    textOverflow: TextOverflow.visible,
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    textAlign: TextAlign.left,
+                    color: Colors.black87,
+                    size: 15.0,
+                    text: hospital.about ?? 'Not Available'),
               ),
             ],
           ),
@@ -164,7 +168,9 @@ class HospitalProfile extends StatelessWidget {
               child: Container(
                   alignment: Alignment.center,
                   height: 120.0,
-                  child: HospitalPromo()),
+                  child: HospitalPromo(
+                    promotions: promotions,
+                  )),
             ),
           ]),
         )),
@@ -193,17 +199,18 @@ class HospitalProfile extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 33.0, right: 20.0, top: 6.0),
+                    padding:
+                        const EdgeInsets.only(left: 0.0, right: 0.0, top: 6.0),
                     child: FancyText(
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0,
-                      textAlign: TextAlign.left,
-                      color: Colors.black87,
-                      size: 15.0,
-                      text:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    ),
+                        letterSpacing: 1.0,
+                        wordSpacing: 2.0,
+                        textAlign: TextAlign.left,
+                        textOverflow: TextOverflow.visible,
+                        color: Colors.black87,
+                        size: 15.0,
+                        text: hospital.departments != null
+                            ? hospital.departments.replaceAll(';', ', ')
+                            : 'Not available'),
                   ),
                 ]))),
         SliverToBoxAdapter(
