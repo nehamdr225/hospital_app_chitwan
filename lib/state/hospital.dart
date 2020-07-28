@@ -26,6 +26,7 @@ class HospitalDataStore extends ChangeNotifier {
         }
         getAvailableDoctors();
         getPromotions();
+        getInquiries();
       }
     } catch (e) {}
   }

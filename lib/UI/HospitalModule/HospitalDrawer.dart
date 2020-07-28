@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalProfile.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/InquiryTab.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/PromotionTab.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -127,27 +128,44 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
             //       )
             //     : SizedBox(height:0.0),
             user != null
-                ?DrawerElements(
-              //Home
-              title: 'Promotions',
-              icon: 'assets/images/drawerIcon/calendar.png',
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PromotionTab()));
-              },
-            ):SizedBox.shrink(),
+                ? DrawerElements(
+                    //Home
+                    title: 'Promotions',
+                    icon: 'assets/images/drawerIcon/calendar.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PromotionTab()));
+                    },
+                  )
+                : SizedBox.shrink(),
             user != null
-                ?DrawerElements(
-              //Home
-              title: 'Profile',
-              icon: 'assets/images/drawerIcon/profile.png',
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HospitalProfileSettings()));
-              },
-            ):SizedBox.shrink(),
+                ? DrawerElements(
+                    //Home
+                    title: 'Inquiries',
+                    icon: 'assets/images/drawerIcon/chat.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InquiryTab()));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Home
+                    title: 'Profile',
+                    icon: 'assets/images/drawerIcon/profile.png',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HospitalProfileSettings()));
+                    },
+                  )
+                : SizedBox.shrink(),
 
             Divider(
               color: Colors.grey[500],
@@ -171,7 +189,7 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                 //     MaterialPageRoute(builder: (context) => AboutPage()));
               },
             ),
-            
+
             user != null
                 ? Padding(
                     padding: const EdgeInsets.only(
