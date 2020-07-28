@@ -5,28 +5,23 @@ import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class InquiryCard extends StatefulWidget {
+class InquiryCard extends StatelessWidget {
   final id;
   InquiryCard({this.id});
-  @override
-  _InquiryCardState createState() => _InquiryCardState();
-}
-
-class _InquiryCardState extends State<InquiryCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final inquiry = Provider.of<UserDataStore>(context)
         .inquiries
-        .firstWhere((element) => element.id == widget.id);
+        .firstWhere((element) => element.id == id);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => InquiryDetail()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => InquiryDetail(id: id)));
         },
         child: Container(
             decoration: BoxDecoration(
