@@ -19,7 +19,7 @@ class WhiteAppBar extends StatelessWidget {
   final bottom;
   final List<Widget> tabs;
   final onFavClick;
-  bool isFav;
+  final bool isFav;
   WhiteAppBar({
     this.elevation: 0.0,
     this.logo,

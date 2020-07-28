@@ -122,7 +122,7 @@ class _DrawerAppState extends State<DrawerApp> {
             user != null
                 ? DrawerElements(
                     //Favorite
-                    title: 'Favorite',
+                    title: 'Favourites',
                     icon: 'assets/images/drawerIcon/favorite.png',
                     onTap: () {
                       Navigator.push(
@@ -141,52 +141,56 @@ class _DrawerAppState extends State<DrawerApp> {
                   ),
                   subtitle: "Appointment & Orders",
                   bodyBuilder: (context) => Column(children: <Widget>[
-                    user != null
-                ? DrawerElements(
-                    //Appointments
-                    title: 'Appointments',
-                    icon: 'assets/images/drawerIcon/calendar.png',iconSize: 0.0,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AppointmentPage()));
-                    },
-                  )
-                : SizedBox.shrink(),
-            user != null
-                ? DrawerElements(
-                    //Appointments
-                    title: 'Prescription',
-                    icon: 'assets/images/drawerIcon/calendar.png',iconSize: 0.0,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AppointmentPage(
-                                    getIndex: 0,
-                                  )));
-                    },
-                  )
-                : SizedBox.shrink(),
-            user != null
-                ? DrawerElements(
-                    //Appointments
-                    title: 'Lab Reports',
-                    icon: 'assets/images/drawerIcon/calendar.png', iconSize: 0.0,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AppointmentPage(
-                                    getIndex: 2,
-                                  )));
-                    },
-                  )
-                : SizedBox.shrink(),
-                  ]))
+                        user != null
+                            ? DrawerElements(
+                                //Appointments
+                                title: 'Appointments',
+                                icon: 'assets/images/drawerIcon/calendar.png',
+                                iconSize: 0.0,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AppointmentPage()));
+                                },
+                              )
+                            : SizedBox.shrink(),
+                        user != null
+                            ? DrawerElements(
+                                //Appointments
+                                title: 'Prescription',
+                                icon: 'assets/images/drawerIcon/calendar.png',
+                                iconSize: 0.0,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AppointmentPage(
+                                                getIndex: 0,
+                                              )));
+                                },
+                              )
+                            : SizedBox.shrink(),
+                        user != null
+                            ? DrawerElements(
+                                //Appointments
+                                title: 'Lab Reports',
+                                icon: 'assets/images/drawerIcon/calendar.png',
+                                iconSize: 0.0,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AppointmentPage(
+                                                getIndex: 2,
+                                              )));
+                                },
+                              )
+                            : SizedBox.shrink(),
+                      ]))
             ]),
-            
+
             DrawerElements(
               //Specialities
               title: 'Specialities',
