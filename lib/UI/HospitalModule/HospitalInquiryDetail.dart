@@ -36,34 +36,37 @@ class _HospitalInquiryDetailState extends State<HospitalInquiryDetail> {
           preferredSize: Size.fromHeight(50.0)),
       backgroundColor: Theme.of(context).colorScheme.background,
       persistentFooterButtons: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
-          child: FRaisedButton(
-              height: 45.0,
-              width: MediaQuery.of(context).size.width,
-              text: 'Answer Inquiry',
-              color: textDark_Yellow,
-              bg: Theme.of(context).colorScheme.primaryVariant,
-              onPressed: inquiryAnswer != null && inquiryAnswer.length > 20
-                  ? () async {
-                      setState(() {
-                        isActive = true;
-                      });
-                      await hospitalDataStore.updateInquiryAnswer(
-                          inquiry.id, inquiryAnswer);
-                      setState(() {
-                        isActive = false;
-                      });
-                      buildAndShowFlushBar(
-                        context: context,
-                        text: 'Inquiry has been answered!',
-                        icon: Icons.check,
-                      );
-                      await Future.delayed(Duration(seconds: 2));
-                      Navigator.of(context).pop();
-                    }
-                  : null),
-        ),
+        if (inquiry.answer == null)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: FRaisedButton(
+                height: 45.0,
+                width: MediaQuery.of(context).size.width,
+                text: 'Answer Inquiry',
+                color: textDark_Yellow,
+                bg: Theme.of(context).colorScheme.primaryVariant,
+                onPressed: inquiryAnswer != null &&
+                        inquiryAnswer.length > 20 &&
+                        !isActive
+                    ? () async {
+                        setState(() {
+                          isActive = true;
+                        });
+                        await hospitalDataStore.updateInquiryAnswer(
+                            inquiry.id, inquiryAnswer);
+                        setState(() {
+                          isActive = false;
+                        });
+                        buildAndShowFlushBar(
+                          context: context,
+                          text: 'Inquiry has been answered!',
+                          icon: Icons.check,
+                        );
+                        await Future.delayed(Duration(seconds: 2));
+                        Navigator.of(context).pop();
+                      }
+                    : null),
+          ),
       ],
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
@@ -107,16 +110,27 @@ class _HospitalInquiryDetailState extends State<HospitalInquiryDetail> {
             ],
           ),
           SizedBox(height: 30.0),
-          FForms(
-            text: 'Inquiry Answer',
-            maxLines: 10,
-            minLines: 2,
-            textColor: Theme.of(context).colorScheme.primaryVariant,
-            borderColor: Theme.of(context).colorScheme.primaryVariant,
-            validator: (val) => val.length < 20
-                ? 'Answer must be more than 20 charatcers!'
-                : null,
-          )
+          inquiry.answer == null
+              ? FForms(
+                  text: 'Inquiry Answer',
+                  maxLines: 10,
+                  minLines: 2,
+                  textColor: Theme.of(context).colorScheme.primaryVariant,
+                  borderColor: Theme.of(context).colorScheme.primaryVariant,
+                  validator: (val) => val.length < 20
+                      ? 'Answer must be more than 20 characters!'
+                      : null,
+                  onChanged: (value) => setState(() {
+                    inquiryAnswer = value;
+                  }),
+                )
+              : FancyText(
+                  text: inquiry.answer,
+                  fontWeight: FontWeight.w600,
+                  size: 16.0,
+                  textAlign: TextAlign.left,
+                  textOverflow: TextOverflow.visible,
+                )
         ]),
       ),
     );
