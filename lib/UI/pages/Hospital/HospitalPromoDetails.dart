@@ -51,17 +51,30 @@ class HospitalPromoDetails extends StatelessWidget {
               color: theme.colorScheme.primaryVariant,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: FancyText(
-              text: 'Valid from ' + promo.fromDate + ' to ' + promo.toDate,
-              size: 14,
-              textAlign: TextAlign.start,
-              fontWeight: FontWeight.w600,
-              textOverflow: TextOverflow.visible,
-              color: Colors.black54,
+          if (promo.isArchived == null || promo.isArchived == false)
+            Padding(
+              padding: EdgeInsets.only(left: 10.0, top: 10.0),
+              child: FancyText(
+                text: 'Valid from ' + promo.fromDate + ' to ' + promo.toDate,
+                size: 14,
+                textAlign: TextAlign.start,
+                fontWeight: FontWeight.w600,
+                textOverflow: TextOverflow.visible,
+                color: Colors.black54,
+              ),
             ),
-          ),
+          if (promo.isArchived != null && promo.isArchived == true)
+            Padding(
+              padding: EdgeInsets.only(left: 10.0, top: 10.0),
+              child: FancyText(
+                text: 'This promotion has expired!',
+                size: 16,
+                textAlign: TextAlign.start,
+                fontWeight: FontWeight.w600,
+                textOverflow: TextOverflow.visible,
+                color: Colors.red,
+              ),
+            ),
           Padding(
             padding: EdgeInsets.only(left: 10.0, top: 10.0),
             child: FancyText(
