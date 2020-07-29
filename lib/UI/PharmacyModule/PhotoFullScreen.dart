@@ -4,13 +4,18 @@ import "package:flutter/material.dart";
 import 'package:photo_view/photo_view.dart';
 
 class PhotoFullScreen extends StatelessWidget {
-  final image;
-  PhotoFullScreen({this.image});
+  final image, title;
+  PhotoFullScreen({this.image, this.title});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          child: WhiteAppBar(), preferredSize: Size.fromHeight(50.0)),
+          child: WhiteAppBar(
+            title: title ?? '',
+            color: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.primaryVariant,
+          ),
+          preferredSize: Size.fromHeight(50.0)),
       body: PhotoView(
         loadingBuilder: (context, event) => Center(
           child: Container(
@@ -23,11 +28,10 @@ class PhotoFullScreen extends StatelessWidget {
           ),
         ),
         minScale: PhotoViewComputedScale.contained * 0.9,
-        initialScale: PhotoViewComputedScale.contained * 1.1,
+        initialScale: PhotoViewComputedScale.contained * 0.9,
         imageProvider: NetworkImage(image),
         backgroundDecoration: BoxDecoration(
           color: Colors.grey[300],
-          
         ),
       ),
     );
