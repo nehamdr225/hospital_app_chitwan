@@ -14,7 +14,7 @@ class _PromotionTabState extends State<PromotionTab>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 2, vsync: this, initialIndex: 1);
+    _tabController = new TabController(length: 3, vsync: this, initialIndex: 1);
     super.initState();
   }
 
@@ -22,7 +22,7 @@ class _PromotionTabState extends State<PromotionTab>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+        backgroundColor: theme.colorScheme.background,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100.0),
           child: WhiteAppBar(
@@ -34,16 +34,20 @@ class _PromotionTabState extends State<PromotionTab>
             controller: _tabController,
             tabs: <Widget>[
               Tab(
-                text: "All Promotions",
+                text: "Archived",
               ),
-              Tab(text: "Add New Promotions"),
+              Tab(
+                text: "Promotions",
+              ),
+              Tab(text: "Create Promotion"),
             ],
           ),
         ),
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            AllPromotions(),
+            ArchivedPromotions(),
+            Promotions(),
             AddPromotion()
           ],
         ));

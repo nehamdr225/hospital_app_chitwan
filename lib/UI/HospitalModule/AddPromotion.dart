@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
@@ -20,10 +21,9 @@ class AddPromotion extends StatefulWidget {
 class _AddPromotionState extends State<AddPromotion> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   HospitalPromotion promo = HospitalPromotion(
-    fromDate:
-        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
-    toDate:
-        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+    fromDate: DateTime.now().toIso8601String(),
+    toDate: DateTime.now().toIso8601String(),
+    isArchived: false,
   );
 
   File _image;
@@ -46,7 +46,7 @@ class _AddPromotionState extends State<AddPromotion> {
     );
     if (picked != null)
       setState(() {
-        promo.fromDate = '${picked.year}-${picked.month}-${picked.day}';
+        promo.fromDate = picked.toIso8601String();
       });
   }
 
@@ -59,7 +59,7 @@ class _AddPromotionState extends State<AddPromotion> {
     );
     if (picked != null)
       setState(() {
-        promo.toDate = '${picked.year}-${picked.month}-${picked.day}';
+        promo.toDate = picked.toIso8601String();
       });
   }
 
@@ -126,7 +126,7 @@ class _AddPromotionState extends State<AddPromotion> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoctorsModule()));
+                            builder: (context) => HospitalModule()));
                   }
                 });
               },
@@ -261,7 +261,7 @@ class _AddPromotionState extends State<AddPromotion> {
                           )),
                       child: Center(
                         child: Text(
-                          "${promo.fromDate}",
+                          "${promo.fromDate.split('T')[0]}",
                           style: style,
                           textAlign: TextAlign.center,
                         ),
@@ -304,7 +304,7 @@ class _AddPromotionState extends State<AddPromotion> {
                           )),
                       child: Center(
                         child: Text(
-                          "${promo.toDate}",
+                          "${promo.toDate.split('T')[0]}",
                           style: style,
                           textAlign: TextAlign.center,
                         ),

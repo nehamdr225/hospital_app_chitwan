@@ -22,7 +22,6 @@ class _PrescriptionCardState extends State<PrescriptionCard> {
         .prescriptions
         .firstWhere((element) => element.id == widget.id);
     final DateTime date = DateTime.parse(prescription.timestamp);
-    print(date);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

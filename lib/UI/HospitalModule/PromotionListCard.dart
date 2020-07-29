@@ -88,7 +88,9 @@ class _PromotionListCardState extends State<PromotionListCard> {
                       title: "",
                       titleColor: textDark_Yellow,
                       defaultStyle: false,
-                      caption: promotion.fromDate + ' to ' + promotion.toDate,
+                      caption: promotion.fromDate.split('T')[0] +
+                          ' to ' +
+                          promotion.toDate.split('T')[0],
                       capColor: textDark_Yellow,
                       mainAxisAlignment: MainAxisAlignment.center,
                     )

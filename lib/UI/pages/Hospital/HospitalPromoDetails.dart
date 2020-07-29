@@ -55,7 +55,10 @@ class HospitalPromoDetails extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 10.0, top: 10.0),
               child: FancyText(
-                text: 'Valid from ' + promo.fromDate + ' to ' + promo.toDate,
+                text: 'Valid from ' +
+                    promo.fromDate.split('T')[0] +
+                    ' to ' +
+                    promo.toDate.split('T')[0],
                 size: 14,
                 textAlign: TextAlign.start,
                 fontWeight: FontWeight.w600,
@@ -63,7 +66,7 @@ class HospitalPromoDetails extends StatelessWidget {
                 color: Colors.black54,
               ),
             ),
-          if (promo.isArchived != null && promo.isArchived == true)
+          if (promo.isArchived)
             Padding(
               padding: EdgeInsets.only(left: 10.0, top: 10.0),
               child: FancyText(

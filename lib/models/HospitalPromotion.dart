@@ -44,7 +44,7 @@ class HospitalPromotion implements HospitalPromoModel {
 
   Map<String, dynamic> toJson() => {
         if (this.id != null) 'id': this.id,
-        if (this.isArchived != null) 'isArchived': this.isArchived,
+        'isArchived': this.isArchived,
         'hospitalId': this.hospitalId,
         'fromDate': this.fromDate,
         'toDate': this.toDate,

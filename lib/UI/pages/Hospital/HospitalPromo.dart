@@ -81,7 +81,7 @@ class HospitalPromo extends StatelessWidget {
                           titleColor: textDark_Yellow,
                           defaultStyle: false,
                           caption:
-                              "${promotions[index].fromDate} to ${promotions[index].fromDate}",
+                              "${promotions[index].fromDate.split('T')[0]} to ${promotions[index].fromDate.split('T')[0]}",
                           capColor: textDark_Yellow,
                           mainAxisAlignment: MainAxisAlignment.center,
                         )

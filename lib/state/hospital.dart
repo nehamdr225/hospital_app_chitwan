@@ -157,6 +157,10 @@ class HospitalDataStore extends ChangeNotifier {
     return DatabaseService.createPromotion(data);
   }
 
+  archivePromotion(String documentId) {
+    return DatabaseService.archivePromotion(documentId);
+  }
+
   StorageUploadTask uploadFile(File file) {
     return DatabaseService.uploadFile(file, user.uid);
   }

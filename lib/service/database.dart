@@ -281,6 +281,12 @@ abstract class DatabaseService {
     return promoCollection.document().setData(data);
   }
 
+  static Future<void> archivePromotion(String documentId) {
+    return promoCollection.document(documentId).updateData({
+      'isArchived': true,
+    });
+  }
+
   static Stream<QuerySnapshot> getPromotions(String hospitalId) {
     return promoCollection
         .where('hospitalId', isEqualTo: hospitalId)
@@ -288,7 +294,7 @@ abstract class DatabaseService {
   }
 
   static Stream<QuerySnapshot> getPromotionsForUser() {
-    return promoCollection.snapshots();
+    return promoCollection.where('isArchived', isEqualTo: false).snapshots();
   }
 
   static Future<void> createInquiry(Map<String, String> data) {
