@@ -1,5 +1,4 @@
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/service/database.dart';
@@ -27,12 +26,19 @@ class _PromotionDetailState extends State<PromotionDetail> {
 
     final dialog = AlertDialog(
       actions: <Widget>[
-        FRaisedButton(
-          shape: true,
-          radius: 10.0,
-          text: 'OK',
-          bgcolor: Colors.red,
-          color: Colors.white,
+        InkWell(
+          child: FancyText(text: "Cancel", color: theme.secondary),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        SizedBox(width: 4.0),
+        ActionChip(
+          label: FancyText(
+            text: "Archive",
+            color: textDark_Yellow,
+          ),
+          backgroundColor: Colors.green.shade400,
           onPressed: isActive
               ? null
               : () async {
@@ -51,24 +57,15 @@ class _PromotionDetailState extends State<PromotionDetail> {
                   );
                 },
         ),
-        FRaisedButton(
-          shape: true,
-          radius: 10.0,
-          text: 'Cancel',
-          bgcolor: theme.primaryVariant,
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        )
       ],
       content: FancyText(
-        textOverflow: TextOverflow.visible,
-        textAlign: TextAlign.start,
-        text: "Are you sure you want to archive this promotion?",
-        color: theme.primaryVariant,
-        fontWeight: FontWeight.w600,
-      ),
+          textOverflow: TextOverflow.visible,
+          textAlign: TextAlign.start,
+          text: "Are you sure you want to archive this promotion?",
+         
+          size: 15.0,
+          fontWeight: FontWeight.w400,
+          color: blueGrey),
     );
 
     return Scaffold(
@@ -103,34 +100,25 @@ class _PromotionDetailState extends State<PromotionDetail> {
           floating: true,
           pinned: true,
           snap: true,
-          elevation: 1.0,
+          elevation: 0.0,
           backgroundColor: theme.primary,
           flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Padding(
                 padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                child: Text(promotion.title,
-                    style: TextStyle(
-                      color: theme.background,
-                      fontSize: 15.0,
-                    )),
+                child: FancyText(
+                  text: promotion.title,
+                  color: textDark_Yellow,
+                  size: 15.0,
+                ),
               ),
-              background: Stack(
-                children: <Widget>[
-                  Container(
-                    height: 285.0,
-                    color: theme.background,
-                  ),
-                  Container(
-                    width: size.width,
-                    height: size.height * 0.6,
-                    color: theme.primary,
-                    child: Image.network(
-                      promotion.image,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
+              background: Container(
+                width: size.width,
+                height: size.height * 0.6,
+                child: Image.network(
+                  promotion.image,
+                  fit: BoxFit.contain,
+                ),
               )),
         ),
         if (promotion.isArchived)
@@ -147,17 +135,42 @@ class _PromotionDetailState extends State<PromotionDetail> {
           )),
         if (!promotion.isArchived)
           SliverToBoxAdapter(
-              child: Padding(
-            padding: const EdgeInsets.only(left: 44.0, top: 0.0),
-            child: FancyText(
-              textOverflow: TextOverflow.visible,
-              text: 'From   ' +
-                  promotion.fromDate.split('T')[0] +
-                  '   To   ' +
-                  promotion.toDate.split('T')[0],
-              fontWeight: FontWeight.w500,
-              size: 16.0,
-              textAlign: TextAlign.start,
+              child: Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 44.0, top: 10.0),
+            child: Row(
+              children: <Widget>[
+                FancyText(
+                  textOverflow: TextOverflow.visible,
+                  text: 'From:   ',
+                  color: blueGrey.withOpacity(0.7),
+                  fontWeight: FontWeight.w500,
+                  size: 15.5,
+                  textAlign: TextAlign.start,
+                ),
+                FancyText(
+                  textOverflow: TextOverflow.visible,
+                  text: promotion.fromDate.split('T')[0],
+                  fontWeight: FontWeight.w500,
+                  size: 16.0,
+                  textAlign: TextAlign.start,
+                ),
+                FancyText(
+                  textOverflow: TextOverflow.visible,
+                  text: '   To:   ',
+                  color: blueGrey.withOpacity(0.7),
+                  fontWeight: FontWeight.w500,
+                  size: 15.5,
+                  textAlign: TextAlign.start,
+                ),
+                FancyText(
+                  textOverflow: TextOverflow.visible,
+                  text: promotion.toDate.split('T')[0],
+                  fontWeight: FontWeight.w500,
+                  size: 16.0,
+                  textAlign: TextAlign.start,
+                ),
+              ],
             ),
           )),
         SliverToBoxAdapter(
@@ -189,7 +202,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                 child: FancyText(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.justify,
                     textOverflow: TextOverflow.visible,
                     color: Colors.black87,
                     size: 15.0,
