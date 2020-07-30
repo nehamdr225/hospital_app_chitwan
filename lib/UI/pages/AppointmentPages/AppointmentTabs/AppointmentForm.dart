@@ -105,547 +105,550 @@ class _AppointmentFormState extends State<AppointmentForm> {
         ),
       ),
       backgroundColor: theme.colorScheme.background,
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              // first and last name
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: <Widget>[
-                  FForms(
-                    initialValue: userDataStore.user.name.split(' ')[0],
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    text: "First Name",
-                    textColor: blueGrey.withOpacity(0.7),
-                    width: width * 0.40,
-                    // validator: (val) =>
-                    //     val.isEmpty ? 'First Name is required' : null,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'First Name is Reqired';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _fName = value;
-                    },
-                  ),
-                  SizedBox(width: 10.0),
-                  FForms(
-                    initialValue: userDataStore.user.name.split(' ')[1],
-                    borderColor: theme.colorScheme.primary,
-                    formColor: Colors.white,
-                    text: "Last Name",
-                    type: TextInputType.text,
-                    textColor: blueGrey.withOpacity(0.7),
-                    width: width * 0.515,
-                    validator: (val) =>
-                        val.isEmpty ? 'Last Name is required' : null,
-                    onSaved: (value) {
-                      _lName = value;
-                    },
-                  )
-                ],
+      body: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              SizedBox(
+                height: 10.0,
               ),
-            ),
-            Padding(
-              //phone number
-              padding: const EdgeInsets.all(10.0),
-              child: FForms(
-                initialValue: userDataStore.user.phone,
-                icon: Icon(
-                  Icons.phone,
-                  color: theme.iconTheme.color,
+              Container(
+                // first and last name
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: <Widget>[
+                    FForms(
+                      initialValue: userDataStore.user.name.split(' ')[0],
+                      borderColor: theme.colorScheme.primary,
+                      formColor: Colors.white,
+                      text: "First Name",
+                      textColor: blueGrey.withOpacity(0.7),
+                      width: width * 0.40,
+                      // validator: (val) =>
+                      //     val.isEmpty ? 'First Name is required' : null,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'First Name is Reqired';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _fName = value;
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    FForms(
+                      initialValue: userDataStore.user.name.split(' ')[1],
+                      borderColor: theme.colorScheme.primary,
+                      formColor: Colors.white,
+                      text: "Last Name",
+                      type: TextInputType.text,
+                      textColor: blueGrey.withOpacity(0.7),
+                      width: width * 0.515,
+                      validator: (val) =>
+                          val.isEmpty ? 'Last Name is required' : null,
+                      onSaved: (value) {
+                        _lName = value;
+                      },
+                    )
+                  ],
                 ),
-                text: "Phone Number",
-                type: TextInputType.phone,
-                //width: width * 0.80,
-                borderColor: theme.colorScheme.primary,
-                formColor: Colors.white,
-                textColor: blueGrey.withOpacity(0.7),
-                validator: (val) => val.isEmpty || val.length < 8
-                    ? 'Phone Number is required'
-                    : null,
-                onSaved: (value) {
-                  _fPhone = value;
-                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FancyText(
-                      text: "Select Hospital: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                      textAlign: TextAlign.left,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10.0),
-                      height: 40.0,
-                      // width: width * 0.40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: theme.colorScheme.primary,
-                          )),
-                      child: DropdownButton(
-                        underline: SizedBox(),
-                        hint: Container(
-                            height: 45.0,
-                            width: width * 0.50,
-                            alignment: Alignment.center,
-                            child: FancyText(
-                              text: "Select Hospital",
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            )),
-                        value: _valHospital,
-                        items: _myHospital.map((value) {
-                          return DropdownMenuItem(
-                            child: FancyText(
-                              text: value,
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            value: value,
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _valHospital = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FancyText(
-                      text: "Select Department: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                      textAlign: TextAlign.left,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10.0),
-                      height: 40.0,
-                      // width: width * 0.40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: theme.colorScheme.primary,
-                          )),
-                      child: DropdownButton(
-                        underline: SizedBox(),
-                        hint: Container(
-                            height: 45.0,
-                            width: width * 0.40,
-                            alignment: Alignment.center,
-                            child: FancyText(
-                              text: "Select Department",
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            )),
-                        value: _valDepartment,
-                        // items: userDataStore.hospitals != null &&
-                        //         _valHospital != null
-                        //     ? userDataStore.hospitals
-                        //         .firstWhere((element) =>
-                        //             element['name'] ==
-                        //             _valHospital)['departments']
-                        items: _myDepartment.map((value) {
-                          return DropdownMenuItem(
-                            child: FancyText(
-                              text: value,
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            value: value,
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _valDepartment = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FancyText(
-                      text: "Select Doctor: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                      textAlign: TextAlign.left,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10.0),
-                      height: 40.0,
-                      // width: width * 0.40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: theme.colorScheme.primary,
-                          )),
-                      child: DropdownButton(
-                        underline: SizedBox(),
-                        hint: Container(
-                            height: 45.0,
-                            width: width * 0.50,
-                            alignment: Alignment.center,
-                            child: FancyText(
-                              text: "Select Doctor",
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            )),
-                        value: _valDoctor,
-                        items: _valDoctor != null
-                            ? [
-                                DropdownMenuItem(
-                                  child: FancyText(
-                                    text: _valDoctor,
-                                    color: blueGrey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  value: _valDoctor,
-                                )
-                              ]
-                            : _valHospital != null &&
-                                    userDataStore.doctors != null
-                                ? userDataStore.doctors
-                                    // .where((element) =>
-                                    //     element['hospital'] == _valHospital)
-                                    // .toList()
-                                    .map((value) {
-                                    return DropdownMenuItem(
-                                      child: FancyText(
-                                        text: value.name,
-                                        color: blueGrey,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      value: value.name,
-                                    );
-                                  }).toList()
-                                : [
-                                    DropdownMenuItem(
-                                      child: FancyText(
-                                        text: '',
-                                        color: blueGrey,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      value: '',
-                                    )
-                                  ],
-                        onChanged: (value) {
-                          setState(() {
-                            _valDoctor = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
-            ),
-            Padding(
-              //date
-              padding:
-                  const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FancyText(
-                    text: "Pick a date: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                    textAlign: TextAlign.left,
+              Padding(
+                //phone number
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user.phone,
+                  icon: Icon(
+                    Icons.phone,
+                    color: theme.iconTheme.color,
                   ),
-                  Container(
-                    height: 40.0,
-                    width: width * 0.50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: Colors.white,
-                        border: Border.all(
-                          width: 1,
-                          color: theme.colorScheme.primary,
-                        )),
-                    child: Center(
-                      child: Text(
-                        "${selectedDate.day.toString()}-${selectedDate.month.toString()}-${selectedDate.year.toString()}",
-                        style: style,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () => _selectDate(context),
-                  ),
-                ],
+                  text: "Phone Number",
+                  type: TextInputType.phone,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Phone Number is required'
+                      : null,
+                  onSaved: (value) {
+                    _fPhone = value;
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FancyText(
-                      text: "Pick Time: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                      textAlign: TextAlign.left,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10.0),
-                      height: 40.0,
-                      // width: width * 0.40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: theme.colorScheme.primary,
-                          )),
-                      child: DropdownButton(
-                        underline: SizedBox(),
-                        hint: Container(
-                            height: 45.0,
-                            width: width * 0.45,
-                            alignment: Alignment.center,
-                            child: FancyText(
-                              text: "Pick a time",
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            )),
-                        value: _valTime,
-                        items: _time.map((value) {
-                          return DropdownMenuItem(
-                            child: FancyText(
-                              text: value,
-                              color: blueGrey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            value: value,
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _valTime = value;
-                          });
-                        },
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FancyText(
+                        text: "Select Hospital: ",
+                        size: 16.0,
+                        fontWeight: FontWeight.w500,
+                        textAlign: TextAlign.left,
                       ),
-                    ),
-                    Icon(Icons.timer)
-                  ]),
-            ),
-            Padding(
-              //gender
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  FancyText(
-                    text: "Consultation Type: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  SizedBox(width: 10.0),
-                  Radio(
-                    value: AppointmentT.opd,
-                    activeColor: theme.iconTheme.color,
-                    groupValue: _appointment,
-                    onChanged: (AppointmentT value) {
-                      setState(() {
-                        _appointment = value;
-                      });
-                    },
-                  ),
-                  FancyText(
-                    text: "OPD",
-                    size: 15.0,
-                    color: blueGrey.withOpacity(0.9),
-                  ),
-                  Radio(
-                    value: AppointmentT.online,
-                    activeColor: theme.iconTheme.color,
-                    groupValue: _appointment,
-                    onChanged: (AppointmentT value) {
-                      setState(() {
-                        _appointment = value;
-                      });
-                    },
-                  ),
-                  FancyText(
-                    text: "Online",
-                    size: 15.0,
-                    color: blueGrey.withOpacity(0.9),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              //gender
-              padding: const EdgeInsets.only(
-                  top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  FancyText(
-                    text: "Gender: ",
-                    size: 16.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  SizedBox(width: 10.0),
-                  Radio(
-                    value: Gender.male,
-                    activeColor: theme.iconTheme.color,
-                    groupValue: _gender,
-                    onChanged: (Gender value) {
-                      setState(() {
-                        _gender = value;
-                      });
-                    },
-                  ),
-                  FancyText(
-                    text: "Male",
-                    size: 15.0,
-                    color: blueGrey.withOpacity(0.9),
-                  ),
-                  Radio(
-                    value: Gender.female,
-                    activeColor: theme.iconTheme.color,
-                    groupValue: _gender,
-                    onChanged: (Gender value) {
-                      setState(() {
-                        _gender = value;
-                      });
-                    },
-                  ),
-                  FancyText(
-                    text: "Female",
-                    size: 15.0,
-                    color: blueGrey.withOpacity(0.9),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                height: 45.0,
-                child: RaisedButton(
-                  color: theme.colorScheme.primary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0)),
-                  child: FancyText(
-                    text: "SUBMIT",
-                    size: 16.0,
-                    color: textDark_Yellow,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  onPressed: isActive
-                      ? null
-                      : () async {
-                          if (_valDepartment == null ||
-                              _valDoctor == null ||
-                              _valTime == null ||
-                              !_formKey.currentState.validate()) {
-                            buildAndShowFlushBar(
-                              context: context,
-                              text: 'Please provide all data!',
-                              backgroundColor: theme.colorScheme.error,
-                              icon: Icons.error_outline,
+                      Container(
+                        padding: EdgeInsets.only(left: 10.0),
+                        height: 40.0,
+                        // width: width * 0.40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 1,
+                              color: theme.colorScheme.primary,
+                            )),
+                        child: DropdownButton(
+                          underline: SizedBox(),
+                          hint: Container(
+                              height: 45.0,
+                              width: width * 0.50,
+                              alignment: Alignment.center,
+                              child: FancyText(
+                                text: "Select Hospital",
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          value: _valHospital,
+                          items: _myHospital.map((value) {
+                            return DropdownMenuItem(
+                              child: FancyText(
+                                text: value,
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              value: value,
                             );
-                            return;
-                          }
-                          setState(() {
-                            isActive = true;
-                          });
-                          _formKey.currentState.save();
-                          widget.appointment.firstName = _fName;
-                          widget.appointment.lastName = _lName;
-                          widget.appointment.phoneNum = _fPhone;
-                          widget.appointment.gender = _gender.toString();
-                          widget.appointment.consultationType =
-                              _appointment.toString();
-                          widget.appointment.doctor = _valDoctor;
-                          widget.appointment.department = _valDepartment;
-                          widget.appointment.hospital = _valHospital;
-                          widget.appointment.date = selectedDate;
-                          widget.appointment.time = _valTime;
-                          final updateData = widget.appointment.toJson();
-                          updateData['userId'] = userDataStore.user.uid;
-                          final doctor = userDataStore.doctors.firstWhere(
-                              (element) => element.name == _valDoctor,
-                              orElse: () => null);
-                          updateData['doctorId'] = doctor.uid;
-                          userDataStore
-                              .createAppointment(updateData)
-                              .then((value) async {
+                          }).toList(),
+                          onChanged: (value) {
                             setState(() {
-                              isActive = false;
+                              _valHospital = value;
                             });
-                            if (value != 'error') {
+                          },
+                        ),
+                      ),
+                    ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FancyText(
+                        text: "Select Department: ",
+                        size: 16.0,
+                        fontWeight: FontWeight.w500,
+                        textAlign: TextAlign.left,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 10.0),
+                        height: 40.0,
+                        // width: width * 0.40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 1,
+                              color: theme.colorScheme.primary,
+                            )),
+                        child: DropdownButton(
+                          underline: SizedBox(),
+                          hint: Container(
+                              height: 45.0,
+                              width: width * 0.40,
+                              alignment: Alignment.center,
+                              child: FancyText(
+                                text: "Select Department",
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          value: _valDepartment,
+                          // items: userDataStore.hospitals != null &&
+                          //         _valHospital != null
+                          //     ? userDataStore.hospitals
+                          //         .firstWhere((element) =>
+                          //             element['name'] ==
+                          //             _valHospital)['departments']
+                          items: _myDepartment.map((value) {
+                            return DropdownMenuItem(
+                              child: FancyText(
+                                text: value,
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              value: value,
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _valDepartment = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FancyText(
+                        text: "Select Doctor: ",
+                        size: 16.0,
+                        fontWeight: FontWeight.w500,
+                        textAlign: TextAlign.left,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 10.0),
+                        height: 40.0,
+                        // width: width * 0.40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 1,
+                              color: theme.colorScheme.primary,
+                            )),
+                        child: DropdownButton(
+                          underline: SizedBox(),
+                          hint: Container(
+                              height: 45.0,
+                              width: width * 0.50,
+                              alignment: Alignment.center,
+                              child: FancyText(
+                                text: "Select Doctor",
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          value: _valDoctor,
+                          items: _valDoctor != null
+                              ? [
+                                  DropdownMenuItem(
+                                    child: FancyText(
+                                      text: _valDoctor,
+                                      color: blueGrey,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    value: _valDoctor,
+                                  )
+                                ]
+                              : _valHospital != null &&
+                                      userDataStore.doctors != null
+                                  ? userDataStore.doctors
+                                      // .where((element) =>
+                                      //     element['hospital'] == _valHospital)
+                                      // .toList()
+                                      .map((value) {
+                                      return DropdownMenuItem(
+                                        child: FancyText(
+                                          text: value.name,
+                                          color: blueGrey,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        value: value.name,
+                                      );
+                                    }).toList()
+                                  : [
+                                      DropdownMenuItem(
+                                        child: FancyText(
+                                          text: '',
+                                          color: blueGrey,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        value: '',
+                                      )
+                                    ],
+                          onChanged: (value) {
+                            setState(() {
+                              _valDoctor = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ]),
+              ),
+              Padding(
+                //date
+                padding:
+                    const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FancyText(
+                      text: "Pick a date: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.left,
+                    ),
+                    Container(
+                      height: 40.0,
+                      width: width * 0.50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 1,
+                            color: theme.colorScheme.primary,
+                          )),
+                      child: Center(
+                        child: Text(
+                          "${selectedDate.day.toString()}-${selectedDate.month.toString()}-${selectedDate.year.toString()}",
+                          style: style,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.calendar_today),
+                      onPressed: () => _selectDate(context),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FancyText(
+                        text: "Pick Time: ",
+                        size: 16.0,
+                        fontWeight: FontWeight.w500,
+                        textAlign: TextAlign.left,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 10.0),
+                        height: 40.0,
+                        // width: width * 0.40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 1,
+                              color: theme.colorScheme.primary,
+                            )),
+                        child: DropdownButton(
+                          underline: SizedBox(),
+                          hint: Container(
+                              height: 45.0,
+                              width: width * 0.45,
+                              alignment: Alignment.center,
+                              child: FancyText(
+                                text: "Pick a time",
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          value: _valTime,
+                          items: _time.map((value) {
+                            return DropdownMenuItem(
+                              child: FancyText(
+                                text: value,
+                                color: blueGrey,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              value: value,
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _valTime = value;
+                            });
+                          },
+                        ),
+                      ),
+                      Icon(Icons.timer)
+                    ]),
+              ),
+              Padding(
+                //gender
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Row(
+                  children: <Widget>[
+                    FancyText(
+                      text: "Consultation Type: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 10.0),
+                    Radio(
+                      value: AppointmentT.opd,
+                      activeColor: theme.iconTheme.color,
+                      groupValue: _appointment,
+                      onChanged: (AppointmentT value) {
+                        setState(() {
+                          _appointment = value;
+                        });
+                      },
+                    ),
+                    FancyText(
+                      text: "OPD",
+                      size: 15.0,
+                      color: blueGrey.withOpacity(0.9),
+                    ),
+                    Radio(
+                      value: AppointmentT.online,
+                      activeColor: theme.iconTheme.color,
+                      groupValue: _appointment,
+                      onChanged: (AppointmentT value) {
+                        setState(() {
+                          _appointment = value;
+                        });
+                      },
+                    ),
+                    FancyText(
+                      text: "Online",
+                      size: 15.0,
+                      color: blueGrey.withOpacity(0.9),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                //gender
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Row(
+                  children: <Widget>[
+                    FancyText(
+                      text: "Gender: ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 10.0),
+                    Radio(
+                      value: Gender.male,
+                      activeColor: theme.iconTheme.color,
+                      groupValue: _gender,
+                      onChanged: (Gender value) {
+                        setState(() {
+                          _gender = value;
+                        });
+                      },
+                    ),
+                    FancyText(
+                      text: "Male",
+                      size: 15.0,
+                      color: blueGrey.withOpacity(0.9),
+                    ),
+                    Radio(
+                      value: Gender.female,
+                      activeColor: theme.iconTheme.color,
+                      groupValue: _gender,
+                      onChanged: (Gender value) {
+                        setState(() {
+                          _gender = value;
+                        });
+                      },
+                    ),
+                    FancyText(
+                      text: "Female",
+                      size: 15.0,
+                      color: blueGrey.withOpacity(0.9),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  height: 45.0,
+                  child: RaisedButton(
+                    color: theme.colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0)),
+                    child: FancyText(
+                      text: "SUBMIT",
+                      size: 16.0,
+                      color: textDark_Yellow,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    onPressed: isActive
+                        ? null
+                        : () async {
+                            if (_valDepartment == null ||
+                                _valDoctor == null ||
+                                _valTime == null ||
+                                !_formKey.currentState.validate()) {
                               buildAndShowFlushBar(
                                 context: context,
-                                text: 'Appointment Created Successfully!',
-                                icon: Icons.check,
+                                text: 'Please provide all data!',
+                                backgroundColor: theme.colorScheme.error,
+                                icon: Icons.error_outline,
                               );
-                              await Future.delayed(Duration(seconds: 2));
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
-                                  (route) => false);
-                            } else {
+                              return;
+                            }
+                            setState(() {
+                              isActive = true;
+                            });
+                            _formKey.currentState.save();
+                            widget.appointment.firstName = _fName;
+                            widget.appointment.lastName = _lName;
+                            widget.appointment.phoneNum = _fPhone;
+                            widget.appointment.gender = _gender.toString();
+                            widget.appointment.consultationType =
+                                _appointment.toString();
+                            widget.appointment.doctor = _valDoctor;
+                            widget.appointment.department = _valDepartment;
+                            widget.appointment.hospital = _valHospital;
+                            widget.appointment.date = selectedDate;
+                            widget.appointment.time = _valTime;
+                            final updateData = widget.appointment.toJson();
+                            updateData['userId'] = userDataStore.user.uid;
+                            final doctor = userDataStore.doctors.firstWhere(
+                                (element) => element.name == _valDoctor,
+                                orElse: () => null);
+                            updateData['doctorId'] = doctor.uid;
+                            userDataStore
+                                .createAppointment(updateData)
+                                .then((value) async {
+                              setState(() {
+                                isActive = false;
+                              });
+                              if (value != 'error') {
+                                buildAndShowFlushBar(
+                                  context: context,
+                                  text: 'Appointment Created Successfully!',
+                                  icon: Icons.check,
+                                );
+                                await Future.delayed(Duration(seconds: 2));
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()),
+                                    (route) => false);
+                              } else {
+                                buildAndShowFlushBar(
+                                  context: context,
+                                  text: 'Appointment Creation Failed!',
+                                  icon: Icons.error,
+                                );
+                              }
+                            }).catchError((err) {
+                              setState(() {
+                                isActive = false;
+                              });
                               buildAndShowFlushBar(
                                 context: context,
-                                text: 'Appointment Creation Failed!',
+                                text: 'Oops something went wrong!',
                                 icon: Icons.error,
                               );
-                            }
-                          }).catchError((err) {
-                            setState(() {
-                              isActive = false;
+                              print(err);
                             });
-                            buildAndShowFlushBar(
-                              context: context,
-                              text: 'Oops something went wrong!',
-                              icon: Icons.error,
-                            );
-                            print(err);
-                          });
-                        },
+                          },
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
