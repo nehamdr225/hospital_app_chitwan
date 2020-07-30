@@ -1,6 +1,6 @@
-import 'package:chitwan_hospital/UI/core/atoms/Category.dart';
-import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
-import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
+import 'package:eMed/UI/core/atoms/Category.dart';
+import 'package:eMed/UI/pages/Home/DoctorsTab.dart';
+import 'package:eMed/UI/pages/Pharmacy/PharmacyTab.dart';
 import 'package:flutter/material.dart';
 
 class DetailPageOptions extends StatefulWidget {

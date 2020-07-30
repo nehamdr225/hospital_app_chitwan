@@ -1,9 +1,9 @@
-import 'package:chitwan_hospital/UI/core/atoms/Category.dart';
-import 'package:chitwan_hospital/UI/pages/Ambulance/AmbulanceTab.dart';
-import 'package:chitwan_hospital/UI/pages/Home/DoctorsTab.dart';
-import 'package:chitwan_hospital/UI/pages/Hospital/HospitalTab.dart';
-import 'package:chitwan_hospital/UI/pages/Lab/LabTab.dart';
-import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyTab.dart';
+import 'package:eMed/UI/core/atoms/Category.dart';
+import 'package:eMed/UI/pages/Ambulance/AmbulanceTab.dart';
+import 'package:eMed/UI/pages/Home/DoctorsTab.dart';
+import 'package:eMed/UI/pages/Hospital/HospitalTab.dart';
+import 'package:eMed/UI/pages/Lab/LabTab.dart';
+import 'package:eMed/UI/pages/Pharmacy/PharmacyTab.dart';
 import 'package:flutter/material.dart';
 import 'FancyText.dart';
 

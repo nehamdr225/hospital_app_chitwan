@@ -1,13 +1,13 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/PhotoFullScreen.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/RejectRemarkform.dart';
-import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
-import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
-import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
-import 'package:chitwan_hospital/state/pharmacy.dart';
+import 'package:eMed/UI/PharmacyModule/PhotoFullScreen.dart';
+import 'package:eMed/UI/PharmacyModule/RejectRemarkform.dart';
+import 'package:eMed/UI/core/atoms/Indicator.dart';
+import 'package:eMed/UI/core/atoms/RowInput.dart';
+import 'package:eMed/models/PharmacyAppointment.dart';
+import 'package:eMed/state/pharmacy.dart';
 import 'package:flutter/material.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/theme.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 

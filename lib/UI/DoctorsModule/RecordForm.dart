@@ -1,9 +1,9 @@
-import 'package:chitwan_hospital/UI/Widget/Forms.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/state/doctor.dart';
+import 'package:eMed/UI/Widget/Forms.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/Indicator.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/state/doctor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,5 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyCard.dart';
-import 'package:chitwan_hospital/state/pharmacy.dart';
+import 'package:eMed/UI/PharmacyModule/PharmacyCard.dart';
+import 'package:eMed/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

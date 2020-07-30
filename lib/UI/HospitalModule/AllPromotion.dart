@@ -1,5 +1,5 @@
-import 'package:chitwan_hospital/UI/HospitalModule/PromotionListCard.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:eMed/UI/HospitalModule/PromotionListCard.dart';
+import 'package:eMed/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-// package com.hits.chitwan_hospital;
+// package com.hits.eMed;
 
 // import io.flutter.app.FlutterApplication;
 // import io.flutter.plugin.common.PluginRegistry;

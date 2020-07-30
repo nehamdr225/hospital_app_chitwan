@@ -1,15 +1,15 @@
-import 'package:chitwan_hospital/UI/DoctorsModule/DoctorsModule.dart';
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
-import 'package:chitwan_hospital/UI/LabModule/LabModule.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
-import 'package:chitwan_hospital/UI/Widget/Forms.dart';
-import 'package:chitwan_hospital/UI/Widget/loading.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
-import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/app.dart';
+import 'package:eMed/UI/DoctorsModule/DoctorsModule.dart';
+import 'package:eMed/UI/HospitalModule/HospitalModule.dart';
+import 'package:eMed/UI/LabModule/LabModule.dart';
+import 'package:eMed/UI/PharmacyModule/PharmacyModule.dart';
+import 'package:eMed/UI/Widget/Forms.dart';
+import 'package:eMed/UI/Widget/loading.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/UI/pages/OthersLogin.dart';
+import 'package:eMed/service/auth.dart';
+import 'package:eMed/state/app.dart';
 import 'package:flutter/material.dart';
 
 class OthersSignUp extends StatefulWidget {

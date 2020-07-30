@@ -1,13 +1,13 @@
-import 'package:chitwan_hospital/UI/HospitalModule/DoctorCards.dart';
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalDrawer.dart';
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalProfile.dart';
-import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
-import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:eMed/UI/HospitalModule/DoctorCards.dart';
+import 'package:eMed/UI/HospitalModule/HospitalDrawer.dart';
+import 'package:eMed/UI/HospitalModule/HospitalProfile.dart';
+import 'package:eMed/UI/Widget/MainAppBar.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/RaisedButtons.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/UI/pages/SignIn/SignIn.dart';
+import 'package:eMed/service/auth.dart';
+import 'package:eMed/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

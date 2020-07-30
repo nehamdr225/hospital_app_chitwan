@@ -1,4 +1,4 @@
-package com.hits.chitwan_hospital
+package com.hits.eMed
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

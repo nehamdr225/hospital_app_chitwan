@@ -1,7 +1,7 @@
-import 'package:chitwan_hospital/UI/LabModule/LabCard.dart';
-import 'package:chitwan_hospital/UI/LabModule/LabInfoUpload.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/state/lab.dart';
+import 'package:eMed/UI/LabModule/LabCard.dart';
+import 'package:eMed/UI/LabModule/LabInfoUpload.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/state/lab.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

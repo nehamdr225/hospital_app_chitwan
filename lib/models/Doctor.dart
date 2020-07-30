@@ -1,4 +1,4 @@
-import 'package:chitwan_hospital/models/User.dart';
+import 'package:eMed/models/User.dart';
 
 abstract class DoctorModel extends UserModel {
   String uid;

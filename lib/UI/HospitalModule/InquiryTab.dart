@@ -1,6 +1,6 @@
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalInquiryCard.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:eMed/UI/HospitalModule/HospitalInquiryCard.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

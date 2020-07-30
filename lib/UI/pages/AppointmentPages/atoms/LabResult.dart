@@ -1,6 +1,6 @@
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/RowInput.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
 class LabResults extends StatelessWidget {

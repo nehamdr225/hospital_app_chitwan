@@ -1,7 +1,7 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/BuyerDetail.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
-import 'package:chitwan_hospital/state/pharmacy.dart';
+import 'package:eMed/UI/PharmacyModule/BuyerDetail.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/models/PharmacyAppointment.dart';
+import 'package:eMed/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

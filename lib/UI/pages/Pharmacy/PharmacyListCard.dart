@@ -1,6 +1,6 @@
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyDetails.dart';
-import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/pages/Pharmacy/PharmacyDetails.dart';
+import 'package:eMed/UI/pages/Pharmacy/PharmacyForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

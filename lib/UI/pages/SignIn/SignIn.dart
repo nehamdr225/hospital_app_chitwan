@@ -1,14 +1,14 @@
-import 'package:chitwan_hospital/UI/Widget/Forms.dart';
-import 'package:chitwan_hospital/UI/Widget/loading.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/UI/pages/OthersLogin.dart';
-import 'package:chitwan_hospital/UI/pages/SignUp.dart';
-import 'package:chitwan_hospital/UI/resetPassword.dart';
-import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/app.dart';
+import 'package:eMed/UI/Widget/Forms.dart';
+import 'package:eMed/UI/Widget/loading.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/UI/pages/Home/HomeScreen.dart';
+import 'package:eMed/UI/pages/OthersLogin.dart';
+import 'package:eMed/UI/pages/SignUp.dart';
+import 'package:eMed/UI/resetPassword.dart';
+import 'package:eMed/service/auth.dart';
+import 'package:eMed/state/app.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {

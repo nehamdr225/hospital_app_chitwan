@@ -1,9 +1,9 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
-import 'package:chitwan_hospital/UI/Widget/Forms.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/state/pharmacy.dart';
+import 'package:eMed/UI/PharmacyModule/PharmacyModule.dart';
+import 'package:eMed/UI/Widget/Forms.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,13 +1,13 @@
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
-import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
-import 'package:chitwan_hospital/UI/core/atoms/DetailPageOptions.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
-import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:eMed/UI/HospitalModule/HospitalModule.dart';
+import 'package:eMed/UI/Widget/FRaisedButton.dart';
+import 'package:eMed/UI/core/atoms/DetailPageOptions.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/Indicator.dart';
+import 'package:eMed/UI/core/atoms/RowInput.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/const.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

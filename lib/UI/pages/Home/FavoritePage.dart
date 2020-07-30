@@ -1,7 +1,7 @@
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
-import 'package:chitwan_hospital/state/user.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/pages/Home/HomeListCard.dart';
+import 'package:eMed/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
 import 'package:flutter/material.dart';
 
 class RowInput extends StatelessWidget {

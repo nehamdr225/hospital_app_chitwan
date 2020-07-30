@@ -1,13 +1,13 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyCard.dart';
-import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyDrawer.dart';
-import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
-import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
-import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/pharmacy.dart';
+import 'package:eMed/UI/PharmacyModule/PharmacyCard.dart';
+import 'package:eMed/UI/Widget/MainAppBar.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/Indicator.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/UI/PharmacyModule/PharmacyDrawer.dart';
+import 'package:eMed/UI/pages/SignIn/SignIn.dart';
+import 'package:eMed/models/PharmacyAppointment.dart';
+import 'package:eMed/service/auth.dart';
+import 'package:eMed/state/pharmacy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

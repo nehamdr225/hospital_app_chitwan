@@ -1,15 +1,15 @@
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
-import 'package:chitwan_hospital/UI/HospitalModule/HospitalProfile.dart';
-import 'package:chitwan_hospital/UI/HospitalModule/InquiryTab.dart';
-import 'package:chitwan_hospital/UI/HospitalModule/PromotionTab.dart';
-import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/const.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
-import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
-import 'package:chitwan_hospital/service/auth.dart';
-import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:eMed/UI/HospitalModule/HospitalModule.dart';
+import 'package:eMed/UI/HospitalModule/HospitalProfile.dart';
+import 'package:eMed/UI/HospitalModule/InquiryTab.dart';
+import 'package:eMed/UI/HospitalModule/PromotionTab.dart';
+import 'package:eMed/UI/Widget/FRaisedButton.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/const.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/UI/pages/Home/DrawerElements.dart';
+import 'package:eMed/UI/pages/SignIn/SignIn.dart';
+import 'package:eMed/service/auth.dart';
+import 'package:eMed/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,7 +1,7 @@
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/PCompleted.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/POngoing.dart';
-import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/PRejected.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/PharmacyModule/AppointmentTabs/PCompleted.dart';
+import 'package:eMed/UI/PharmacyModule/AppointmentTabs/POngoing.dart';
+import 'package:eMed/UI/PharmacyModule/AppointmentTabs/PRejected.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
 class OrderList extends StatefulWidget {

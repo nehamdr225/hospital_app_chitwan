@@ -1,12 +1,12 @@
-import 'package:chitwan_hospital/UI/Widget/Forms.dart';
-import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
-import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
-import 'package:chitwan_hospital/UI/core/theme.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/models/BloodRequest.dart';
+import 'package:eMed/UI/Widget/Forms.dart';
+import 'package:eMed/UI/core/atoms/FancyText.dart';
+import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:eMed/UI/core/theme.dart';
+import 'package:eMed/UI/pages/Home/HomeScreen.dart';
+import 'package:eMed/models/BloodRequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chitwan_hospital/service/auth.dart';
+import 'package:eMed/service/auth.dart';
 
 class BloodBankForm extends StatefulWidget {
   final BloodRequest bloodRequestForm;
