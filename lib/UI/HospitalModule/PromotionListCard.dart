@@ -1,8 +1,8 @@
-import 'package:eMed/UI/HospitalModule/PromotionDetail.dart';
-import 'package:eMed/UI/core/atoms/FancyText.dart';
-import 'package:eMed/UI/core/atoms/RowInput.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/state/hospital.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/PromotionDetail.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

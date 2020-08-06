@@ -1,4 +1,4 @@
-import 'package:eMed/models/User.dart';
+import 'package:chitwan_hospital/models/User.dart';
 
 abstract class LaboratoryModel extends UserModel {
   String uid;

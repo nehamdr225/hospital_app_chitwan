@@ -1,9 +1,9 @@
-import 'package:eMed/UI/core/atoms/FancyText.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
-import 'package:eMed/UI/pages/Home/DoctorDetails.dart';
-import 'package:eMed/models/DoctorAppointment.dart';
-import 'package:eMed/state/user.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
+import 'package:chitwan_hospital/UI/pages/Home/DoctorDetails.dart';
+import 'package:chitwan_hospital/models/DoctorAppointment.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

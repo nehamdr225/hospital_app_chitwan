@@ -1,15 +1,15 @@
-import 'package:eMed/UI/DoctorsModule/AppointmentTabs/DoctorAppointmentPage.dart';
-import 'package:eMed/UI/DoctorsModule/DoctorProfile.dart';
-import 'package:eMed/UI/Widget/MainAppBar.dart';
-import 'package:eMed/UI/core/atoms/FancyText.dart';
-import 'package:eMed/UI/core/atoms/Indicator.dart';
-import 'package:eMed/UI/core/atoms/RaisedButtons.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/UI/DoctorsModule/DoctorDrawer.dart';
-import 'package:eMed/UI/DoctorsModule/PatientListCard.dart';
-import 'package:eMed/UI/pages/SignIn/SignIn.dart';
-import 'package:eMed/service/auth.dart';
-import 'package:eMed/state/doctor.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DoctorAppointmentPage.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorProfile.dart';
+import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/DoctorDrawer.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/PatientListCard.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
+import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

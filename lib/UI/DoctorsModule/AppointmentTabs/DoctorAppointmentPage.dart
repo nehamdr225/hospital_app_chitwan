@@ -1,7 +1,7 @@
-import 'package:eMed/UI/DoctorsModule/AppointmentTabs/DCompleted.dart';
-import 'package:eMed/UI/DoctorsModule/AppointmentTabs/DRejected.dart';
-import 'package:eMed/UI/DoctorsModule/AppointmentTabs/DUpcoming.dart';
-import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DCompleted.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DRejected.dart';
+import 'package:chitwan_hospital/UI/DoctorsModule/AppointmentTabs/DUpcoming.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
 class DoctorAppointmentPage extends StatefulWidget {

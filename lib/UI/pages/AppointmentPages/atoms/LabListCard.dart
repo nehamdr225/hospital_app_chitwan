@@ -1,7 +1,7 @@
-import 'package:eMed/UI/core/atoms/FancyText.dart';
-import 'package:eMed/UI/core/atoms/RowInput.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/UI/pages/AppointmentPages/atoms/LabResult.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/LabResult.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

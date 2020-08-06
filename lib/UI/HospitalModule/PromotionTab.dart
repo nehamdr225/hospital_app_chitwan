@@ -1,6 +1,6 @@
-import 'package:eMed/UI/HospitalModule/AddPromotion.dart';
-import 'package:eMed/UI/HospitalModule/AllPromotion.dart';
-import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/AddPromotion.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/AllPromotion.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
 class PromotionTab extends StatefulWidget {

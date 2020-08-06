@@ -1,6 +1,6 @@
-import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
-import 'package:eMed/UI/pages/Lab/LabratoryListCard.dart';
-import 'package:eMed/state/user.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/pages/Lab/LabratoryListCard.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

@@ -1,8 +1,8 @@
-import 'package:eMed/models/Pharmacy.dart';
-import 'package:eMed/models/PharmacyAppointment.dart';
-import 'package:eMed/service/auth.dart';
-import 'package:eMed/service/database.dart';
-import 'package:eMed/state/app.dart';
+import 'package:chitwan_hospital/models/Pharmacy.dart';
+import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
+import 'package:chitwan_hospital/service/auth.dart';
+import 'package:chitwan_hospital/service/database.dart';
+import 'package:chitwan_hospital/state/app.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 

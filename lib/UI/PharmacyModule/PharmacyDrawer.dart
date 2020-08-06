@@ -1,13 +1,13 @@
-import 'package:eMed/UI/PharmacyModule/AppointmentTabs/OrderList.dart';
-import 'package:eMed/UI/PharmacyModule/PharmacyModule.dart';
-import 'package:eMed/UI/PharmacyModule/PharmacyProfile.dart';
-import 'package:eMed/UI/Widget/FRaisedButton.dart';
-import 'package:eMed/UI/core/atoms/FancyText.dart';
-import 'package:eMed/UI/core/const.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/UI/pages/Home/DrawerElements.dart';
-import 'package:eMed/UI/pages/SignIn/SignIn.dart';
-import 'package:eMed/service/auth.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/AppointmentTabs/OrderList.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyModule.dart';
+import 'package:chitwan_hospital/UI/PharmacyModule/PharmacyProfile.dart';
+import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/const.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Home/DrawerElements.dart';
+import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
+import 'package:chitwan_hospital/service/auth.dart';
 import 'package:flutter/material.dart';
 
 class PharmacyDrawerApp extends StatefulWidget {

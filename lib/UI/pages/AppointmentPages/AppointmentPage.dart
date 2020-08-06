@@ -1,8 +1,8 @@
-import 'package:eMed/UI/pages/AppointmentPages/AppointmentTabs/Apointment.dart';
-import 'package:eMed/UI/pages/AppointmentPages/AppointmentTabs/Inquiry.dart';
-import 'package:eMed/UI/pages/AppointmentPages/AppointmentTabs/LabReports.dart';
-import 'package:eMed/UI/pages/AppointmentPages/AppointmentTabs/Prescription.dart';
-import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Apointment.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Inquiry.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/LabReports.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Prescription.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentPage extends StatefulWidget {

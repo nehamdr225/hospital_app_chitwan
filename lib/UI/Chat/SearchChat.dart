@@ -1,10 +1,10 @@
-import 'package:eMed/UI/Chat/ChatScreen.dart';
-import 'package:eMed/UI/Chat/SearchList.dart';
-import 'package:eMed/UI/Widget/Forms.dart';
-import 'package:eMed/UI/core/atoms/AppBarW.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/state/doctor.dart';
-import 'package:eMed/state/user.dart';
+import 'package:chitwan_hospital/UI/Chat/ChatScreen.dart';
+import 'package:chitwan_hospital/UI/Chat/SearchList.dart';
+import 'package:chitwan_hospital/UI/Widget/Forms.dart';
+import 'package:chitwan_hospital/UI/core/atoms/AppBarW.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/state/doctor.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

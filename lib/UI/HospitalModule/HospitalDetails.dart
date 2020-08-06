@@ -1,8 +1,8 @@
 import 'dart:ui';
-import 'package:eMed/UI/core/atoms/FancyText.dart';
-import 'package:eMed/UI/core/atoms/WhiteAppBar.dart';
-import 'package:eMed/UI/core/theme.dart';
-import 'package:eMed/UI/pages/Home/HomeScreen.dart';
+import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
+import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
