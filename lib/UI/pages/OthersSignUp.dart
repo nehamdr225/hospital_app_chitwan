@@ -55,8 +55,8 @@ class _OthersSignUpState extends State<OthersSignUp> {
                 onTap: () => FocusScope.of(context).unfocus(),
                               child: ListView(shrinkWrap: true, children: <Widget>[
                   Container(
-                    height: 70.0,
-                    child: Image.asset("assets/images/caduceus.png"),
+                    height: 120.0,
+                    child: Image.asset("assets/images/logo.png"),
                   ),
                   SizedBox(height: 20.0),
                   Form(

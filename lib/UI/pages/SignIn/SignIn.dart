@@ -87,9 +87,8 @@ class _SignInState extends State<SignIn> {
                 child: ListView(
                   children: <Widget>[
                     Container(
-                      height: 70.0,
-                      width: 70.0,
-                      child: Image.asset("assets/images/caduceus.png"),
+                      height: 120.0,
+                      child: Image.asset("assets/images/logo.png"),
                     ),
                     Container(
                       decoration: BoxDecoration(
