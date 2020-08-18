@@ -20,23 +20,8 @@ class UserDataStore extends ChangeNotifier {
   handleInitialProfileLoad() async {
     try {
       if (user == null && isLoggedIn == null) {
-        final String userId = await AuthService.getCurrentUID();
-        if (userId != null) {
-          isLoggedIn = true;
-          final userData = await DatabaseService.getUserData(userId);
-          if (userData.data != null) {
-            final data = userData.data;
-            data['id'] = userId;
-            user = User.fromJson(data);
-            getUserAppointments();
-            getUserPrescriptions();
-            getUserLabs();
-            fetchMessages();
-            getInquiries();
-            getFavourites();
-          }
-        }
-        isLoggedIn = false;
+        setUserData();
+
         getAvailableDoctors(null);
         getHospitals();
         getPromotions();
@@ -147,6 +132,26 @@ class UserDataStore extends ChangeNotifier {
   set favourites(List<Favourite> newfavourites) {
     _favourites = newfavourites;
     notifyListeners();
+  }
+
+  Future<void> setUserData() async {
+    final String userId = await AuthService.getCurrentUID();
+    if (userId != null) {
+      isLoggedIn = true;
+      final userData = await DatabaseService.getUserData(userId);
+      if (userData.data != null) {
+        final data = userData.data;
+        data['id'] = userId;
+        user = User.fromJson(data);
+        getUserAppointments();
+        getUserPrescriptions();
+        getUserLabs();
+        fetchMessages();
+        getInquiries();
+        getFavourites();
+      }
+    }
+    isLoggedIn = false;
   }
 
   Future<Map> createMessageCollection(String docId, String docName) async {

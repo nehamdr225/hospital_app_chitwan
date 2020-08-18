@@ -9,7 +9,9 @@ import 'package:chitwan_hospital/UI/pages/SignUp.dart';
 import 'package:chitwan_hospital/UI/resetPassword.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/app.dart';
+import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -53,6 +55,7 @@ class _SignInState extends State<SignIn> {
           } else {
             // userDataStore.fetchUserData(result.uid);
             setLocalUserData('userType', 'user');
+            Provider.of<UserDataStore>(context, listen: false).setUserData();
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -60,6 +63,7 @@ class _SignInState extends State<SignIn> {
           }
         }
       } catch (e) {
+        print(e);
         setState(() {
           loading = false;
           error = 'Could not sign in with those credentials';
