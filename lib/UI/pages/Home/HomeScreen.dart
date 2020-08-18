@@ -1,18 +1,41 @@
 import 'package:chitwan_hospital/UI/Widget/MainAppBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/HoizontalList.dart';
-import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RaisedButtons.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/PCRAppointment.dart';
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
-import 'package:chitwan_hospital/UI/pages/Home/HomeListCard.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/models/DoctorAppointment.dart';
-import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+Widget promptLoginDialog(context) => Dialog(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 40.0),
+            child: FRaisedButton(
+              text: 'Login to continue',
+              color: textDark_Yellow,
+              bgcolor: Theme.of(context).colorScheme.primaryVariant,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SignIn(),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -22,16 +45,7 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final userDataStore = Provider.of<UserDataStore>(context);
     userDataStore.handleInitialProfileLoad();
-    final doctors = userDataStore.doctors;
-    if (userDataStore.user == null)
-      Future.delayed(Duration(seconds: 10)).then((value) {
-        if (userDataStore.user == null) {
-          AuthService.signOut();
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => SignIn()),
-              (route) => false);
-        }
-      });
+    // final doctors = userDataStore.doctors;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -62,7 +76,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: theme.colorScheme.primary,
       ),
       body: ListView(children: <Widget>[
-        Indicator(doctors),
+        // Indicator(doctors),
         Padding(
           padding: const EdgeInsets.only(
               top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),
@@ -75,21 +89,46 @@ class HomeScreen extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(
-              top: 10.0, right: 10.0, left: 10.0, bottom: 20.0),
-          child: FancyText(
-            text: "Featured",
-            fontWeight: FontWeight.w600,
-            color: theme.textTheme.bodyText2.color,
-            size: 17.0,
-            textAlign: TextAlign.left,
+              top: 30.0, right: 10.0, left: 10.0, bottom: 20.0),
+          child: OutlineButton(
+            color: theme.colorScheme.primary,
+            borderSide: BorderSide(color: theme.colorScheme.primary),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PCRAppointment(appointment: newAppointment),
+                ),
+              );
+            },
+            child: Text(
+              'Book Online PCR Test',
+              style: TextStyle(
+                color: theme.colorScheme.primary,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
-        Column(
-            children: doctors != null
-                ? doctors
-                    .map<Widget>((each) => HomeListCard(id: each.uid))
-                    .toList()
-                : [Text('')]),
+
+        // Padding(
+        //   padding: const EdgeInsets.only(
+        //       top: 10.0, right: 10.0, left: 10.0, bottom: 20.0),
+        //   child: FancyText(
+        //     text: "Featured",
+        //     fontWeight: FontWeight.w600,
+        //     color: theme.textTheme.bodyText2.color,
+        //     size: 17.0,
+        //     textAlign: TextAlign.left,
+        //   ),
+        // ),
+        // Column(
+        //     children: doctors != null
+        //         ? doctors
+        //             .map<Widget>((each) => HomeListCard(id: each.uid))
+        //             .toList()
+        //         : [Text('')]),
       ]),
     );
   }

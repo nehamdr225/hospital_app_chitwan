@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/Lab/LabForm.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class LabDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final isLoggedIn = Provider.of<UserDataStore>(context).isLoggedIn;
     final laboratory =
         Provider.of<UserDataStore>(context).laboratories.firstWhere(
               (element) => element.uid == id,
@@ -191,12 +193,18 @@ class LabDetails extends StatelessWidget {
             shape: true,
             radius: 5.0,
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LabForm(
-                            labId: laboratory.uid,
-                          )));
+              if (isLoggedIn)
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LabForm(
+                              labId: laboratory.uid,
+                            )));
+              else
+                showDialog(
+                  context: context,
+                  builder: (context) => promptLoginDialog(context),
+                );
             },
           ),
         ),

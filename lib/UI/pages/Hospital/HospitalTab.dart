@@ -10,19 +10,21 @@ class HospitalTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final hospitals = Provider.of<UserDataStore>(context).hospitals;
     return Scaffold(
-        appBar: PreferredSize(
-            child: WhiteAppBar(
-              title: "Hospitals",
-              titleColor: Theme.of(context).colorScheme.primary,
-            ),
-            preferredSize: Size.fromHeight(50.0)),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: ListView.builder(
-            itemCount: hospitals != null ? hospitals.length : 0,
-            itemBuilder: (BuildContext context, int index) {
-              return HospitalList(
-                id: hospitals[index].uid,
-              );
-            }));
+      appBar: PreferredSize(
+          child: WhiteAppBar(
+            title: "Hospitals",
+            titleColor: Theme.of(context).colorScheme.primary,
+          ),
+          preferredSize: Size.fromHeight(50.0)),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: ListView.builder(
+        itemCount: hospitals != null ? hospitals.length : 0,
+        itemBuilder: (BuildContext context, int index) {
+          return HospitalList(
+            id: hospitals[index].uid,
+          );
+        },
+      ),
+    );
   }
 }

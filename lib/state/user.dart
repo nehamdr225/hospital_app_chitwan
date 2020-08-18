@@ -19,25 +19,27 @@ import 'package:flutter/cupertino.dart';
 class UserDataStore extends ChangeNotifier {
   handleInitialProfileLoad() async {
     try {
-      if (user == null) {
+      if (user == null && isLoggedIn == null) {
         final String userId = await AuthService.getCurrentUID();
         if (userId != null) {
+          isLoggedIn = true;
           final userData = await DatabaseService.getUserData(userId);
           if (userData.data != null) {
             final data = userData.data;
             data['id'] = userId;
             user = User.fromJson(data);
             getUserAppointments();
-            getAvailableDoctors(null);
-            getHospitals();
             getUserPrescriptions();
             getUserLabs();
             fetchMessages();
             getInquiries();
-            getPromotions();
             getFavourites();
           }
         }
+        isLoggedIn = false;
+        getAvailableDoctors(null);
+        getHospitals();
+        getPromotions();
       }
     } catch (e) {}
   }
@@ -54,6 +56,14 @@ class UserDataStore extends ChangeNotifier {
   List<HospitalInquiry> _inquiries;
   List<HospitalPromotion> _promotions;
   List<Favourite> _favourites;
+  bool _isLoggedIn;
+
+  bool get isLoggedIn => _isLoggedIn;
+
+  set isLoggedIn(bool val) {
+    _isLoggedIn = val;
+    notifyListeners();
+  }
 
   List get messages => _messages;
 

@@ -5,6 +5,7 @@ import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/const.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
+import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/UI/pages/Pharmacy/PharmacyForm.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class PharmacyDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final isLoggedIn = Provider.of<UserDataStore>(context).isLoggedIn;
     final pharmacy = Provider.of<UserDataStore>(context)
         .pharmacies
         .firstWhere((element) => element['id'] == id);
@@ -190,14 +192,20 @@ class PharmacyDetails extends StatelessWidget {
             shape: true,
             radius: 5.0,
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PharmacyForm(
-                            doctor: pharmacy['name'],
-                            department: pharmacy['address'],
-                            id: id,
-                          )));
+              if (isLoggedIn)
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PharmacyForm(
+                              doctor: pharmacy['name'],
+                              department: pharmacy['address'],
+                              id: id,
+                            )));
+              else
+                showDialog(
+                  context: context,
+                  builder: (context) => promptLoginDialog(context),
+                );
             },
           ),
         ),

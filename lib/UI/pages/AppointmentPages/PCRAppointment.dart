@@ -1,7 +1,6 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
-import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
@@ -13,21 +12,20 @@ import 'package:provider/provider.dart';
 enum Gender { male, female }
 enum AppointmentT { opd, online }
 
-class AppointmentForm extends StatefulWidget {
+class PCRAppointment extends StatefulWidget {
   final DoctorAppointment appointment;
   final doctor;
   final department;
-  AppointmentForm(
+  PCRAppointment(
       {this.doctor, this.department, @required this.appointment, Key key})
       : super(key: key);
   @override
-  _AppointmentFormState createState() => _AppointmentFormState();
+  _PCRAppointmentState createState() => _PCRAppointmentState();
 }
 
-class _AppointmentFormState extends State<AppointmentForm> {
+class _PCRAppointmentState extends State<PCRAppointment> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Gender _gender = Gender.male;
-  AppointmentT _appointment = AppointmentT.opd;
   List name = [];
   String _fName;
   String _lName;
@@ -35,13 +33,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
   DateTime selectedDate = DateTime.now();
   String _valHospital = "Chitwan Hospital";
 
-  String _valDepartment;
-  List _myDepartment = [
-    "Operation Theater",
-    "ENT",
-    "Dermatology",
-  ];
-  String _valDoctor;
   String _valTime;
   List _time = [
     "12:00 PM",
@@ -65,17 +56,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.department != null) {
-      setState(() {
-        _valDepartment = widget.department.toString();
-        _myDepartment = [widget.department.toString()];
-      });
-    }
-    if (widget.doctor != null) {
-      setState(() {
-        _valDoctor = widget.doctor.toString();
-      });
-    }
     TextEditingController _textController = new TextEditingController();
     _textController.text = widget.appointment.firstName;
     final theme = Theme.of(context);
@@ -98,7 +78,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
         preferredSize: Size.fromHeight(41.0),
         child: WhiteAppBar(
           titleColor: theme.colorScheme.primary,
-          title: "Appointment Form",
+          title: "PCR Appointment Form",
           bottom: PreferredSize(
               child: BoolIndicator(isActive),
               preferredSize: Size.fromHeight(1.0)),
@@ -240,147 +220,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     ]),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Select Department: ",
-                        size: 16.0,
-                        fontWeight: FontWeight.w500,
-                        textAlign: TextAlign.left,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10.0),
-                        height: 40.0,
-                        // width: width * 0.40,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white,
-                            border: Border.all(
-                              width: 1,
-                              color: theme.colorScheme.primary,
-                            )),
-                        child: DropdownButton(
-                          underline: SizedBox(),
-                          hint: Container(
-                              height: 45.0,
-                              width: width * 0.40,
-                              alignment: Alignment.center,
-                              child: FancyText(
-                                text: "Select Department",
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          value: _valDepartment,
-                          // items: userDataStore.hospitals != null &&
-                          //         _valHospital != null
-                          //     ? userDataStore.hospitals
-                          //         .firstWhere((element) =>
-                          //             element['name'] ==
-                          //             _valHospital)['departments']
-                          items: _myDepartment.map((value) {
-                            return DropdownMenuItem(
-                              child: FancyText(
-                                text: value,
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              value: value,
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _valDepartment = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Select Doctor: ",
-                        size: 16.0,
-                        fontWeight: FontWeight.w500,
-                        textAlign: TextAlign.left,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10.0),
-                        height: 40.0,
-                        // width: width * 0.40,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white,
-                            border: Border.all(
-                              width: 1,
-                              color: theme.colorScheme.primary,
-                            )),
-                        child: DropdownButton(
-                          underline: SizedBox(),
-                          hint: Container(
-                              height: 45.0,
-                              width: width * 0.50,
-                              alignment: Alignment.center,
-                              child: FancyText(
-                                text: "Select Doctor",
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          value: _valDoctor,
-                          items: _valDoctor != null
-                              ? [
-                                  DropdownMenuItem(
-                                    child: FancyText(
-                                      text: _valDoctor,
-                                      color: blueGrey,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    value: _valDoctor,
-                                  )
-                                ]
-                              : _valHospital != null &&
-                                      userDataStore.doctors != null
-                                  ? userDataStore.doctors
-                                      // .where((element) =>
-                                      //     element['hospital'] == _valHospital)
-                                      // .toList()
-                                      .map((value) {
-                                      return DropdownMenuItem(
-                                        child: FancyText(
-                                          text: value.name,
-                                          color: blueGrey,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        value: value.name,
-                                      );
-                                    }).toList()
-                                  : [
-                                      DropdownMenuItem(
-                                        child: FancyText(
-                                          text: '',
-                                          color: blueGrey,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        value: '',
-                                      )
-                                    ],
-                          onChanged: (value) {
-                            setState(() {
-                              _valDoctor = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ]),
-              ),
-              Padding(
                 //date
                 padding:
                     const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
@@ -480,51 +319,6 @@ class _AppointmentFormState extends State<AppointmentForm> {
                 child: Row(
                   children: <Widget>[
                     FancyText(
-                      text: "Consultation Type: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    SizedBox(width: 10.0),
-                    Radio(
-                      value: AppointmentT.opd,
-                      activeColor: theme.iconTheme.color,
-                      groupValue: _appointment,
-                      onChanged: (AppointmentT value) {
-                        setState(() {
-                          _appointment = value;
-                        });
-                      },
-                    ),
-                    FancyText(
-                      text: "OPD",
-                      size: 15.0,
-                      color: blueGrey.withOpacity(0.9),
-                    ),
-                    Radio(
-                      value: AppointmentT.online,
-                      activeColor: theme.iconTheme.color,
-                      groupValue: _appointment,
-                      onChanged: (AppointmentT value) {
-                        setState(() {
-                          _appointment = value;
-                        });
-                      },
-                    ),
-                    FancyText(
-                      text: "Online",
-                      size: 15.0,
-                      color: blueGrey.withOpacity(0.9),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                //gender
-                padding: const EdgeInsets.only(
-                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-                child: Row(
-                  children: <Widget>[
-                    FancyText(
                       text: "Gender: ",
                       size: 16.0,
                       fontWeight: FontWeight.w500,
@@ -588,75 +382,75 @@ class _AppointmentFormState extends State<AppointmentForm> {
                               );
                               return;
                             }
-                            if (_valDepartment == null ||
-                                _valDoctor == null ||
-                                _valTime == null ||
-                                !_formKey.currentState.validate()) {
-                              buildAndShowFlushBar(
-                                context: context,
-                                text: 'Please provide all data!',
-                                backgroundColor: theme.colorScheme.error,
-                                icon: Icons.error_outline,
-                              );
-                              return;
-                            }
-                            setState(() {
-                              isActive = true;
-                            });
-                            _formKey.currentState.save();
-                            widget.appointment.firstName = _fName;
-                            widget.appointment.lastName = _lName;
-                            widget.appointment.phoneNum = _fPhone;
-                            widget.appointment.gender = _gender.toString();
-                            widget.appointment.consultationType =
-                                _appointment.toString();
-                            widget.appointment.doctor = _valDoctor;
-                            widget.appointment.department = _valDepartment;
-                            widget.appointment.hospital = _valHospital;
-                            widget.appointment.date = selectedDate;
-                            widget.appointment.time = _valTime;
-                            final updateData = widget.appointment.toJson();
-                            updateData['userId'] = userDataStore.user.uid;
-                            final doctor = userDataStore.doctors.firstWhere(
-                                (element) => element.name == _valDoctor,
-                                orElse: () => null);
-                            updateData['doctorId'] = doctor.uid;
-                            userDataStore
-                                .createAppointment(updateData)
-                                .then((value) async {
-                              setState(() {
-                                isActive = false;
-                              });
-                              if (value != 'error') {
-                                buildAndShowFlushBar(
-                                  context: context,
-                                  text: 'Appointment Created Successfully!',
-                                  icon: Icons.check,
-                                );
-                                await Future.delayed(Duration(seconds: 2));
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen()),
-                                    (route) => false);
-                              } else {
-                                buildAndShowFlushBar(
-                                  context: context,
-                                  text: 'Appointment Creation Failed!',
-                                  icon: Icons.error,
-                                );
-                              }
-                            }).catchError((err) {
-                              setState(() {
-                                isActive = false;
-                              });
-                              buildAndShowFlushBar(
-                                context: context,
-                                text: 'Oops something went wrong!',
-                                icon: Icons.error,
-                              );
-                              print(err);
-                            });
+                            // if (_valDepartment == null ||
+                            //     _valDoctor == null ||
+                            //     _valTime == null ||
+                            //     !_formKey.currentState.validate()) {
+                            //   buildAndShowFlushBar(
+                            //     context: context,
+                            //     text: 'Please provide all data!',
+                            //     backgroundColor: theme.colorScheme.error,
+                            //     icon: Icons.error_outline,
+                            //   );
+                            //   return;
+                            // }
+                            // setState(() {
+                            //   isActive = true;
+                            // });
+                            // _formKey.currentState.save();
+                            // widget.appointment.firstName = _fName;
+                            // widget.appointment.lastName = _lName;
+                            // widget.appointment.phoneNum = _fPhone;
+                            // widget.appointment.gender = _gender.toString();
+                            // widget.appointment.consultationType =
+                            //     _appointment.toString();
+                            // widget.appointment.doctor = _valDoctor;
+                            // widget.appointment.department = _valDepartment;
+                            // widget.appointment.hospital = _valHospital;
+                            // widget.appointment.date = selectedDate;
+                            // widget.appointment.time = _valTime;
+                            // final updateData = widget.appointment.toJson();
+                            // updateData['userId'] = userDataStore.user.uid;
+                            // final doctor = userDataStore.doctors.firstWhere(
+                            //     (element) => element.name == _valDoctor,
+                            //     orElse: () => null);
+                            // updateData['doctorId'] = doctor.uid;
+                            // userDataStore
+                            //     .createAppointment(updateData)
+                            //     .then((value) async {
+                            //   setState(() {
+                            //     isActive = false;
+                            //   });
+                            //   if (value != 'error') {
+                            //     buildAndShowFlushBar(
+                            //       context: context,
+                            //       text: 'Appointment Created Successfully!',
+                            //       icon: Icons.check,
+                            //     );
+                            //     await Future.delayed(Duration(seconds: 2));
+                            //     Navigator.pushAndRemoveUntil(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) => HomeScreen()),
+                            //         (route) => false);
+                            //   } else {
+                            //     buildAndShowFlushBar(
+                            //       context: context,
+                            //       text: 'Appointment Creation Failed!',
+                            //       icon: Icons.error,
+                            //     );
+                            //   }
+                            // }).catchError((err) {
+                            //   setState(() {
+                            //     isActive = false;
+                            //   });
+                            //   buildAndShowFlushBar(
+                            //     context: context,
+                            //     text: 'Oops something went wrong!',
+                            //     icon: Icons.error,
+                            //   );
+                            //   print(err);
+                            // });
                           },
                   ),
                 ),
