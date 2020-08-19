@@ -1,3 +1,5 @@
+import 'package:chitwan_hospital/UI/HospitalModule/PCRAppointmentDetails.dart';
+import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,19 +11,38 @@ class PCRTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appointments = Provider.of<HospitalDataStore>(context).appointments;
-    return ListView.builder(
-      itemCount: appointments != null ? appointments.length : 0,
-      itemBuilder: (BuildContext context, int index) {
-        return PCRCard(
-          date: appointments[index].date,
-          time: appointments[index].time,
-          name: appointments[index].firstName +
-              ' ' +
-              appointments[index].lastName,
-          phone: appointments[index].phoneNum,
-          status: appointments[index].status,
-        );
-      },
+    final theme = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: PreferredSize(
+          child: WhiteAppBar(
+            titleColor: theme.primary,
+            title: "PCR Test Request",
+          ),
+          preferredSize: Size.fromHeight(60.0)),
+      backgroundColor: theme.background,
+      body: ListView.builder(
+        itemCount: appointments != null ? appointments.length : 0,
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PCRAppointmentDetails(
+                  id: appointments[index].id,
+                ),
+              ),
+            ),
+            child: PCRCard(
+              date: appointments[index].date,
+              time: appointments[index].time,
+              name: appointments[index].firstName +
+                  ' ' +
+                  appointments[index].lastName,
+              phone: appointments[index].phoneNum,
+              status: appointments[index].status,
+            ),
+          );
+        },
+      ),
     );
   }
 }

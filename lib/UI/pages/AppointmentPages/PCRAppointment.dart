@@ -32,7 +32,6 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   String _lName;
   String _fPhone;
   DateTime selectedDate = DateTime.now();
-  String _valHospital = "Chitwan Hospital";
 
   String _valTime;
   List _time = [
@@ -68,12 +67,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
         color: blueGrey.withOpacity(0.9));
 
     final userDataStore = Provider.of<UserDataStore>(context);
-    // print(userDataStore.hospitals);
-    List _myHospital = [_valHospital];
-    //  userDataStore.hospitals != null
-    //     ? userDataStore.hospitals.map<String>((e) => e['name']).toList()
-    //     : [];
-    // print(_myHospital);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(41.0),

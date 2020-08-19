@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalModule.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/HospitalProfile.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/InquiryTab.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/PCRTabs.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/PromotionTab.dart';
 import 'package:chitwan_hospital/UI/Widget/FRaisedButton.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -150,6 +151,17 @@ class _HospitalDrawerAppState extends State<HospitalDrawerApp> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => InquiryTab()));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Home
+                    title: 'PCR Tests',
+                    icon: 'assets/images/drawerIcon/prescription.png',
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => PCRTabs()));
                     },
                   )
                 : SizedBox.shrink(),

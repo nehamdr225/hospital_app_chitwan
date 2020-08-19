@@ -172,6 +172,22 @@ class HospitalDataStore extends ChangeNotifier {
     }
   }
 
+  Future<bool> setAppointmentStatus(String uid, dynamic status) async {
+    bool value = await DatabaseService.setPCRAppointmentStatus(uid, status);
+    // if (value) {
+    //   final newAppointments = _appointments.map<PCRAppointment>((each) {
+    //     if (each.id == uid) {
+    //       final data = each;
+    //       data.status = status;
+    //       return data;
+    //     }
+    //     return each;
+    //   }).toList();
+    //   appointments = newAppointments;
+    // }
+    return value;
+  }
+
   updateDepartments(Map data) {
     DatabaseService.updateHospitalData(user.uid, data);
   }

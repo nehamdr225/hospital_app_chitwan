@@ -16,7 +16,7 @@ class CallList extends DoctorsTab {
     cardGenerator(doctor) {
       final department = departmentDoctors[doctor]['department'];
       final camelDepart = department[0] + department.substring(1).toLowerCase();
-      final contact = departmentDoctors[doctor]['contact'];
+      // final contact = departmentDoctors[doctor]['contact'];
       final subD = departmentDoctors[doctor]['sub-department'];
       final camelSub = subD[0] + subD.substring(1).toLowerCase();
       return Padding(

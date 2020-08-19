@@ -205,6 +205,16 @@ abstract class DatabaseService {
     }
   }
 
+  static Future<bool> setPCRAppointmentStatus(
+      String uid, dynamic status) async {
+    try {
+      await pcrCollection.document(uid).updateData({'status': status});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Future<bool> setDiagnosis(String uid, List data) async {
     try {
       await appointmentCollection.document(uid).updateData({'diagnosis': data});
