@@ -34,10 +34,10 @@ class DoctorsModule extends StatelessWidget {
         }
       });
     buildAppointmentRequests() {
-      List<Widget> widgets = appointments != null && appointments.length > 0
-          ? appointments.map<Widget>((each) {
-              return PatientListCard(id: each['id']);
-            }).toList()
+      return appointments != null && appointments.length > 0
+          ? appointments
+              .map<Widget>((each) => PatientListCard(id: each['id']))
+              .toList()
           : [
               Text(
                 'You have no new appointments!',
@@ -60,7 +60,6 @@ class DoctorsModule extends StatelessWidget {
                 ),
               )
             ];
-      return widgets;
     }
 
     return SafeArea(
