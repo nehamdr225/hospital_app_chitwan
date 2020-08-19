@@ -1,5 +1,4 @@
 import 'package:chitwan_hospital/UI/HospitalModule/PCRTabs.dart';
-import 'package:chitwan_hospital/UI/pages/AppointmentPages/atoms/PrescriptionListCard.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
