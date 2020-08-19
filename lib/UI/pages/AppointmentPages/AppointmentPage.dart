@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Apointment.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Inquiry.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/LabReports.dart';
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/PCRTab.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/Prescription.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _AppointmentPageState extends State<AppointmentPage>
   @override
   void initState() {
     _tabController = new TabController(
-      length: 4,
+      length: 5,
       vsync: this,
       initialIndex: widget.getIndex,
     );
@@ -52,6 +53,7 @@ class _AppointmentPageState extends State<AppointmentPage>
               Tab(
                 text: "Inquiry",
               ),
+              Tab(text: 'PCR Test')
             ],
           ),
         ),
@@ -62,6 +64,7 @@ class _AppointmentPageState extends State<AppointmentPage>
             Appointment(),
             LabReports(),
             Inquiry(),
+            PCRTab(),
           ],
         ));
   }

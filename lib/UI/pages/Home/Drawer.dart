@@ -132,68 +132,83 @@ class _DrawerAppState extends State<DrawerApp> {
                   )
                 : SizedBox(height: 0.0),
             user != null
-                            ? DrawerElements(
-                                //Appointments
-                                title: 'Appointments',
-                                icon: 'assets/images/drawerIcon/calendar.png',
-                             
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AppointmentPage()));
-                                },
-                              )
-                            : SizedBox.shrink(),
-                        user != null
-                            ? DrawerElements(
-                                //Appointments
-                                title: 'Prescription',
-                                icon: 'assets/images/drawerIcon/prescription.png',
-                                iconSize: 21.0,
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AppointmentPage(
-                                                getIndex: 0,
-                                              )));
-                                },
-                              )
-                            : SizedBox.shrink(),
-                        user != null
-                            ? DrawerElements(
-                                //Appointments
-                                title: 'Lab Reports',
-                                icon: 'assets/images/drawerIcon/lab.png',
-                                iconSize: 21.0,
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AppointmentPage(
-                                                getIndex: 2,
-                                              )));
-                                },
-                              )
-                            : SizedBox.shrink(),
-                         user != null
-                            ? DrawerElements(
-                                //Appointments
-                                title: 'Inquiry',
-                                icon: 'assets/images/drawerIcon/inquiry.png',
-                                iconSize: 21.0,
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AppointmentPage(
-                                                getIndex: 3,
-                                              )));
-                                },
-                              )
-                            : SizedBox.shrink(),
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Appointments',
+                    icon: 'assets/images/drawerIcon/calendar.png',
+
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage()));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Prescription',
+                    icon: 'assets/images/drawerIcon/prescription.png',
+                    iconSize: 21.0,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage(
+                                    getIndex: 0,
+                                  )));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'PCR Tests',
+                    icon: 'assets/images/drawerIcon/calendar.png',
+
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage(
+                                    getIndex: 4,
+                                  )));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Lab Reports',
+                    icon: 'assets/images/drawerIcon/lab.png',
+                    iconSize: 21.0,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage(
+                                    getIndex: 2,
+                                  )));
+                    },
+                  )
+                : SizedBox.shrink(),
+            user != null
+                ? DrawerElements(
+                    //Appointments
+                    title: 'Inquiry',
+                    icon: 'assets/images/drawerIcon/inquiry.png',
+                    iconSize: 21.0,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppointmentPage(
+                                    getIndex: 3,
+                                  )));
+                    },
+                  )
+                : SizedBox.shrink(),
 
             DrawerElements(
               //Specialities

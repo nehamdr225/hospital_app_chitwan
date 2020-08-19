@@ -7,6 +7,7 @@ import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:chitwan_hospital/models/HospitalPromotion.dart';
 import 'package:chitwan_hospital/models/Lab.dart';
 import 'package:chitwan_hospital/models/LabAppointment.dart';
+import 'package:chitwan_hospital/models/PCRAppintment.dart';
 import 'package:chitwan_hospital/models/PharmacyAppointment.dart';
 import 'package:chitwan_hospital/models/User.dart';
 import 'package:chitwan_hospital/service/auth.dart';
@@ -41,6 +42,7 @@ class UserDataStore extends ChangeNotifier {
   List<HospitalInquiry> _inquiries;
   List<HospitalPromotion> _promotions;
   List<Favourite> _favourites;
+  List<PCRAppointment> _pcr;
   bool _isLoggedIn;
 
   bool get isLoggedIn => _isLoggedIn;
@@ -134,6 +136,13 @@ class UserDataStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<PCRAppointment> get pcr => _pcr;
+
+  set pcr(List<PCRAppointment> newpcr) {
+    _pcr = newpcr;
+    notifyListeners();
+  }
+
   Future<void> setUserData() async {
     final String userId = await AuthService.getCurrentUID();
     if (userId != null) {
@@ -149,6 +158,7 @@ class UserDataStore extends ChangeNotifier {
         fetchMessages();
         getInquiries();
         getFavourites();
+        getPCRAppointments();
       }
     }
     isLoggedIn = false;
@@ -361,6 +371,21 @@ class UserDataStore extends ChangeNotifier {
       } else {
         appointments = addData;
       }
+    }, onError: (err) {
+      print(err);
+    });
+  }
+
+  getPCRAppointments() {
+    final result = DatabaseService.getPCRAppointments(user.uid);
+    result.listen((data) {
+      final List addData = data.documents.map<PCRAppointment>((e) {
+        final Map thisdata = e.data;
+        thisdata['id'] = e.documentID;
+        return PCRAppointment.fromJson(thisdata);
+      }).toList();
+
+      pcr = addData;
     }, onError: (err) {
       print(err);
     });
