@@ -249,52 +249,52 @@ class DoctorDetails extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, bottom: 8.0, left: 15.0, right: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(children: [
-                Icon(
-                  Icons.phone,
-                  color: theme.colorScheme.primary,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Phone Number: ",
-                        textAlign: TextAlign.left,
-                        size: 15.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      FancyText(
-                        text: doctor.phone,
-                        textAlign: TextAlign.left,
-                        size: 16.0,
-                        color: theme.colorScheme.secondaryVariant,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
-              RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  color: Theme.of(context).colorScheme.primary,
-                  textColor: Colors.white,
-                  child: Icon(Icons.phone_forwarded),
-                  onPressed: () {
-                    // _makePhoneCall(('tel: ${contact[0]}'));
-                  }),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(
+        //       top: 8.0, bottom: 8.0, left: 15.0, right: 8.0),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: <Widget>[
+        //       Row(children: [
+        //         Icon(
+        //           Icons.phone,
+        //           color: theme.colorScheme.primary,
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(left: 10.0),
+        //           child: Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: <Widget>[
+        //               FancyText(
+        //                 text: "Phone Number: ",
+        //                 textAlign: TextAlign.left,
+        //                 size: 15.0,
+        //                 fontWeight: FontWeight.w400,
+        //               ),
+        //               FancyText(
+        //                 text: doctor.phone,
+        //                 textAlign: TextAlign.left,
+        //                 size: 16.0,
+        //                 color: theme.colorScheme.secondaryVariant,
+        //                 fontWeight: FontWeight.w600,
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ]),
+        //       RaisedButton(
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(5.0),
+        //           ),
+        //           color: Theme.of(context).colorScheme.primary,
+        //           textColor: Colors.white,
+        //           child: Icon(Icons.phone_forwarded),
+        //           onPressed: () {
+        //             // _makePhoneCall(('tel: ${contact[0]}'));
+        //           }),
+        //     ],
+        //   ),
+        // ),
       ]),
     );
   }

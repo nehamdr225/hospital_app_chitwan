@@ -28,15 +28,6 @@ class CallList extends DoctorsTab {
               boxShadow: [
                 BoxShadow(
                     color: Colors.white60,
-                    //offset: Offset(-4, -4),
-                    blurRadius: 3.0,
-                    spreadRadius: -12.0),
-                BoxShadow(
-                    color: Colors.white60,
-                    offset: Offset(-4, -4),
-                    blurRadius: 3.0),
-                BoxShadow(
-                    color: Colors.white60,
                     offset: Offset(-4, -4),
                     blurRadius: 3.0),
                 BoxShadow(
@@ -81,41 +72,41 @@ class CallList extends DoctorsTab {
                           size: 15.0,
                           textAlign: TextAlign.left,
                         ),
-                        contact.length > 1
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 2.0),
-                                      child: FancyText(
-                                        text: "Contact: ",
-                                        textAlign: TextAlign.left,
-                                        defaultStyle: true,
-                                      ),
-                                    ),
-                                    FancyText(  
-                                        text:
-                                            "${contact[0].toString()}, ${contact[1].toString()}",
-                                        textAlign: TextAlign.left,
-                                        fontWeight: FontWeight.w500)
-                                  ])
-                            : Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 2.0),
-                                    child: FancyText(
-                                      text: "Contact: ",
-                                      textAlign: TextAlign.left,
-                                      defaultStyle: true,
-                                    ),
-                                  ),
-                                  FancyText(
-                                    text: "${contact[0].toString()}",
-                                    textAlign: TextAlign.left,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ],
-                              ),
+                        // contact.length > 1
+                        //     ? Column(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         children: <Widget>[
+                        //             Padding(
+                        //               padding: const EdgeInsets.only(top: 2.0),
+                        //               child: FancyText(
+                        //                 text: "Contact: ",
+                        //                 textAlign: TextAlign.left,
+                        //                 defaultStyle: true,
+                        //               ),
+                        //             ),
+                        //             FancyText(
+                        //                 text:
+                        //                     "${contact[0].toString()}, ${contact[1].toString()}",
+                        //                 textAlign: TextAlign.left,
+                        //                 fontWeight: FontWeight.w500)
+                        //           ])
+                        //     : Row(
+                        //         children: <Widget>[
+                        //           Padding(
+                        //             padding: const EdgeInsets.only(top: 2.0),
+                        //             child: FancyText(
+                        //               text: "Contact: ",
+                        //               textAlign: TextAlign.left,
+                        //               defaultStyle: true,
+                        //             ),
+                        //           ),
+                        //           FancyText(
+                        //             text: "${contact[0].toString()}",
+                        //             textAlign: TextAlign.left,
+                        //             fontWeight: FontWeight.w500,
+                        //           ),
+                        //         ],
+                        //       ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[

@@ -9,13 +9,13 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/AppointmentTabs/AppointmentForm.dart';
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/PCRAppointment.dart';
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
-import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromo.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromoDetails.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/models/DoctorAppointment.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 Widget promptLoginDialog(context) => Dialog(
       child: Padding(
@@ -27,7 +27,7 @@ Widget promptLoginDialog(context) => Dialog(
             child: FRaisedButton(
               text: 'Login to continue',
               color: textDark_Yellow,
-              bgcolor: Theme.of(context).colorScheme.primaryVariant,
+              bgcolor: Theme.of(context).colorScheme.primary,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -95,10 +95,10 @@ class HomeScreen extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(
-              top: 30.0, right: 10.0, left: 10.0, bottom: 20.0),
-          child: OutlineButton(
+              top: 20.0, right: 10.0, left: 10.0, bottom: 20.0),
+          child: FlatButton(
             color: theme.colorScheme.primary,
-            borderSide: BorderSide(color: theme.colorScheme.primary),
+            //borderSide: BorderSide(color: theme.colorScheme.primary),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -110,7 +110,7 @@ class HomeScreen extends StatelessWidget {
             child: Text(
               'Book Online PCR Test',
               style: TextStyle(
-                color: theme.colorScheme.primary,
+                color: Colors.white,//theme.colorScheme.primary,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -226,7 +226,7 @@ class HomeScreen extends StatelessWidget {
         // ),
         // Column(
         //     children: doctors != null
-        //         ? doctors
+        //         ? doctors 
         //             .map<Widget>((each) => HomeListCard(id: each.uid))
         //             .toList()
         //         : [Text('')]),
