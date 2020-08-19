@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chitwan_hospital/models/Hospital.dart';
 import 'package:chitwan_hospital/models/HospitalInquiry.dart';
 import 'package:chitwan_hospital/models/HospitalPromotion.dart';
+import 'package:chitwan_hospital/models/PCRAppintment.dart';
 import 'package:chitwan_hospital/service/auth.dart';
 import 'package:chitwan_hospital/service/database.dart';
 import 'package:chitwan_hospital/state/app.dart';
@@ -27,6 +28,7 @@ class HospitalDataStore extends ChangeNotifier {
         getAvailableDoctors();
         getPromotions();
         getInquiries();
+        getPCR();
       }
     } catch (e) {}
   }
@@ -35,6 +37,7 @@ class HospitalDataStore extends ChangeNotifier {
   Hospital _userData;
   List<HospitalPromotion> _promotions;
   List<HospitalInquiry> _inquiries;
+  List<PCRAppointment> _appointments;
 
   Hospital get user => _userData;
 
@@ -61,6 +64,13 @@ class HospitalDataStore extends ChangeNotifier {
 
   set inquiries(List<HospitalInquiry> newinquiries) {
     _inquiries = newinquiries;
+    notifyListeners();
+  }
+
+  List<PCRAppointment> get appointments => _appointments;
+
+  set appointments(List<PCRAppointment> newappointments) {
+    _appointments = newappointments;
     notifyListeners();
   }
 
@@ -98,6 +108,19 @@ class HospitalDataStore extends ChangeNotifier {
           return HospitalPromotion.fromJson(data);
         }).toList();
         promotions = promoData;
+      }
+    });
+  }
+
+  void getPCR() {
+    DatabaseService.getPCRHospitalAppointments().listen((event) {
+      if (event.documents.length > 0) {
+        final promoData = event.documents.map<PCRAppointment>((e) {
+          final data = e.data;
+          data['id'] = e.documentID;
+          return PCRAppointment.fromJson(data);
+        }).toList();
+        appointments = promoData;
       }
     });
   }

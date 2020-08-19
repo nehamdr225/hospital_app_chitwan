@@ -31,6 +31,7 @@ abstract class DatabaseService {
       db.collection('inquiries');
   static final CollectionReference favouritesCollection =
       db.collection('favourites');
+  static final CollectionReference pcrCollection = db.collection('pcr');
 
   static Future updateUserData(String uid, Map<String, dynamic> data) async {
     return await userCollection.document(uid).setData(data, merge: true);
@@ -86,6 +87,14 @@ abstract class DatabaseService {
     }
   }
 
+  static Future createPCRAppointment(Map data) async {
+    try {
+      return await pcrCollection.document().setData(data);
+    } catch (e) {
+      return 'error';
+    }
+  }
+
   static Stream<QuerySnapshot> getAppointments(String uid) {
     final result = appointmentCollection.where('userId', isEqualTo: uid);
     return result.snapshots();
@@ -93,6 +102,15 @@ abstract class DatabaseService {
 
   static Future<DocumentSnapshot> getOneAppointment(String uid) {
     return appointmentCollection.document(uid).get();
+  }
+
+  static Stream<QuerySnapshot> getPCRAppointments(String uid) {
+    final result = pcrCollection.where('userId', isEqualTo: uid);
+    return result.snapshots();
+  }
+
+  static Future<DocumentSnapshot> getOnePCRAppointment(String uid) {
+    return pcrCollection.document(uid).get();
   }
 
   static Stream<QuerySnapshot> getDoctors() {
@@ -111,6 +129,9 @@ abstract class DatabaseService {
     final result = appointmentCollection.where('doctorId', isEqualTo: uid);
     return result.snapshots();
   }
+
+  static Stream<QuerySnapshot> getPCRHospitalAppointments() =>
+      pcrCollection.snapshots();
 
   static getDoctorsByHospital(String hospital) {
     return doctorCollection.where('hospital', isEqualTo: hospital);

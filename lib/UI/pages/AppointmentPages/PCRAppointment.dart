@@ -1,10 +1,11 @@
 import 'package:chitwan_hospital/UI/Widget/Forms.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/SnackBar.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
-import 'package:chitwan_hospital/models/DoctorAppointment.dart';
+import 'package:chitwan_hospital/models/PCRAppintment.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,18 +13,18 @@ import 'package:provider/provider.dart';
 enum Gender { male, female }
 enum AppointmentT { opd, online }
 
-class PCRAppointment extends StatefulWidget {
-  final DoctorAppointment appointment;
+class PCRAppointmentPage extends StatefulWidget {
+  final PCRAppointment appointment;
   final doctor;
   final department;
-  PCRAppointment(
+  PCRAppointmentPage(
       {this.doctor, this.department, @required this.appointment, Key key})
       : super(key: key);
   @override
-  _PCRAppointmentState createState() => _PCRAppointmentState();
+  _PCRAppointmentPageState createState() => _PCRAppointmentPageState();
 }
 
-class _PCRAppointmentState extends State<PCRAppointment> {
+class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Gender _gender = Gender.male;
   List name = [];
@@ -164,60 +165,6 @@ class _PCRAppointmentState extends State<PCRAppointment> {
                     _fPhone = value;
                   },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Select Hospital: ",
-                        size: 16.0,
-                        fontWeight: FontWeight.w500,
-                        textAlign: TextAlign.left,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10.0),
-                        height: 40.0,
-                        // width: width * 0.40,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white,
-                            border: Border.all(
-                              width: 1,
-                              color: theme.colorScheme.primary,
-                            )),
-                        child: DropdownButton(
-                          underline: SizedBox(),
-                          hint: Container(
-                              height: 45.0,
-                              width: width * 0.50,
-                              alignment: Alignment.center,
-                              child: FancyText(
-                                text: "Select Hospital",
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          value: _valHospital,
-                          items: _myHospital.map((value) {
-                            return DropdownMenuItem(
-                              child: FancyText(
-                                text: value,
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              value: value,
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _valHospital = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ]),
               ),
               Padding(
                 //date
@@ -382,75 +329,64 @@ class _PCRAppointmentState extends State<PCRAppointment> {
                               );
                               return;
                             }
-                            // if (_valDepartment == null ||
-                            //     _valDoctor == null ||
-                            //     _valTime == null ||
-                            //     !_formKey.currentState.validate()) {
-                            //   buildAndShowFlushBar(
-                            //     context: context,
-                            //     text: 'Please provide all data!',
-                            //     backgroundColor: theme.colorScheme.error,
-                            //     icon: Icons.error_outline,
-                            //   );
-                            //   return;
-                            // }
-                            // setState(() {
-                            //   isActive = true;
-                            // });
-                            // _formKey.currentState.save();
-                            // widget.appointment.firstName = _fName;
-                            // widget.appointment.lastName = _lName;
-                            // widget.appointment.phoneNum = _fPhone;
-                            // widget.appointment.gender = _gender.toString();
-                            // widget.appointment.consultationType =
-                            //     _appointment.toString();
-                            // widget.appointment.doctor = _valDoctor;
-                            // widget.appointment.department = _valDepartment;
-                            // widget.appointment.hospital = _valHospital;
-                            // widget.appointment.date = selectedDate;
-                            // widget.appointment.time = _valTime;
-                            // final updateData = widget.appointment.toJson();
-                            // updateData['userId'] = userDataStore.user.uid;
-                            // final doctor = userDataStore.doctors.firstWhere(
-                            //     (element) => element.name == _valDoctor,
-                            //     orElse: () => null);
-                            // updateData['doctorId'] = doctor.uid;
-                            // userDataStore
-                            //     .createAppointment(updateData)
-                            //     .then((value) async {
-                            //   setState(() {
-                            //     isActive = false;
-                            //   });
-                            //   if (value != 'error') {
-                            //     buildAndShowFlushBar(
-                            //       context: context,
-                            //       text: 'Appointment Created Successfully!',
-                            //       icon: Icons.check,
-                            //     );
-                            //     await Future.delayed(Duration(seconds: 2));
-                            //     Navigator.pushAndRemoveUntil(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => HomeScreen()),
-                            //         (route) => false);
-                            //   } else {
-                            //     buildAndShowFlushBar(
-                            //       context: context,
-                            //       text: 'Appointment Creation Failed!',
-                            //       icon: Icons.error,
-                            //     );
-                            //   }
-                            // }).catchError((err) {
-                            //   setState(() {
-                            //     isActive = false;
-                            //   });
-                            //   buildAndShowFlushBar(
-                            //     context: context,
-                            //     text: 'Oops something went wrong!',
-                            //     icon: Icons.error,
-                            //   );
-                            //   print(err);
-                            // });
+                            if (_valTime == null ||
+                                !_formKey.currentState.validate()) {
+                              buildAndShowFlushBar(
+                                context: context,
+                                text: 'Please provide all data!',
+                                backgroundColor: theme.colorScheme.error,
+                                icon: Icons.error_outline,
+                              );
+                              return;
+                            }
+                            setState(() {
+                              isActive = true;
+                            });
+                            _formKey.currentState.save();
+                            widget.appointment.firstName = _fName;
+                            widget.appointment.lastName = _lName;
+                            widget.appointment.phoneNum = _fPhone;
+                            widget.appointment.gender = _gender.toString();
+                            widget.appointment.date = selectedDate;
+                            widget.appointment.time = _valTime;
+                            final updateData = widget.appointment.toJson();
+                            updateData['userId'] = userDataStore.user.uid;
+                            userDataStore
+                                .createPCRAppointment(updateData)
+                                .then((value) async {
+                              setState(() {
+                                isActive = false;
+                              });
+                              if (value != 'error') {
+                                buildAndShowFlushBar(
+                                  context: context,
+                                  text: 'PCR Appointment Created Successfully!',
+                                  icon: Icons.check,
+                                );
+                                await Future.delayed(Duration(seconds: 2));
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()),
+                                    (route) => false);
+                              } else {
+                                buildAndShowFlushBar(
+                                  context: context,
+                                  text: 'PCR Appointment Creation Failed!',
+                                  icon: Icons.error,
+                                );
+                              }
+                            }).catchError((err) {
+                              setState(() {
+                                isActive = false;
+                              });
+                              buildAndShowFlushBar(
+                                context: context,
+                                text: 'Oops something went wrong!',
+                                icon: Icons.error,
+                              );
+                              print(err);
+                            });
                           },
                   ),
                 ),

@@ -50,41 +50,25 @@ class HomeApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme.serviceLightTheme,
       home: SafeArea(
-          child:
-              // StreamBuilder(
-              //   stream: AuthService.user,
-              //   builder: (BuildContext context, AsyncSnapshot<FirebaseUser> user) {
-              //     switch (user.connectionState) {
-              //       case ConnectionState.waiting:
-              //         return BlankLoader();
-              //       default:
-              //         if (user.data != null && user.data.uid != null) {
-              //           return
-              FutureBuilder(
-        future: getLocalUserData('userType'),
-        builder: (BuildContext context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return BlankLoader();
-            default:
-              if (snapshot.data == 'doctor')
-                return DoctorsModule();
-              else if (snapshot.data == 'hospital')
-                return HospitalModule();
-              else if (snapshot.data == 'pharmacy')
-                return PharmacyModule();
-              else if (snapshot.data == 'lab') return LabModule();
-              return HomeScreen();
-          }
-        },
-      )
-          // } else {
-          //   return SignIn();
-          // }
-          // }
-          //   },
-          // ),
-          ),
+        child: FutureBuilder(
+          future: getLocalUserData('userType'),
+          builder: (BuildContext context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return BlankLoader();
+              default:
+                if (snapshot.data == 'doctor')
+                  return DoctorsModule();
+                else if (snapshot.data == 'hospital')
+                  return HospitalModule();
+                else if (snapshot.data == 'pharmacy')
+                  return PharmacyModule();
+                else if (snapshot.data == 'lab') return LabModule();
+                return HomeScreen();
+            }
+          },
+        ),
+      ),
     );
   }
 }

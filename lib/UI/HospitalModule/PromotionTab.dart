@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/HospitalModule/AddPromotion.dart';
 import 'package:chitwan_hospital/UI/HospitalModule/AllPromotion.dart';
+import 'package:chitwan_hospital/UI/HospitalModule/PCRTabs.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _PromotionTabState extends State<PromotionTab>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController = new TabController(length: 4, vsync: this, initialIndex: 1);
     super.initState();
   }
 
@@ -40,6 +41,7 @@ class _PromotionTabState extends State<PromotionTab>
                 text: "Promotions",
               ),
               Tab(text: "Create Promotion"),
+              Tab(text: "PCR Tests"),
             ],
           ),
         ),
@@ -48,7 +50,8 @@ class _PromotionTabState extends State<PromotionTab>
           children: <Widget>[
             ArchivedPromotions(),
             Promotions(),
-            AddPromotion()
+            AddPromotion(),
+            PCRTabs()
           ],
         ));
   }

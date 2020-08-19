@@ -12,10 +12,10 @@ import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/Hospital/HospitalPromoDetails.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/models/DoctorAppointment.dart';
+import 'package:chitwan_hospital/models/PCRAppintment.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 Widget promptLoginDialog(context) => Dialog(
       child: Padding(
@@ -103,14 +103,14 @@ class HomeScreen extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) =>
-                      PCRAppointment(appointment: newAppointment),
+                      PCRAppointmentPage(appointment: new PCRAppointment()),
                 ),
               );
             },
             child: Text(
               'Book Online PCR Test',
               style: TextStyle(
-                color: Colors.white,//theme.colorScheme.primary,
+                color: Colors.white, //theme.colorScheme.primary,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -226,7 +226,7 @@ class HomeScreen extends StatelessWidget {
         // ),
         // Column(
         //     children: doctors != null
-        //         ? doctors 
+        //         ? doctors
         //             .map<Widget>((each) => HomeListCard(id: each.uid))
         //             .toList()
         //         : [Text('')]),

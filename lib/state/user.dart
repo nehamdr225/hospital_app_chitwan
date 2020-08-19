@@ -341,6 +341,10 @@ class UserDataStore extends ChangeNotifier {
     return DatabaseService.createAppointment(data);
   }
 
+  Future createPCRAppointment(Map data) async {
+    return DatabaseService.createPCRAppointment(data);
+  }
+
   getUserAppointments() {
     final result = DatabaseService.getAppointments(user.uid);
     result.listen((data) {
