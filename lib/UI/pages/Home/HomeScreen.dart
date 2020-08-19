@@ -117,101 +117,101 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 10.0, right: 10.0, left: 10.0, bottom: 20.0),
-          child: FancyText(
-            text: "Promotions",
-            fontWeight: FontWeight.w600,
-            color: theme.textTheme.bodyText2.color,
-            size: 17.0,
-            textAlign: TextAlign.left,
-          ),
-        ),
-        Column(
-          children: promotions != null
-              ? promotions
-                  .map<Widget>((promotion) => InkWell(
-                        onTap: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HospitalPromoDetails(
-                                      promo: promotion,
-                                    ))),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, left: 8.0, right: 8.0, bottom: 10.0),
-                          child: Container(
-                            width: size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: theme.colorScheme.primary,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.white60,
-                                    offset: Offset(-4, -4),
-                                    blurRadius: 3.0),
-                                BoxShadow(
-                                  color: Color(0xffffffff),
-                                  offset: Offset(-.9, -.9),
-                                ),
-                                BoxShadow(
-                                    color: theme.colorScheme.primary
-                                        .withOpacity(0.3),
-                                    offset: Offset(4, 4),
-                                    blurRadius: 3.0),
-                                BoxShadow(
-                                    color: theme.colorScheme.primary
-                                        .withOpacity(0.3),
-                                    offset: Offset(.9, .9),
-                                    blurRadius: 1.0),
-                              ],
-                            ),
-                            child: Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: <Widget>[
-                                Container(
-                                    width: size.width * 0.95,
-                                    height: 170.0,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(promotion.image),
-                                          fit: BoxFit.fill),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    )),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    color: Colors.black38,
-                                  ),
-                                ),
-                                Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      FancyText(
-                                          letterSpacing: 1.0,
-                                          text: promotion.title,
-                                          color: textDark_Yellow,
-                                          size: 17.0,
-                                          fontWeight: FontWeight.w600),
-                                      RowInput(
-                                        title: "Date:  ",
-                                        titleColor: textDark_Yellow,
-                                        defaultStyle: false,
-                                        caption:
-                                            "${promotion.fromDate.split('T')[0]} to ${promotion.fromDate.split('T')[0]}",
-                                        capColor: textDark_Yellow,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                      )
-                                    ]),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ))
-                  .toList()
-              : [],
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(
+        //       top: 10.0, right: 10.0, left: 10.0, bottom: 20.0),
+        //   child: FancyText(
+        //     text: "Promotions",
+        //     fontWeight: FontWeight.w600,
+        //     color: theme.textTheme.bodyText2.color,
+        //     size: 17.0,
+        //     textAlign: TextAlign.left,
+        //   ),
+        // ),
+        // Column(
+        //   children: promotions != null
+        //       ? promotions
+        //           .map<Widget>((promotion) => InkWell(
+        //                 onTap: () =>
+        //                     Navigator.of(context).push(MaterialPageRoute(
+        //                         builder: (context) => HospitalPromoDetails(
+        //                               promo: promotion,
+        //                             ))),
+        //                 child: Padding(
+        //                   padding: const EdgeInsets.only(
+        //                       top: 8.0, left: 8.0, right: 8.0, bottom: 10.0),
+        //                   child: Container(
+        //                     width: size.width,
+        //                     decoration: BoxDecoration(
+        //                       borderRadius: BorderRadius.circular(8.0),
+        //                       color: theme.colorScheme.primary,
+        //                       boxShadow: [
+        //                         BoxShadow(
+        //                             color: Colors.white60,
+        //                             offset: Offset(-4, -4),
+        //                             blurRadius: 3.0),
+        //                         BoxShadow(
+        //                           color: Color(0xffffffff),
+        //                           offset: Offset(-.9, -.9),
+        //                         ),
+        //                         BoxShadow(
+        //                             color: theme.colorScheme.primary
+        //                                 .withOpacity(0.3),
+        //                             offset: Offset(4, 4),
+        //                             blurRadius: 3.0),
+        //                         BoxShadow(
+        //                             color: theme.colorScheme.primary
+        //                                 .withOpacity(0.3),
+        //                             offset: Offset(.9, .9),
+        //                             blurRadius: 1.0),
+        //                       ],
+        //                     ),
+        //                     child: Stack(
+        //                       alignment: AlignmentDirectional.center,
+        //                       children: <Widget>[
+        //                         Container(
+        //                             width: size.width * 0.95,
+        //                             height: 170.0,
+        //                             decoration: BoxDecoration(
+        //                               image: DecorationImage(
+        //                                   image: NetworkImage(promotion.image),
+        //                                   fit: BoxFit.fill),
+        //                               borderRadius: BorderRadius.circular(8.0),
+        //                             )),
+        //                         Container(
+        //                           decoration: BoxDecoration(
+        //                             borderRadius: BorderRadius.circular(8.0),
+        //                             color: Colors.black38,
+        //                           ),
+        //                         ),
+        //                         Column(
+        //                             mainAxisAlignment: MainAxisAlignment.center,
+        //                             children: <Widget>[
+        //                               FancyText(
+        //                                   letterSpacing: 1.0,
+        //                                   text: promotion.title,
+        //                                   color: textDark_Yellow,
+        //                                   size: 17.0,
+        //                                   fontWeight: FontWeight.w600),
+        //                               RowInput(
+        //                                 title: "Date:  ",
+        //                                 titleColor: textDark_Yellow,
+        //                                 defaultStyle: false,
+        //                                 caption:
+        //                                     "${promotion.fromDate.split('T')[0]} to ${promotion.fromDate.split('T')[0]}",
+        //                                 capColor: textDark_Yellow,
+        //                                 mainAxisAlignment:
+        //                                     MainAxisAlignment.center,
+        //                               )
+        //                             ]),
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ))
+        //           .toList()
+        //       : [],
+        // ),
 
         // Padding(
         //   padding: const EdgeInsets.only(
