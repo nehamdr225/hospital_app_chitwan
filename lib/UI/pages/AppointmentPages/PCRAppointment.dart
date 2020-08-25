@@ -11,6 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 enum Gender { male, female }
+enum Travel { yes, no, unknown }
+enum AnimalMarket { yes, no, unknown }
+enum Infection { yes, no, unknown }
+enum Occupation { student, health_worker, with_animal, lab_worker, others }
 enum AppointmentT { opd, online }
 
 class PCRAppointmentPage extends StatefulWidget {
@@ -27,11 +31,21 @@ class PCRAppointmentPage extends StatefulWidget {
 class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Gender _gender = Gender.male;
+  Occupation _occupation = Occupation.student;
+  Travel _travel = Travel.no;
+  Infection _infection = Infection.no;
+  AnimalMarket _animalMarket = AnimalMarket.no;
   List name = [];
   String _fName;
   String _lName;
-  String _fPhone;
+  String _fPhone, _fEmail, _fDOB, _fTAddress, _fPAddress, _fAge;
+  String _fHName, _foccupation;
   DateTime selectedDate = DateTime.now();
+
+  bool healthCareSeeting = true;
+  bool familySeeting = false;
+  bool workPlace = false;
+  bool unknown = false;
 
   String _valTime;
   List _time = [
@@ -89,6 +103,16 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
               SizedBox(
                 height: 10.0,
               ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FancyText(
+                  textAlign: TextAlign.start,
+                  text: "Patient's Information",
+                  color: Colors.grey[500],
+                  fontWeight: FontWeight.bold,
+                  size: 14.0,
+                ),
+              ),
               Container(
                 // first and last name
                 padding: const EdgeInsets.all(10.0),
@@ -143,6 +167,31 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       ? userDataStore.user.phone
                       : null,
                   icon: Icon(
+                    Icons.email,
+                    color: theme.iconTheme.color,
+                  ),
+                  text: "Email",
+                  type: TextInputType.emailAddress,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Email is required'
+                      : null,
+                  onSaved: (value) {
+                    _fEmail = value;
+                  },
+                ),
+              ),
+              Padding(
+                //phone number
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user != null
+                      ? userDataStore.user.phone
+                      : null,
+                  icon: Icon(
                     Icons.phone,
                     color: theme.iconTheme.color,
                   ),
@@ -161,105 +210,14 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 ),
               ),
               Padding(
-                //date
-                padding:
-                    const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FancyText(
-                      text: "Pick a date: ",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                      textAlign: TextAlign.left,
-                    ),
-                    Container(
-                      height: 40.0,
-                      width: width * 0.50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: theme.colorScheme.primary,
-                          )),
-                      child: Center(
-                        child: Text(
-                          "${selectedDate.day.toString()}-${selectedDate.month.toString()}-${selectedDate.year.toString()}",
-                          style: style,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.calendar_today),
-                      onPressed: () => _selectDate(context),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      FancyText(
-                        text: "Pick Time: ",
-                        size: 16.0,
-                        fontWeight: FontWeight.w500,
-                        textAlign: TextAlign.left,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10.0),
-                        height: 40.0,
-                        // width: width * 0.40,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white,
-                            border: Border.all(
-                              width: 1,
-                              color: theme.colorScheme.primary,
-                            )),
-                        child: DropdownButton(
-                          underline: SizedBox(),
-                          hint: Container(
-                              height: 45.0,
-                              width: width * 0.45,
-                              alignment: Alignment.center,
-                              child: FancyText(
-                                text: "Pick a time",
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          value: _valTime,
-                          items: _time.map((value) {
-                            return DropdownMenuItem(
-                              child: FancyText(
-                                text: value,
-                                color: blueGrey,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              value: value,
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _valTime = value;
-                            });
-                          },
-                        ),
-                      ),
-                      Icon(Icons.timer)
-                    ]),
-              ),
-              Padding(
                 //gender
                 padding: const EdgeInsets.only(
                     top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
                 child: Row(
                   children: <Widget>[
                     FancyText(
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.start,
                       text: "Gender: ",
                       size: 16.0,
                       fontWeight: FontWeight.w500,
@@ -295,6 +253,665 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       size: 15.0,
                       color: blueGrey.withOpacity(0.9),
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                //DOB
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FForms(
+                      width: width * 0.60,
+                      initialValue: userDataStore.user != null
+                          ? userDataStore.user.phone
+                          : null,
+                      text: "Date of Birth",
+                      type: TextInputType.number,
+                      labeltext: false,
+                      hintText: 'MM-DD-YYYY',
+                      //width: width * 0.80,
+                      borderColor: theme.colorScheme.primary,
+                      formColor: Colors.white,
+                      textColor: blueGrey.withOpacity(0.7),
+                      validator: (val) => val.isEmpty || val.length < 8
+                          ? 'DOB is required'
+                          : null,
+                      onSaved: (value) {
+                        _fDOB = value;
+                      },
+                    ),
+                    FForms(
+                      width: width * 0.30,
+                      initialValue: userDataStore.user != null
+                          ? userDataStore.user.phone
+                          : null,
+                      text: "Age",
+                      type: TextInputType.number,
+                      //width: width * 0.80,
+                      borderColor: theme.colorScheme.primary,
+                      formColor: Colors.white,
+                      textColor: blueGrey.withOpacity(0.7),
+                      validator: (val) => val.isEmpty || val.length < 8
+                          ? 'Age is required'
+                          : null,
+                      onSaved: (value) {
+                        _fAge = value;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                //Temp Address
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user != null
+                      ? userDataStore.user.phone
+                      : null,
+                  labeltext: false,
+                  text: "Temporary Address",
+                  hintText: "Province, District, Municipality, Ward",
+                  type: TextInputType.text,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Temporary Address is required'
+                      : null,
+                  onSaved: (value) {
+                    _fTAddress = value;
+                  },
+                ),
+              ),
+              Padding(
+                //permananet address
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user != null
+                      ? userDataStore.user.phone
+                      : null,
+                  labeltext: false,
+                  text: "Permanent Address",
+                  hintText: "Province, District, Municipality, Ward",
+                  type: TextInputType.text,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Permanent Address is required'
+                      : null,
+                  onSaved: (value) {
+                    _fPAddress = value;
+                  },
+                ),
+              ),
+              Padding(
+                //phone number
+                padding: const EdgeInsets.all(10.0),
+                child: FForms(
+                  initialValue: userDataStore.user != null
+                      ? userDataStore.user.phone
+                      : null,
+                  labeltext: false,
+                  text: "Name of hospital",
+                  hintText: "Name of hospital where patient is admitted.",
+                  type: TextInputType.text,
+                  //width: width * 0.80,
+                  borderColor: theme.colorScheme.primary,
+                  formColor: Colors.white,
+                  textColor: blueGrey.withOpacity(0.7),
+                  validator: (val) => val.isEmpty || val.length < 8
+                      ? 'Permanent Address is required'
+                      : null,
+                  onSaved: (value) {
+                    _fHName = value;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FancyText(
+                  textAlign: TextAlign.start,
+                  text: "Exposure and Travel Information",
+                  color: Colors.grey[500],
+                  fontWeight: FontWeight.bold,
+                  size: 14.0,
+                ),
+              ),
+              Padding(
+                //Occupation
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FancyText(
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.start,
+                      text: "Occupation",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 10.0),
+                    Row(
+                      children: [
+                        Radio(
+                          value: Occupation.student,
+                          activeColor: theme.iconTheme.color,
+                          groupValue: _occupation,
+                          onChanged: (Occupation value) {
+                            setState(() {
+                              _occupation = value;
+                            });
+                          },
+                        ),
+                        FancyText(
+                          text: "Student",
+                          size: 15.0,
+                          color: blueGrey.withOpacity(0.9),
+                        ),
+                      ],
+                    ),
+                    Row(children: [
+                      Radio(
+                        value: Occupation.health_worker,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _occupation,
+                        onChanged: (Occupation value) {
+                          setState(() {
+                            _occupation = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Health Worker",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    Row(children: [
+                      Radio(
+                        value: Occupation.with_animal,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _occupation,
+                        onChanged: (Occupation value) {
+                          setState(() {
+                            _occupation = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Works with animals",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    Row(children: [
+                      Radio(
+                        value: Occupation.lab_worker,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _occupation,
+                        onChanged: (Occupation value) {
+                          setState(() {
+                            _occupation = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Labratory Worker",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    Row(children: [
+                      Radio(
+                        value: Occupation.others,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _occupation,
+                        onChanged: (Occupation value) {
+                          setState(() {
+                            _occupation = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Others",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    _occupation == Occupation.others
+                        ? Padding(
+                            //phone number
+                            padding: const EdgeInsets.all(10.0),
+                            child: FForms(
+                              initialValue: userDataStore.user != null
+                                  ? userDataStore.user.phone
+                                  : null,
+                              text: "Specify occupation",
+                              type: TextInputType.text,
+                              //width: width * 0.80,
+                              underline: true,
+                              borderColor: theme.colorScheme.primary,
+                              formColor: Colors.white,
+                              textColor: blueGrey.withOpacity(0.7),
+                              validator: (val) => val.isEmpty || val.length < 8
+                                  ? 'Occupation is required'
+                                  : null,
+                              onSaved: (value) {
+                                _foccupation = value;
+                              },
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ],
+                ),
+              ),
+              Padding(
+                // travel
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FancyText(
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.start,
+                      text:
+                          "Has the patient travelled in the 14 days prior to symptom onset? ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 10.0),
+                    Row(
+                      children: [
+                        Radio(
+                          value: Travel.yes,
+                          activeColor: theme.iconTheme.color,
+                          groupValue: _travel,
+                          onChanged: (Travel value) {
+                            setState(() {
+                              _travel = value;
+                            });
+                          },
+                        ),
+                        FancyText(
+                          text: "Yes",
+                          size: 15.0,
+                          color: blueGrey.withOpacity(0.9),
+                        ),
+                      ],
+                    ),
+                    Row(children: [
+                      Radio(
+                        value: Travel.no,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _travel,
+                        onChanged: (Travel value) {
+                          setState(() {
+                            _travel = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "No",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    Row(children: [
+                      Radio(
+                        value: Travel.unknown,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _travel,
+                        onChanged: (Travel value) {
+                          setState(() {
+                            _travel = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Unknown",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    _travel == Travel.yes
+                        ? Padding(
+                            //phone number
+                            padding: const EdgeInsets.all(10.0),
+                            child: FForms(
+                              initialValue: userDataStore.user != null
+                                  ? userDataStore.user.phone
+                                  : null,
+                              text: "Specify country",
+                              type: TextInputType.text,
+                              //width: width * 0.80,
+                              underline: true,
+                              borderColor: theme.colorScheme.primary,
+                              formColor: Colors.white,
+                              textColor: blueGrey.withOpacity(0.7),
+                              validator: (val) => val.isEmpty || val.length < 8
+                                  ? 'Country is required'
+                                  : null,
+                              onSaved: (value) {
+                                _foccupation = value;
+                              },
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ],
+                ),
+              ),
+              Padding(
+                // travel
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FancyText(
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.start,
+                      text:
+                          "Has the patient had close contact with a probable or confirmed in the 14 days prior to symptom onset? ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 10.0),
+                    Row(
+                      children: [
+                        Radio(
+                          value: Infection.yes,
+                          activeColor: theme.iconTheme.color,
+                          groupValue: _infection,
+                          onChanged: (Infection value) {
+                            setState(() {
+                              _infection = value;
+                            });
+                          },
+                        ),
+                        FancyText(
+                          text: "Yes",
+                          size: 15.0,
+                          color: blueGrey.withOpacity(0.9),
+                        ),
+                      ],
+                    ),
+                    Row(children: [
+                      Radio(
+                        value: Infection.no,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _infection,
+                        onChanged: (Infection value) {
+                          setState(() {
+                            _infection = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "No",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    Row(children: [
+                      Radio(
+                        value: Infection.unknown,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _infection,
+                        onChanged: (Infection value) {
+                          setState(() {
+                            _infection = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Unknown",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    _infection == Infection.yes
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Padding(
+                                  //phone number
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: FForms(
+                                    initialValue: userDataStore.user != null
+                                        ? userDataStore.user.phone
+                                        : null,
+                                    text:
+                                        "please list all probable or confirmed cases",
+                                    type: TextInputType.text,
+                                    //width: width * 0.80,
+                                    underline: true,
+                                    borderColor: theme.colorScheme.primary,
+                                    formColor: Colors.white,
+                                    textColor: blueGrey.withOpacity(0.7),
+                                    validator: (val) =>
+                                        val.isEmpty || val.length < 8
+                                            ? 'Required'
+                                            : null,
+                                    onSaved: (value) {
+                                      _foccupation = value;
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  //phone number
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: FForms(
+                                    
+                                    initialValue: userDataStore.user != null
+                                        ? userDataStore.user.phone
+                                        : null,
+                                    text: "location/city/country for exposure",
+                                    type: TextInputType.text,
+                                    //width: width * 0.80,
+                                    underline: true,
+                                    borderColor: theme.colorScheme.primary,
+                                    formColor: Colors.white,
+                                    textColor: blueGrey.withOpacity(0.7),
+                                    validator: (val) =>
+                                        val.isEmpty || val.length < 8
+                                            ? 'Location is required'
+                                            : null,
+                                    onSaved: (value) {
+                                      _foccupation = value;
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: FancyText(
+                                    text:
+                                        "Contact seeting(check all that apply): ",
+                                    size: 16.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        value: healthCareSeeting,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            healthCareSeeting = newValue;
+                                          });
+                                        }),
+                                    FancyText(
+                                      text: "Health Care Seeting",
+                                      size: 15.0,
+                                      color: blueGrey.withOpacity(0.9),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        value: familySeeting,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            familySeeting = newValue;
+                                          });
+                                        }),
+                                    FancyText(
+                                      text: "Family Seeting",
+                                      size: 15.0,
+                                      color: blueGrey.withOpacity(0.9),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        value: workPlace,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            workPlace = newValue;
+                                          });
+                                        }),
+                                    FancyText(
+                                      text: "Work Place",
+                                      size: 15.0,
+                                      color: blueGrey.withOpacity(0.9),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                        value: healthCareSeeting,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            healthCareSeeting = newValue;
+                                          });
+                                        }),
+                                    FancyText(
+                                      text: "Unknown",
+                                      size: 15.0,
+                                      color: blueGrey.withOpacity(0.9),
+                                    ),
+                                  ],
+                                ),
+                              ])
+                        : SizedBox.shrink(),
+                  ],
+                ),
+              ),
+              Padding(
+                // travel
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FancyText(
+                      textOverflow: TextOverflow.visible,
+                      textAlign: TextAlign.start,
+                      text:
+                          "Have you visited any live animal markets in the 14 days prior to symptom onset? ",
+                      size: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 10.0),
+                    Row(
+                      children: [
+                        Radio(
+                          value: AnimalMarket.yes,
+                          activeColor: theme.iconTheme.color,
+                          groupValue: _animalMarket,
+                          onChanged: (AnimalMarket value) {
+                            setState(() {
+                              _animalMarket = value;
+                            });
+                          },
+                        ),
+                        FancyText(
+                          text: "Yes",
+                          size: 15.0,
+                          color: blueGrey.withOpacity(0.9),
+                        ),
+                      ],
+                    ),
+                    Row(children: [
+                      Radio(
+                        value: AnimalMarket.no,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _animalMarket,
+                        onChanged: (AnimalMarket value) {
+                          setState(() {
+                            _animalMarket = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "No",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    Row(children: [
+                      Radio(
+                        value: AnimalMarket.unknown,
+                        activeColor: theme.iconTheme.color,
+                        groupValue: _animalMarket,
+                        onChanged: (AnimalMarket value) {
+                          setState(() {
+                            _animalMarket = value;
+                          });
+                        },
+                      ),
+                      FancyText(
+                        text: "Unknown",
+                        size: 15.0,
+                        color: blueGrey.withOpacity(0.9),
+                      ),
+                    ]),
+                    _animalMarket == AnimalMarket.yes
+                        ? Padding(
+                            //phone number
+                            padding: const EdgeInsets.all(10.0),
+                            child: FForms(
+                              initialValue: userDataStore.user != null
+                                  ? userDataStore.user.phone
+                                  : null,
+                              text: "Specify country of exposure",
+                              type: TextInputType.text,
+                              //width: width * 0.80,
+                              underline: true,
+                              borderColor: theme.colorScheme.primary,
+                              formColor: Colors.white,
+                              textColor: blueGrey.withOpacity(0.7),
+                              validator: (val) => val.isEmpty || val.length < 8
+                                  ? 'Country is required'
+                                  : null,
+                              onSaved: (value) {
+                                _foccupation = value;
+                              },
+                            ),
+                          )
+                        : SizedBox.shrink(),
                   ],
                 ),
               ),

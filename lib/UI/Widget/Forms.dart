@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FForms extends StatelessWidget {
   final String initialValue;
   final bool obscure;
-  final String text;
+  final String text, hintText;
   final bool labeltext;
   final icon;
   final Widget trailingIcon;
@@ -32,6 +32,7 @@ class FForms extends StatelessWidget {
       {this.text,
       this.initialValue,
       this.labeltext: true,
+      this.hintText,
       this.width,
       this.type,
       this.obscure: false,
@@ -40,7 +41,7 @@ class FForms extends StatelessWidget {
       this.icon,
       this.trailingIcon,
       this.prefix,
-      this.underline: false,
+      this.underline: false, 
       this.formColor: Colors.white,
       this.borderColor: Colors.white,
       this.textColor,
@@ -83,7 +84,7 @@ class FForms extends StatelessWidget {
           prefix: prefix,
           prefixIcon: icon,
           suffixIcon: trailingIcon,
-          hintText: labeltext == true ? text : '',
+          hintText: labeltext == true ? text : hintText,
           enabled: true,
           labelStyle: style.copyWith(color: textColor),
           labelText: text,
