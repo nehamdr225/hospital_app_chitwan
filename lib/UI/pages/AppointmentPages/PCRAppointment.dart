@@ -47,12 +47,6 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   bool workPlace = false;
   bool unknown = false;
 
-  String _valTime;
-  List _time = [
-    "12:00 PM",
-    "5:00 PM",
-    "7:00 PM",
-  ];
   bool isActive = false;
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -353,9 +347,6 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 //phone number
                 padding: const EdgeInsets.all(10.0),
                 child: FForms(
-                  initialValue: userDataStore.user != null
-                      ? userDataStore.user.phone
-                      : null,
                   labeltext: false,
                   text: "Name of hospital",
                   hintText: "Name of hospital where patient is admitted.",
@@ -364,9 +355,6 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
-                  validator: (val) => val.isEmpty || val.length < 8
-                      ? 'Permanent Address is required'
-                      : null,
                   onSaved: (value) {
                     _fHName = value;
                   },
@@ -708,7 +696,6 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                   //phone number
                                   padding: const EdgeInsets.all(10.0),
                                   child: FForms(
-                                    
                                     initialValue: userDataStore.user != null
                                         ? userDataStore.user.phone
                                         : null,
@@ -940,8 +927,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               );
                               return;
                             }
-                            if (_valTime == null ||
-                                !_formKey.currentState.validate()) {
+                            if (!_formKey.currentState.validate()) {
                               buildAndShowFlushBar(
                                 context: context,
                                 text: 'Please provide all data!',
@@ -959,7 +945,6 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                             widget.appointment.phoneNum = _fPhone;
                             widget.appointment.gender = _gender.toString();
                             widget.appointment.date = selectedDate;
-                            widget.appointment.time = _valTime;
                             final updateData = widget.appointment.toJson();
                             updateData['userId'] = userDataStore.user.uid;
                             userDataStore
