@@ -152,15 +152,6 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
                                         color: textDark_Yellow,
                                       ),
                                     ),
-                                    appointment.time != null
-                                        ? FancyText(
-                                            text: appointment.time,
-                                            color: textDark_Yellow,
-                                          )
-                                        : FancyText(
-                                            text: "Not set",
-                                            color: textDark_Yellow,
-                                          )
                                   ],
                                 ),
                               ),

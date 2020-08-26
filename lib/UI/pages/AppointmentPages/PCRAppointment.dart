@@ -11,11 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 enum Gender { male, female }
-enum Travel { yes, no, unknown }
-enum AnimalMarket { yes, no, unknown }
-enum Infection { yes, no, unknown }
+enum BoolEnum { yes, no, unknown }
 enum Occupation { student, health_worker, with_animal, lab_worker, others }
-enum AppointmentT { opd, online }
 
 class PCRAppointmentPage extends StatefulWidget {
   final PCRAppointment appointment;
@@ -32,14 +29,15 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Gender _gender = Gender.male;
   Occupation _occupation = Occupation.student;
-  Travel _travel = Travel.no;
-  Infection _infection = Infection.no;
-  AnimalMarket _animalMarket = AnimalMarket.no;
+  BoolEnum _travel = BoolEnum.no;
+  BoolEnum _infection = BoolEnum.no;
+  BoolEnum _animalMarket = BoolEnum.no;
+  String _ftravelCountry, _fprobableList, _exposedLocation;
   List name = [];
   String _fName;
   String _lName;
   String _fPhone, _fEmail, _fDOB, _fTAddress, _fPAddress, _fAge;
-  String _fHName, _foccupation;
+  String _fHName, _foccupation, _fLivemarket;
   DateTime selectedDate = DateTime.now();
 
   bool healthCareSeeting = true;
@@ -518,10 +516,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     Row(
                       children: [
                         Radio(
-                          value: Travel.yes,
+                          value: BoolEnum.yes,
                           activeColor: theme.iconTheme.color,
                           groupValue: _travel,
-                          onChanged: (Travel value) {
+                          onChanged: (BoolEnum value) {
                             setState(() {
                               _travel = value;
                             });
@@ -536,10 +534,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ),
                     Row(children: [
                       Radio(
-                        value: Travel.no,
+                        value: BoolEnum.no,
                         activeColor: theme.iconTheme.color,
                         groupValue: _travel,
-                        onChanged: (Travel value) {
+                        onChanged: (BoolEnum value) {
                           setState(() {
                             _travel = value;
                           });
@@ -553,10 +551,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ]),
                     Row(children: [
                       Radio(
-                        value: Travel.unknown,
+                        value: BoolEnum.unknown,
                         activeColor: theme.iconTheme.color,
                         groupValue: _travel,
-                        onChanged: (Travel value) {
+                        onChanged: (BoolEnum value) {
                           setState(() {
                             _travel = value;
                           });
@@ -568,7 +566,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _travel == Travel.yes
+                    _travel == BoolEnum.yes
                         ? Padding(
                             //phone number
                             padding: const EdgeInsets.all(10.0),
@@ -587,7 +585,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                   ? 'Country is required'
                                   : null,
                               onSaved: (value) {
-                                _foccupation = value;
+                                _ftravelCountry = value;
                               },
                             ),
                           )
@@ -614,10 +612,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     Row(
                       children: [
                         Radio(
-                          value: Infection.yes,
+                          value: BoolEnum.yes,
                           activeColor: theme.iconTheme.color,
                           groupValue: _infection,
-                          onChanged: (Infection value) {
+                          onChanged: (BoolEnum value) {
                             setState(() {
                               _infection = value;
                             });
@@ -632,10 +630,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ),
                     Row(children: [
                       Radio(
-                        value: Infection.no,
+                        value: BoolEnum.no,
                         activeColor: theme.iconTheme.color,
                         groupValue: _infection,
-                        onChanged: (Infection value) {
+                        onChanged: (BoolEnum value) {
                           setState(() {
                             _infection = value;
                           });
@@ -649,10 +647,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ]),
                     Row(children: [
                       Radio(
-                        value: Infection.unknown,
+                        value: BoolEnum.unknown,
                         activeColor: theme.iconTheme.color,
                         groupValue: _infection,
-                        onChanged: (Infection value) {
+                        onChanged: (BoolEnum value) {
                           setState(() {
                             _infection = value;
                           });
@@ -664,7 +662,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _infection == Infection.yes
+                    _infection == BoolEnum.yes
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -688,7 +686,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                             ? 'Required'
                                             : null,
                                     onSaved: (value) {
-                                      _foccupation = value;
+                                      _fprobableList = value;
                                     },
                                   ),
                                 ),
@@ -711,7 +709,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                             ? 'Location is required'
                                             : null,
                                     onSaved: (value) {
-                                      _foccupation = value;
+                                      _exposedLocation = value;
                                     },
                                   ),
                                 ),
@@ -825,10 +823,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     Row(
                       children: [
                         Radio(
-                          value: AnimalMarket.yes,
+                          value: BoolEnum.yes,
                           activeColor: theme.iconTheme.color,
                           groupValue: _animalMarket,
-                          onChanged: (AnimalMarket value) {
+                          onChanged: (BoolEnum value) {
                             setState(() {
                               _animalMarket = value;
                             });
@@ -843,10 +841,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ),
                     Row(children: [
                       Radio(
-                        value: AnimalMarket.no,
+                        value: BoolEnum.no,
                         activeColor: theme.iconTheme.color,
                         groupValue: _animalMarket,
-                        onChanged: (AnimalMarket value) {
+                        onChanged: (BoolEnum value) {
                           setState(() {
                             _animalMarket = value;
                           });
@@ -860,10 +858,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ]),
                     Row(children: [
                       Radio(
-                        value: AnimalMarket.unknown,
+                        value: BoolEnum.unknown,
                         activeColor: theme.iconTheme.color,
                         groupValue: _animalMarket,
-                        onChanged: (AnimalMarket value) {
+                        onChanged: (BoolEnum value) {
                           setState(() {
                             _animalMarket = value;
                           });
@@ -875,7 +873,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _animalMarket == AnimalMarket.yes
+                    _animalMarket == BoolEnum.yes
                         ? Padding(
                             //phone number
                             padding: const EdgeInsets.all(10.0),
@@ -883,7 +881,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               initialValue: userDataStore.user != null
                                   ? userDataStore.user.phone
                                   : null,
-                              text: "Specify country of exposure",
+                              text: "Specify place",
                               type: TextInputType.text,
                               //width: width * 0.80,
                               underline: true,
@@ -894,7 +892,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                   ? 'Country is required'
                                   : null,
                               onSaved: (value) {
-                                _foccupation = value;
+                                _fLivemarket = value;
                               },
                             ),
                           )
@@ -943,7 +941,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                             widget.appointment.firstName = _fName;
                             widget.appointment.lastName = _lName;
                             widget.appointment.phoneNum = _fPhone;
-                            widget.appointment.gender = _gender.toString();
+                            widget.appointment.gender = _gender;
                             widget.appointment.date = selectedDate;
                             final updateData = widget.appointment.toJson();
                             updateData['userId'] = userDataStore.user.uid;

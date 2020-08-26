@@ -17,7 +17,6 @@ class PCRTab extends StatelessWidget {
               appointments[index].lastName,
           phone: appointments[index].phoneNum,
           status: appointments[index].status,
-          time: appointments[index].time,
         );
       },
     );

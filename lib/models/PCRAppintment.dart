@@ -1,10 +1,13 @@
+import 'package:chitwan_hospital/UI/pages/AppointmentPages/PCRAppointment.dart';
+import 'package:chitwan_hospital/service/extensions.dart';
+
 abstract class PCRAppointmentModel {
   String id;
   String userId;
   String firstName;
   String lastName;
   String phoneNum;
-  String gender;
+  Gender gender;
   String email;
   String dob;
   String age;
@@ -13,9 +16,9 @@ abstract class PCRAppointmentModel {
   String admittedHospital;
   String occupation;
   String status;
-  bool previousTravel;
-  bool closeContactToProbable;
-  bool liveMarketVisit;
+  BoolEnum previousTravel;
+  BoolEnum closeContactToProbable;
+  BoolEnum liveMarketVisit;
   DateTime date;
 }
 
@@ -25,7 +28,7 @@ class PCRAppointment implements PCRAppointmentModel {
   String firstName;
   String lastName;
   String phoneNum;
-  String gender;
+  Gender gender;
   String status;
   String email;
   String dob;
@@ -34,9 +37,9 @@ class PCRAppointment implements PCRAppointmentModel {
   String permanentAddress;
   String admittedHospital;
   String occupation;
-  bool previousTravel;
-  bool closeContactToProbable;
-  bool liveMarketVisit;
+  BoolEnum previousTravel;
+  BoolEnum closeContactToProbable;
+  BoolEnum liveMarketVisit;
   DateTime date;
   PCRAppointment({
     this.date,
@@ -64,7 +67,7 @@ class PCRAppointment implements PCRAppointmentModel {
         'phoneNum': phoneNum,
         'date': date,
         'lastName': lastName,
-        'gender': gender,
+        'gender': gender.string,
         'email': email,
         'dob': dob,
         'age': age,
@@ -72,9 +75,9 @@ class PCRAppointment implements PCRAppointmentModel {
         'permanentAddress': permanentAddress,
         'admittedHospital': admittedHospital,
         'occupation': occupation,
-        'previousTravel': previousTravel,
-        'liveMarketVisit': liveMarketVisit,
-        'closeContactToProbable': closeContactToProbable,
+        'previousTravel': previousTravel.boolean,
+        'liveMarketVisit': liveMarketVisit.boolean,
+        'closeContactToProbable': closeContactToProbable.boolean,
         if (status != null) 'status': status,
         if (id != null) 'id': id,
         if (userId != null) 'userId': userId,
@@ -84,19 +87,20 @@ class PCRAppointment implements PCRAppointmentModel {
       : firstName = json['firstName'],
         lastName = json['lastName'],
         date = json['date'].toDate(),
-        gender = json['gender'],
+        gender = (Gender.male).fromString(json['gender']),
         phoneNum = json['phoneNum'],
         status = json['status'],
         id = json['id'],
         userId = json['userId'],
         admittedHospital = json['admittedHospital'],
         age = json['age'],
-        closeContactToProbable = json['closeContactToProbable'],
+        closeContactToProbable =
+            (BoolEnum.no).fromBoolean(json['closeContactToProbable']),
         dob = json['dob'],
         email = json['email'],
-        liveMarketVisit = json['liveMarketVisit'],
+        liveMarketVisit = (BoolEnum.no).fromBoolean(json['liveMarketVisit']),
         occupation = json['occupation'],
         permanentAddress = json['permanentAddress'],
-        previousTravel = json['previousTravel'],
+        previousTravel = (BoolEnum.no).fromBoolean(json['previousTravel']),
         temporaryAddress = json['temporaryAddress'];
 }

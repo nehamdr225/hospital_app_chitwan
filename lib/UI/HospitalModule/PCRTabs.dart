@@ -33,7 +33,6 @@ class PCRTabs extends StatelessWidget {
             ),
             child: PCRCard(
               date: appointments[index].date,
-              time: appointments[index].time,
               name: appointments[index].firstName +
                   ' ' +
                   appointments[index].lastName,
@@ -52,13 +51,11 @@ class PCRCard extends StatefulWidget {
   final phone;
   final status;
   final DateTime date;
-  final time;
   PCRCard({
     this.name,
     this.phone,
     this.date,
     this.status,
-    this.time,
   });
 
   @override
@@ -68,7 +65,6 @@ class PCRCard extends StatefulWidget {
 class _PCRCardState extends State<PCRCard> {
   @override
   Widget build(BuildContext context) {
-    print(widget.time);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Padding(
@@ -134,10 +130,6 @@ class _PCRCardState extends State<PCRCard> {
                           title: "Date:  ",
                           caption: widget.date.toIso8601String().split('T')[0],
                           defaultStyle: true,
-                        ),
-                        RowInput(
-                          title: "Time:  ",
-                          caption: widget.time,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5.0),
