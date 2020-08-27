@@ -11,7 +11,7 @@ class PCRTab extends StatelessWidget {
       itemCount: appointments.length,
       itemBuilder: (BuildContext context, int index) {
         return PCRCard(
-          date: appointments[index].date,
+          date: appointments[index].timestamp,
           name: appointments[index].firstName +
               ' ' +
               appointments[index].lastName,

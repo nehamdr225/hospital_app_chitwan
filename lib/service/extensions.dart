@@ -54,3 +54,39 @@ extension BoolExtension on BoolEnum {
     }
   }
 }
+
+extension OccupationExtension on Occupation {
+  String get string {
+    switch (this) {
+      case Occupation.health_worker:
+        return 'Health worker';
+      case Occupation.lab_worker:
+        return 'Lab worker';
+      case Occupation.student:
+        return 'Student';
+      case Occupation.with_animal:
+        return 'With animal';
+      case Occupation.others:
+        return 'Others';
+      default:
+        return 'Others';
+    }
+  }
+
+  Occupation fromString(String value) {
+    switch (value) {
+      case 'Health worker':
+        return Occupation.health_worker;
+      case 'Lab Worker':
+        return Occupation.lab_worker;
+      case 'Student':
+        return Occupation.student;
+      case 'With animal':
+        return Occupation.with_animal;
+      case 'Others':
+        return Occupation.others;
+      default:
+        return Occupation.others;
+    }
+  }
+}

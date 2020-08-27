@@ -1,6 +1,7 @@
 import 'package:chitwan_hospital/UI/HospitalModule/PCRAppointmentDetails.dart';
 import 'package:chitwan_hospital/UI/core/atoms/WhiteAppBar.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chitwan_hospital/UI/core/atoms/FancyText.dart';
@@ -32,7 +33,7 @@ class PCRTabs extends StatelessWidget {
               ),
             ),
             child: PCRCard(
-              date: appointments[index].date,
+              date: appointments[index].timestamp,
               name: appointments[index].firstName +
                   ' ' +
                   appointments[index].lastName,
@@ -50,7 +51,7 @@ class PCRCard extends StatefulWidget {
   final name;
   final phone;
   final status;
-  final DateTime date;
+  final Timestamp date;
   PCRCard({
     this.name,
     this.phone,
@@ -128,7 +129,10 @@ class _PCRCardState extends State<PCRCard> {
                         ),
                         RowInput(
                           title: "Date:  ",
-                          caption: widget.date.toIso8601String().split('T')[0],
+                          caption: widget.date
+                              .toDate()
+                              .toIso8601String()
+                              .split('T')[0],
                           defaultStyle: true,
                         ),
                         Padding(

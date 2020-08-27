@@ -22,7 +22,7 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
     final hospitalDataStore = Provider.of<HospitalDataStore>(context);
     final appointment = hospitalDataStore.appointments
         .firstWhere((element) => element.id == widget.id);
-    Timestamp date = Timestamp.fromDate(appointment.date);
+    Timestamp date = appointment.timestamp;
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
 

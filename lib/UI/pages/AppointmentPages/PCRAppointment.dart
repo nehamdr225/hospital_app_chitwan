@@ -7,6 +7,7 @@ import 'package:chitwan_hospital/UI/core/theme.dart';
 import 'package:chitwan_hospital/UI/pages/Home/HomeScreen.dart';
 import 'package:chitwan_hospital/models/PCRAppintment.dart';
 import 'package:chitwan_hospital/state/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,41 +28,45 @@ class PCRAppointmentPage extends StatefulWidget {
 
 class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Gender _gender = Gender.male;
-  Occupation _occupation = Occupation.student;
-  BoolEnum _travel = BoolEnum.no;
-  BoolEnum _infection = BoolEnum.no;
-  BoolEnum _animalMarket = BoolEnum.no;
-  String _ftravelCountry, _fprobableList, _exposedLocation;
-  List name = [];
-  String _fName;
-  String _lName;
-  String _fPhone, _fEmail, _fDOB, _fTAddress, _fPAddress, _fAge;
-  String _fHName, _foccupation, _fLivemarket;
-  DateTime selectedDate = DateTime.now();
+  PCRAppointment appointment;
+  // Gender _gender = Gender.male;
+  // Occupation _occupation = Occupation.student;
+  // BoolEnum _travel = BoolEnum.no;
+  // BoolEnum _infection = BoolEnum.no;
+  // BoolEnum _animalMarket = BoolEnum.no;
+  // String _ftravelLoction, _fprobableList, _exposedLocation;
+  // String _fName;
+  // String _lName;
+  // String _fPhone, _fEmail, _fDOB, _fTAddress, _fPAddress, _fAge;
+  // String _fHName, _foccupation, _fLivemarket;
+  // DateTime selectedDate = DateTime.now();
 
-  bool healthCareSeeting = true;
-  bool familySeeting = false;
-  bool workPlace = false;
-  bool unknown = false;
+  // bool healthCareSeeting = true;
+  // bool familySeeting = false;
+  // bool workPlace = false;
+  // bool unknown = false;
 
   bool isActive = false;
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2020, 1),
-      lastDate: DateTime(2020, 9),
-    );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
-  }
+  // Future<Null> _selectDate(BuildContext context) async {
+  //   final DateTime picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: selectedDate,
+  //     firstDate: DateTime(2020, 1),
+  //     lastDate: DateTime(2020, 9),
+  //   );
+  //   if (picked != null && picked != selectedDate)
+  //     setState(() {
+  //       selectedDate = picked;
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.appointment != null && appointment == null)
+      setState(() {
+        appointment = widget.appointment;
+      });
     TextEditingController _textController = new TextEditingController();
     _textController.text = widget.appointment.firstName;
     final theme = Theme.of(context);
@@ -127,8 +132,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         }
                         return null;
                       },
-                      onSaved: (value) {
-                        _fName = value;
+                      onChanged: (value) {
+                        setState(() {
+                          appointment.firstName = value;
+                        });
                       },
                     ),
                     SizedBox(width: 10.0),
@@ -144,8 +151,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       width: width * 0.515,
                       validator: (val) =>
                           val.isEmpty ? 'Last Name is required' : null,
-                      onSaved: (value) {
-                        _lName = value;
+                      onChanged: (value) {
+                        setState(() {
+                          appointment.lastName = value;
+                        });
                       },
                     )
                   ],
@@ -171,8 +180,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   validator: (val) => val.isEmpty || val.length < 8
                       ? 'Email is required'
                       : null,
-                  onSaved: (value) {
-                    _fEmail = value;
+                  onChanged: (value) {
+                    setState(() {
+                      appointment.email = value;
+                    });
                   },
                 ),
               ),
@@ -196,8 +207,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   validator: (val) => val.isEmpty || val.length < 8
                       ? 'Phone Number is required'
                       : null,
-                  onSaved: (value) {
-                    _fPhone = value;
+                  onChanged: (value) {
+                    setState(() {
+                      appointment.phoneNum = value;
+                    });
                   },
                 ),
               ),
@@ -218,10 +231,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     Radio(
                       value: Gender.male,
                       activeColor: theme.iconTheme.color,
-                      groupValue: _gender,
+                      groupValue: appointment.gender,
                       onChanged: (Gender value) {
                         setState(() {
-                          _gender = value;
+                          appointment.gender = value;
                         });
                       },
                     ),
@@ -233,10 +246,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     Radio(
                       value: Gender.female,
                       activeColor: theme.iconTheme.color,
-                      groupValue: _gender,
+                      groupValue: appointment.gender,
                       onChanged: (Gender value) {
                         setState(() {
-                          _gender = value;
+                          appointment.gender = value;
                         });
                       },
                     ),
@@ -270,8 +283,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       validator: (val) => val.isEmpty || val.length < 8
                           ? 'DOB is required'
                           : null,
-                      onSaved: (value) {
-                        _fDOB = value;
+                      onChanged: (value) {
+                        setState(() {
+                          appointment.dob = value;
+                        });
                       },
                     ),
                     FForms(
@@ -288,8 +303,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       validator: (val) => val.isEmpty || val.length < 8
                           ? 'Age is required'
                           : null,
-                      onSaved: (value) {
-                        _fAge = value;
+                      onChanged: (value) {
+                        setState(() {
+                          appointment.age = value;
+                        });
                       },
                     ),
                   ],
@@ -313,8 +330,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   validator: (val) => val.isEmpty || val.length < 8
                       ? 'Temporary Address is required'
                       : null,
-                  onSaved: (value) {
-                    _fTAddress = value;
+                  onChanged: (value) {
+                    setState(() {
+                      appointment.temporaryAddress = value;
+                    });
                   },
                 ),
               ),
@@ -336,8 +355,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   validator: (val) => val.isEmpty || val.length < 8
                       ? 'Permanent Address is required'
                       : null,
-                  onSaved: (value) {
-                    _fPAddress = value;
+                  onChanged: (value) {
+                    setState(() {
+                      appointment.permanentAddress = value;
+                    });
                   },
                 ),
               ),
@@ -353,8 +374,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
-                  onSaved: (value) {
-                    _fHName = value;
+                  onChanged: (value) {
+                    setState(() {
+                      appointment.admittedHospital = value;
+                    });
                   },
                 ),
               ),
@@ -388,10 +411,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         Radio(
                           value: Occupation.student,
                           activeColor: theme.iconTheme.color,
-                          groupValue: _occupation,
+                          groupValue: appointment.occupation,
                           onChanged: (Occupation value) {
                             setState(() {
-                              _occupation = value;
+                              appointment.occupation = value;
                             });
                           },
                         ),
@@ -406,10 +429,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: Occupation.health_worker,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _occupation,
+                        groupValue: appointment.occupation,
                         onChanged: (Occupation value) {
                           setState(() {
-                            _occupation = value;
+                            appointment.occupation = value;
                           });
                         },
                       ),
@@ -423,10 +446,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: Occupation.with_animal,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _occupation,
+                        groupValue: appointment.occupation,
                         onChanged: (Occupation value) {
                           setState(() {
-                            _occupation = value;
+                            appointment.occupation = value;
                           });
                         },
                       ),
@@ -440,10 +463,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: Occupation.lab_worker,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _occupation,
+                        groupValue: appointment.occupation,
                         onChanged: (Occupation value) {
                           setState(() {
-                            _occupation = value;
+                            appointment.occupation = value;
                           });
                         },
                       ),
@@ -457,10 +480,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: Occupation.others,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _occupation,
+                        groupValue: appointment.occupation,
                         onChanged: (Occupation value) {
                           setState(() {
-                            _occupation = value;
+                            appointment.occupation = value;
                           });
                         },
                       ),
@@ -470,7 +493,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _occupation == Occupation.others
+                    appointment.occupation == Occupation.others
                         ? Padding(
                             //phone number
                             padding: const EdgeInsets.all(10.0),
@@ -488,8 +511,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               validator: (val) => val.isEmpty || val.length < 8
                                   ? 'Occupation is required'
                                   : null,
-                              onSaved: (value) {
-                                _foccupation = value;
+                              onChanged: (value) {
+                                appointment.occupation = value;
                               },
                             ),
                           )
@@ -518,10 +541,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         Radio(
                           value: BoolEnum.yes,
                           activeColor: theme.iconTheme.color,
-                          groupValue: _travel,
+                          groupValue: appointment.previousTravel,
                           onChanged: (BoolEnum value) {
                             setState(() {
-                              _travel = value;
+                              appointment.previousTravel = value;
                             });
                           },
                         ),
@@ -536,10 +559,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: BoolEnum.no,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _travel,
+                        groupValue: appointment.previousTravel,
                         onChanged: (BoolEnum value) {
                           setState(() {
-                            _travel = value;
+                            appointment.previousTravel = value;
                           });
                         },
                       ),
@@ -553,10 +576,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: BoolEnum.unknown,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _travel,
+                        groupValue: appointment.previousTravel,
                         onChanged: (BoolEnum value) {
                           setState(() {
-                            _travel = value;
+                            appointment.previousTravel = value;
                           });
                         },
                       ),
@@ -566,7 +589,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _travel == BoolEnum.yes
+                    appointment.previousTravel == BoolEnum.yes
                         ? Padding(
                             //phone number
                             padding: const EdgeInsets.all(10.0),
@@ -574,7 +597,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               initialValue: userDataStore.user != null
                                   ? userDataStore.user.phone
                                   : null,
-                              text: "Specify country",
+                              text: "Specify travel location",
                               type: TextInputType.text,
                               //width: width * 0.80,
                               underline: true,
@@ -582,10 +605,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               formColor: Colors.white,
                               textColor: blueGrey.withOpacity(0.7),
                               validator: (val) => val.isEmpty || val.length < 8
-                                  ? 'Country is required'
+                                  ? 'Travel location is required'
                                   : null,
-                              onSaved: (value) {
-                                _ftravelCountry = value;
+                              onChanged: (value) {
+                                appointment.placeOfTravel = value;
                               },
                             ),
                           )
@@ -614,10 +637,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         Radio(
                           value: BoolEnum.yes,
                           activeColor: theme.iconTheme.color,
-                          groupValue: _infection,
+                          groupValue: appointment.closeContactToProbable,
                           onChanged: (BoolEnum value) {
                             setState(() {
-                              _infection = value;
+                              appointment.closeContactToProbable = value;
                             });
                           },
                         ),
@@ -632,10 +655,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: BoolEnum.no,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _infection,
+                        groupValue: appointment.closeContactToProbable,
                         onChanged: (BoolEnum value) {
                           setState(() {
-                            _infection = value;
+                            appointment.closeContactToProbable = value;
                           });
                         },
                       ),
@@ -649,10 +672,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: BoolEnum.unknown,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _infection,
+                        groupValue: appointment.closeContactToProbable,
                         onChanged: (BoolEnum value) {
                           setState(() {
-                            _infection = value;
+                            appointment.closeContactToProbable = value;
                           });
                         },
                       ),
@@ -662,7 +685,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _infection == BoolEnum.yes
+                    appointment.closeContactToProbable == BoolEnum.yes
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -685,8 +708,9 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                         val.isEmpty || val.length < 8
                                             ? 'Required'
                                             : null,
-                                    onSaved: (value) {
-                                      _fprobableList = value;
+                                    onChanged: (value) {
+                                      appointment.closeContactDetails
+                                          .probableCases = value;
                                     },
                                   ),
                                 ),
@@ -708,8 +732,9 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                         val.isEmpty || val.length < 8
                                             ? 'Location is required'
                                             : null,
-                                    onSaved: (value) {
-                                      _exposedLocation = value;
+                                    onChanged: (value) {
+                                      appointment.closeContactDetails
+                                          .exposedLocation = value;
                                     },
                                   ),
                                 ),
@@ -726,13 +751,15 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                 Row(
                                   children: [
                                     Checkbox(
-                                        value: healthCareSeeting,
+                                        value: appointment
+                                            .contactSeeting.healthCare,
                                         activeColor: Theme.of(context)
                                             .colorScheme
                                             .primary,
                                         onChanged: (bool newValue) {
                                           setState(() {
-                                            healthCareSeeting = newValue;
+                                            appointment.contactSeeting
+                                                .healthCare = newValue;
                                           });
                                         }),
                                     FancyText(
@@ -745,13 +772,15 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                 Row(
                                   children: [
                                     Checkbox(
-                                        value: familySeeting,
+                                        value:
+                                            appointment.contactSeeting.family,
                                         activeColor: Theme.of(context)
                                             .colorScheme
                                             .primary,
                                         onChanged: (bool newValue) {
                                           setState(() {
-                                            familySeeting = newValue;
+                                            appointment.contactSeeting.family =
+                                                newValue;
                                           });
                                         }),
                                     FancyText(
@@ -764,13 +793,15 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                 Row(
                                   children: [
                                     Checkbox(
-                                        value: workPlace,
+                                        value: appointment
+                                            .contactSeeting.workPlace,
                                         activeColor: Theme.of(context)
                                             .colorScheme
                                             .primary,
                                         onChanged: (bool newValue) {
                                           setState(() {
-                                            workPlace = newValue;
+                                            appointment.contactSeeting
+                                                .workPlace = newValue;
                                           });
                                         }),
                                     FancyText(
@@ -783,13 +814,15 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                 Row(
                                   children: [
                                     Checkbox(
-                                        value: healthCareSeeting,
+                                        value:
+                                            appointment.contactSeeting.unknown,
                                         activeColor: Theme.of(context)
                                             .colorScheme
                                             .primary,
                                         onChanged: (bool newValue) {
                                           setState(() {
-                                            healthCareSeeting = newValue;
+                                            appointment.contactSeeting.unknown =
+                                                newValue;
                                           });
                                         }),
                                     FancyText(
@@ -825,10 +858,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         Radio(
                           value: BoolEnum.yes,
                           activeColor: theme.iconTheme.color,
-                          groupValue: _animalMarket,
+                          groupValue: appointment.liveMarketVisit,
                           onChanged: (BoolEnum value) {
                             setState(() {
-                              _animalMarket = value;
+                              appointment.liveMarketVisit = value;
                             });
                           },
                         ),
@@ -843,10 +876,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: BoolEnum.no,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _animalMarket,
+                        groupValue: appointment.liveMarketVisit,
                         onChanged: (BoolEnum value) {
                           setState(() {
-                            _animalMarket = value;
+                            appointment.liveMarketVisit = value;
                           });
                         },
                       ),
@@ -860,10 +893,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       Radio(
                         value: BoolEnum.unknown,
                         activeColor: theme.iconTheme.color,
-                        groupValue: _animalMarket,
+                        groupValue: appointment.liveMarketVisit,
                         onChanged: (BoolEnum value) {
                           setState(() {
-                            _animalMarket = value;
+                            appointment.liveMarketVisit = value;
                           });
                         },
                       ),
@@ -873,7 +906,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                         color: blueGrey.withOpacity(0.9),
                       ),
                     ]),
-                    _animalMarket == BoolEnum.yes
+                    appointment.liveMarketVisit == BoolEnum.yes
                         ? Padding(
                             //phone number
                             padding: const EdgeInsets.all(10.0),
@@ -881,7 +914,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               initialValue: userDataStore.user != null
                                   ? userDataStore.user.phone
                                   : null,
-                              text: "Specify place",
+                              text: "Specify market place",
                               type: TextInputType.text,
                               //width: width * 0.80,
                               underline: true,
@@ -889,10 +922,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               formColor: Colors.white,
                               textColor: blueGrey.withOpacity(0.7),
                               validator: (val) => val.isEmpty || val.length < 8
-                                  ? 'Country is required'
+                                  ? 'Market place is required'
                                   : null,
-                              onSaved: (value) {
-                                _fLivemarket = value;
+                              onChanged: (value) {
+                                appointment.liveMarketLocation = value;
                               },
                             ),
                           )
@@ -938,12 +971,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               isActive = true;
                             });
                             _formKey.currentState.save();
-                            widget.appointment.firstName = _fName;
-                            widget.appointment.lastName = _lName;
-                            widget.appointment.phoneNum = _fPhone;
-                            widget.appointment.gender = _gender;
-                            widget.appointment.date = selectedDate;
-                            final updateData = widget.appointment.toJson();
+                            appointment.timestamp = Timestamp.now();
+                            final updateData = appointment.toJson();
                             updateData['userId'] = userDataStore.user.uid;
                             userDataStore
                                 .createPCRAppointment(updateData)

@@ -1,5 +1,6 @@
 import 'package:chitwan_hospital/UI/pages/AppointmentPages/PCRAppointment.dart';
 import 'package:chitwan_hospital/service/extensions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class PCRAppointmentModel {
   String id;
@@ -14,12 +15,17 @@ abstract class PCRAppointmentModel {
   String temporaryAddress;
   String permanentAddress;
   String admittedHospital;
-  String occupation;
+  Occupation occupation;
+  String otherOccupation;
   String status;
   BoolEnum previousTravel;
+  String placeOfTravel;
   BoolEnum closeContactToProbable;
+  CloseContactDetails closeContactDetails;
   BoolEnum liveMarketVisit;
-  DateTime date;
+  String liveMarketLocation;
+  Timestamp timestamp;
+  ContactSeeting contactSeeting;
 }
 
 class PCRAppointment implements PCRAppointmentModel {
@@ -36,36 +42,45 @@ class PCRAppointment implements PCRAppointmentModel {
   String temporaryAddress;
   String permanentAddress;
   String admittedHospital;
-  String occupation;
+  Occupation occupation;
+  String otherOccupation;
   BoolEnum previousTravel;
+  String placeOfTravel;
   BoolEnum closeContactToProbable;
+  CloseContactDetails closeContactDetails;
   BoolEnum liveMarketVisit;
-  DateTime date;
-  PCRAppointment({
-    this.date,
-    this.gender,
-    this.firstName,
-    this.lastName,
-    this.phoneNum,
-    this.status,
-    this.id,
-    this.userId,
-    this.admittedHospital,
-    this.age,
-    this.closeContactToProbable,
-    this.dob,
-    this.email,
-    this.liveMarketVisit,
-    this.occupation,
-    this.permanentAddress,
-    this.previousTravel,
-    this.temporaryAddress,
-  });
+  String liveMarketLocation;
+  Timestamp timestamp;
+  ContactSeeting contactSeeting;
+  PCRAppointment(
+      {this.timestamp,
+      this.gender,
+      this.firstName,
+      this.lastName,
+      this.phoneNum,
+      this.status,
+      this.id,
+      this.userId,
+      this.admittedHospital,
+      this.age,
+      this.closeContactToProbable,
+      this.dob,
+      this.email,
+      this.liveMarketVisit,
+      this.occupation,
+      this.permanentAddress,
+      this.previousTravel,
+      this.temporaryAddress,
+      this.closeContactDetails,
+      this.liveMarketLocation,
+      this.otherOccupation,
+      this.placeOfTravel,
+      this.contactSeeting});
 
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
         'phoneNum': phoneNum,
-        'date': date,
+        'timestamp': timestamp,
         'lastName': lastName,
         'gender': gender.string,
         'email': email,
@@ -74,10 +89,16 @@ class PCRAppointment implements PCRAppointmentModel {
         'temporaryAddress': temporaryAddress,
         'permanentAddress': permanentAddress,
         'admittedHospital': admittedHospital,
-        'occupation': occupation,
+        'occupation': occupation.string,
         'previousTravel': previousTravel.boolean,
         'liveMarketVisit': liveMarketVisit.boolean,
         'closeContactToProbable': closeContactToProbable.boolean,
+        'contactSeeting': contactSeeting.toJson(),
+        if (occupation.string == 'Others') 'otherOccupation': otherOccupation,
+        if (previousTravel.boolean) 'placeOfTravel': placeOfTravel,
+        if (liveMarketVisit.boolean) 'liveMarketLocation': liveMarketLocation,
+        if (closeContactToProbable.boolean)
+          'closeContactDetails': closeContactDetails.toJson(),
         if (status != null) 'status': status,
         if (id != null) 'id': id,
         if (userId != null) 'userId': userId,
@@ -86,7 +107,7 @@ class PCRAppointment implements PCRAppointmentModel {
   PCRAppointment.fromJson(json)
       : firstName = json['firstName'],
         lastName = json['lastName'],
-        date = json['date'].toDate(),
+        timestamp = json['timestamp'],
         gender = (Gender.male).fromString(json['gender']),
         phoneNum = json['phoneNum'],
         status = json['status'],
@@ -99,8 +120,51 @@ class PCRAppointment implements PCRAppointmentModel {
         dob = json['dob'],
         email = json['email'],
         liveMarketVisit = (BoolEnum.no).fromBoolean(json['liveMarketVisit']),
-        occupation = json['occupation'],
+        occupation = (Occupation.others).fromString(json['occupation']),
         permanentAddress = json['permanentAddress'],
         previousTravel = (BoolEnum.no).fromBoolean(json['previousTravel']),
-        temporaryAddress = json['temporaryAddress'];
+        temporaryAddress = json['temporaryAddress'],
+        otherOccupation = json['otherOccupation'],
+        placeOfTravel = json['placeOfTravel'],
+        liveMarketLocation = json['liveMarketLocation'],
+        closeContactDetails =
+            CloseContactDetails.fromJson(json['closeContactDetails']),
+        contactSeeting = ContactSeeting.fromJson(json['contactSeeting']);
+}
+
+class CloseContactDetails {
+  String probableCases, exposedLocation;
+
+  CloseContactDetails({this.exposedLocation, this.probableCases});
+
+  CloseContactDetails.fromJson(json)
+      : this.probableCases = json['probableCases'],
+        this.exposedLocation = json['exposedLocation'];
+
+  Map<String, String> toJson() => {
+        'probableCases': this.probableCases,
+        'exposedLocation': this.exposedLocation,
+      };
+}
+
+class ContactSeeting {
+  bool healthCare;
+  bool family;
+  bool workPlace;
+  bool unknown;
+
+  ContactSeeting({this.family, this.healthCare, this.unknown, this.workPlace});
+
+  ContactSeeting.fromJson(json)
+      : this.family = json['family'],
+        this.healthCare = json['healthCare'],
+        this.unknown = json['unknown'],
+        this.workPlace = json['workPlace'];
+
+  Map<String, bool> toJson() => {
+        'family': this.family,
+        'healthCare': this.healthCare,
+        'unknown': this.unknown,
+        'workPlace': this.workPlace,
+      };
 }
