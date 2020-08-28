@@ -480,6 +480,18 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
                     ),
                   )
                 : SizedBox.fromSize(),
+                 "${appointment.closeContactToProbable}" == "BoolEnum.yes"
+                ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: RowInput(
+                      defaultStyle: true,
+                      title: "Exposed Location: ",
+                      caption:
+                          "${appointment.closeContactDetails.exposedLocation}",
+                    ),
+                  )
+                : SizedBox.fromSize(),
+            
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: QA(
