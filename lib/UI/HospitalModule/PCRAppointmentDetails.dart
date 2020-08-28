@@ -1,4 +1,6 @@
 import 'package:chitwan_hospital/UI/core/atoms/Indicator.dart';
+import 'package:chitwan_hospital/UI/core/atoms/QA.dart';
+import 'package:chitwan_hospital/UI/core/atoms/RowInput.dart';
 import 'package:chitwan_hospital/state/hospital.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,12 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
     Timestamp date = appointment.timestamp;
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    final gender = "${appointment.gender}".replaceRange(0, 7, '').toUpperCase();
+    final prevTravel =
+        "${appointment.previousTravel}".replaceRange(0, 9, '').toUpperCase();
+    final closeContactToProbable = "${appointment.closeContactToProbable}"
+        .replaceRange(0, 9, '')
+        .toUpperCase();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -59,19 +67,6 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
         backgroundColor: theme.primary,
       ),
       body: ListView(children: <Widget>[
-        // Padding(
-        //   padding: const EdgeInsets.only(right: 12.0),
-        //   child: FancyText(
-        //       text: "Edit",
-        //       color: Colors.blueGrey.withOpacity(0.7),
-        //       fontWeight: FontWeight.w700,
-        //       size: 15.0,
-        //       textAlign: TextAlign.end,
-        //       onTap: () {
-        //         Navigator.of(context).push(
-        //             MaterialPageRoute(builder: (context) => PatientEdit()));
-        //       }),
-        // ),
         BoolIndicator(isActive),
         Padding(
           padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
@@ -143,15 +138,6 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
                                             text: "Not set",
                                             color: textDark_Yellow,
                                           ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 3.0),
-                                      child: Icon(
-                                        Icons.timer,
-                                        size: 16.0,
-                                        color: textDark_Yellow,
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -163,6 +149,13 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
                                 textAlign: TextAlign.left,
                                 color: textDark_Yellow,
                               ),
+                              RowInput(
+                                title: 'Gender: ',
+                                caption: gender,
+                                defaultStyle: false,
+                                capColor: textDark_Yellow,
+                                titleColor: textDark_Yellow,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
                                 child: Column(
@@ -172,6 +165,7 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
                                       text: "Current Status: ",
                                       textAlign: TextAlign.left,
                                       color: textDark_Yellow,
+                                      size: 14.0,
                                     ),
                                     appointment.status == null
                                         ? Row(
@@ -385,6 +379,131 @@ class _PCRAppointmentDetailsState extends State<PCRAppointmentDetails> {
                 ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 8.0, left: 15.0),
+          child: Column(children: <Widget>[
+            
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: RowInput(
+                defaultStyle: true,
+                title: "Date of Birth: ",
+                caption: "${appointment.dob}",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: RowInput(
+                defaultStyle: true,
+                title: "Age: ",
+                caption: "${appointment.age}",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: RowInput(
+                defaultStyle: true,
+                title: "Temporary Address: ",
+                caption: "${appointment.temporaryAddress}",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: RowInput(
+                defaultStyle: true,
+                title: "Permanent Address: ",
+                caption: "${appointment.permanentAddress}",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: RowInput(
+                defaultStyle: true,
+                title: "Name of admitted hospital: ",
+                caption: "${appointment.admittedHospital}",
+              ),
+            ),
+           
+            "${appointment.occupation}" != "Occupation.others"
+                ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: RowInput(
+                      defaultStyle: true,
+                      title: "Occupation: ",
+                      caption: "${appointment.occupation}",
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: RowInput(
+                      defaultStyle: true,
+                      title: "Occupation: ",
+                      caption: "${appointment.otherOccupation}",
+                    ),
+                  ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: QA(
+                defaultStyle: true,
+                title:
+                    "Has the patient travelled in the 14 days prior to symptom onset?  ",
+                caption: prevTravel,
+              ),
+            ),
+            "${appointment.previousTravel}" == "BoolEnum.yes"
+                ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: RowInput(
+                      defaultStyle: true,
+                      title: "Travel Location: ",
+                      caption: "${appointment.placeOfTravel}",
+                    ),
+                  )
+                : SizedBox.fromSize(),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: QA(
+                defaultStyle: true,
+                title:
+                    "Has the patient had close contact with a probable or confirmed in the 14 days prior to symptom onset?  ",
+                caption: closeContactToProbable,
+              ),
+            ),
+            "${appointment.closeContactToProbable}" == "BoolEnum.yes"
+                ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: RowInput(
+                      defaultStyle: true,
+                      title: "Contact Details: ",
+                      caption:
+                          "${appointment.closeContactDetails.probableCases}",
+                    ),
+                  )
+                : SizedBox.fromSize(),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: QA(
+                defaultStyle: true,
+                title:
+                    "Have you visited any live animal markets in the 14 days prior to symptom onset?  ",
+                caption: "${appointment.liveMarketVisit}"
+                    .replaceRange(0, 9, '')
+                    .toUpperCase(),
+              ),
+            ),
+            "${appointment.closeContactToProbable}" == "BoolEnum.yes"
+                ? Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: RowInput(
+                      defaultStyle: true,
+                      title: "Contact Details: ",
+                      caption: "${appointment.liveMarketLocation}",
+                    ),
+                  )
+                : SizedBox.fromSize(),
+            SizedBox(height: 100.0)
+          ]),
+        )
       ]),
     );
   }
