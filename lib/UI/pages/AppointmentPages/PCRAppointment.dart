@@ -16,19 +16,22 @@ enum BoolEnum { yes, no, unknown }
 enum Occupation { student, health_worker, with_animal, lab_worker, others }
 
 class PCRAppointmentPage extends StatefulWidget {
-  final PCRAppointment appointment;
-  final doctor;
-  final department;
-  PCRAppointmentPage(
-      {this.doctor, this.department, @required this.appointment, Key key})
-      : super(key: key);
+  PCRAppointmentPage({Key key}) : super(key: key);
   @override
   _PCRAppointmentPageState createState() => _PCRAppointmentPageState();
 }
 
 class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  PCRAppointment appointment;
+  PCRAppointment appointment = PCRAppointment(
+    closeContactToProbable: BoolEnum.yes,
+    gender: Gender.male,
+    // closeContactDetails: CloseContactDetails(),
+    contactSeeting: ContactSeeting(workPlace: true),
+    liveMarketVisit: BoolEnum.yes,
+    occupation: Occupation.others,
+    previousTravel: BoolEnum.yes,
+  );
   // Gender _gender = Gender.male;
   // Occupation _occupation = Occupation.student;
   // BoolEnum _travel = BoolEnum.no;
@@ -63,21 +66,22 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.appointment != null && appointment == null)
-      setState(() {
-        appointment = widget.appointment;
-      });
-    TextEditingController _textController = new TextEditingController();
-    _textController.text = widget.appointment.firstName;
+    // TextEditingController _textController = new TextEditingController();
     final theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
-    var style = TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.bold,
-        fontSize: 15,
-        color: blueGrey.withOpacity(0.9));
+    // var style = TextStyle(
+    //     fontFamily: 'Montserrat',
+    //     fontWeight: FontWeight.bold,
+    //     fontSize: 15,
+    //     color: blueGrey.withOpacity(0.9));
 
     final userDataStore = Provider.of<UserDataStore>(context);
+    if (appointment.firstName == null && appointment.lastName == null) {
+      setState(() {
+        appointment.firstName = userDataStore.user.name.split(' ')[0];
+        appointment.lastName = userDataStore.user.name.split(' ')[1];
+      });
+    }
 
     return Scaffold(
       appBar: PreferredSize(
@@ -116,9 +120,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 child: Row(
                   children: <Widget>[
                     FForms(
-                      initialValue: userDataStore.user != null
-                          ? userDataStore.user.name.split(' ')[0]
-                          : null,
+                      initialValue: appointment.firstName,
                       borderColor: theme.colorScheme.primary,
                       formColor: Colors.white,
                       text: "First Name",
@@ -140,9 +142,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ),
                     SizedBox(width: 10.0),
                     FForms(
-                      initialValue: userDataStore.user != null
-                          ? userDataStore.user.name.split(' ')[1]
-                          : null,
+                      initialValue: appointment.lastName,
                       borderColor: theme.colorScheme.primary,
                       formColor: Colors.white,
                       text: "Last Name",

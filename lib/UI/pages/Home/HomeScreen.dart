@@ -10,7 +10,6 @@ import 'package:chitwan_hospital/UI/pages/AppointmentPages/PCRAppointment.dart';
 import 'package:chitwan_hospital/UI/pages/Home/Drawer.dart';
 import 'package:chitwan_hospital/UI/pages/SignIn/SignIn.dart';
 import 'package:chitwan_hospital/models/DoctorAppointment.dart';
-import 'package:chitwan_hospital/models/PCRAppintment.dart';
 import 'package:chitwan_hospital/state/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +48,6 @@ class HomeScreen extends StatelessWidget {
     userDataStore.handleInitialProfileLoad();
     // final doctors = userDataStore.doctors;
     final promotions = userDataStore.promotions;
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -100,8 +98,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) =>
-                      PCRAppointmentPage(appointment: new PCRAppointment()),
+                  builder: (context) => PCRAppointmentPage(),
                 ),
               );
             },
