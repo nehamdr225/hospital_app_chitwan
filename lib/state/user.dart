@@ -21,13 +21,17 @@ class UserDataStore extends ChangeNotifier {
   handleInitialProfileLoad() async {
     try {
       if (user == null && isLoggedIn == null) {
+        debugPrint('Initializing user...');
         setUserData();
 
         getAvailableDoctors(null);
         getHospitals();
         getPromotions();
       }
-    } catch (e) {}
+    } catch (e) {
+      debugPrint('User initialization error...\n');
+      debugPrint(e);
+    }
   }
 
   User _userData;
@@ -146,6 +150,7 @@ class UserDataStore extends ChangeNotifier {
   Future<void> setUserData() async {
     final String userId = await AuthService.getCurrentUID();
     if (userId != null) {
+      debugPrint('Got user id ...');
       isLoggedIn = true;
       final userData = await DatabaseService.getUserData(userId);
       if (userData.data != null) {
@@ -160,6 +165,7 @@ class UserDataStore extends ChangeNotifier {
         getFavourites();
         getPCRAppointments();
       }
+      return;
     }
     isLoggedIn = false;
   }

@@ -46,6 +46,7 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final userDataStore = Provider.of<UserDataStore>(context);
     userDataStore.handleInitialProfileLoad();
+    final isLoggedIn = userDataStore.isLoggedIn;
     // final doctors = userDataStore.doctors;
     final promotions = userDataStore.promotions;
 
@@ -59,12 +60,18 @@ class HomeScreen extends StatelessWidget {
       drawer: DrawerApp(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AppointmentForm(
-                        appointment: newAppointment,
-                      )));
+          if (isLoggedIn)
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AppointmentForm(
+                          appointment: newAppointment,
+                        )));
+          else
+            showDialog(
+              context: context,
+              builder: (context) => promptLoginDialog(context),
+            );
         },
         icon: Icon(
           Icons.calendar_today,
@@ -96,11 +103,17 @@ class HomeScreen extends StatelessWidget {
             color: theme.colorScheme.primary,
             //borderSide: BorderSide(color: theme.colorScheme.primary),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => PCRAppointmentPage(),
-                ),
-              );
+              if (isLoggedIn)
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PCRAppointmentPage(),
+                  ),
+                );
+              else
+                showDialog(
+                  context: context,
+                  builder: (context) => promptLoginDialog(context),
+                );
             },
             child: Text(
               'Book Online PCR Test',

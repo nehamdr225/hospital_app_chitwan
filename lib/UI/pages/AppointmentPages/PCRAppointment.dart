@@ -26,60 +26,32 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
   PCRAppointment appointment = PCRAppointment(
     closeContactToProbable: BoolEnum.yes,
     gender: Gender.male,
-    // closeContactDetails: CloseContactDetails(),
-    contactSeeting: ContactSeeting(workPlace: true),
+    closeContactDetails: CloseContactDetails(),
+    contactSeeting: ContactSeeting(
+      workPlace: true,
+      healthCare: false,
+      family: true,
+      unknown: false,
+    ),
     liveMarketVisit: BoolEnum.yes,
     occupation: Occupation.others,
     previousTravel: BoolEnum.yes,
   );
-  // Gender _gender = Gender.male;
-  // Occupation _occupation = Occupation.student;
-  // BoolEnum _travel = BoolEnum.no;
-  // BoolEnum _infection = BoolEnum.no;
-  // BoolEnum _animalMarket = BoolEnum.no;
-  // String _ftravelLoction, _fprobableList, _exposedLocation;
-  // String _fName;
-  // String _lName;
-  // String _fPhone, _fEmail, _fDOB, _fTAddress, _fPAddress, _fAge;
-  // String _fHName, _foccupation, _fLivemarket;
-  // DateTime selectedDate = DateTime.now();
-
-  // bool healthCareSeeting = true;
-  // bool familySeeting = false;
-  // bool workPlace = false;
-  // bool unknown = false;
 
   bool isActive = false;
 
-  // Future<Null> _selectDate(BuildContext context) async {
-  //   final DateTime picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: selectedDate,
-  //     firstDate: DateTime(2020, 1),
-  //     lastDate: DateTime(2020, 9),
-  //   );
-  //   if (picked != null && picked != selectedDate)
-  //     setState(() {
-  //       selectedDate = picked;
-  //     });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // TextEditingController _textController = new TextEditingController();
     final theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
-    // var style = TextStyle(
-    //     fontFamily: 'Montserrat',
-    //     fontWeight: FontWeight.bold,
-    //     fontSize: 15,
-    //     color: blueGrey.withOpacity(0.9));
 
     final userDataStore = Provider.of<UserDataStore>(context);
     if (appointment.firstName == null && appointment.lastName == null) {
       setState(() {
         appointment.firstName = userDataStore.user.name.split(' ')[0];
         appointment.lastName = userDataStore.user.name.split(' ')[1];
+        appointment.email = userDataStore.user.email;
+        appointment.phoneNum = userDataStore.user.phone;
       });
     }
 
@@ -130,7 +102,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       //     val.isEmpty ? 'First Name is required' : null,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'First Name is Reqired';
+                          return 'First Name is Required';
                         }
                         return null;
                       },
@@ -165,7 +137,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: FForms(
                   initialValue: userDataStore.user != null
-                      ? userDataStore.user.phone
+                      ? userDataStore.user.email
                       : null,
                   icon: Icon(
                     Icons.email,
@@ -177,9 +149,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
-                  validator: (val) => val.isEmpty || val.length < 8
-                      ? 'Email is required'
-                      : null,
+                  validator: (val) => val.isEmpty ? 'Email is required' : null,
                   onChanged: (value) {
                     setState(() {
                       appointment.email = value;
@@ -269,9 +239,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   children: [
                     FForms(
                       width: width * 0.60,
-                      initialValue: userDataStore.user != null
-                          ? userDataStore.user.phone
-                          : null,
+                      initialValue: appointment.dob,
                       text: "Date of Birth",
                       type: TextInputType.number,
                       labeltext: false,
@@ -280,9 +248,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                       borderColor: theme.colorScheme.primary,
                       formColor: Colors.white,
                       textColor: blueGrey.withOpacity(0.7),
-                      validator: (val) => val.isEmpty || val.length < 8
-                          ? 'DOB is required'
-                          : null,
+                      validator: (val) =>
+                          val.isEmpty ? 'DOB is required' : null,
                       onChanged: (value) {
                         setState(() {
                           appointment.dob = value;
@@ -291,18 +258,15 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     ),
                     FForms(
                       width: width * 0.30,
-                      initialValue: userDataStore.user != null
-                          ? userDataStore.user.phone
-                          : null,
+                      initialValue: appointment.age,
                       text: "Age",
                       type: TextInputType.number,
                       //width: width * 0.80,
                       borderColor: theme.colorScheme.primary,
                       formColor: Colors.white,
                       textColor: blueGrey.withOpacity(0.7),
-                      validator: (val) => val.isEmpty || val.length < 8
-                          ? 'Age is required'
-                          : null,
+                      validator: (val) =>
+                          val.isEmpty ? 'Age is required' : null,
                       onChanged: (value) {
                         setState(() {
                           appointment.age = value;
@@ -316,9 +280,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 //Temp Address
                 padding: const EdgeInsets.all(10.0),
                 child: FForms(
-                  initialValue: userDataStore.user != null
-                      ? userDataStore.user.phone
-                      : null,
+                  initialValue: appointment.temporaryAddress,
                   labeltext: false,
                   text: "Temporary Address",
                   hintText: "Province, District, Municipality, Ward",
@@ -327,9 +289,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
-                  validator: (val) => val.isEmpty || val.length < 8
-                      ? 'Temporary Address is required'
-                      : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Temporary Address is required' : null,
                   onChanged: (value) {
                     setState(() {
                       appointment.temporaryAddress = value;
@@ -341,9 +302,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 //permananet address
                 padding: const EdgeInsets.all(10.0),
                 child: FForms(
-                  initialValue: userDataStore.user != null
-                      ? userDataStore.user.phone
-                      : null,
+                  initialValue: appointment.permanentAddress,
                   labeltext: false,
                   text: "Permanent Address",
                   hintText: "Province, District, Municipality, Ward",
@@ -352,9 +311,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
-                  validator: (val) => val.isEmpty || val.length < 8
-                      ? 'Permanent Address is required'
-                      : null,
+                  validator: (val) =>
+                      val.isEmpty ? 'Permanent Address is required' : null,
                   onChanged: (value) {
                     setState(() {
                       appointment.permanentAddress = value;
@@ -367,13 +325,14 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: FForms(
                   labeltext: false,
-                  text: "Name of hospital",
+                  text: "Name of admitted hospital",
                   hintText: "Name of hospital where patient is admitted.",
                   type: TextInputType.text,
                   //width: width * 0.80,
                   borderColor: theme.colorScheme.primary,
                   formColor: Colors.white,
                   textColor: blueGrey.withOpacity(0.7),
+                  initialValue: appointment.admittedHospital,
                   onChanged: (value) {
                     setState(() {
                       appointment.admittedHospital = value;
@@ -498,9 +457,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                             //phone number
                             padding: const EdgeInsets.all(10.0),
                             child: FForms(
-                              initialValue: userDataStore.user != null
-                                  ? userDataStore.user.phone
-                                  : null,
+                              initialValue: appointment.otherOccupation,
                               text: "Specify occupation",
                               type: TextInputType.text,
                               //width: width * 0.80,
@@ -508,11 +465,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               borderColor: theme.colorScheme.primary,
                               formColor: Colors.white,
                               textColor: blueGrey.withOpacity(0.7),
-                              validator: (val) => val.isEmpty || val.length < 8
-                                  ? 'Occupation is required'
-                                  : null,
+                              validator: (val) =>
+                                  val.isEmpty ? 'Occupation is required' : null,
                               onChanged: (value) {
-                                appointment.occupation = value;
+                                appointment.otherOccupation = value;
                               },
                             ),
                           )
@@ -594,9 +550,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                             //phone number
                             padding: const EdgeInsets.all(10.0),
                             child: FForms(
-                              initialValue: userDataStore.user != null
-                                  ? userDataStore.user.phone
-                                  : null,
+                              initialValue: appointment.placeOfTravel,
                               text: "Specify travel location",
                               type: TextInputType.text,
                               //width: width * 0.80,
@@ -604,7 +558,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                               borderColor: theme.colorScheme.primary,
                               formColor: Colors.white,
                               textColor: blueGrey.withOpacity(0.7),
-                              validator: (val) => val.isEmpty || val.length < 8
+                              validator: (val) => val.isEmpty
                                   ? 'Travel location is required'
                                   : null,
                               onChanged: (value) {
@@ -693,9 +647,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                   //phone number
                                   padding: const EdgeInsets.all(10.0),
                                   child: FForms(
-                                    initialValue: userDataStore.user != null
-                                        ? userDataStore.user.phone
-                                        : null,
+                                    initialValue: appointment
+                                        .closeContactDetails?.probableCases,
                                     text:
                                         "please list all probable or confirmed cases",
                                     type: TextInputType.text,
@@ -705,12 +658,12 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                     formColor: Colors.white,
                                     textColor: blueGrey.withOpacity(0.7),
                                     validator: (val) =>
-                                        val.isEmpty || val.length < 8
-                                            ? 'Required'
-                                            : null,
+                                        val.isEmpty ? 'Required' : null,
                                     onChanged: (value) {
-                                      appointment.closeContactDetails
-                                          .probableCases = value;
+                                      setState(() {
+                                        appointment.closeContactDetails
+                                            .probableCases = value;
+                                      });
                                     },
                                   ),
                                 ),
@@ -718,9 +671,8 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                   //phone number
                                   padding: const EdgeInsets.all(10.0),
                                   child: FForms(
-                                    initialValue: userDataStore.user != null
-                                        ? userDataStore.user.phone
-                                        : null,
+                                    initialValue: appointment
+                                        .closeContactDetails?.exposedLocation,
                                     text: "location/city/country for exposure",
                                     type: TextInputType.text,
                                     //width: width * 0.80,
@@ -728,13 +680,14 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                                     borderColor: theme.colorScheme.primary,
                                     formColor: Colors.white,
                                     textColor: blueGrey.withOpacity(0.7),
-                                    validator: (val) =>
-                                        val.isEmpty || val.length < 8
-                                            ? 'Location is required'
-                                            : null,
+                                    validator: (val) => val.isEmpty
+                                        ? 'Location is required'
+                                        : null,
                                     onChanged: (value) {
-                                      appointment.closeContactDetails
-                                          .exposedLocation = value;
+                                      setState(() {
+                                        appointment.closeContactDetails
+                                            .exposedLocation = value;
+                                      });
                                     },
                                   ),
                                 ),
@@ -911,9 +864,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                             //phone number
                             padding: const EdgeInsets.all(10.0),
                             child: FForms(
-                              initialValue: userDataStore.user != null
-                                  ? userDataStore.user.phone
-                                  : null,
+                              initialValue: appointment.liveMarketLocation,
                               text: "Specify market place",
                               type: TextInputType.text,
                               //width: width * 0.80,
@@ -950,6 +901,7 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                     onPressed: isActive
                         ? null
                         : () async {
+                            _formKey.currentState.save();
                             if (userDataStore.user == null) {
                               showDialog(
                                 context: context,
@@ -970,10 +922,10 @@ class _PCRAppointmentPageState extends State<PCRAppointmentPage> {
                             setState(() {
                               isActive = true;
                             });
-                            _formKey.currentState.save();
+
                             appointment.timestamp = Timestamp.now();
-                            final updateData = appointment.toJson();
-                            updateData['userId'] = userDataStore.user.uid;
+                            appointment.userId = userDataStore.user.uid;
+                            final Map updateData = appointment.toJson();
                             userDataStore
                                 .createPCRAppointment(updateData)
                                 .then((value) async {
