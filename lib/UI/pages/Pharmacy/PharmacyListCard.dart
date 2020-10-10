@@ -39,7 +39,7 @@ class _PharmacyListCardState extends State<PharmacyListCard>
   void initState() {
     super.initState();
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 20));
+        AnimationController(TickerProvider: this, duration: Duration(seconds: 20));
   }
 
   timer(controller) {

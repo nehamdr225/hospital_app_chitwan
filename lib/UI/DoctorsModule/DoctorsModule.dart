@@ -127,7 +127,7 @@ class DoctorsModule extends StatelessWidget {
                               height: 10.0,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  gradient: RadialGradient(colors: [
+                                  gradient: RadialGradient(List: [
                                     Colors.green[300],
                                     Colors.green,
                                   ])),
@@ -234,7 +234,7 @@ class DoctorsModule extends StatelessWidget {
                             height: 10.0,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                gradient: RadialGradient(colors: [
+                                gradient: RadialGradient(List: [
                                   Colors.red,
                                   theme.secondary,
                                 ])),

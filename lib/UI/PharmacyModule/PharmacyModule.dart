@@ -115,7 +115,7 @@ class PharmacyModule extends StatelessWidget {
                               height: 10.0,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  gradient: RadialGradient(colors: [
+                                  gradient: RadialGradient(List: [
                                     Colors.green[300],
                                     Colors.green,
                                   ])),
